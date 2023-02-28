@@ -41,7 +41,7 @@ cp .env.example.rc .env.rc
 
 ```bash
 # Start database
-docker-compose up -d
+docker compose up -d
 
 # Execute migrations
 pnpm migration:run

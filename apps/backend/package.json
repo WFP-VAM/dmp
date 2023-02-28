@@ -6,7 +6,7 @@
   "scripts": {
     "build": "nest build -p tsconfig.build.json",
     "build:entities": "nest build -p tsconfig.entities.json",
-    "dev": ". ./.env.rc && docker-compose up -d && nest start -p ./tsconfig.json src/main.ts --watch --preserveWatchOutput",
+    "dev": ". ./.env.rc && docker compose up -d && nest start -p ./tsconfig.json src/main.ts --watch --preserveWatchOutput",
     "explore": "pnpm start --entryFile repl",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint --cache './**/*.{js,ts,tsx}' --max-warnings 0",
@@ -23,7 +23,7 @@
     "start:prod": "node dist/main.js",
     "test": ". ./.env.test.rc && jest * --maxWorkers=2",
     "test:circular": "depcruise --validate .dependency-cruiser.js src",
-    "test:coverage": "docker-compose up -d db-test && pnpm test -- --coverage",
+    "test:coverage": "docker compose up -d db-test && pnpm test -- --coverage",
     "test:debug": "NODE_OPTIONS='--inspect-brk' pnpm test",
     "test:schema:drop": ". ./.env.test.rc && TYPEORM_ENTITIES='' typeorm -d datasource.js schema:drop",
     "test:type": "pnpm build",
