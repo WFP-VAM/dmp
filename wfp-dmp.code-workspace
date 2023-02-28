@@ -6,13 +6,10 @@
       "source.fixAll.eslint": true,
       "source.fixAll.stylelint": true
     },
-    "stylelint.validate": [
-      "typescript",
-      "typescriptreact"
-    ],
+    "stylelint.validate": ["typescript", "typescriptreact"],
     "stylelint.customSyntax": "@stylelint/postcss-css-in-js",
     "search.exclude": {
-      "pnpm-lock.yaml": true,
+      "pnpm-lock.yaml": true
     },
     "files.exclude": {
       "**/coverage": true,
@@ -42,7 +39,7 @@
       "eslint 🔧",
       "bifrost starter root 🌈"
     ],
-    "jest.autoRun": "off",
+    "jest.autoRun": "off"
   },
   "extensions": {
     "recommendations": [
@@ -66,13 +63,15 @@
         "protocol": "inspector",
         "port": 9229,
         "restart": true,
-        "skipFiles": [
-          "<node_internals>/**"
-        ]
+        "skipFiles": ["<node_internals>/**"]
       }
     ]
   },
   "folders": [
+    {
+      "path": "apps/backend-infrastructure",
+      "name": "backend infrastructure [CDK] ☁️"
+    },
     {
       "path": "apps/backend",
       "name": "backend [Nest.js] 😺"
