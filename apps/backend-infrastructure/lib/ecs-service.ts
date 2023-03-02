@@ -59,6 +59,9 @@ export class ECSService extends NestedStack {
       'FargateService',
       {
         cluster,
+        desiredCount: 1,
+        minHealthyPercent: 0,
+        maxHealthyPercent: 200,
         taskImageOptions: {
           secrets: {
             POSTGRES_USER: ecs_Secret.fromSecretsManager(dbSecret, 'username'),
@@ -90,6 +93,11 @@ export class ECSService extends NestedStack {
         protocol: aws_elasticloadbalancingv2.ApplicationProtocol.HTTPS,
         redirectHTTP: true,
       },
+    );
+
+    loadBalancedService.targetGroup.setAttribute(
+      'deregistration_delay.timeout_seconds',
+      '20',
     );
 
     const policyStatement = new PolicyStatement({

@@ -37,6 +37,13 @@ class Database extends NestedStack {
       vpc,
     });
 
+    vpc.privateSubnets.forEach(privateSubnet => {
+      dbSecurityGroup.addIngressRule(
+        Peer.ipv4(privateSubnet.ipv4CidrBlock),
+        Port.tcp(5432),
+      );
+    });
+
     dbSecurityGroup.addIngressRule(
       Peer.ipv4(vpc.privateSubnets[0].ipv4CidrBlock),
       Port.tcp(5432),
