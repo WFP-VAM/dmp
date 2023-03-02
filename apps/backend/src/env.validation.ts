@@ -18,7 +18,19 @@ class EnvironmentVariables {
   SECRET_KEY!: string;
 
   @IsString()
-  TYPEORM_URL!: string;
+  POSTGRES_USER!: string;
+
+  @IsString()
+  POSTGRES_PASSWORD!: string;
+
+  @IsString()
+  POSTGRES_HOST!: string;
+
+  @IsNumber()
+  POSTGRES_PORT!: number;
+
+  @IsString()
+  POSTGRES_DATABASE!: string;
 
   @IsString()
   TYPEORM_ENTITIES!: string;

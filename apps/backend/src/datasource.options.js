@@ -5,7 +5,7 @@
  **/
 const dataSourceOptions = {
   type: 'postgres',
-  url: process.env.TYPEORM_URL,
+  url: `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DATABASE}`,
   entities: process.env.TYPEORM_ENTITIES.split(','),
   migrations: process.env.TYPEORM_MIGRATIONS.split(','),
   synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true',

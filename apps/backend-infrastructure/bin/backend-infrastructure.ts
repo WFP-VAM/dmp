@@ -1,19 +1,17 @@
 #!/usr/bin/env node
-import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
+import 'source-map-support/register';
 
-import { BackendInfrastructureStack } from '../lib/backend-infrastructure-stack';
+import { NestStack } from '../lib/nestStack';
+
+const DEFAULT_REGION = process.env.CDK_DEFAULT_REGION;
+const DEFAULT_ACCOUNT = process.env.CDK_DEFAULT_ACCOUNT;
+
+if (DEFAULT_REGION === undefined) throw 'Missing CDK_DEFAULT_REGION env';
+if (DEFAULT_ACCOUNT === undefined) throw 'Missing CDK_DEFAULT_ACCOUNT env';
 
 const app = new cdk.App();
-new BackendInfrastructureStack(app, 'BackendInfrastructureStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+new NestStack(app, NestStack.name, {
+  stackName: NestStack.name,
+  env: { account: DEFAULT_ACCOUNT, region: DEFAULT_REGION },
 });

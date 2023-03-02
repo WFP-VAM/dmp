@@ -1,4 +1,5 @@
 dist
 node_modules
-!.lintstagedrc.js
-!.dependency-cruiser.js
+.lintstagedrc.js
+.dependency-cruiser.js
+cdk.out/**

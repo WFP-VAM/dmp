@@ -168,6 +168,7 @@ module.exports = {
             allowBoolean: true,
           },
         ],
+        '@typescript-eslint/unbound-method': 'off',
       },
     },
   ],

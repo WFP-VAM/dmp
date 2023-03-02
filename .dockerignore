@@ -1,12 +1,12 @@
-**/**
-
 !package.json
 !.gitignore
 !turbo.json
 !pnpm-lock.yaml
 !pnpm-workspace.yaml
 !**/package.json
-!apps/**
+!apps/backend/**
+apps/backend-infrastructure/**
+apps/frontend/**
 !packages/**
 **/dist
 **/.next
@@ -14,3 +14,4 @@
 **/.swc
 **/node_modules
 **/coverage
+**/.env*

@@ -33,7 +33,7 @@ RUN HUSKY=0 pnpm install && \
   rm -rf **/src **/.turbo node_modules **/node_modules && \
   pnpm install --production
 
-FROM node:hydrogen-alpine3.16 AS runner
+FROM pnpm-installed as runner
 RUN apk add --no-cache dumb-init
 
 WORKDIR /app
@@ -44,4 +44,4 @@ RUN adduser --system --uid 1001 nestjs
 USER nestjs
 COPY --from=installer --chown=nestjs:nestjs /app .
 
-CMD dumb-init node apps/backend/dist/main.js
+CMD cd apps/backend && pnpm migration:run:prod && dumb-init node dist/main.js

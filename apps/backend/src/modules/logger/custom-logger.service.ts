@@ -67,7 +67,7 @@ const formatter = [Environment.Development, Environment.Test].includes(
             }
 
             logString += `"${logProperty}": `;
-
+            /* eslint-disable @typescript-eslint/no-unsafe-argument */
             switch (logProperty) {
               case 'timestamp':
                 logString += `"${clc.blueBright(info[logProperty])}"`;
