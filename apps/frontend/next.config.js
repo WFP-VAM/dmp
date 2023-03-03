@@ -1,5 +1,4 @@
 const nextBundleAnalyzer = require('@next/bundle-analyzer');
-const path = require('path');
 
 const securityHeaders = [
   {
@@ -37,15 +36,9 @@ const nextConfig = {
     VERSION: process.env.VERSION,
   },
   reactStrictMode: true,
-  // allow for 80% smaller docker images
-  output: 'standalone',
   // experimental, however will be released the default in Nextjs 12.2.0
   swcMinify: true,
 
-  experimental: {
-    // this includes files from the monorepo base two directories up, required for docker build
-    outputFileTracingRoot: path.join(__dirname, '../../'),
-  },
   headers: async () => [
     {
       // Apply these headers to all routes in your application.
