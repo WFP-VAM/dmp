@@ -25,6 +25,7 @@ export interface ECSServiceProps extends NestedStackProps {
   dbHostname: string;
   dbPort: string;
   applicationName: string;
+  allowedHost: string;
 }
 
 export class ECSService extends NestedStack {
@@ -41,6 +42,7 @@ export class ECSService extends NestedStack {
       dbPort,
       certificate,
       applicationName,
+      allowedHost,
     } = props;
 
     const nestSecret = new Secret(this, 'nestSecret', {
@@ -85,7 +87,7 @@ export class ECSService extends NestedStack {
             TYPEORM_ENTITIES: 'dist/**/*.entity.js',
             TYPEORM_MIGRATIONS: 'migration/*.js',
             TYPEORM_SYNCHRONIZE: 'false',
-            ALLOWED_HOST: 'http://localhost:3000',
+            ALLOWED_HOST: allowedHost,
           },
         },
         certificate,

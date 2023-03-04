@@ -9,6 +9,9 @@ import { NestVpc } from './vpc';
 
 const DBNAME = 'nestdb';
 
+const ALLOWED_HOST = process.env.ALLOWED_HOST ?? '';
+if (ALLOWED_HOST === '') throw 'Missing ALLOWED_HOST env';
+
 class NestStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -44,6 +47,7 @@ class NestStack extends Stack {
       dbSecret: database.dbSecret,
       vpc: vpc.vpc,
       applicationName,
+      allowedHost: ALLOWED_HOST,
     });
 
     new Route53Record(this, Route53Record.name, {
