@@ -5,5 +5,5 @@ export default class CreateUserDto {
   @IsString() readonly email!: string;
   @IsString() readonly password!: string;
   @IsArray() readonly roles!: string[];
-  @IsString() readonly region!: string;
+  @IsString() readonly province!: string;
 }

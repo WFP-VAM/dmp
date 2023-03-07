@@ -16,5 +16,5 @@ export class User extends BaseEntity {
   roles!: string[];
 
   @Column({ length: 50 })
-  region!: string;
+  province!: string;
 }

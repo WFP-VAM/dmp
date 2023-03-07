@@ -61,7 +61,7 @@ export class UserService {
     const email = `${name}@email.com`;
     const password = process.env.SUPERADMIN_PASSWORD as string;
     const roles = ['admin'];
-    const region = 'region';
-    void this.createUser({ name, email, password, roles, region });
+    const province = 'region';
+    void this.createUser({ name, email, password, roles, province });
   }
 }

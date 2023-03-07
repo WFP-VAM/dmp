@@ -10,7 +10,7 @@ export class UserFactory extends Factory<User> {
       email: faker.internet.email(),
       password: faker.random.word(),
       roles: faker.random.arrayElement([['admin'], []]),
-      region: faker.random.locale(),
+      province: faker.random.locale(),
       ...user,
     } as User);
 }
