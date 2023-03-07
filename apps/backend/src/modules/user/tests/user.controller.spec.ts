@@ -15,11 +15,8 @@ const generateUserDto = () => ({
   name: faker.name.lastName(),
   email: faker.internet.email(),
   password: faker.random.word(),
-});
-
-const generateUserWithRolesDto = () => ({
-  ...generateUserDto(),
   roles: faker.random.arrayElement([['admin'], []]),
+  region: faker.random.locale(),
 });
 
 describe('UserController', () => {
@@ -81,7 +78,7 @@ describe('UserController', () => {
     it('should return 403 http code if user is not an admin', async () => {
       const [user, existingUser] = await userFactory.createMany([{ roles: [] }, {}]);
       const accessToken = authService.createAccessToken(user, 10000);
-      const userDto = generateUserWithRolesDto();
+      const userDto = generateUserDto();
 
       await request(app.getHttpServer())
         .patch(`/users/${existingUser.id}`)
@@ -97,7 +94,7 @@ describe('UserController', () => {
     it('should update a given user and hash the password', async () => {
       const [adminUser, existingUser] = await userFactory.createMany([{ roles: ['admin'] }, {}]);
       const accessToken = authService.createAccessToken(adminUser, 10000);
-      const userDto = generateUserWithRolesDto();
+      const userDto = generateUserDto();
 
       const response = await request(app.getHttpServer())
         .patch(`/users/${existingUser.id}`)
