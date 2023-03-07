@@ -34,6 +34,7 @@ export class UserService {
     const { id: userId } = await this.userRepository.save({
       ...userDto,
       roles: [],
+      region: 'region',
       password: hashedPassword,
     });
 

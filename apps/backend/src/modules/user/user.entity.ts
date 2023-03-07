@@ -14,4 +14,7 @@ export class User extends BaseEntity {
 
   @Column({ type: 'varchar', array: true })
   roles!: string[];
+
+  @Column({ type: 'string' })
+  region!: string;
 }
