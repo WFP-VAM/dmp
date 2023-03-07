@@ -5,6 +5,6 @@
     "rootDir": ".",
     "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "cdk.out"]
 }

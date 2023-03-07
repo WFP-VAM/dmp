@@ -56,12 +56,16 @@ export class UserService {
     return await this.getUser(userId);
   };
 
-  onModuleInit() {
+  async onModuleInit() {
     const name = process.env.SUPERADMIN_USERNAME as string;
-    const email = `${name}@email.com`;
+    const email = `${name}@superadmin.com`;
     const password = process.env.SUPERADMIN_PASSWORD as string;
     const roles = ['admin'];
     const province = 'region';
-    void this.createUser({ name, email, password, roles, province });
+    try {
+      await this.createUser({ name, email, password, roles, province });
+    } catch {
+      console.log('Super user already exists');
+    }
   }
 }
