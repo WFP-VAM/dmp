@@ -17,7 +17,8 @@ export class UserController {
     public readonly service: UserService,
   ) {}
 
-  @Post({ isPublic: true })
+  @Post()
+  @UseGuards(new RolesGuard(['admin']))
   createOne(@Body() userDto: CreateUserDto): Promise<GetUserDto> {
     return this.service.createUser(userDto);
   }

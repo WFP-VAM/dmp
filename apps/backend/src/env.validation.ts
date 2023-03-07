@@ -44,6 +44,12 @@ class EnvironmentVariables {
 
   @IsString()
   ALLOWED_HOST!: string;
+
+  @IsString()
+  SUPERADMIN_USERNAME!: string;
+
+  @IsString()
+  SUPERADMIN_PASSWORD!: string;
 }
 
 export const validate = (config: Record<string, unknown>): EnvironmentVariables => {
