@@ -1,9 +1,10 @@
 # Installation
 
-- [Install fnm](https://github.com/Schniz/fnm#installation) or another node version manager (I _highly_ recommend use-on-cd option)
+- [Install fnm](https://github.com/Schniz/fnm#installation) or another node version manager (I *highly* recommend use-on-cd option)
 - Use the correct node version: `fnm use`
 - [Install pnpm](https://pnpm.io/installation)
 - Then run `pnpm install`
+
 
 ## Start the app
 
@@ -21,8 +22,6 @@ curl --request POST \
   --data '{
   "name": "username",
   "email":"username@email.com",
-  "password":"password",
-  "region":"region",
-  "roles":"[admin]"
+  "password":"password"
 }'
 ```
