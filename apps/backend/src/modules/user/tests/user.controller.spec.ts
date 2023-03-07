@@ -46,7 +46,7 @@ describe('UserController', () => {
   });
 
   describe('POST - /users', () => {
-    it('should return 401 http code if user is not an admin', async () => {
+    it('should return 403 http code if user is not an admin', async () => {
       const user = await userFactory.createOne({ roles: ['user'] });
       const accessToken = authService.createAccessToken(user, 10000);
       const userDto = generateUserDto();
