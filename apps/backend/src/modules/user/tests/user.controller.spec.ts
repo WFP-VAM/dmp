@@ -77,6 +77,23 @@ describe('UserController', () => {
         });
     });
 
+    it('should create a user with a province', async () => {
+      const adminUser = await userFactory.createOne({ roles: ['admin'] });
+      const accessToken = authService.createAccessToken(adminUser, 10000);
+      const userDto = generateUserDto();
+
+      await request(app.getHttpServer())
+        .post('/users')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send({ ...userDto, province: 'region' })
+        .expect(201)
+        .expect(async (response: { body: GetUserDto }) => {
+          const databaseUser = await userRepository.findOneBy({ id: response.body.id });
+          expect(databaseUser).toBeDefined();
+          expect(databaseUser?.province).toEqual('region');
+        });
+    });
+
     it('should return 409 http code if email already exists', async () => {
       const [existingUser, adminUser] = await userFactory.createMany([
         { roles: ['user'] },
