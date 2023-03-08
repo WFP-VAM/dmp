@@ -39,7 +39,8 @@
       "eslint 🔧",
       "bifrost starter root 🌈"
     ],
-    "jest.autoRun": "off"
+    "jest.autoRun": "off",
+    "cSpell.words": ["SUPERADMIN"]
   },
   "extensions": {
     "recommendations": [

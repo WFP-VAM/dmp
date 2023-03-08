@@ -55,13 +55,20 @@ export class ECSService extends NestedStack {
       },
     });
 
-    const superadminUsername = new Secret(this, 'adminUser', {
+    const superadminUsername = new Secret(this, 'superadminUser', {
+      secretName: 'Superadmin-Username',
       generateSecretString: {
         excludeUppercase: true,
         excludePunctuation: true,
+        passwordLength: 8,
       },
     });
-    const superadminPassword = new Secret(this, 'adminPassword');
+    const superadminPassword = new Secret(this, 'superadminPassword', {
+      secretName: 'Superadmin-Password',
+      generateSecretString: {
+        passwordLength: 12,
+      },
+    });
 
     const cluster = new Cluster(this, 'Cluster', { vpc });
     const loadBalancedService = new ApplicationLoadBalancedFargateService(
