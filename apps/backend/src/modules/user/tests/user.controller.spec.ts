@@ -15,10 +15,6 @@ const generateUserDto = () => ({
   name: faker.name.lastName(),
   email: faker.internet.email(),
   password: faker.random.word(),
-});
-
-const generateUserWithRolesDto = () => ({
-  ...generateUserDto(),
   roles: faker.random.arrayElement([['admin'], []]),
 });
 
@@ -49,21 +45,26 @@ describe('UserController', () => {
   });
 
   describe('POST - /users', () => {
-    it('should return 409 http code if email already exists', async () => {
-      const user = await userFactory.createOne({ roles: [] });
+    it('should return 403 http code if user is not an admin', async () => {
+      const user = await userFactory.createOne({ roles: ['user'] });
+      const accessToken = authService.createAccessToken(user, 10000);
       const userDto = generateUserDto();
 
       await request(app.getHttpServer())
-        .post('/users')
-        .send({ ...userDto, email: user.email })
-        .expect(409);
+        .post('/users/')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(userDto)
+        .expect(403);
     });
 
     it('should create a user with a hashed password', async () => {
+      const adminUser = await userFactory.createOne({ roles: ['admin'] });
+      const accessToken = authService.createAccessToken(adminUser, 10000);
       const userDto = generateUserDto();
 
       await request(app.getHttpServer())
         .post('/users')
+        .set('Authorization', `Bearer ${accessToken}`)
         .send(userDto)
         .expect(201)
         .expect(async (response: { body: GetUserDto }) => {
@@ -75,13 +76,45 @@ describe('UserController', () => {
           expect(password !== userDto.password).toBe(true);
         });
     });
+
+    it('should create a user with a province', async () => {
+      const adminUser = await userFactory.createOne({ roles: ['admin'] });
+      const accessToken = authService.createAccessToken(adminUser, 10000);
+      const userDto = generateUserDto();
+
+      await request(app.getHttpServer())
+        .post('/users')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send({ ...userDto, province: 'region' })
+        .expect(201)
+        .expect(async (response: { body: GetUserDto }) => {
+          const databaseUser = await userRepository.findOneBy({ id: response.body.id });
+          expect(databaseUser).toBeDefined();
+          expect(databaseUser?.province).toEqual('region');
+        });
+    });
+
+    it('should return 409 http code if email already exists', async () => {
+      const [existingUser, adminUser] = await userFactory.createMany([
+        { roles: ['user'] },
+        { roles: ['admin'] },
+      ]);
+      const accessToken = authService.createAccessToken(adminUser, 10000);
+      const userDto = generateUserDto();
+
+      await request(app.getHttpServer())
+        .post('/users')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send({ ...userDto, email: existingUser.email })
+        .expect(409);
+    });
   });
 
   describe('PATCH - /users', () => {
     it('should return 403 http code if user is not an admin', async () => {
       const [user, existingUser] = await userFactory.createMany([{ roles: [] }, {}]);
       const accessToken = authService.createAccessToken(user, 10000);
-      const userDto = generateUserWithRolesDto();
+      const userDto = generateUserDto();
 
       await request(app.getHttpServer())
         .patch(`/users/${existingUser.id}`)
@@ -97,7 +130,7 @@ describe('UserController', () => {
     it('should update a given user and hash the password', async () => {
       const [adminUser, existingUser] = await userFactory.createMany([{ roles: ['admin'] }, {}]);
       const accessToken = authService.createAccessToken(adminUser, 10000);
-      const userDto = generateUserWithRolesDto();
+      const userDto = generateUserDto();
 
       const response = await request(app.getHttpServer())
         .patch(`/users/${existingUser.id}`)

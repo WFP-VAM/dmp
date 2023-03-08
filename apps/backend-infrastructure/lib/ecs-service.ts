@@ -55,6 +55,21 @@ export class ECSService extends NestedStack {
       },
     });
 
+    const superadminUsername = new Secret(this, 'superadminUser', {
+      secretName: 'Superadmin-Username',
+      generateSecretString: {
+        excludeUppercase: true,
+        excludePunctuation: true,
+        passwordLength: 8,
+      },
+    });
+    const superadminPassword = new Secret(this, 'superadminPassword', {
+      secretName: 'Superadmin-Password',
+      generateSecretString: {
+        passwordLength: 12,
+      },
+    });
+
     const cluster = new Cluster(this, 'Cluster', { vpc });
     const loadBalancedService = new ApplicationLoadBalancedFargateService(
       this,
@@ -72,6 +87,10 @@ export class ECSService extends NestedStack {
               'password',
             ),
             SECRET_KEY: ecs_Secret.fromSecretsManager(nestSecret, 'NestKey'),
+            SUPERADMIN_USERNAME:
+              ecs_Secret.fromSecretsManager(superadminUsername),
+            SUPERADMIN_PASSWORD:
+              ecs_Secret.fromSecretsManager(superadminPassword),
           },
           image: ContainerImage.fromAsset(
             path.join(__dirname, '..', '..', '..'),

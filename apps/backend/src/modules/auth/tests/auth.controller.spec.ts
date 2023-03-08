@@ -12,6 +12,12 @@ import { Repository } from 'typeorm';
 
 import { REFRESH_TOKEN } from '../auth.controller';
 import { AuthService } from '../auth.service';
+const generateUserDto = () => ({
+  name: faker.name.lastName(),
+  email: faker.internet.email(),
+  password: faker.random.word(),
+  roles: faker.random.arrayElement([['admin'], []]),
+});
 
 describe('AppController', () => {
   let app: INestApplication;
@@ -57,8 +63,7 @@ describe('AppController', () => {
     it('should return 401 http code if wrong credentials are provided', async () => {
       const email = faker.internet.email();
       await userService.createUser({
-        name: faker.name.lastName(),
-        email,
+        ...generateUserDto(),
         password: 'correctPassword',
       });
 
@@ -73,7 +78,7 @@ describe('AppController', () => {
       const email = faker.internet.email();
 
       await userService.createUser({
-        name: faker.name.lastName(),
+        ...generateUserDto(),
         email,
         password,
       });
@@ -95,7 +100,7 @@ describe('AppController', () => {
       const email = faker.internet.email();
 
       await userService.createUser({
-        name: faker.name.lastName(),
+        ...generateUserDto(),
         email: email.toLocaleLowerCase(),
         password,
       });

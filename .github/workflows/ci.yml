@@ -46,10 +46,10 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      - name: build
-        run: pnpm build
       - name: linters
         run: pnpm lint
+      - name: build
+        run: pnpm build
       - name: Tests
         run: pnpm test
       - name: Dependency Cruiser

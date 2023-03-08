@@ -33,7 +33,6 @@ export class UserService {
     const hashedPassword = await this.hashPassword(userDto.password);
     const { id: userId } = await this.userRepository.save({
       ...userDto,
-      roles: [],
       password: hashedPassword,
     });
 
@@ -56,4 +55,16 @@ export class UserService {
 
     return await this.getUser(userId);
   };
+
+  async onModuleInit() {
+    const name = process.env.SUPERADMIN_USERNAME as string;
+    const email = `${name}@superadmin.com`;
+    const password = process.env.SUPERADMIN_PASSWORD as string;
+    const roles = ['admin'];
+    try {
+      await this.createUser({ name, email, password, roles });
+    } catch {
+      console.log('Super user already exists');
+    }
+  }
 }
