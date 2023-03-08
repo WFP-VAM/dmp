@@ -1,9 +1,9 @@
-import { IsArray, IsString } from 'class-validator';
+import { IsArray, IsOptional, IsString } from 'class-validator';
 
 export default class CreateUserDto {
   @IsString() readonly name!: string;
   @IsString() readonly email!: string;
   @IsString() readonly password!: string;
   @IsArray() readonly roles!: string[];
-  @IsString() readonly province!: string;
+  @IsOptional() readonly province?: string;
 }

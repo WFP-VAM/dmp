@@ -61,9 +61,8 @@ export class UserService {
     const email = `${name}@superadmin.com`;
     const password = process.env.SUPERADMIN_PASSWORD as string;
     const roles = ['admin'];
-    const province = 'region';
     try {
-      await this.createUser({ name, email, password, roles, province });
+      await this.createUser({ name, email, password, roles });
     } catch {
       console.log('Super user already exists');
     }
