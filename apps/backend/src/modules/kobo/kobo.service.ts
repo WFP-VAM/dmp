@@ -1,4 +1,7 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class KoboService {}
+export class KoboService {
+  constructor(private readonly httpService: HttpService) {}
+}
