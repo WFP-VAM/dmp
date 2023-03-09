@@ -25,12 +25,12 @@ const NavMenuContent = (): JSX.Element => {
 
   return (
     <>
-      <Box margin="20px 0px 0px 10px">
+      <Box margin="30px 0px 0px 10px">
         <Logo
           src="/logo.svg"
           alt="logo"
-          width={180}
-          height={80}
+          width={175}
+          height={175}
           priority={true} //preloads image
         />
       </Box>
@@ -73,7 +73,7 @@ export const NavBar = ({ children }: Props): JSX.Element => {
     <>
       <MenuIcon fontSize="medium" onClick={handleDrawerToggle} />
       <Box display="flex">
-        <Box component="nav" sx={{ width: { sm: 254 }, flexShrink: { sm: 0 } }}>
+        <Box component="nav" sx={{ width: { sm: 260 }, flexShrink: { sm: 0 } }}>
           <Drawer
             variant="temporary"
             open={mobileDrawerOpen}
