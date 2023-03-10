@@ -17,17 +17,10 @@ import {
 import Logo from 'next/image';
 import { ReactNode, useState } from 'react';
 
-import { isAdmin, useGetMe } from 'services/api/user/useUser';
+import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
 
 const NavMenuContent = (): JSX.Element => {
-  const user = useGetMe();
-  const isAdminLoggedIn = () => {
-    if (user) {
-      return isAdmin(user);
-    }
-
-    return false;
-  };
+  const isAdmin = useIsSignedInUserAdmin();
 
   const navMenuListItemsData = [
     { text: 'Forms', icon: StarIcon },
@@ -66,7 +59,7 @@ const NavMenuContent = (): JSX.Element => {
             </ListItemButton>
           </ListItem>
         ))}
-        {isAdminLoggedIn() && (
+        {isAdmin && (
           <ListItem key="admin">
             <ListItemButton>
               <ListItemIcon>
