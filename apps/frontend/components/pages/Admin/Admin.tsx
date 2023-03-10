@@ -12,7 +12,7 @@ export const Admin = (): JSX.Element => {
           boxShadow: 6,
         }}
       >
-        <Typography variant="h6" padding={1}>
+        <Typography variant="body2" padding={1}>
           Add User
         </Typography>
         <AddIcon fontSize="medium" />
