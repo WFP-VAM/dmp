@@ -21,3 +21,13 @@ export const useGetMe = () => {
 export const updateMe = async (data: UpdateUserDto): Promise<void> => {
   await apiClient.patch<unknown>(ApiRoutes.users, data);
 };
+
+export const useIsSignedInUserAdmin = (): boolean => {
+  const user = useGetMe();
+
+  if (user) {
+    return Boolean(user.roles.includes('admin'));
+  }
+
+  return false;
+};
