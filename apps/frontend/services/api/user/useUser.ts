@@ -21,3 +21,7 @@ export const useGetMe = () => {
 export const updateMe = async (data: UpdateUserDto): Promise<void> => {
   await apiClient.patch<unknown>(ApiRoutes.users, data);
 };
+
+export const isAdmin = (user: GetUserDto): boolean => {
+  return Boolean(user.roles.includes('admin'));
+};
