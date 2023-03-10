@@ -15,7 +15,7 @@ export const Admin = (): JSX.Element => {
         <Typography variant="h6" padding={1}>
           Add User
         </Typography>
-        <AddIcon sx={{ ml: 1 }} />
+        <AddIcon fontSize="medium" />
       </Button>
     </Box>
   );
