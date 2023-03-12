@@ -3,9 +3,9 @@ import { UserFactory } from '@modules/user/user.factory';
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '@root/app.module';
+import { DROUGHT, FLOOD, INCIDENT } from '@wfp-dmp/interfaces';
 import request from 'supertest';
 
-import { DROUGHT, FLOOD, INCIDENT } from '../constants';
 import { KoboService } from '../kobo.service';
 
 describe('KoboController', () => {

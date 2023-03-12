@@ -1,6 +1,4 @@
-export const FLOOD = 'FLOOD' as const;
-export const DROUGHT = 'DROUGHT' as const;
-export const INCIDENT = 'INCIDENT' as const;
+import { DROUGHT, FLOOD, INCIDENT } from '@wfp-dmp/interfaces';
 
 const floodAssetId = process.env.FLOOD_ASSET_ID;
 const droughtAssetId = process.env.DROUGHT_ASSET_ID;
@@ -21,5 +19,3 @@ export const AssetId = {
   [DROUGHT]: droughtAssetId,
   [INCIDENT]: incidentAssetId,
 } as const;
-
-export type DisasterType = typeof FLOOD | typeof DROUGHT | typeof INCIDENT;

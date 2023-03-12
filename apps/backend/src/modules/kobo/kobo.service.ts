@@ -1,8 +1,9 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { substractDaysToDate } from '@utils/date';
+import { DisasterType } from '@wfp-dmp/interfaces';
 
-import { AssetId, DisasterType } from './constants';
+import { AssetId } from './constants';
 
 @Injectable()
 export class KoboService {
