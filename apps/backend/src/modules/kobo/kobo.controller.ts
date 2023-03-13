@@ -8,12 +8,12 @@ import { KoboService } from './kobo.service';
 export class KoboController {
   constructor(private readonly koboService: KoboService) {}
 
-  @Get('/:nbDays')
-  async getLastForms(@Param('nbDays') nbDays: number): Promise<GetLastFormsDto> {
+  @Get('/:numDays')
+  async getLastForms(@Param('numDays') numDays: number): Promise<GetLastFormsDto> {
     const [floodResp, droughtResp, incidentResp] = await Promise.all([
-      this.koboService.getLastForms(nbDays, FLOOD),
-      this.koboService.getLastForms(nbDays, DROUGHT),
-      this.koboService.getLastForms(nbDays, INCIDENT),
+      this.koboService.getLastForms(numDays, FLOOD),
+      this.koboService.getLastForms(numDays, DROUGHT),
+      this.koboService.getLastForms(numDays, INCIDENT),
     ]);
 
     return { [FLOOD]: floodResp, [DROUGHT]: droughtResp, [INCIDENT]: incidentResp };

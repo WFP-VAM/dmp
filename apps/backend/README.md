@@ -30,6 +30,8 @@
 
 ## Installation
 
+Fill `KOBO_TOKEN`, `FLOOD_ASSET_ID`, `DROUGHT_ASSET_ID`, `INCIDENT_ASSET_ID` in `.env.example.rc` and `.env.test.rc`.
+
 ```bash
 # Install dependencies
 pnpm install
