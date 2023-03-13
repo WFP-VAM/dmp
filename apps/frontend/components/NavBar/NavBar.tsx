@@ -12,15 +12,19 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from '@mui/material';
 import Logo from 'next/image';
 import { ReactNode, useState } from 'react';
 
+import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
+
 const NavMenuContent = (): JSX.Element => {
+  const isAdmin = useIsSignedInUserAdmin();
+
   const navMenuListItemsData = [
-    { text: 'Forms', icon: StarIcon, action: ExpandMoreIcon },
-    { text: 'Reports', icon: ContentPasteIcon, action: ExpandMoreIcon },
-    { text: 'Admin', icon: SupervisorAccountIcon },
+    { text: 'Forms', icon: StarIcon },
+    { text: 'Reports', icon: ContentPasteIcon },
   ];
 
   return (
@@ -38,7 +42,7 @@ const NavMenuContent = (): JSX.Element => {
         {navMenuListItemsData.map(item => (
           <ListItem key={item.text}>
             <ListItemButton
-              disableTouchRipple={item.text === 'Admin' ? false : true}
+              disableTouchRipple={true}
               sx={{
                 width: '100%',
                 borderRadius: '4px',
@@ -51,10 +55,22 @@ const NavMenuContent = (): JSX.Element => {
                 primary={item.text}
                 primaryTypographyProps={{ fontSize: 16 }}
               />
-              {item.action && <item.action fontSize="small" />}
+              <ExpandMoreIcon fontSize="small" sx={{ ml: 2 }} />
             </ListItemButton>
           </ListItem>
         ))}
+        {isAdmin && (
+          <ListItem key="admin">
+            <ListItemButton>
+              <ListItemIcon>
+                <SupervisorAccountIcon />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="body1">Admin</Typography>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
       </List>
     </>
   );

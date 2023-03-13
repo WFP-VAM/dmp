@@ -1,5 +1,6 @@
 import 'styles/global.css';
 import 'styles/stylesheet.css';
+import { ThemeProvider } from '@mui/material';
 import { Inter } from '@next/font/google';
 import { AppProps } from 'next/app';
 import React from 'react';
@@ -9,6 +10,7 @@ import { SWRConfig } from 'swr';
 import { AppCrashFallback, ErrorBoundary } from 'components';
 import { Intl } from 'providers';
 import { apiClient } from 'services/api/client';
+import { muiTheme } from 'theme/muiTheme';
 
 if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
   void import('@axe-core/react').then(({ default: reactAxe }) => {
@@ -29,23 +31,25 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
           font-family: ${inter.style.fontFamily};
         }
       `}</style>
-      <ErrorBoundary FallbackComponent={AppCrashFallback}>
-        <Intl defaultLocale="en">
-          <SWRConfig
-            value={{
-              refreshInterval: 0, // disable auto refresh by interval by default
-              fetcher: (resource: string) =>
-                apiClient
-                  .get<unknown>(resource)
-                  .then(response => response.data),
-            }}
-          >
-            <div>
-              <Component {...pageProps} />
-            </div>
-          </SWRConfig>
-        </Intl>
-      </ErrorBoundary>
+      <ThemeProvider theme={muiTheme}>
+        <ErrorBoundary FallbackComponent={AppCrashFallback}>
+          <Intl defaultLocale="en">
+            <SWRConfig
+              value={{
+                refreshInterval: 0, // disable auto refresh by interval by default
+                fetcher: (resource: string) =>
+                  apiClient
+                    .get<unknown>(resource)
+                    .then(response => response.data),
+              }}
+            >
+              <div>
+                <Component {...pageProps} />
+              </div>
+            </SWRConfig>
+          </Intl>
+        </ErrorBoundary>
+      </ThemeProvider>
     </>
   );
 };
