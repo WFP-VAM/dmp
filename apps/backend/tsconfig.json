@@ -5,31 +5,15 @@
     "baseUrl": "./src",
     "rootDir": "./src",
     "paths": {
-      "@helpers/*": [
-        "helpers/*"
-      ],
-      "@auth/*": [
-        "modules/auth/*"
-      ],
-      "@modules/*": [
-        "modules/*"
-      ],
-      "@decorators/*": [
-        "decorators/*"
-      ],
-      "@testUtils/*": [
-        "testUtils/*"
-      ],
-      "@root/*": [
-        "./*"
-      ]
+      "@helpers/*": ["helpers/*"],
+      "@auth/*": ["modules/auth/*"],
+      "@modules/*": ["modules/*"],
+      "@decorators/*": ["decorators/*"],
+      "@testUtils/*": ["testUtils/*"],
+      "@utils/*": ["utils/*"],
+      "@root/*": ["./*"]
     }
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

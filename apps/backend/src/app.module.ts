@@ -13,6 +13,7 @@ import { dataSourceOptions } from './datasource.options';
 import { validate } from './env.validation';
 import { EntityNotFoundFilter } from './exception/entity-not-found.filter';
 import { QueryFailedFilter } from './exception/query-failed.filter';
+import { KoboModule } from './modules/kobo/kobo.module';
 import { LoggerMiddleware } from './modules/logger/logger.middleware';
 import { LoggerModule } from './modules/logger/logger.module';
 import { UserModule } from './modules/user/user.module';
@@ -32,6 +33,7 @@ AdminJS.registerAdapter({ Database, Resource });
     UserModule,
     AuthModule,
     LoggerModule,
+    KoboModule,
   ],
   controllers: [AppController],
   providers: [
