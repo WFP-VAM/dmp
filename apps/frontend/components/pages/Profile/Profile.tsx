@@ -1,3 +1,5 @@
+import { Button } from '@mui/material';
+
 import { useGetMe } from 'services/api/user/useUser';
 
 import { ProfileForm } from './ProfileForm';
@@ -9,6 +11,9 @@ export const Profile = (): JSX.Element => {
     <>
       <h2>Here you can update your profile !</h2>
       {user && <ProfileForm user={user} />}
+
+      <Button />
+      {/* onclick, change the sitewide language to the other  */}
     </>
   );
 };

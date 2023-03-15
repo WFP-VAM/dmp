@@ -1,4 +1,12 @@
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { IntlProvider } from 'react-intl';
 
 import { flattenMessages } from 'services/intl';
@@ -22,8 +30,15 @@ type IntlProps = {
 
 export const Intl = ({ children }: IntlProps): JSX.Element => {
   const { locale, defaultLocale } = useRouter();
-  const currentLocale = locale != null ? locale : 'km';
+  const browserLocale = locale != null ? locale : 'km';
+
+  const [currentLocale, setCurrentLocale] = useState(browserLocale);
   const messages = loadLocaleData(currentLocale);
+
+  const handleChange = (e: SelectChangeEvent) => {
+    const overrideLocale = e.target.value;
+    setCurrentLocale(overrideLocale);
+  };
 
   return (
     <IntlProvider
@@ -31,6 +46,18 @@ export const Intl = ({ children }: IntlProps): JSX.Element => {
       messages={messages}
       defaultLocale={defaultLocale}
     >
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={currentLocale}
+          onChange={handleChange}
+        >
+          <MenuItem value="en">English</MenuItem>
+          <MenuItem value="km">Khmer</MenuItem>
+        </Select>
+      </FormControl>
       {children}
     </IntlProvider>
   );
