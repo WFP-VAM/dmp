@@ -1,12 +1,12 @@
 {
-  "admin": { "add_user": "Add User" },
+  "admin": { "add_user": "Add User in khmer" },
   "login": {
-    "title": "Welcome!",
-    "error": "An error has occurred. Please try again.",
-    "warning": "Your username or password is invalid. Try again.",
+    "title": "in khmerrrr!",
+    "error": "KHMER.",
+    "warning": "KHMER",
     "email": {
-      "label": "Email",
-      "placeholder": "max@bifrost.io",
+      "label": "khmerrrrrrr",
+      "placeholder": "khmer",
       "error": {
         "required": "Please enter your email address",
         "invalid": "Please enter a valid email address"
@@ -23,7 +23,7 @@
   },
   "profile": {
     "name": {
-      "label": "Name",
+      "label": "khmer",
       "error": {
         "required": "Please enter your name",
         "invalid": "Please enter a valid name"
