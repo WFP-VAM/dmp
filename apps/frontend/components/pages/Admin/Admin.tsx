@@ -1,60 +1,52 @@
 import AddIcon from '@mui/icons-material/Add';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CloseIcon from '@mui/icons-material/Close';
 import {
   Autocomplete,
   Box,
   Button,
-  Checkbox,
   Dialog,
   TextField,
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 const UserCreateForm = (): JSX.Element => {
   const provinceOptions = [{ label: 'province1' }, { label: 'province2' }];
   const adminOptions = ['PCDM', 'NCDM', 'Admin'];
 
-  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-  const checkedIcon = <CheckBoxIcon fontSize="small" />;
   const fieldWidth = 400;
+  const inputWidth = fieldWidth - 40;
 
   return (
-    <Box display="flex" flexDirection="column">
-      <TextField label="Name" variant="outlined" />
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        '& .MuiTextField-root': { padding: '4px', width: inputWidth },
+      }}
+    >
+      <TextField label="Username" variant="outlined" />
       <TextField label="Email" variant="outlined" />
       <TextField label="Password" variant="outlined" type="password" />
       <TextField label="Confirm Password" variant="outlined" type="password" />
       <Autocomplete
         disablePortal
         options={provinceOptions}
-        sx={{ width: fieldWidth }}
+        sx={{ width: inputWidth }}
         renderInput={params => <TextField {...params} label="Province" />}
       />
       <Autocomplete
-        multiple
+        disablePortal
         options={adminOptions}
-        disableCloseOnSelect
         getOptionLabel={option => option}
-        renderOption={(props, option, { selected }) => (
-          <li {...props}>
-            <Checkbox
-              icon={icon}
-              checkedIcon={checkedIcon}
-              style={{ marginRight: 8 }}
-              checked={selected}
-            />
-            {option}
-          </li>
-        )}
-        style={{ width: fieldWidth }}
+        style={{ width: inputWidth }}
         renderInput={params => <TextField {...params} label="User Roles" />}
       />
-      <Button>
-        <Typography variant="h5" color="white" padding={1}>
-          Create User
+      <Button size="large" variant="contained" sx={{ margin: 0.5 }}>
+        <Typography variant="body1" padding={1}>
+          <FormattedMessage id="admin.add_user" defaultMessage="Add User" />
         </Typography>
       </Button>
     </Box>
@@ -68,13 +60,11 @@ interface Props {
 const UserCreateDialog = ({ open, closeDialog }: Props): JSX.Element => {
   return (
     <Dialog open={open}>
-      <Box
-        width={500}
-        height={500}
-        display="flex"
-        flexDirection={'row-reverse'}
-      >
-        <CloseIcon onClick={closeDialog} />
+      <Box width={440} height={495}>
+        <CloseIcon
+          onClick={closeDialog}
+          sx={{ position: 'absolute', top: 5, right: 5 }}
+        />
         <UserCreateForm />
       </Box>
     </Dialog>
@@ -91,13 +81,10 @@ export const Admin = (): JSX.Element => {
       <Button
         variant="contained"
         size="large"
-        sx={{
-          borderRadius: 100,
-          boxShadow: 6,
-        }}
+        sx={{ boxShadow: 6 }}
         onClick={openDialog}
       >
-        <Typography variant="body2" padding={1} textTransform="none">
+        <Typography variant="body2" padding={1}>
           <FormattedMessage id="admin.add_user" defaultMessage="Add User" />
         </Typography>
         <AddIcon fontSize="medium" />

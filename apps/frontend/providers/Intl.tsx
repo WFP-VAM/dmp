@@ -44,12 +44,7 @@ export const Intl = ({ children }: IntlProps): JSX.Element => {
       defaultLocale={defaultLocale}
     >
       <FormControl sx={{ padding: 2, float: 'right' }}>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={currentLocale}
-          onChange={handleChange}
-        >
+        <Select value={currentLocale} onChange={handleChange}>
           <MenuItem value="en">English</MenuItem>
           <MenuItem value="km">Khmer</MenuItem>
         </Select>
