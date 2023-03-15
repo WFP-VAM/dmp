@@ -1,25 +1,30 @@
 import { IntlProvider } from 'react-intl';
 
+import { useLanguageContext } from 'context';
 import { flattenMessages } from 'services/intl';
 import en from 'translations/en.json';
+import km from 'translations/km.json';
 
 const loadLocaleData = (locale: string) => {
   switch (locale) {
-    default:
+    case 'km':
+      return flattenMessages(km);
+    case 'en':
       return flattenMessages(en);
   }
 };
 
 type IntlProps = {
-  defaultLocale: string;
   children: React.ReactNode;
 };
 
-export const Intl = ({ children, defaultLocale }: IntlProps): JSX.Element => {
-  const messages = loadLocaleData(defaultLocale);
+export const Intl = ({ children }: IntlProps): JSX.Element => {
+  const { language } = useLanguageContext();
+  const messages = loadLocaleData(language);
+  console.log(language);
 
   return (
-    <IntlProvider messages={messages} locale="en" defaultLocale={defaultLocale}>
+    <IntlProvider locale={language} messages={messages} defaultLocale="km">
       {children}
     </IntlProvider>
   );
