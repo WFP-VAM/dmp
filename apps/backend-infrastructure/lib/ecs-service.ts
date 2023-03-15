@@ -70,6 +70,14 @@ export class ECSService extends NestedStack {
       },
     });
 
+    const adminjsCookieSecret = new Secret(this, 'adminjsCookieSecret', {
+      secretName: 'dmpAdminjsCookieSecret',
+    });
+
+    const adminjsSessionSecret = new Secret(this, 'adminjsSessionSecret', {
+      secretName: 'dmpAdminjsSessionSecret',
+    });
+
     const koboToken = Secret.fromSecretNameV2(
       this,
       'koboToken',
@@ -115,6 +123,10 @@ export class ECSService extends NestedStack {
               ecs_Secret.fromSecretsManager(superadminUsername),
             SUPERADMIN_PASSWORD:
               ecs_Secret.fromSecretsManager(superadminPassword),
+            ADMINJS_COOKIE_SECRET:
+              ecs_Secret.fromSecretsManager(adminjsCookieSecret),
+            ADMINJS_SESSION_SECRET:
+              ecs_Secret.fromSecretsManager(adminjsSessionSecret),
             KOBO_TOKEN: ecs_Secret.fromSecretsManager(koboToken),
             FLOOD_ASSET_ID: ecs_Secret.fromSecretsManager(floodAssetId),
             INCIDENT_ASSET_ID: ecs_Secret.fromSecretsManager(incidentAssetId),

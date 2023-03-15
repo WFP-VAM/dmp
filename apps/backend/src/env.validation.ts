@@ -52,6 +52,12 @@ class EnvironmentVariables {
   SUPERADMIN_PASSWORD!: string;
 
   @IsString()
+  ADMINJS_COOKIE_SECRET!: string;
+
+  @IsString()
+  ADMINJS_SESSION_SECRET!: string;
+
+  @IsString()
   KOBO_TOKEN!: string;
 
   @IsString()
