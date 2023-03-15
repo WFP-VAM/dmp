@@ -1,5 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Button, Typography } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
 
 export const Admin = (): JSX.Element => {
   return (
@@ -13,7 +14,7 @@ export const Admin = (): JSX.Element => {
         }}
       >
         <Typography variant="body2" padding={1} textTransform="none">
-          Add User
+          <FormattedMessage id="admin.add_user" defaultMessage="Add User" />
         </Typography>
         <AddIcon fontSize="medium" />
       </Button>

@@ -33,7 +33,7 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
       `}</style>
       <ThemeProvider theme={muiTheme}>
         <ErrorBoundary FallbackComponent={AppCrashFallback}>
-          <Intl defaultLocale="en">
+          <Intl>
             <SWRConfig
               value={{
                 refreshInterval: 0, // disable auto refresh by interval by default
