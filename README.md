@@ -6,7 +6,3 @@ Bifrost is a monorepo starter for fullstack application using Nextjs and Nestjs.
 
 - Follow the [installation](./docs/installation.md) docs
 
-
-## Sponsor
-
-[![Theodo](./docs/assets/Logo-theodo.png)](https://www.theodo.fr/)
