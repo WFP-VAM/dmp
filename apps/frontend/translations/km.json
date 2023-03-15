@@ -1,34 +1,3 @@
 {
-  "admin": { "add_user": "Add User in khmer" },
-  "login": {
-    "title": "in khmerrrr!",
-    "error": "KHMER.",
-    "warning": "KHMER",
-    "email": {
-      "label": "khmerrrrrrr",
-      "placeholder": "khmer",
-      "error": {
-        "required": "Please enter your email address",
-        "invalid": "Please enter a valid email address"
-      }
-    },
-    "password": {
-      "label": "Password",
-      "placeholder": "Password",
-      "error": {
-        "required": "Please enter your password"
-      }
-    },
-    "submit": "Log In"
-  },
-  "profile": {
-    "name": {
-      "label": "khmer",
-      "error": {
-        "required": "Please enter your name",
-        "invalid": "Please enter a valid name"
-      }
-    },
-    "submit": "Update"
-  }
+  "admin": { "add_user": "Add User in khmer" }
 }

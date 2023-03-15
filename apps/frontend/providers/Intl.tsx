@@ -12,13 +12,11 @@ import { flattenMessages } from 'services/intl';
 import en from 'translations/en.json';
 import km from 'translations/km.json';
 
-const loadLocaleData = (locale: string | undefined) => {
+const loadLocaleData = (locale: string) => {
   switch (locale) {
     case 'km':
       return flattenMessages(km);
     case 'en':
-      return flattenMessages(en);
-    default:
       return flattenMessages(en);
   }
 };
