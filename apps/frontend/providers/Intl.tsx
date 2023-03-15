@@ -1,6 +1,5 @@
 import {
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -46,8 +45,7 @@ export const Intl = ({ children }: IntlProps): JSX.Element => {
       messages={messages}
       defaultLocale={defaultLocale}
     >
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+      <FormControl sx={{ padding: 2, float: 'right' }}>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
