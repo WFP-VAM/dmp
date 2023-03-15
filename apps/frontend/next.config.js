@@ -46,11 +46,6 @@ const nextConfig = {
       headers: securityHeaders,
     },
   ],
-
-  i18n: {
-    locales: ['en', 'km'],
-    defaultLocale: 'km',
-  },
 };
 
 const withBundleAnalyzer = nextBundleAnalyzer({

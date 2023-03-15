@@ -7,16 +7,21 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import {
   Box,
   Drawer,
+  FormControl,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   Typography,
 } from '@mui/material';
 import Logo from 'next/image';
 import { ReactNode, useState } from 'react';
 
+import { useLanguageContext } from 'context';
 import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
 
 const NavMenuContent = (): JSX.Element => {
@@ -26,6 +31,12 @@ const NavMenuContent = (): JSX.Element => {
     { text: 'Forms', icon: StarIcon },
     { text: 'Reports', icon: ContentPasteIcon },
   ];
+
+  const { language, setLanguage } = useLanguageContext();
+  const handleLanguageChange = (e: SelectChangeEvent) => {
+    const newLanguage = e.target.value;
+    setLanguage(newLanguage);
+  };
 
   return (
     <>
@@ -72,6 +83,12 @@ const NavMenuContent = (): JSX.Element => {
           </ListItem>
         )}
       </List>
+      <FormControl sx={{ padding: 4 }}>
+        <Select value={language} onChange={handleLanguageChange}>
+          <MenuItem value="en">English</MenuItem>
+          <MenuItem value="km">Khmer</MenuItem>
+        </Select>
+      </FormControl>
     </>
   );
 };
