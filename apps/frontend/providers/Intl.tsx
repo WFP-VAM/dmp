@@ -21,7 +21,6 @@ type IntlProps = {
 export const Intl = ({ children }: IntlProps): JSX.Element => {
   const { language } = useLanguageContext();
   const messages = loadLocaleData(language);
-  console.log(language);
 
   return (
     <IntlProvider locale={language} messages={messages} defaultLocale="km">

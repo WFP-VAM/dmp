@@ -19,12 +19,15 @@ import {
   Typography,
 } from '@mui/material';
 import Logo from 'next/image';
+import { useRouter } from 'next/router';
 import { ReactNode, useState } from 'react';
 
 import { useLanguageContext } from 'context';
 import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
+import { env } from 'services/env';
 
 const NavMenuContent = (): JSX.Element => {
+  const router = useRouter();
   const isAdmin = useIsSignedInUserAdmin();
 
   const navMenuListItemsData = [
@@ -36,6 +39,12 @@ const NavMenuContent = (): JSX.Element => {
   const handleLanguageChange = (e: SelectChangeEvent) => {
     const newLanguage = e.target.value;
     setLanguage(newLanguage);
+  };
+
+  const handleAdminClick = () => {
+    const baseURL = env('NEXT_PUBLIC_API_BASE_URL');
+    const path = new URL('/admin/login', baseURL);
+    void router.push(path);
   };
 
   return (
@@ -72,7 +81,7 @@ const NavMenuContent = (): JSX.Element => {
         ))}
         {isAdmin && (
           <ListItem key="admin">
-            <ListItemButton>
+            <ListItemButton onClick={handleAdminClick}>
               <ListItemIcon>
                 <SupervisorAccountIcon />
               </ListItemIcon>
