@@ -21,6 +21,7 @@ import {
 import Logo from 'next/image';
 import { useRouter } from 'next/router';
 import { ReactNode, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { useLanguageContext } from 'context';
 import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
@@ -49,7 +50,7 @@ const NavMenuContent = (): JSX.Element => {
 
   return (
     <>
-      <Box margin="30px 0px 0px 10px">
+      <Box margin="30px 0px 0px 20px">
         <Logo
           src="/logo.svg"
           alt="logo"
@@ -94,8 +95,18 @@ const NavMenuContent = (): JSX.Element => {
       </List>
       <FormControl sx={{ padding: 4 }}>
         <Select value={language} onChange={handleLanguageChange}>
-          <MenuItem value="en">English</MenuItem>
-          <MenuItem value="km">Khmer</MenuItem>
+          <MenuItem value="en">
+            <FormattedMessage
+              id="navigation.language.english"
+              defaultMessage="English"
+            />
+          </MenuItem>
+          <MenuItem value="km">
+            <FormattedMessage
+              id="navigation.language.khmer"
+              defaultMessage="ភាសាខ្មែរ"
+            />
+          </MenuItem>
         </Select>
       </FormControl>
     </>
