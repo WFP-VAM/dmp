@@ -19,12 +19,16 @@ import {
   Typography,
 } from '@mui/material';
 import Logo from 'next/image';
+import { useRouter } from 'next/router';
 import { ReactNode, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { useLanguageContext } from 'context';
 import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
+import { env } from 'services/env';
 
 const NavMenuContent = (): JSX.Element => {
+  const router = useRouter();
   const isAdmin = useIsSignedInUserAdmin();
 
   const navMenuListItemsData = [
@@ -38,9 +42,15 @@ const NavMenuContent = (): JSX.Element => {
     setLanguage(newLanguage);
   };
 
+  const handleAdminClick = () => {
+    const baseURL = env('NEXT_PUBLIC_API_BASE_URL');
+    const path = new URL('/admin/login', baseURL);
+    void router.push(path);
+  };
+
   return (
     <>
-      <Box margin="30px 0px 0px 10px">
+      <Box margin="30px 0px 0px 20px">
         <Logo
           src="/logo.svg"
           alt="logo"
@@ -72,7 +82,7 @@ const NavMenuContent = (): JSX.Element => {
         ))}
         {isAdmin && (
           <ListItem key="admin">
-            <ListItemButton>
+            <ListItemButton onClick={handleAdminClick}>
               <ListItemIcon>
                 <SupervisorAccountIcon />
               </ListItemIcon>
@@ -85,8 +95,18 @@ const NavMenuContent = (): JSX.Element => {
       </List>
       <FormControl sx={{ padding: 4 }}>
         <Select value={language} onChange={handleLanguageChange}>
-          <MenuItem value="en">English</MenuItem>
-          <MenuItem value="km">Khmer</MenuItem>
+          <MenuItem value="en">
+            <FormattedMessage
+              id="navigation.language.english"
+              defaultMessage="English"
+            />
+          </MenuItem>
+          <MenuItem value="km">
+            <FormattedMessage
+              id="navigation.language.khmer"
+              defaultMessage="ភាសាខ្មែរ"
+            />
+          </MenuItem>
         </Select>
       </FormControl>
     </>

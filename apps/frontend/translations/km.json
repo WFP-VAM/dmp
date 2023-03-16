@@ -1,3 +1,42 @@
 {
-  "admin": { "add_user": "Add User in khmer" }
+  "login": {
+    "title": "សូមស្វាគមន៍!",
+    "error": "An error has occurred. Please try again.",
+    "warning": "Your username or password is invalid. Try again.",
+    "email": {
+      "label": "អ៊ីមែល",
+      "placeholder": "max@bifrost.io",
+      "error": {
+        "required": "Please enter your email address",
+        "invalid": "Please enter a valid email address"
+      }
+    },
+    "password": {
+      "label": "ពាក្យសម្ងាត់",
+      "placeholder": "ពាក្យសម្ងាត់",
+      "error": {
+        "required": "Please enter your password"
+      }
+    },
+    "submit": "ចូល"
+  },
+  "profile": {
+    "name": {
+      "label": "Name",
+      "error": {
+        "required": "Please enter your name",
+        "invalid": "Please enter a valid name"
+      }
+    },
+    "submit": "ធ្វើបច្ចុប្បន្នភាព"
+  },
+  "navigation": {
+    "forms": "Forms",
+    "reports": "Reports",
+    "admin": "ទំព័រអ្នកគ្រប់គ្រង",
+    "language": {
+      "english": "English",
+      "khmer": "ភាសាខ្មែរ"
+    }
+  }
 }
