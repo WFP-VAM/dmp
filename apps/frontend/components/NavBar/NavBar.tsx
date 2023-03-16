@@ -87,7 +87,12 @@ const NavMenuContent = (): JSX.Element => {
                 <SupervisorAccountIcon />
               </ListItemIcon>
               <ListItemText>
-                <Typography variant="body1">Admin</Typography>
+                <Typography variant="body1">
+                  <FormattedMessage
+                    id="navigation.admin"
+                    defaultMessage="Admin"
+                  />
+                </Typography>
               </ListItemText>
             </ListItemButton>
           </ListItem>
