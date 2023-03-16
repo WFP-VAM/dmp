@@ -1,20 +1,14 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AdminUpdateUserDto, CreateUserDto, GetUserDto, UpdateUserDto } from '@wfp-dmp/interfaces';
-import { hash } from 'bcrypt';
 import { Repository } from 'typeorm';
 
+import { hashPassword } from './passwordUtils';
 import { User } from './user.entity';
-
-const SALT_ROUNDS = 10;
 
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
-
-  private hashPassword = async (password: string) => {
-    return await hash(password, SALT_ROUNDS);
-  };
 
   getUser = async (userId: string): Promise<GetUserDto> => {
     return await this.userRepository.findOneByOrFail({ id: userId });
@@ -30,7 +24,7 @@ export class UserService {
       throw new ConflictException();
     }
 
-    const hashedPassword = await this.hashPassword(userDto.password);
+    const hashedPassword = await hashPassword(userDto.password);
     const { id: userId } = await this.userRepository.save({
       ...userDto,
       password: hashedPassword,
@@ -47,7 +41,7 @@ export class UserService {
     let user = userDto;
 
     if (userDto.password !== undefined) {
-      const hashedPassword = await this.hashPassword(userDto.password);
+      const hashedPassword = await hashPassword(userDto.password);
       user = { ...user, password: hashedPassword };
     }
 
