@@ -1,4 +1,4 @@
-import { GetLastFormsDto } from '@wfp-dmp/interfaces';
+import { DroughtDto, FloodDto, IncidentDto } from '@wfp-dmp/interfaces';
 import Head from 'next/head';
 import Link from 'next/link';
 import useSWR from 'swr';
@@ -10,7 +10,9 @@ import style from './Home.module.css';
 
 export const Home = (): JSX.Element => {
   const user = useGetMe();
-  const { data: lastForms } = useSWR<GetLastFormsDto>(ApiRoutes.kobo);
+  const { data: lastForms } = useSWR<(FloodDto | DroughtDto | IncidentDto)[]>(
+    ApiRoutes.lastForms,
+  );
 
   return (
     <div>
