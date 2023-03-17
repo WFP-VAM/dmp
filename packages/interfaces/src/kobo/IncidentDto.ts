@@ -11,7 +11,7 @@ import {
 
 import { ValidationStatus } from './ValidationStatusDto';
 
-export default class DroughtDto {
+export class IncidentDto {
   @IsPositive() readonly '_id'!: number;
   @IsString() readonly 'formhub/uuid'!: string;
   @IsDateString() readonly 'start'!: string;
@@ -101,10 +101,17 @@ export default class DroughtDto {
   @IsString() readonly '_uuid'!: string;
   @IsArray() readonly '_attachments'!: unknown[];
   @IsString() readonly '_status'!: string;
-  @IsArray() readonly '_geolocation'!: number[];
+  @IsArray() readonly '_geolocation'!: (number | null)[];
   @IsDateString() readonly '_submission_time'!: string;
   @IsArray() readonly '_tags'!: unknown[];
   @IsArray() readonly '_notes'!: unknown[];
   @ValidateNested() readonly '_validation_status'!: ValidationStatus;
-  @IsString() readonly '_submitted_by'!: string;
+  @IsString() readonly '_submitted_by'!: string | null;
+}
+
+export class IncidentQueryResponseDto {
+  @IsPositive() readonly count!: number;
+  @IsString() readonly next!: string | null;
+  @IsString() readonly previous!: string | null;
+  @IsArray() readonly results!: IncidentDto[];
 }
