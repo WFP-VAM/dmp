@@ -40,15 +40,17 @@
     }
   },
   "validation_params": {
+    "disaster_type": "Disaster Type",
     "flood": "Flood",
     "drought": "Drought",
     "incidents": {
+      "type": "Incident Type",
       "storm": "Storm",
       "fire": "Fire",
       "lightning": "Lightning",
       "epidemics": "Epidemics",
       "river_collapse": "River Bank Collapse",
-      "inserts": "Inserts",
+      "insects": "Insects",
       "traffic": "Traffic Accident",
       "drowning": "Drowning",
       "collapse": "Collapse",

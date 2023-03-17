@@ -40,20 +40,22 @@
     }
   },
   "validation_params": {
-    "flood": "Flood",
-    "drought": "Drought",
+    "disaster_type": "ប្រភេទគ្រោះមហន្តរាយ",
+    "flood": "ទឹកជំនន់",
+    "drought": "រាំងស្ងួត",
     "incidents": {
-      "storm": "Storm",
-      "fire": "Fire",
-      "lightning": "Lightning",
-      "epidemics": "Epidemics",
-      "river_collapse": "River Bank Collapse",
-      "inserts": "Inserts",
-      "traffic": "Traffic Accident",
-      "drowning": "Drowning",
-      "collapse": "Collapse",
-      "weapon": "Unexploded Weapon",
-      "all": "All Incidents"
+      "type": "ឧបទ្ទវហេតុ",
+      "storm": "ខ្យល់ព្យុះ",
+      "fire": "អគ្គីភ័យ",
+      "lightning": "រន្ទះបាញ់",
+      "epidemics": "ជំងឺរាតត្បាត",
+      "river_collapse": "បាក់ច្រាំង",
+      "insects": "សត្វល្អិតបំផ្លាញ",
+      "traffic": "គ្រោះថ្នាក់ចរាចរណ៍",
+      "drowning": "លង់ទឹក",
+      "collapse": "បាក់អគារ",
+      "weapon": "យុទ្ធភណ្ឌមិនទាន់ផ្ទុះ",
+      "all": "ផ្សេងៗ"
     }
   }
 }
