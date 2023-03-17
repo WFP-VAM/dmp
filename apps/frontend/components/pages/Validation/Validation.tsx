@@ -5,33 +5,34 @@ import {
   Radio,
   RadioGroup,
 } from '@mui/material';
+import { DROUGHT, FLOOD, INCIDENT } from '@wfp-dmp/interfaces';
 import { ChangeEvent, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 const disasters = [
-  { labelId: 'validation_params.flood', value: 'flood' },
-  { labelId: 'validation_params.drought', value: 'drought' },
+  { labelId: 'validation_params.flood', value: FLOOD },
+  { labelId: 'validation_params.drought', value: DROUGHT },
 ];
 const incidents = [
-  { labelId: 'validation_params.incidents.storm', value: 'incident' },
-  { labelId: 'validation_params.incidents.fire', value: 'incident' },
-  { labelId: 'validation_params.incidents.lightning', value: 'incident' },
-  { labelId: 'validation_params.incidents.epidemics', value: 'incident' },
+  { labelId: 'validation_params.incidents.storm', value: INCIDENT },
+  { labelId: 'validation_params.incidents.fire', value: INCIDENT },
+  { labelId: 'validation_params.incidents.lightning', value: INCIDENT },
+  { labelId: 'validation_params.incidents.epidemics', value: INCIDENT },
   {
     labelId: 'validation_params.incidents.river_collapse',
-    value: 'incident',
+    value: INCIDENT,
   },
-  { labelId: 'validation_params.incidents.insects', value: 'incident' },
-  { labelId: 'validation_params.incidents.traffic', value: 'incident' },
-  { labelId: 'validation_params.incidents.drowning', value: 'incident' },
-  { labelId: 'validation_params.incidents.collapse', value: 'incident' },
-  { labelId: 'validation_params.incidents.weapon', value: 'incident' },
-  { labelId: 'validation_params.incidents.all', value: 'incident' },
+  { labelId: 'validation_params.incidents.insects', value: INCIDENT },
+  { labelId: 'validation_params.incidents.traffic', value: INCIDENT },
+  { labelId: 'validation_params.incidents.drowning', value: INCIDENT },
+  { labelId: 'validation_params.incidents.collapse', value: INCIDENT },
+  { labelId: 'validation_params.incidents.weapon', value: INCIDENT },
+  { labelId: 'validation_params.incidents.all', value: INCIDENT },
 ];
 export const Validation = () => {
   const intl = useIntl();
 
-  const [disasterType, setDisasterType] = useState('flood');
+  const [disasterType, setDisasterType] = useState(FLOOD);
   const handleDisasterChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newDisasterType = e.target.value;
     setDisasterType(newDisasterType);
