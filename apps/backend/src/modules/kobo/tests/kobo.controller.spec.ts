@@ -44,47 +44,55 @@ describe('KoboController', () => {
 
   describe('GET - /kobo/n', () => {
     it('should return 200 with the kobo response', async () => {
-      jest.spyOn(koboService, 'getLastForms').mockImplementation((_, disasterType) => {
-        let response;
+      const numDays = '5';
 
-        switch (disasterType) {
-          case FLOOD:
-            response = {
-              count: 1,
-              next: null,
-              previous: null,
-              results: [floodMock],
-            } as FloodQueryResponseDto;
-            break;
-          case DROUGHT:
-            response = {
-              count: 1,
-              next: null,
-              previous: null,
-              results: [droughtMock],
-            } as DroughtQueryResponseDto;
-            break;
-          case INCIDENT:
-            response = {
-              count: 1,
-              next: null,
-              previous: null,
-              results: [incidentMock],
-            } as IncidentQueryResponseDto;
-            break;
-        }
+      const getLastFormsSpy = jest
+        .spyOn(koboService, 'getLastForms')
+        .mockImplementation((_, disasterType) => {
+          let response;
 
-        return Promise.resolve(response);
-      });
+          switch (disasterType) {
+            case FLOOD:
+              response = {
+                count: 1,
+                next: null,
+                previous: null,
+                results: [floodMock],
+              } as FloodQueryResponseDto;
+              break;
+            case DROUGHT:
+              response = {
+                count: 1,
+                next: null,
+                previous: null,
+                results: [droughtMock],
+              } as DroughtQueryResponseDto;
+              break;
+            case INCIDENT:
+              response = {
+                count: 1,
+                next: null,
+                previous: null,
+                results: [incidentMock],
+              } as IncidentQueryResponseDto;
+              break;
+          }
+
+          return Promise.resolve(response);
+        });
 
       const user = await userFactory.createOne({ roles: ['ncdm'] });
       const accessToken = authService.createAccessToken(user, 10000);
       await request(app.getHttpServer())
-        .get('/kobo/last-forms/5')
+        .get(`/kobo/last-forms/${numDays}`)
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(200)
         .expect((response: { body: (FloodDto | DroughtDto | IncidentDto)[] }) => {
           expect(response.body).toEqual([floodMock, droughtMock, incidentMock]);
+          expect(getLastFormsSpy).toHaveBeenCalledTimes(3);
+          expect(getLastFormsSpy).toHaveBeenNthCalledWith(1, numDays, FLOOD);
+          expect(getLastFormsSpy).toHaveBeenNthCalledWith(2, numDays, DROUGHT);
+          expect(getLastFormsSpy).toHaveBeenNthCalledWith(3, numDays, INCIDENT);
         });
     });
   });
