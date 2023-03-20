@@ -5,33 +5,27 @@ import {
   Radio,
   RadioGroup,
 } from '@mui/material';
+import { DisasterMapping, IncidentMapping } from '@wfp-dmp/interfaces';
 import { ChangeEvent, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-const disasters = [
-  { labelId: 'validation_params.flood', value: 'flood' },
-  { labelId: 'validation_params.drought', value: 'drought' },
-];
-const incidents = [
-  { labelId: 'validation_params.incident.storm', value: 'storm' },
-  { labelId: 'validation_params.incident.fire', value: 'fire' },
-  { labelId: 'validation_params.incident.lightning', value: 'lightning' },
-  { labelId: 'validation_params.incident.epidemics', value: 'epidemics' },
-  {
-    labelId: 'validation_params.incident.river_collapse',
-    value: 'river_collapse',
-  },
-  { labelId: 'validation_params.incident.insects', value: 'insects' },
-  { labelId: 'validation_params.incident.traffic', value: 'traffic' },
-  { labelId: 'validation_params.incident.drowning', value: 'drowning' },
-  { labelId: 'validation_params.incident.collapse', value: 'collapse' },
-  { labelId: 'validation_params.incident.weapon', value: 'weapon' },
-  { labelId: 'validation_params.incident.all', value: 'all' },
-];
+const disasters = Object.keys(DisasterMapping).map(disaster => {
+  return {
+    labelId: `validation_params.${disaster}`,
+    value: DisasterMapping[disaster],
+  };
+});
+const incidents = Object.keys(IncidentMapping).map(incident => {
+  return {
+    labelId: `validation_params.${incident}`,
+    value: IncidentMapping[incident],
+  };
+});
 export const FormSearch = () => {
   const intl = useIntl();
 
-  const [disasterType, setDisasterType] = useState('flood');
+  const defaultDisaster = DisasterMapping['flood'];
+  const [disasterType, setDisasterType] = useState(defaultDisaster);
   const handleDisasterChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newDisasterType = e.target.value;
     setDisasterType(newDisasterType);
@@ -76,7 +70,7 @@ export const FormSearch = () => {
         >
           <legend>
             <FormattedMessage
-              id="validation_params.incident.type"
+              id="validation_params.incident_type"
               defaultMessage="Incident Type"
             />
           </legend>
