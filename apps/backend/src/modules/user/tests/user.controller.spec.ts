@@ -150,7 +150,11 @@ describe('UserController', () => {
     it('should update the user calling the endpoint', async () => {
       const existingUser = await userFactory.createOne();
       const accessToken = authService.createAccessToken(existingUser, 10000);
-      const userDto = generateUserDto();
+      const userDto = {
+        name: faker.name.lastName(),
+        email: faker.internet.email(),
+        password: faker.random.word(),
+      };
 
       const response = await request(app.getHttpServer())
         .patch(`/users`)
