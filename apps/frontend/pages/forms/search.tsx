@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
 
 import { NavBar } from 'components/NavBar';
-import { ReportValidation } from 'components/pages/Reports';
+import { FormSearch } from 'components/pages/Forms';
 
 const ValidationPage: NextPage = () => (
   <NavBar>
-    <ReportValidation />
+    <FormSearch />
   </NavBar>
 );
 

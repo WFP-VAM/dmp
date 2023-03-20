@@ -1,0 +1,1 @@
+export { FormSearch } from './Search';

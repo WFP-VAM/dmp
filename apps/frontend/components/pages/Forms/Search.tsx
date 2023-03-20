@@ -28,7 +28,7 @@ const incidents = [
   { labelId: 'validation_params.incident.weapon', value: 'weapon' },
   { labelId: 'validation_params.incident.all', value: 'all' },
 ];
-export const ReportValidation = () => {
+export const FormSearch = () => {
   const intl = useIntl();
 
   const [disasterType, setDisasterType] = useState('flood');
