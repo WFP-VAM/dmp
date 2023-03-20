@@ -116,7 +116,7 @@ export class DroughtDto {
   @IsDateString() readonly '_submission_time'!: string;
   @IsArray() readonly '_tags'!: unknown[];
   @IsArray() readonly '_notes'!: unknown[];
-  @ValidateNested() readonly '_validation_status'!: ValidationStatus;
+  @ValidateNested() readonly '_validation_status'!: ValidationStatus | Record<string, never>;
   @IsString() readonly '_submitted_by'!: string | null;
 }
 
