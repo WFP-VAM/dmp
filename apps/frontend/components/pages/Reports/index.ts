@@ -1,1 +1,1 @@
-export * from './Validation';
+export { ReportValidation } from './Validation';
