@@ -27,7 +27,7 @@
     "test:debug": "NODE_OPTIONS='--inspect-brk' pnpm test",
     "test:schema:drop": ". ./.env.test.rc && TYPEORM_ENTITIES='' typeorm -d datasource.js schema:drop",
     "test:type": "pnpm build",
-    "test:watch": "pnpm test --watch"
+    "test:watch": "pnpm run test --watch"
   },
   "dependencies": {
     "@adminjs/express": "5.0.1",

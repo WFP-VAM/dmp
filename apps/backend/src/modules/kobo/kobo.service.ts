@@ -9,6 +9,7 @@ import {
   FloodQueryResponseDto,
   INCIDENT,
   IncidentQueryResponseDto,
+  koboKeys,
 } from '@wfp-dmp/interfaces';
 
 import { AssetId } from './constants';
@@ -27,12 +28,18 @@ export class KoboService {
   async getLastForms<T extends DisasterType>(
     numDays: number,
     disasterType: T,
+    province: string | undefined,
   ): Promise<QueryResponse<T>> {
     const startDate = substractDaysToDate(new Date(), numDays);
     const { data } = await this.httpService.axiosRef.get<QueryResponse<T>>(
       `assets/${AssetId[disasterType]}/data.json`,
       {
-        params: { query: { _submission_time: { $gt: formatDateToStringDate(startDate) } } },
+        params: {
+          query: {
+            _submission_time: { $gt: formatDateToStringDate(startDate) },
+            [koboKeys[disasterType].province]: province,
+          },
+        },
       },
     );
 
