@@ -38,5 +38,24 @@
       "english": "English",
       "khmer": "ភាសាខ្មែរ"
     }
+  },
+  "validation_params": {
+    "disaster_type": "Disaster Type",
+    "flood": "Flood",
+    "drought": "Drought",
+    "incident": {
+      "type": "Incident Type",
+      "storm": "Storm",
+      "fire": "Fire",
+      "lightning": "Lightning",
+      "epidemics": "Epidemics",
+      "river_collapse": "River Bank Collapse",
+      "insects": "Insects",
+      "traffic": "Traffic Accident",
+      "drowning": "Drowning",
+      "collapse": "Collapse",
+      "weapon": "Unexploded Weapon",
+      "all": "All Incidents"
+    }
   }
 }
