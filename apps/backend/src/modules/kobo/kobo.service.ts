@@ -1,23 +1,41 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { formatDateToStringDate, substractDaysToDate } from '@utils/date';
-import { DisasterType } from '@wfp-dmp/interfaces';
+import {
+  DisasterType,
+  DROUGHT,
+  DroughtQueryResponseDto,
+  FLOOD,
+  FloodQueryResponseDto,
+  INCIDENT,
+  IncidentQueryResponseDto,
+} from '@wfp-dmp/interfaces';
 
 import { AssetId } from './constants';
+
+type QueryResponse<T> = T extends typeof FLOOD
+  ? FloodQueryResponseDto
+  : T extends typeof DROUGHT
+  ? DroughtQueryResponseDto
+  : T extends typeof INCIDENT
+  ? IncidentQueryResponseDto
+  : never;
 
 @Injectable()
 export class KoboService {
   constructor(private readonly httpService: HttpService) {}
-  async getLastForms(numDays: number, disasterType: DisasterType): Promise<string> {
+  async getLastForms<T extends DisasterType>(
+    numDays: number,
+    disasterType: T,
+  ): Promise<QueryResponse<T>> {
     const startDate = substractDaysToDate(new Date(), numDays);
-    // TODO: update once the form answers are typed
-    const { data } = await this.httpService.axiosRef.get<undefined>(
+    const { data } = await this.httpService.axiosRef.get<QueryResponse<T>>(
       `assets/${AssetId[disasterType]}/data.json`,
       {
         params: { query: { _submission_time: { $gt: formatDateToStringDate(startDate) } } },
       },
     );
 
-    return JSON.stringify(data);
+    return data;
   }
 }

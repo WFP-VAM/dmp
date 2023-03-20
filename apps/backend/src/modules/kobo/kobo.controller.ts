@@ -1,6 +1,6 @@
 import { Get } from '@decorators/httpDecorators';
 import { Controller, Param } from '@nestjs/common';
-import { DROUGHT, FLOOD, GetLastFormsDto, INCIDENT } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtDto, FLOOD, FloodDto, INCIDENT, IncidentDto } from '@wfp-dmp/interfaces';
 
 import { KoboService } from './kobo.service';
 
@@ -8,14 +8,16 @@ import { KoboService } from './kobo.service';
 export class KoboController {
   constructor(private readonly koboService: KoboService) {}
 
-  @Get('/:numDays')
-  async getLastForms(@Param('numDays') numDays: number): Promise<GetLastFormsDto> {
+  @Get('last-forms/:numDays')
+  async getLastForms(
+    @Param('numDays') numDays: number,
+  ): Promise<(FloodDto | DroughtDto | IncidentDto)[]> {
     const [floodResp, droughtResp, incidentResp] = await Promise.all([
       this.koboService.getLastForms(numDays, FLOOD),
       this.koboService.getLastForms(numDays, DROUGHT),
       this.koboService.getLastForms(numDays, INCIDENT),
     ]);
 
-    return { [FLOOD]: floodResp, [DROUGHT]: droughtResp, [INCIDENT]: incidentResp };
+    return [...floodResp.results, ...droughtResp.results, ...incidentResp.results];
   }
 }
