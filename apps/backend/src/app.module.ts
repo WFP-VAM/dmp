@@ -60,6 +60,7 @@ const authenticate = async (email: string, password: string) => {
         return {
           adminJsOptions: {
             rootPath: '/admin',
+            branding: { logo: false, companyName: 'WFP DMP', withMadeWithLove: false },
           },
           auth: {
             authenticate,
