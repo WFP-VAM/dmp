@@ -100,12 +100,12 @@ export const FormSearch = () => {
     const newDisasterType = e.target.value;
     setDisasterType(newDisasterType);
   };
-  const [filters, setFilters] = useState({ disType: defaultDisaster });
+  const [filters, setFilters] = useState({ disTyp: defaultDisaster });
   const handleSearch = () => {
-    setFilters({ ...filters, disType: disasterType });
+    setFilters({ ...filters, disTyp: disasterType });
   };
 
-  const { data } = useSWR(
+  const { data: formData } = useSWR(
     [ApiRoutes.forms, filters],
     async (relativePath, filterOptions) => {
       await apiClient
@@ -113,7 +113,7 @@ export const FormSearch = () => {
         .then(response => response.data);
     },
   );
-  console.log(data);
+  console.log(formData);
 
   return (
     <Box display="flex" flexDirection="column">
