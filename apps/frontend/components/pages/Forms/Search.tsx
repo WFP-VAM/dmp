@@ -9,6 +9,10 @@ import {
 import { DisasterMapping, IncidentMapping } from '@wfp-dmp/interfaces';
 import { ChangeEvent, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import useSWR from 'swr';
+
+import { ApiRoutes } from 'services/api/apiRoutes';
+import { apiClient } from 'services/api/client';
 
 interface Props {
   disasterType: string;
@@ -96,6 +100,20 @@ export const FormSearch = () => {
     const newDisasterType = e.target.value;
     setDisasterType(newDisasterType);
   };
+  const [filters, setFilters] = useState({ disType: defaultDisaster });
+  const handleSearch = () => {
+    setFilters({ ...filters, disType: disasterType });
+  };
+
+  const { data } = useSWR(
+    [ApiRoutes.forms, filters],
+    async (relativePath, filterOptions) => {
+      await apiClient
+        .get<unknown>(relativePath, { params: filterOptions })
+        .then(response => response.data);
+    },
+  );
+  console.log(data);
 
   return (
     <Box display="flex" flexDirection="column">
@@ -103,7 +121,7 @@ export const FormSearch = () => {
         onChange={handleDisasterChange}
         disasterType={disasterType}
       />
-      <Button>Search</Button>
+      <Button onClick={handleSearch}>Search</Button>
     </Box>
   );
 };
