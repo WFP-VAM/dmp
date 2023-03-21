@@ -12,6 +12,7 @@ import { Repository } from 'typeorm';
 import { KoboService } from '../kobo.service';
 import { droughtMock } from './__mocks__/drought';
 import { floodMock } from './__mocks__/flood';
+import { getFormsMock } from './__mocks__/getForms';
 import { getLastFormsMock } from './__mocks__/getLastForms';
 import { incidentMock } from './__mocks__/incident';
 
@@ -101,6 +102,28 @@ describe('KoboController', () => {
         .get(`/kobo/last-forms/${numDays}`)
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(500);
+    });
+  });
+
+  describe('GET forms', () => {
+    it('should return 200 and the service should receive province and the filter params', async () => {
+      const role = 'pcdm';
+      const province = '10';
+      const disTyp = '1';
+
+      const getFormsSpy = jest.spyOn(koboService, 'getForms').mockImplementation(getFormsMock);
+
+      const user = await userFactory.createOne({ roles: [role], province });
+      const accessToken = authService.createAccessToken(user, 10000);
+      await request(app.getHttpServer())
+        .get('/kobo/forms')
+        .query({ DisTyp: disTyp })
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect(200)
+        .expect((response: { body: FloodDto[] }) => {
+          expect(response.body).toEqual([floodMock]);
+          expect(getFormsSpy).toHaveBeenNthCalledWith(1, province, disTyp);
+        });
     });
   });
 });

@@ -1,7 +1,15 @@
 import { UseProvince } from '@auth/user.decorator';
 import { Get } from '@decorators/httpDecorators';
-import { Controller, Param } from '@nestjs/common';
-import { DROUGHT, DroughtDto, FLOOD, FloodDto, INCIDENT, IncidentDto } from '@wfp-dmp/interfaces';
+import { Controller, Param, Query } from '@nestjs/common';
+import {
+  DROUGHT,
+  DroughtDto,
+  FLOOD,
+  FloodDto,
+  GetFormsDto,
+  INCIDENT,
+  IncidentDto,
+} from '@wfp-dmp/interfaces';
 
 import { KoboService } from './kobo.service';
 
@@ -21,5 +29,15 @@ export class KoboController {
     ]);
 
     return [...floodResp.results, ...droughtResp.results, ...incidentResp.results];
+  }
+
+  @Get('forms')
+  async getForms(
+    @UseProvince() province: string | undefined,
+    @Query() filters: GetFormsDto,
+  ): Promise<(FloodDto | DroughtDto | IncidentDto)[]> {
+    const response = await this.koboService.getForms(province, filters.DisTyp);
+
+    return response.results;
   }
 }
