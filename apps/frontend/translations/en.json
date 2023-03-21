@@ -31,10 +31,7 @@
     "submit": "Update"
   },
   "navigation": {
-    "forms": {
-      "header": "Forms",
-      "search": "Search"
-    },
+    "forms": "Forms",
     "reports": "Reports",
     "admin": "Admin",
     "language": {

@@ -31,10 +31,7 @@
     "submit": "ធ្វើបច្ចុប្បន្នភាព"
   },
   "navigation": {
-    "forms": {
-      "header": "Forms",
-      "search": "Search"
-    },
+    "forms": "Forms",
     "reports": "Reports",
     "admin": "ទំព័រអ្នកគ្រប់គ្រង",
     "language": {
