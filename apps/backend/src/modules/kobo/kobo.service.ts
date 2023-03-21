@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { formatDateToStringDate, substractDaysToDate } from '@utils/date';
 import {
-  computeDistaterTypeFromDistTyp,
+  computeDisasterTypeFromDistTyp,
   DisasterType,
   DROUGHT,
   DroughtQueryResponseDto,
@@ -51,7 +51,7 @@ export class KoboService {
     province: string | undefined,
     disTyp: string,
   ): Promise<QueryResponse<T>> {
-    const disasterType = computeDistaterTypeFromDistTyp(disTyp);
+    const disasterType = computeDisasterTypeFromDistTyp(disTyp);
     const { data } = await this.httpService.axiosRef.get<QueryResponse<T>>(
       `assets/${AssetId[disasterType]}/data.json`,
       {
