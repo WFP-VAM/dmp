@@ -4,6 +4,7 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import {
   Box,
   FormControl,
+  Link,
   List,
   ListItem,
   ListItemButton,
@@ -39,12 +40,6 @@ export const NavMenuContent = (): JSX.Element => {
     setLanguage(newLanguage);
   };
 
-  const handleRoutingClick = () => {
-    const baseURL = env('NEXT_PUBLIC_BASE_PATH');
-    const path = new URL('/forms/search', baseURL);
-    void router.push(path);
-  };
-
   return (
     <>
       <Box margin="30px 0px 0px 20px">
@@ -58,21 +53,25 @@ export const NavMenuContent = (): JSX.Element => {
       </Box>
       <List>
         <ListItem key="forms">
-          <ListItemButton
-            sx={{
-              width: '100%',
-              borderRadius: '4px',
-            }}
-            onClick={handleRoutingClick}
+          <Link
+            href="/forms/search"
+            sx={{ textDecoration: 'none', color: 'inherit' }}
           >
-            <ListItemIcon>
-              <StarIcon fontSize="medium" key="forms" />
-            </ListItemIcon>
-            <ListItemText
-              primary={intl.formatMessage({ id: 'navigation.forms' })}
-              primaryTypographyProps={{ fontSize: 16 }}
-            />
-          </ListItemButton>
+            <ListItemButton
+              sx={{
+                width: '100%',
+                borderRadius: '4px',
+              }}
+            >
+              <ListItemIcon>
+                <StarIcon fontSize="medium" key="forms" />
+              </ListItemIcon>
+              <ListItemText
+                primary={intl.formatMessage({ id: 'navigation.forms' })}
+                primaryTypographyProps={{ fontSize: 16 }}
+              />
+            </ListItemButton>
+          </Link>
         </ListItem>
         <ListItem key="reports">
           <ListItemButton
