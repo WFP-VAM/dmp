@@ -16,7 +16,6 @@ import {
   Typography,
 } from '@mui/material';
 import Logo from 'next/image';
-import { useRouter } from 'next/router';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useLanguageContext } from 'context';
@@ -25,13 +24,12 @@ import { env } from 'services/env';
 
 export const NavMenuContent = (): JSX.Element => {
   const intl = useIntl();
-  const router = useRouter();
   const isAdmin = useIsSignedInUserAdmin();
 
   const handleAdminClick = () => {
     const baseURL = env('NEXT_PUBLIC_API_BASE_URL');
-    const path = new URL('/admin/login', baseURL);
-    void router.push(path);
+    const path = new URL('/admin/login', baseURL).toString();
+    window.location.href = path;
   };
 
   const { language, setLanguage } = useLanguageContext();
