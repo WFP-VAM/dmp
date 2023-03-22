@@ -1,25 +1,21 @@
 import {
   Box,
   Button,
-  FormControl,
   FormControlLabel,
   Radio,
   RadioGroup,
 } from '@mui/material';
 import { DisasterMapping, IncidentMapping } from '@wfp-dmp/interfaces';
-import { ChangeEvent, useState } from 'react';
+import { BaseSyntheticEvent } from 'react';
+import { Control, Controller, useForm, UseFormRegister } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
-import useSWR from 'swr';
-
-import { ApiRoutes } from 'services/api/apiRoutes';
-import { apiClient } from 'services/api/client';
 
 interface Props {
-  disasterType: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  register: UseFormRegister<{ DisTyp: string }>;
+  control: Control<{ DisTyp: string }>;
 }
 
-const DisasterFilter = ({ disasterType, onChange }: Props): JSX.Element => {
+const DisasterFilter = ({ control }: Props): JSX.Element => {
   const intl = useIntl();
 
   const disasters = Object.keys(DisasterMapping).map(disaster => {
@@ -36,92 +32,91 @@ const DisasterFilter = ({ disasterType, onChange }: Props): JSX.Element => {
   });
 
   return (
-    <FormControl>
-      <RadioGroup
-        value={disasterType}
-        onChange={onChange}
-        sx={{ display: 'flex', flexDirection: 'row' }}
-      >
-        <Box
-          component="fieldset"
-          sx={{ border: '2px solid grey', borderRadius: 2, margin: 2 }}
+    <Controller
+      name={'DisTyp'}
+      control={control}
+      render={({ field: { onChange, value } }) => (
+        <RadioGroup
+          value={value}
+          onChange={onChange}
+          sx={{ display: 'flex', flexDirection: 'row' }}
         >
-          <legend>
-            <FormattedMessage
-              id="validation_params.disaster_type"
-              defaultMessage="Disaster Type"
-            />
-          </legend>
-          {disasters.map(type => (
-            <FormControlLabel
-              key={type.labelId}
-              value={type.value}
-              control={<Radio />}
-              label={intl.formatMessage({
-                id: type.labelId,
-              })}
-            />
-          ))}
-        </Box>
-        <Box
-          component="fieldset"
-          width={600}
-          sx={{
-            border: '2px solid grey',
-            borderRadius: 2,
-            margin: 2,
-          }}
-        >
-          <legend>
-            <FormattedMessage
-              id="validation_params.incident_type"
-              defaultMessage="Incident Type"
-            />
-          </legend>
-          {incidents.map(type => (
-            <FormControlLabel
-              key={type.labelId}
-              value={type.value}
-              control={<Radio />}
-              label={intl.formatMessage({
-                id: type.labelId,
-              })}
-            />
-          ))}
-        </Box>
-      </RadioGroup>
-    </FormControl>
+          <Box
+            component="fieldset"
+            sx={{ border: '2px solid grey', borderRadius: 2, margin: 2 }}
+          >
+            <legend>
+              <FormattedMessage
+                id="validation_params.disaster_type"
+                defaultMessage="Disaster Type"
+              />
+            </legend>
+            {disasters.map(type => (
+              <FormControlLabel
+                key={type.labelId}
+                value={type.value}
+                control={<Radio />}
+                label={intl.formatMessage({
+                  id: type.labelId,
+                })}
+              />
+            ))}
+          </Box>
+          <Box
+            component="fieldset"
+            width={600}
+            sx={{
+              border: '2px solid grey',
+              borderRadius: 2,
+              margin: 2,
+            }}
+          >
+            <legend>
+              <FormattedMessage
+                id="validation_params.incident_type"
+                defaultMessage="Incident Type"
+              />
+            </legend>
+            {incidents.map(type => (
+              <FormControlLabel
+                key={type.labelId}
+                value={type.value}
+                control={<Radio />}
+                label={intl.formatMessage({
+                  id: type.labelId,
+                })}
+              />
+            ))}
+          </Box>
+        </RadioGroup>
+      )}
+    />
   );
 };
-export const FormSearch = () => {
-  const defaultDisaster = DisasterMapping['flood'];
-  const [disasterType, setDisasterType] = useState(defaultDisaster);
-  const handleDisasterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newDisasterType = e.target.value;
-    setDisasterType(newDisasterType);
-  };
-  const [filters, setFilters] = useState({ DisTyp: defaultDisaster });
-  const handleSearch = () => {
-    setFilters({ ...filters, DisTyp: disasterType });
-  };
 
-  const { data: formData } = useSWR(
-    [ApiRoutes.forms, filters],
-    async (relativePath, filterOptions) => {
-      await apiClient
-        .get<unknown>(relativePath, { params: filterOptions })
-        .then(response => response.data);
-    },
-  );
-  console.log(formData);
+export const FormSearch = () => {
+  const { register, control, handleSubmit } = useForm({
+    defaultValues: { DisTyp: '1' },
+  });
+
+  // const { data: formData } = useSWR(
+  //   [ApiRoutes.forms, filters],
+  //   async (relativePath, filterOptions) => {
+  //     await apiClient
+  //       .get<unknown>(relativePath, { params: filterOptions })
+  //       .then(response => response.data);
+  //   },
+  // );
+  // console.log(formData);
+  const submitHandler = (data: { DisTyp: string }, e?: BaseSyntheticEvent) =>
+    console.log(data, e?.target);
 
   return (
     <Box display="flex" flexDirection="column">
-      <DisasterFilter
-        onChange={handleDisasterChange}
-        disasterType={disasterType}
-      />
-      <Button onClick={handleSearch}>Search</Button>
+      <form onSubmit={handleSubmit(submitHandler)}>
+        <DisasterFilter register={register} control={control} />
+        <Button type="submit">Search</Button>
+      </form>
     </Box>
   );
 };
