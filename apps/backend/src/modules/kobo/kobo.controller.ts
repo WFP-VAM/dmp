@@ -6,6 +6,7 @@ import {
   DroughtDto,
   FLOOD,
   FloodDto,
+  GetFormDto,
   GetFormsDto,
   INCIDENT,
   IncidentDto,
@@ -39,5 +40,15 @@ export class KoboController {
     const response = await this.koboService.getForms(province, filters.DisTyp);
 
     return response.results;
+  }
+
+  @Get('form/:disasterType/:id')
+  async getForm(
+    @UseProvince() province: string | undefined,
+    @Param() params: GetFormDto,
+  ): Promise<FloodDto | DroughtDto | IncidentDto> {
+    const response = await this.koboService.getForm(province, params.disasterType, params.id);
+
+    return response;
   }
 }

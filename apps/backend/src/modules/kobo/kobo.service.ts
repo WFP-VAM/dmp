@@ -5,10 +5,13 @@ import {
   computeDisasterTypeFromDistTyp,
   DisasterType,
   DROUGHT,
+  DroughtDto,
   DroughtQueryResponseDto,
   FLOOD,
+  FloodDto,
   FloodQueryResponseDto,
   INCIDENT,
+  IncidentDto,
   IncidentQueryResponseDto,
   koboKeys,
 } from '@wfp-dmp/interfaces';
@@ -21,6 +24,14 @@ type QueryResponse<T> = T extends typeof FLOOD
   ? DroughtQueryResponseDto
   : T extends typeof INCIDENT
   ? IncidentQueryResponseDto
+  : never;
+
+type GetFormResponse<T> = T extends typeof FLOOD
+  ? FloodDto
+  : T extends typeof DROUGHT
+  ? DroughtDto
+  : T extends typeof INCIDENT
+  ? IncidentDto
   : never;
 
 @Injectable()
@@ -59,6 +70,25 @@ export class KoboService {
           query: {
             [koboKeys[disasterType].province]: province,
             [koboKeys[disasterType].disTyp]: disTyp,
+          },
+        },
+      },
+    );
+
+    return data;
+  }
+
+  async getForm<T extends DisasterType>(
+    province: string | undefined,
+    disasterType: DisasterType,
+    id: string,
+  ): Promise<GetFormResponse<T>> {
+    const { data } = await this.httpService.axiosRef.get<GetFormResponse<T>>(
+      `assets/${AssetId[disasterType]}/data/${id}.json`,
+      {
+        params: {
+          query: {
+            [koboKeys[disasterType].province]: province,
           },
         },
       },

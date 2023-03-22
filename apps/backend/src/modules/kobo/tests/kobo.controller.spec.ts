@@ -12,6 +12,7 @@ import { Repository } from 'typeorm';
 import { KoboService } from '../kobo.service';
 import { droughtMock } from './__mocks__/drought';
 import { floodMock } from './__mocks__/flood';
+import { getFormMock } from './__mocks__/getForm';
 import { getFormsMock } from './__mocks__/getForms';
 import { getLastFormsMock } from './__mocks__/getLastForms';
 import { incidentMock } from './__mocks__/incident';
@@ -123,6 +124,28 @@ describe('KoboController', () => {
         .expect((response: { body: FloodDto[] }) => {
           expect(response.body).toEqual([floodMock]);
           expect(getFormsSpy).toHaveBeenNthCalledWith(1, province, disTyp);
+        });
+    });
+  });
+
+  describe('GET form', () => {
+    it('should return 200 and the service should receive province, disaster type and form id', async () => {
+      const role = 'pcdm';
+      const province = '10';
+      const disasterType = FLOOD;
+      const id = 'test';
+
+      const getFormsSpy = jest.spyOn(koboService, 'getForm').mockImplementation(getFormMock);
+
+      const user = await userFactory.createOne({ roles: [role], province });
+      const accessToken = authService.createAccessToken(user, 10000);
+      await request(app.getHttpServer())
+        .get(`/kobo/form/${disasterType}/${id}`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect(200)
+        .expect((response: { body: FloodDto }) => {
+          expect(response.body).toEqual(floodMock);
+          expect(getFormsSpy).toHaveBeenNthCalledWith(1, province, disasterType, id);
         });
     });
   });
