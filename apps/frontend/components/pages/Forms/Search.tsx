@@ -114,7 +114,12 @@ export const FormSearch = () => {
     <Box display="flex" flexDirection="column">
       <form onSubmit={handleSubmit(submitHandler)}>
         <DisasterFilter register={register} control={control} />
-        <Button type="submit">Search</Button>
+        <Button sx={{ color: 'white', float: 'right' }} type="submit">
+          <FormattedMessage
+            id="navigation.forms.search"
+            defaultMessage="Hide password"
+          />
+        </Button>
       </form>
     </Box>
   );

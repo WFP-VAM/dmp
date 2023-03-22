@@ -65,7 +65,7 @@ export const NavMenuContent = (): JSX.Element => {
                 <StarIcon fontSize="medium" key="forms" />
               </ListItemIcon>
               <ListItemText
-                primary={intl.formatMessage({ id: 'navigation.forms' })}
+                primary={intl.formatMessage({ id: 'navigation.forms.header' })}
                 primaryTypographyProps={{ fontSize: 16 }}
               />
             </ListItemButton>
