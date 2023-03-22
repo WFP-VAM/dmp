@@ -6,9 +6,13 @@ import {
   RadioGroup,
 } from '@mui/material';
 import { DisasterMapping, IncidentMapping } from '@wfp-dmp/interfaces';
-import { BaseSyntheticEvent } from 'react';
+import { useState } from 'react';
 import { Control, Controller, useForm, UseFormRegister } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
+import useSWR from 'swr';
+
+import { ApiRoutes } from 'services/api/apiRoutes';
+import { apiClient } from 'services/api/client';
 
 interface Props {
   register: UseFormRegister<{ DisTyp: string }>;
@@ -99,17 +103,21 @@ export const FormSearch = () => {
     defaultValues: { DisTyp: '1' },
   });
 
-  // const { data: formData } = useSWR(
-  //   [ApiRoutes.forms, filters],
-  //   async (relativePath, filterOptions) => {
-  //     await apiClient
-  //       .get<unknown>(relativePath, { params: filterOptions })
-  //       .then(response => response.data);
-  //   },
-  // );
-  // console.log(formData);
-  const submitHandler = (data: { DisTyp: string }, e?: BaseSyntheticEvent) =>
-    console.log(data, e?.target);
+  const defaultDisaster = DisasterMapping['flood'];
+  const [disasterType, setDisasterType] = useState(defaultDisaster);
+
+  const submitHandler = (data: { DisTyp: string }) => {
+    setDisasterType(data.DisTyp);
+  };
+  const { data: formData } = useSWR(
+    [ApiRoutes.forms, disasterType],
+    async (relativePath, disType) => {
+      await apiClient
+        .get<unknown>(relativePath, { params: { DisTyp: disType } })
+        .then(response => response.data);
+    },
+  );
+  console.log(formData);
 
   return (
     <Box display="flex" flexDirection="column">
