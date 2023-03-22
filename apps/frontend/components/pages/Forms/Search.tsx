@@ -7,13 +7,12 @@ import {
 } from '@mui/material';
 import { DisasterMapping, IncidentMapping } from '@wfp-dmp/interfaces';
 import { useState } from 'react';
-import { Control, Controller, useForm, UseFormRegister } from 'react-hook-form';
+import { Control, Controller, useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useForms } from 'services/forms/useForms';
 
 interface Props {
-  register: UseFormRegister<{ DisTyp: string }>;
   control: Control<{ DisTyp: string }>;
 }
 
@@ -97,7 +96,7 @@ const DisasterFilter = ({ control }: Props): JSX.Element => {
 };
 
 export const FormSearch = () => {
-  const { register, control, handleSubmit } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: { DisTyp: '1' },
   });
 
@@ -108,19 +107,21 @@ export const FormSearch = () => {
     setDisasterType(data.DisTyp);
   };
   const forms = useForms(disasterType);
-  console.log(forms);
 
   return (
     <Box display="flex" flexDirection="column">
-      <form onSubmit={handleSubmit(submitHandler)}>
-        <DisasterFilter register={register} control={control} />
-        <Button sx={{ color: 'white', float: 'right' }} type="submit">
-          <FormattedMessage
-            id="navigation.forms.search"
-            defaultMessage="Hide password"
-          />
-        </Button>
-      </form>
+      <Box>
+        <form onSubmit={handleSubmit(submitHandler)}>
+          <DisasterFilter control={control} />
+          <Button sx={{ color: 'white', float: 'right' }} type="submit">
+            <FormattedMessage
+              id="navigation.forms.search"
+              defaultMessage="Hide password"
+            />
+          </Button>
+        </form>
+      </Box>
+      <Box>{JSON.stringify(forms)}</Box>
     </Box>
   );
 };
