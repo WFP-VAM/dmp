@@ -9,10 +9,8 @@ import { DisasterMapping, IncidentMapping } from '@wfp-dmp/interfaces';
 import { useState } from 'react';
 import { Control, Controller, useForm, UseFormRegister } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
-import useSWR from 'swr';
 
-import { ApiRoutes } from 'services/api/apiRoutes';
-import { apiClient } from 'services/api/client';
+import { useForms } from 'services/forms/useForms';
 
 interface Props {
   register: UseFormRegister<{ DisTyp: string }>;
@@ -109,15 +107,8 @@ export const FormSearch = () => {
   const submitHandler = (data: { DisTyp: string }) => {
     setDisasterType(data.DisTyp);
   };
-  const { data: formData } = useSWR(
-    [ApiRoutes.forms, disasterType],
-    async (relativePath, disType) => {
-      await apiClient
-        .get<unknown>(relativePath, { params: { DisTyp: disType } })
-        .then(response => response.data);
-    },
-  );
-  console.log(formData);
+  const forms = useForms(disasterType);
+  console.log(forms);
 
   return (
     <Box display="flex" flexDirection="column">
