@@ -100,9 +100,9 @@ export const FormSearch = () => {
     const newDisasterType = e.target.value;
     setDisasterType(newDisasterType);
   };
-  const [filters, setFilters] = useState({ disTyp: defaultDisaster });
+  const [filters, setFilters] = useState({ DisTyp: defaultDisaster });
   const handleSearch = () => {
-    setFilters({ ...filters, disTyp: disasterType });
+    setFilters({ ...filters, DisTyp: disasterType });
   };
 
   const { data: formData } = useSWR(
