@@ -11,7 +11,6 @@ import { ApiRoutes } from 'services/api/apiRoutes';
 import { apiClient } from 'services/api/client';
 
 export const useForm = (formDisasterType: DisasterType, formId: string) => {
-  console.log('in hook');
   const { data } = useSWR(
     [ApiRoutes.form, formDisasterType, formId],
     async (relativePath, disasterType, id) => {
