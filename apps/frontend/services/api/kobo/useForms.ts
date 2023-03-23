@@ -9,7 +9,7 @@ export const useForms = (disasterType: string) => {
     [ApiRoutes.forms, disasterType],
     async (relativePath, disType) => {
       const { data: formsData } = await apiClient.get<
-        FloodDto[] | DroughtDto[] | IncidentDto[]
+        FloodDto[] | DroughtDto[] | IncidentDto[] | []
       >(relativePath, {
         params: { DisTyp: disType },
       });
