@@ -1,6 +1,6 @@
 import { UseProvince } from '@auth/user.decorator';
 import { Get } from '@decorators/httpDecorators';
-import { Controller, Param, Query } from '@nestjs/common';
+import { Controller, HttpException, HttpStatus, Param, Query } from '@nestjs/common';
 import {
   DROUGHT,
   DroughtDto,
@@ -47,8 +47,12 @@ export class KoboController {
     @UseProvince() province: string | undefined,
     @Param() params: GetFormDto,
   ): Promise<FloodDto | DroughtDto | IncidentDto> {
-    const response = await this.koboService.getForm(province, params.disasterType, params.id);
+    try {
+      const response = await this.koboService.getForm(province, params.disasterType, params.id);
 
-    return response;
+      return response;
+    } catch (error) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
   }
 }
