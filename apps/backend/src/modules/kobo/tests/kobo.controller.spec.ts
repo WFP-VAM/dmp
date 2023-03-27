@@ -5,7 +5,7 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AppModule } from '@root/app.module';
-import { DROUGHT, DroughtDto, FLOOD, FloodDto, INCIDENT, IncidentDto } from '@wfp-dmp/interfaces';
+import { DisasterDtoType, DROUGHT, FLOOD, FloodDto, INCIDENT } from '@wfp-dmp/interfaces';
 import request from 'supertest';
 import { Repository } from 'typeorm';
 
@@ -59,7 +59,7 @@ describe('KoboController', () => {
         .get(`/kobo/last-forms/${numDays}`)
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(200)
-        .expect((response: { body: (FloodDto | DroughtDto | IncidentDto)[] }) => {
+        .expect((response: { body: DisasterDtoType[] }) => {
           expect(response.body).toEqual([floodMock, droughtMock, incidentMock]);
           expect(getLastFormsSpy).toHaveBeenCalledTimes(3);
           expect(getLastFormsSpy).toHaveBeenNthCalledWith(1, numDays, FLOOD, undefined);
@@ -83,7 +83,7 @@ describe('KoboController', () => {
         .get(`/kobo/last-forms/${numDays}`)
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(200)
-        .expect((response: { body: (FloodDto | DroughtDto | IncidentDto)[] }) => {
+        .expect((response: { body: DisasterDtoType[] }) => {
           expect(response.body).toEqual([floodMock, droughtMock, incidentMock]);
           expect(getLastFormsSpy).toHaveBeenCalledTimes(3);
           expect(getLastFormsSpy).toHaveBeenNthCalledWith(1, numDays, FLOOD, province);

@@ -2,14 +2,12 @@ import { UseProvince } from '@auth/user.decorator';
 import { Get } from '@decorators/httpDecorators';
 import { Controller, HttpException, HttpStatus, Param, Query } from '@nestjs/common';
 import {
+  DisasterDtoType,
   DROUGHT,
-  DroughtDto,
   FLOOD,
-  FloodDto,
   GetFormDto,
   GetFormsDto,
   INCIDENT,
-  IncidentDto,
 } from '@wfp-dmp/interfaces';
 
 import { KoboService } from './kobo.service';
@@ -22,7 +20,7 @@ export class KoboController {
   async getLastForms(
     @UseProvince() province: string | undefined,
     @Param('numDays') numDays: number,
-  ): Promise<(FloodDto | DroughtDto | IncidentDto)[]> {
+  ): Promise<DisasterDtoType[]> {
     const [floodResp, droughtResp, incidentResp] = await Promise.all([
       this.koboService.getLastForms(numDays, FLOOD, province),
       this.koboService.getLastForms(numDays, DROUGHT, province),
@@ -36,7 +34,7 @@ export class KoboController {
   async getForms(
     @UseProvince() province: string | undefined,
     @Query() filters: GetFormsDto,
-  ): Promise<(FloodDto | DroughtDto | IncidentDto)[]> {
+  ): Promise<DisasterDtoType[]> {
     const response = await this.koboService.getForms(province, filters.DisTyp);
 
     return response.results;
@@ -46,7 +44,7 @@ export class KoboController {
   async getForm(
     @UseProvince() province: string | undefined,
     @Param() params: GetFormDto,
-  ): Promise<FloodDto | DroughtDto | IncidentDto> {
+  ): Promise<DisasterDtoType> {
     try {
       const response = await this.koboService.getForm(province, params.disasterType, params.id);
 

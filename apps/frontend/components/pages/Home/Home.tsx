@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { DroughtDto, FloodDto, IncidentDto } from '@wfp-dmp/interfaces';
+import { DisasterDtoType } from '@wfp-dmp/interfaces';
 import Link from 'next/link';
 import useSWR from 'swr';
 
@@ -9,9 +9,9 @@ import { useGetMe } from 'services/api/user/useUser';
 
 export const Home = (): JSX.Element => {
   const user = useGetMe();
-  const { data: lastForms, isLoading } = useSWR<
-    (FloodDto | DroughtDto | IncidentDto)[]
-  >(ApiRoutes.lastForms);
+  const { data: lastForms, isLoading } = useSWR<DisasterDtoType[]>(
+    ApiRoutes.lastForms,
+  );
 
   return (
     <Box>
