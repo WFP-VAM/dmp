@@ -41,20 +41,22 @@
   },
   "validation_search_params": {
     "disaster_type": "Disaster Type",
-    "incident_type": "Incident Type",
-    "flood": "Flood",
-    "drought": "Drought",
-    "hurricane": "Storm",
-    "fire": "Fire",
-    "lightning": "Lightning",
-    "epidemics": "Epidemics",
-    "shorebreak": "River Bank Collapse",
-    "insects": "Insects",
-    "traffic_accident": "Traffic Accident",
-    "drowning": "Drowning",
-    "collapse": "Collapse",
-    "weapon": "Unexploded Weapon",
-    "other": "Other Incidents"
+    "incident_type": "Incident Type"
+  },
+  "disasters": {
+    "1": "Flood",
+    "2": "Drought",
+    "3": "Storm",
+    "4": "Fire",
+    "5": "Lightning",
+    "6": "Epidemics",
+    "7": "River Bank Collapse",
+    "8": "Insects",
+    "9": "Traffic Accident",
+    "10": "Drowning",
+    "11": "Collapse",
+    "12": "Unexploded Weapon",
+    "99": "Other Incidents"
   },
   "forms_table": {
     "headers": {

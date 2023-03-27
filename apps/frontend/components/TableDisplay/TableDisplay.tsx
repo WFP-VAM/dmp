@@ -131,7 +131,11 @@ export const TableDisplay = ({
                 <FormattedMessage id={`communes.${formattedForm.commune}`} />
               </TableCell>
               <TableCell>{formattedForm.disasterDate}</TableCell>
-              <TableCell>{formattedForm.disasterType}</TableCell>
+              <TableCell>
+                <FormattedMessage
+                  id={`disasters.${formattedForm.disasterType}`}
+                />
+              </TableCell>
               <TableCell>{formattedForm.reportName}</TableCell>
               <TableCell>{formattedForm.phone}</TableCell>
               <TableCell>{formattedForm.entryDate}</TableCell>

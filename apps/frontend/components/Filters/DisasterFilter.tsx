@@ -10,18 +10,12 @@ interface Props {
 export const DisasterFilter = ({ control }: Props): JSX.Element => {
   const intl = useIntl();
 
-  const disasters = Object.keys(DisasterMapping).map(disaster => {
-    return {
-      labelId: `validation_search_params.${disaster}`,
-      value: DisasterMapping[disaster],
-    };
-  });
-  const incidents = Object.keys(IncidentMapping).map(incident => {
-    return {
-      labelId: `validation_search_params.${incident}`,
-      value: IncidentMapping[incident],
-    };
-  });
+  const disasters = Object.keys(DisasterMapping).map(
+    disaster => DisasterMapping[disaster],
+  );
+  const incidents = Object.keys(IncidentMapping).map(
+    incident => IncidentMapping[incident],
+  );
 
   return (
     <Controller
@@ -45,11 +39,11 @@ export const DisasterFilter = ({ control }: Props): JSX.Element => {
             </legend>
             {disasters.map(type => (
               <FormControlLabel
-                key={type.labelId}
-                value={type.value}
+                key={type}
+                value={type}
                 control={<Radio />}
                 label={intl.formatMessage({
-                  id: type.labelId,
+                  id: `disasters.${type}`,
                 })}
               />
             ))}
@@ -71,11 +65,11 @@ export const DisasterFilter = ({ control }: Props): JSX.Element => {
             </legend>
             {incidents.map(type => (
               <FormControlLabel
-                key={type.labelId}
-                value={type.value}
+                key={type}
+                value={type}
                 control={<Radio />}
                 label={intl.formatMessage({
-                  id: type.labelId,
+                  id: `disasters.${type}`,
                 })}
               />
             ))}
