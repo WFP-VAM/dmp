@@ -4,6 +4,7 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import {
   Box,
   FormControl,
+  IconButton,
   Link,
   List,
   ListItem,
@@ -41,13 +42,17 @@ export const NavMenuContent = (): JSX.Element => {
   return (
     <>
       <Box margin="30px 0px 0px 20px">
-        <Logo
-          src="/logo.svg"
-          alt="logo"
-          width={175}
-          height={175}
-          priority={true} //preloads image
-        />
+        <Link href="/">
+          <IconButton sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
+            <Logo
+              src="/logo.svg"
+              alt="logo"
+              width={175}
+              height={175}
+              priority={true} //preloads image
+            />
+          </IconButton>
+        </Link>
       </Box>
       <List>
         <ListItem key="forms">
