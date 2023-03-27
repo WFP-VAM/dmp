@@ -21,6 +21,66 @@ import path from 'path';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
+const formatForms = (formData: DisasterDtosType | undefined) => {
+  if (formData === undefined) {
+    return [];
+  }
+  if (formData.length === 0) {
+    return [];
+  }
+
+  return formData.map(form => {
+    if (isFlood(form)) {
+      const keys = koboKeys[FLOOD];
+
+      return {
+        province: form[keys.province],
+        district: form[keys.district],
+        commune: form[keys.commune],
+        disasterDate: form[keys.disasterDate],
+        disasterType: form[keys.disTyp],
+        type: form[keys.disTyp],
+        reportName: form[keys.entryName],
+        phone: form[keys.phone],
+        entryDate: form[keys.entryDate],
+        approvalLink: path.join('/form', FLOOD, form[keys.id].toString()),
+        id: form[keys.id],
+      };
+    } else if (isDrought(form)) {
+      const keys = koboKeys[DROUGHT];
+
+      return {
+        province: form[keys.province],
+        district: form[keys.district],
+        commune: form[keys.commune],
+        disasterDate: form[keys.disasterDate],
+        disasterType: form[keys.disTyp],
+        type: form[keys.disTyp],
+        reportName: form[keys.entryName],
+        phone: form[keys.phone],
+        entryDate: form[keys.entryDate],
+        approvalLink: path.join('/form', DROUGHT, form[keys.id].toString()),
+        id: form[keys.id],
+      };
+    } else {
+      const keys = koboKeys[INCIDENT];
+
+      return {
+        province: form[keys.province],
+        district: form[keys.district],
+        commune: form[keys.commune],
+        disasterDate: form[keys.disasterDate],
+        disasterType: form[keys.disTyp],
+        type: form[keys.disTyp],
+        reportName: form[keys.entryName],
+        phone: form[keys.phone],
+        entryDate: form[keys.entryDate],
+        approvalLink: path.join('/form', INCIDENT, form[keys.id].toString()),
+      };
+    }
+  });
+};
+
 export const TableDisplay = ({
   forms,
   isLoading,
@@ -28,66 +88,6 @@ export const TableDisplay = ({
   forms?: DisasterDtosType;
   isLoading: boolean;
 }): JSX.Element => {
-  const formatForms = (formData: DisasterDtosType | undefined) => {
-    if (formData === undefined) {
-      return [];
-    }
-    if (formData.length === 0) {
-      return [];
-    }
-
-    return formData.map(form => {
-      if (isFlood(form)) {
-        const keys = koboKeys[FLOOD];
-
-        return {
-          province: form[keys.province],
-          district: form[keys.district],
-          commune: form[keys.commune],
-          disasterDate: form[keys.disasterDate],
-          disasterType: form[keys.disTyp],
-          type: form[keys.disTyp],
-          reportName: form[keys.entryName],
-          phone: form[keys.phone],
-          entryDate: form[keys.entryDate],
-          approvalLink: path.join('/form', FLOOD, form[keys.id].toString()),
-          id: form[keys.id],
-        };
-      } else if (isDrought(form)) {
-        const keys = koboKeys[DROUGHT];
-
-        return {
-          province: form[keys.province],
-          district: form[keys.district],
-          commune: form[keys.commune],
-          disasterDate: form[keys.disasterDate],
-          disasterType: form[keys.disTyp],
-          type: form[keys.disTyp],
-          reportName: form[keys.entryName],
-          phone: form[keys.phone],
-          entryDate: form[keys.entryDate],
-          approvalLink: path.join('/form', DROUGHT, form[keys.id].toString()),
-          id: form[keys.id],
-        };
-      } else {
-        const keys = koboKeys[INCIDENT];
-
-        return {
-          province: form[keys.province],
-          district: form[keys.district],
-          commune: form[keys.commune],
-          disasterDate: form[keys.disasterDate],
-          disasterType: form[keys.disTyp],
-          type: form[keys.disTyp],
-          reportName: form[keys.entryName],
-          phone: form[keys.phone],
-          entryDate: form[keys.entryDate],
-          approvalLink: path.join('/form', INCIDENT, form[keys.id].toString()),
-        };
-      }
-    });
-  };
-
   const formattedForms = useMemo(() => formatForms(forms), [forms]);
 
   return (
