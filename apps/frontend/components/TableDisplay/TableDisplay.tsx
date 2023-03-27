@@ -8,36 +8,27 @@ import {
   TableRow,
 } from '@mui/material';
 import {
+  DisasterDtosType,
   DROUGHT,
-  DroughtDto,
   FLOOD,
-  FloodDto,
   INCIDENT,
-  IncidentDto,
   koboKeys,
 } from '@wfp-dmp/interfaces';
+import { isDrought, isFlood } from '@wfp-dmp/interfaces/dist/kobo/utils';
 import path from 'path';
 import { useMemo } from 'react';
 
-type union = (FloodDto | DroughtDto | IncidentDto)[];
-export const TableDisplay = ({ forms }: { forms: union }): JSX.Element => {
-  const formatForms = (formData: union) => {
+export const TableDisplay = ({
+  forms,
+}: {
+  forms: DisasterDtosType;
+}): JSX.Element => {
+  const formatForms = (formData: DisasterDtosType) => {
     if (formData.length === 0) {
       return [];
     }
 
     return formData.map(form => {
-      const isFlood = (
-        furm: FloodDto | DroughtDto | IncidentDto,
-      ): furm is FloodDto => {
-        return koboKeys[FLOOD].disTyp in furm;
-      };
-      const isDrought = (
-        furm: FloodDto | DroughtDto | IncidentDto,
-      ): furm is DroughtDto => {
-        return koboKeys[DROUGHT].disTyp in furm;
-      };
-
       if (isFlood(form)) {
         const keys = koboKeys[FLOOD];
 
@@ -88,7 +79,6 @@ export const TableDisplay = ({ forms }: { forms: union }): JSX.Element => {
   };
 
   const formattedForms = useMemo(() => formatForms(forms), [forms]);
-  console.log('formatted', formattedForms);
 
   return (
     <TableContainer component={Paper}>

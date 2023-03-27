@@ -18,5 +18,9 @@ export const useForms = (disasterType: string) => {
     },
   );
 
+  if (data === undefined) {
+    return [];
+  }
+
   return data;
 };
