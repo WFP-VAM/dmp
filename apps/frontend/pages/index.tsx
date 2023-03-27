@@ -1,12 +1,12 @@
 import { NextPage } from 'next';
 
 import { Home } from 'components';
-import { NavBar } from 'components/NavBar';
+import { LayoutWithNav } from 'components/Layout';
 
 const HomePage: NextPage = () => (
-  <NavBar>
+  <LayoutWithNav>
     <Home />
-  </NavBar>
+  </LayoutWithNav>
 );
 
 export default HomePage;

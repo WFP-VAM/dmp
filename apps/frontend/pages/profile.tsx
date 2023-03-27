@@ -1,12 +1,12 @@
 import { NextPage } from 'next';
 
-import { NavBar } from 'components/NavBar';
+import { LayoutWithNav } from 'components/Layout';
 import { Profile } from 'components/pages/Profile';
 
 const ProfilePage: NextPage = () => (
-  <NavBar>
-    <Profile />;
-  </NavBar>
+  <LayoutWithNav>
+    <Profile />
+  </LayoutWithNav>
 );
 
 export default ProfilePage;
