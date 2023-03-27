@@ -10,12 +10,12 @@ export const FormSearch = () => {
   const defaultDisaster = DisasterMapping['flood'];
   const [disasterType, setDisasterType] = useState(defaultDisaster);
 
-  const forms = useForms(disasterType);
+  const { data: formData, isLoading } = useForms(disasterType);
 
   return (
     <Box display="flex" flexDirection="column">
       <SearchFilters setDisasterType={setDisasterType} />
-      <TableDisplay forms={forms} />
+      <TableDisplay isLoading={isLoading} forms={formData} />
     </Box>
   );
 };

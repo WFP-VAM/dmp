@@ -1,6 +1,7 @@
 import {
   Link,
   Paper,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -22,10 +23,15 @@ import { FormattedMessage } from 'react-intl';
 
 export const TableDisplay = ({
   forms,
+  isLoading,
 }: {
-  forms: DisasterDtosType;
+  forms?: DisasterDtosType;
+  isLoading: boolean;
 }): JSX.Element => {
-  const formatForms = (formData: DisasterDtosType) => {
+  const formatForms = (formData: DisasterDtosType | undefined) => {
+    if (formData === undefined) {
+      return [];
+    }
     if (formData.length === 0) {
       return [];
     }
@@ -86,7 +92,7 @@ export const TableDisplay = ({
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 600 }}>
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell>
@@ -118,33 +124,51 @@ export const TableDisplay = ({
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {formattedForms.map(formattedForm => (
-            <TableRow key={formattedForm.id}>
-              <TableCell>
-                <FormattedMessage id={`provinces.${formattedForm.province}`} />
-              </TableCell>
-              <TableCell>
-                <FormattedMessage id={`districts.${formattedForm.district}`} />
-              </TableCell>
-              <TableCell>
-                <FormattedMessage id={`communes.${formattedForm.commune}`} />
-              </TableCell>
-              <TableCell>{formattedForm.disasterDate}</TableCell>
-              <TableCell>
-                <FormattedMessage
-                  id={`disasters.${formattedForm.disasterType}`}
-                />
-              </TableCell>
-              <TableCell>{formattedForm.reportName}</TableCell>
-              <TableCell>{formattedForm.phone}</TableCell>
-              <TableCell>{formattedForm.entryDate}</TableCell>
-              <TableCell>
-                <Link href={formattedForm.approvalLink}>LINK TEXT</Link>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+        {isLoading ? (
+          <TableBody>
+            {[1, 2, 3].map(id => {
+              return (
+                <TableRow key={id}>
+                  <TableCell colSpan={9}>
+                    <Skeleton />
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        ) : (
+          <TableBody>
+            {formattedForms.map(formattedForm => (
+              <TableRow key={formattedForm.id}>
+                <TableCell>
+                  <FormattedMessage
+                    id={`provinces.${formattedForm.province}`}
+                  />
+                </TableCell>
+                <TableCell>
+                  <FormattedMessage
+                    id={`districts.${formattedForm.district}`}
+                  />
+                </TableCell>
+                <TableCell>
+                  <FormattedMessage id={`communes.${formattedForm.commune}`} />
+                </TableCell>
+                <TableCell>{formattedForm.disasterDate}</TableCell>
+                <TableCell>
+                  <FormattedMessage
+                    id={`disasters.${formattedForm.disasterType}`}
+                  />
+                </TableCell>
+                <TableCell>{formattedForm.reportName}</TableCell>
+                <TableCell>{formattedForm.phone}</TableCell>
+                <TableCell>{formattedForm.entryDate}</TableCell>
+                <TableCell>
+                  <Link href={formattedForm.approvalLink}>LINK TEXT</Link>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        )}
       </Table>
     </TableContainer>
   );

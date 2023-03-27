@@ -5,9 +5,9 @@ import { ApiRoutes } from 'services/api/apiRoutes';
 import { apiClient } from 'services/api/client';
 
 export const useForms = (disasterType: string) => {
-  const { data } = useSWR(
+  const { data, isLoading } = useSWR(
     [ApiRoutes.forms, disasterType],
-    async (relativePath, disType) => {
+    async ([relativePath, disType]) => {
       const { data: formsData } = await apiClient.get<
         FloodDto[] | DroughtDto[] | IncidentDto[] | []
       >(relativePath, {
@@ -18,9 +18,5 @@ export const useForms = (disasterType: string) => {
     },
   );
 
-  if (data === undefined) {
-    return [];
-  }
-
-  return data;
+  return { data, isLoading };
 };
