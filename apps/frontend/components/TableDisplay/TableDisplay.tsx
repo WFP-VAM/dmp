@@ -10,7 +10,7 @@ import {
   TableRow,
 } from '@mui/material';
 import {
-  DisasterDtosType,
+  DisasterDtoType,
   DROUGHT,
   FLOOD,
   INCIDENT,
@@ -21,7 +21,7 @@ import path from 'path';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-const formatForms = (formData: DisasterDtosType | undefined) => {
+const formatForms = (formData: DisasterDtoType[] | undefined) => {
   if (formData === undefined) {
     return [];
   }
@@ -85,7 +85,7 @@ export const TableDisplay = ({
   forms,
   isLoading,
 }: {
-  forms?: DisasterDtosType;
+  forms?: DisasterDtoType[];
   isLoading: boolean;
 }): JSX.Element => {
   const formattedForms = useMemo(() => formatForms(forms), [forms]);

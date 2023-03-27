@@ -7,7 +7,7 @@ export const DROUGHT = 'DROUGHT';
 export const INCIDENT = 'INCIDENT';
 
 export type DisasterType = typeof FLOOD | typeof DROUGHT | typeof INCIDENT;
-export type DisasterDtosType = (FloodDto | DroughtDto | IncidentDto)[];
+export type DisasterDtoType = FloodDto | DroughtDto | IncidentDto;
 
 interface MappingTypes {
   [key: string]: string;
