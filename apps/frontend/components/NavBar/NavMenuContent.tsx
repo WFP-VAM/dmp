@@ -42,8 +42,8 @@ export const NavMenuContent = (): JSX.Element => {
   return (
     <>
       <Box margin="30px 0px 0px 20px">
-        <IconButton>
-          <Link href="/">
+        <Link href="/">
+          <IconButton sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
             <Logo
               src="/logo.svg"
               alt="logo"
@@ -51,8 +51,8 @@ export const NavMenuContent = (): JSX.Element => {
               height={175}
               priority={true} //preloads image
             />
-          </Link>
-        </IconButton>
+          </IconButton>
+        </Link>
       </Box>
       <List>
         <ListItem key="forms">
