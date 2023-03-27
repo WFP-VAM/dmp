@@ -3,10 +3,10 @@ import { NextPage } from 'next';
 import { NavBar } from 'components/NavBar';
 import { FormSearch } from 'components/pages/Forms';
 
-const ValidationPage: NextPage = () => (
+const SearchFormsPage: NextPage = () => (
   <NavBar>
     <FormSearch />
   </NavBar>
 );
 
-export default ValidationPage;
+export default SearchFormsPage;
