@@ -16,53 +16,74 @@ import {
   IncidentDto,
   koboKeys,
 } from '@wfp-dmp/interfaces';
+import path from 'path';
 import { useMemo } from 'react';
 
-// ask felix how to type something that could be a mix of all three
-export const TableDisplay = ({
-  forms,
-}: {
-  forms: FloodDto[] | DroughtDto[] | IncidentDto[] | undefined;
-}): JSX.Element => {
-  const formatForms = (
-    formData: FloodDto[] | DroughtDto[] | IncidentDto[] | undefined,
-  ) => {
-    if (formData === undefined) {
+type union = (FloodDto | DroughtDto | IncidentDto)[];
+export const TableDisplay = ({ forms }: { forms: union }): JSX.Element => {
+  const formatForms = (formData: union) => {
+    if (formData.length === 0) {
       return [];
     }
 
     return formData.map(form => {
-      let keys: {
-        district: string;
-        commune: string;
-        province: string;
-        disasterDate: string;
-        entryName: string;
-        phone: string;
-        entryDate: string;
-        disTyp: string;
-        id: string;
+      const isFlood = (
+        furm: FloodDto | DroughtDto | IncidentDto,
+      ): furm is FloodDto => {
+        return koboKeys[FLOOD].disTyp in furm;
       };
-      if (koboKeys[FLOOD].disTyp in form) {
-        keys = koboKeys[FLOOD];
-      } else if (koboKeys[DROUGHT].disTyp in form) {
-        keys = koboKeys[DROUGHT];
-      } else {
-        keys = koboKeys[INCIDENT];
-      }
+      const isDrought = (
+        furm: FloodDto | DroughtDto | IncidentDto,
+      ): furm is DroughtDto => {
+        return koboKeys[DROUGHT].disTyp in furm;
+      };
 
-      return {
-        district: form[keys.district] as string,
-        commune: form[keys.commune] as string,
-        disasterDate: form[keys.disasterDate] as string,
-        disasterType: form[keys.disTyp] as string,
-        type: form[keys.disTyp] as string,
-        reportName: form[keys.entryName] as string,
-        phone: form[keys.phone] as string,
-        entryDate: form[keys.entryDate] as string,
-        approvalLink: form[keys.id] as string,
-        id: form[keys.id] as string,
-      };
+      if (isFlood(form)) {
+        const keys = koboKeys[FLOOD];
+
+        return {
+          district: form[keys.district],
+          commune: form[keys.commune],
+          disasterDate: form[keys.disasterDate],
+          disasterType: form[keys.disTyp],
+          type: form[keys.disTyp],
+          reportName: form[keys.entryName],
+          phone: form[keys.phone],
+          entryDate: form[keys.entryDate],
+          approvalLink: path.join('form', FLOOD, form[keys.id].toString()),
+          id: form[keys.id],
+        };
+      } else if (isDrought(form)) {
+        const keys = koboKeys[DROUGHT];
+
+        return {
+          district: form[keys.district],
+          commune: form[keys.commune],
+          disasterDate: form[keys.disasterDate],
+          disasterType: form[keys.disTyp],
+          type: form[keys.disTyp],
+          reportName: form[keys.entryName],
+          phone: form[keys.phone],
+          entryDate: form[keys.entryDate],
+          approvalLink: path.join('form', DROUGHT, form[keys.id].toString()),
+          id: form[keys.id],
+        };
+      } else {
+        const keys = koboKeys[INCIDENT];
+
+        return {
+          district: form[keys.district],
+          commune: form[keys.commune],
+          disasterDate: form[keys.disasterDate],
+          disasterType: form[keys.disTyp],
+          type: form[keys.disTyp],
+          reportName: form[keys.entryName],
+          phone: form[keys.phone],
+          entryDate: form[keys.entryDate],
+          approvalLink: path.join('form', INCIDENT, form[keys.id].toString()),
+          id: form[keys.id],
+        };
+      }
     });
   };
 
@@ -75,13 +96,13 @@ export const TableDisplay = ({
         <TableHead>
           <TableRow>
             <TableCell>District</TableCell>
-            <TableCell align="right">Commune</TableCell>
-            <TableCell align="right">Disaster date</TableCell>
-            <TableCell align="right">Type of disaster</TableCell>
-            <TableCell align="right">Report entry name</TableCell>
-            <TableCell align="right">Phone</TableCell>
-            <TableCell align="right">Report entry date</TableCell>
-            <TableCell align="right">Review and approval</TableCell>
+            <TableCell>Commune</TableCell>
+            <TableCell>Disaster date</TableCell>
+            <TableCell>Type of disaster</TableCell>
+            <TableCell>Report entry name</TableCell>
+            <TableCell>Phone</TableCell>
+            <TableCell>Report entry date</TableCell>
+            <TableCell>Review and approval</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -93,13 +114,13 @@ export const TableDisplay = ({
               <TableCell component="th" scope="row">
                 {formattedForm.district}
               </TableCell>
-              <TableCell align="right">{formattedForm.commune}</TableCell>
-              <TableCell align="right">{formattedForm.disasterDate}</TableCell>
-              <TableCell align="right">{formattedForm.disasterType}</TableCell>
-              <TableCell align="right">{formattedForm.reportName}</TableCell>
-              <TableCell align="right">{formattedForm.phone}</TableCell>
-              <TableCell align="right">{formattedForm.entryDate}</TableCell>
-              <TableCell align="right">{formattedForm.id}</TableCell>
+              <TableCell>{formattedForm.commune}</TableCell>
+              <TableCell>{formattedForm.disasterDate}</TableCell>
+              <TableCell>{formattedForm.disasterType}</TableCell>
+              <TableCell>{formattedForm.reportName}</TableCell>
+              <TableCell>{formattedForm.phone}</TableCell>
+              <TableCell>{formattedForm.entryDate}</TableCell>
+              <TableCell>{formattedForm.id}</TableCell>
             </TableRow>
           ))}
         </TableBody>
