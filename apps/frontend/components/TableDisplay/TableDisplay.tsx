@@ -17,6 +17,7 @@ import {
 import { isDrought, isFlood } from '@wfp-dmp/interfaces/dist/kobo/utils';
 import path from 'path';
 import { useMemo } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 export const TableDisplay = ({
   forms,
@@ -33,6 +34,7 @@ export const TableDisplay = ({
         const keys = koboKeys[FLOOD];
 
         return {
+          province: form[keys.province],
           district: form[keys.district],
           commune: form[keys.commune],
           disasterDate: form[keys.disasterDate],
@@ -48,6 +50,7 @@ export const TableDisplay = ({
         const keys = koboKeys[DROUGHT];
 
         return {
+          province: form[keys.province],
           district: form[keys.district],
           commune: form[keys.commune],
           disasterDate: form[keys.disasterDate],
@@ -63,6 +66,7 @@ export const TableDisplay = ({
         const keys = koboKeys[INCIDENT];
 
         return {
+          province: form[keys.province],
           district: form[keys.district],
           commune: form[keys.commune],
           disasterDate: form[keys.disasterDate],
@@ -82,29 +86,50 @@ export const TableDisplay = ({
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 600 }} aria-label="simple table">
+      <Table sx={{ minWidth: 600 }}>
         <TableHead>
           <TableRow>
-            <TableCell>District</TableCell>
-            <TableCell>Commune</TableCell>
-            <TableCell>Disaster date</TableCell>
-            <TableCell>Type of disaster</TableCell>
-            <TableCell>Report entry name</TableCell>
-            <TableCell>Phone</TableCell>
-            <TableCell>Report entry date</TableCell>
-            <TableCell>Review and approval</TableCell>
+            <TableCell>
+              <FormattedMessage id="forms_table.headers.province" />
+            </TableCell>
+            <TableCell>
+              <FormattedMessage id="forms_table.headers.district" />
+            </TableCell>
+            <TableCell>
+              <FormattedMessage id="forms_table.headers.commune" />
+            </TableCell>
+            <TableCell>
+              <FormattedMessage id="forms_table.headers.dis_date" />
+            </TableCell>
+            <TableCell>
+              <FormattedMessage id="forms_table.headers.dis_type" />
+            </TableCell>
+            <TableCell>
+              <FormattedMessage id="forms_table.headers.entry_name" />
+            </TableCell>
+            <TableCell>
+              <FormattedMessage id="forms_table.headers.phone" />
+            </TableCell>
+            <TableCell>
+              <FormattedMessage id="forms_table.headers.entry_date" />
+            </TableCell>
+            <TableCell>
+              <FormattedMessage id="forms_table.headers.review_link" />
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {formattedForms.map(formattedForm => (
-            <TableRow
-              key={formattedForm.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {formattedForm.district}
+            <TableRow key={formattedForm.id}>
+              <TableCell>
+                <FormattedMessage id={`provinces.${formattedForm.province}`} />
               </TableCell>
-              <TableCell>{formattedForm.commune}</TableCell>
+              <TableCell>
+                <FormattedMessage id={`districts.${formattedForm.district}`} />
+              </TableCell>
+              <TableCell>
+                <FormattedMessage id={`communes.${formattedForm.commune}`} />
+              </TableCell>
               <TableCell>{formattedForm.disasterDate}</TableCell>
               <TableCell>{formattedForm.disasterType}</TableCell>
               <TableCell>{formattedForm.reportName}</TableCell>

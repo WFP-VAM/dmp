@@ -12,13 +12,13 @@ export const DisasterFilter = ({ control }: Props): JSX.Element => {
 
   const disasters = Object.keys(DisasterMapping).map(disaster => {
     return {
-      labelId: `validation_params.${disaster}`,
+      labelId: `validation_search_params.${disaster}`,
       value: DisasterMapping[disaster],
     };
   });
   const incidents = Object.keys(IncidentMapping).map(incident => {
     return {
-      labelId: `validation_params.${incident}`,
+      labelId: `validation_search_params.${incident}`,
       value: IncidentMapping[incident],
     };
   });
@@ -39,7 +39,7 @@ export const DisasterFilter = ({ control }: Props): JSX.Element => {
           >
             <legend>
               <FormattedMessage
-                id="validation_params.disaster_type"
+                id="validation_search_params.disaster_type"
                 defaultMessage="Disaster Type"
               />
             </legend>
@@ -65,7 +65,7 @@ export const DisasterFilter = ({ control }: Props): JSX.Element => {
           >
             <legend>
               <FormattedMessage
-                id="validation_params.incident_type"
+                id="validation_search_params.incident_type"
                 defaultMessage="Incident Type"
               />
             </legend>
