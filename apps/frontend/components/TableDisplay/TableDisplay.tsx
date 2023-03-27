@@ -1,4 +1,5 @@
 import {
+  Link,
   Paper,
   Table,
   TableBody,
@@ -43,7 +44,7 @@ export const TableDisplay = ({
           reportName: form[keys.entryName],
           phone: form[keys.phone],
           entryDate: form[keys.entryDate],
-          approvalLink: path.join('form', FLOOD, form[keys.id].toString()),
+          approvalLink: path.join('/form', FLOOD, form[keys.id].toString()),
           id: form[keys.id],
         };
       } else if (isDrought(form)) {
@@ -59,7 +60,7 @@ export const TableDisplay = ({
           reportName: form[keys.entryName],
           phone: form[keys.phone],
           entryDate: form[keys.entryDate],
-          approvalLink: path.join('form', DROUGHT, form[keys.id].toString()),
+          approvalLink: path.join('/form', DROUGHT, form[keys.id].toString()),
           id: form[keys.id],
         };
       } else {
@@ -75,8 +76,7 @@ export const TableDisplay = ({
           reportName: form[keys.entryName],
           phone: form[keys.phone],
           entryDate: form[keys.entryDate],
-          approvalLink: path.join('form', INCIDENT, form[keys.id].toString()),
-          id: form[keys.id],
+          approvalLink: path.join('/form', INCIDENT, form[keys.id].toString()),
         };
       }
     });
@@ -139,7 +139,9 @@ export const TableDisplay = ({
               <TableCell>{formattedForm.reportName}</TableCell>
               <TableCell>{formattedForm.phone}</TableCell>
               <TableCell>{formattedForm.entryDate}</TableCell>
-              <TableCell>{formattedForm.id}</TableCell>
+              <TableCell>
+                <Link href={formattedForm.approvalLink}>LINK TEXT</Link>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
