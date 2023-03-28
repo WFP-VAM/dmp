@@ -1,12 +1,12 @@
 import { NextPage } from 'next';
 
-import { NavBar } from 'components/NavBar';
+import { LayoutWithNav } from 'components/Layout';
 import { FormSearch } from 'components/pages/Forms';
 
 const SearchFormsPage: NextPage = () => (
-  <NavBar>
+  <LayoutWithNav>
     <FormSearch />
-  </NavBar>
+  </LayoutWithNav>
 );
 
 export default SearchFormsPage;

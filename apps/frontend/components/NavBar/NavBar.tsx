@@ -42,6 +42,7 @@ export const NavBar = ({ children }: Props): JSX.Element => {
             variant="permanent"
             sx={{
               display: { xs: 'none', sm: 'block' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 260 },
             }}
             open
           >

@@ -1,12 +1,12 @@
 import { NextPage } from 'next';
 
-import { NavBar } from 'components/NavBar';
+import { LayoutWithNav } from 'components/Layout';
 import { FormValidation } from 'components/pages/Form';
 
 const FormPage: NextPage = () => (
-  <NavBar>
+  <LayoutWithNav>
     <FormValidation />
-  </NavBar>
+  </LayoutWithNav>
 );
 
 export default FormPage;
