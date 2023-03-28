@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next/types';
@@ -14,12 +15,24 @@ export const Login: NextPage = () => {
   const intl = useIntl();
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm<LoginData>();
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<LoginData>();
   const onSubmit = (data: LoginData) => {
     return login(data)
       .then(() => router.push(Pages.Home))
-      .catch((e: Response) => {
-        console.log(e);
+      .catch(() => {
+        setError('email', {
+          type: 'server',
+          message: 'Username or password is incorrect',
+        });
+        setError('password', {
+          type: 'server',
+          message: 'Username or password is incorrect',
+        });
       });
   };
 
@@ -79,6 +92,9 @@ export const Login: NextPage = () => {
               })}
             />
           </div>
+          <Typography color="red">
+            {errors.email && errors.password?.message}
+          </Typography>
           <button type="submit" className={style.submit}>
             <FormattedMessage id="login.submit" />
           </button>
