@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
@@ -21,12 +21,14 @@ export const SearchFilters = ({
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
       <DisasterFilter control={control} />
-      <Button sx={{ color: 'white', float: 'right' }} type="submit">
-        <FormattedMessage
-          id="navigation.forms.search"
-          defaultMessage="Hide password"
-        />
-      </Button>
+      <Box display="flex" justifyContent="center" mb={2}>
+        <Button sx={{ color: 'white' }} type="submit">
+          <FormattedMessage
+            id="navigation.forms.search"
+            defaultMessage="Search"
+          />
+        </Button>
+      </Box>
     </form>
   );
 };
