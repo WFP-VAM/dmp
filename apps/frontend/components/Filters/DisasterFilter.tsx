@@ -7,14 +7,15 @@ import {
   Typography,
 } from '@mui/material';
 import { DisasterMapping, IncidentMapping } from '@wfp-dmp/interfaces';
-import { Control, Controller } from 'react-hook-form';
+import { ChangeEvent } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 interface Props {
-  control: Control<{ DisTyp: string }>;
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const DisasterFilter = ({ control }: Props): JSX.Element => {
+export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
   const intl = useIntl();
 
   const disasters = Object.keys(DisasterMapping).map(
@@ -25,62 +26,56 @@ export const DisasterFilter = ({ control }: Props): JSX.Element => {
   );
 
   return (
-    <Controller
-      name={'DisTyp'}
-      control={control}
-      render={({ field: { onChange, value } }) => (
-        <RadioGroup
-          value={value}
-          onChange={onChange}
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 3,
-          }}
-        >
-          <Card variant="outlined" sx={{ marginRight: 5 }}>
-            <CardContent>
-              <Typography variant="h6" sx={{ marginBottom: 1 }}>
-                <FormattedMessage
-                  id="validation_search_params.disaster_type"
-                  defaultMessage="Disaster Type"
-                />
-              </Typography>
-              {disasters.map(type => (
-                <FormControlLabel
-                  key={type}
-                  value={type}
-                  control={<Radio />}
-                  label={intl.formatMessage({
-                    id: `disasters.${type}`,
-                  })}
-                />
-              ))}
-            </CardContent>
-          </Card>
-          <Card variant="outlined" sx={{ maxWidth: 600, marginLeft: 5 }}>
-            <CardContent>
-              <Typography variant="h6" sx={{ marginBottom: 1 }}>
-                <FormattedMessage
-                  id="validation_search_params.incident_type"
-                  defaultMessage="Incident Type"
-                />
-              </Typography>
-              {incidents.map(type => (
-                <FormControlLabel
-                  key={type}
-                  value={type}
-                  control={<Radio />}
-                  label={intl.formatMessage({
-                    id: `disasters.${type}`,
-                  })}
-                />
-              ))}
-            </CardContent>
-          </Card>
-        </RadioGroup>
-      )}
-    />
+    <RadioGroup
+      value={value}
+      onChange={onChange}
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: 3,
+      }}
+    >
+      <Card variant="outlined" sx={{ marginRight: 5 }}>
+        <CardContent>
+          <Typography variant="h6" sx={{ marginBottom: 1 }}>
+            <FormattedMessage
+              id="validation_search_params.disaster_type"
+              defaultMessage="Disaster Type"
+            />
+          </Typography>
+          {disasters.map(type => (
+            <FormControlLabel
+              key={type}
+              value={type}
+              control={<Radio />}
+              label={intl.formatMessage({
+                id: `disasters.${type}`,
+              })}
+            />
+          ))}
+        </CardContent>
+      </Card>
+      <Card variant="outlined" sx={{ maxWidth: 600, marginLeft: 5 }}>
+        <CardContent>
+          <Typography variant="h6" sx={{ marginBottom: 1 }}>
+            <FormattedMessage
+              id="validation_search_params.incident_type"
+              defaultMessage="Incident Type"
+            />
+          </Typography>
+          {incidents.map(type => (
+            <FormControlLabel
+              key={type}
+              value={type}
+              control={<Radio />}
+              label={intl.formatMessage({
+                id: `disasters.${type}`,
+              })}
+            />
+          ))}
+        </CardContent>
+      </Card>
+    </RadioGroup>
   );
 };

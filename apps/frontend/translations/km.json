@@ -41,7 +41,9 @@
   },
   "validation_search_params": {
     "disaster_type": "ប្រភេទគ្រោះមហន្តរាយ",
-    "incident_type": "ឧបទ្ទវហេតុ"
+    "incident_type": "ឧបទ្ទវហេតុ",
+    "start_date": "ចាប់ពី",
+    "end_date": "រហូតដល់"
   },
   "disasters": {
     "1": "ទឹកជំនន់",
