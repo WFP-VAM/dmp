@@ -28,7 +28,7 @@ export const ProvinceFilter = ({
   );
 };
 
-const singleProvinceDistricts = (provinceValue: string) => {
+const getDistrictsFilteredByCommune = (provinceValue: string) => {
   return districts.filter((district: string) => {
     return district.startsWith(provinceValue);
   });
@@ -43,7 +43,7 @@ export const DistrictFilter = ({
   provinceValue: string;
 }): JSX.Element => {
   const districtsFiltered = useMemo(
-    () => singleProvinceDistricts(provinceValue),
+    () => getDistrictsFilteredByCommune(provinceValue),
     [provinceValue],
   );
 
@@ -63,7 +63,7 @@ export const DistrictFilter = ({
   );
 };
 
-const singleDistrictCommunes = (districtValue: string) => {
+const getCommunesFilteredByDistrict = (districtValue: string) => {
   return communes.filter((commune: string) => {
     return commune.startsWith(districtValue);
   });
@@ -78,7 +78,7 @@ export const CommuneFilter = ({
   districtValue: string;
 }): JSX.Element => {
   const communesFiltered = useMemo(
-    () => singleDistrictCommunes(districtValue),
+    () => getCommunesFilteredByDistrict(districtValue),
     [districtValue],
   );
 
