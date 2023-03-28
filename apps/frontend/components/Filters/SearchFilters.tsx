@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { DateRange, DateRangeFilter } from './DateRangeFilter';
 import { DisasterFilter } from './DisasterFilter';
-import { RegionFilter } from './RegionFilter';
+import { CommuneFilter, DistrictFilter, ProvinceFilter } from './RegionFilters';
 
 interface SearchFormData {
   disTyp: string;
@@ -31,6 +31,7 @@ export const SearchFilters = ({
   const submitHandler = (data: SearchFormData) => {
     setDisasterType(data.disTyp);
   };
+  const [provinceValue, districtValue] = watch(['province', 'district']);
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
@@ -49,10 +50,31 @@ export const SearchFilters = ({
       {/* <DisasterFilter control={control} /> */}
       <Controller
         name="province"
-        defaultValue={'01'}
         control={control}
         render={({ field: { value, onChange } }) => (
-          <RegionFilter value={value} onChange={onChange} />
+          <ProvinceFilter value={value} onChange={onChange} />
+        )}
+      />
+      <Controller
+        name="district"
+        control={control}
+        render={({ field: { value, onChange } }) => (
+          <DistrictFilter
+            value={value}
+            onChange={onChange}
+            provinceValue={provinceValue}
+          />
+        )}
+      />
+      <Controller
+        name="commune"
+        control={control}
+        render={({ field: { value, onChange } }) => (
+          <CommuneFilter
+            value={value}
+            onChange={onChange}
+            districtValue={districtValue}
+          />
         )}
       />
       <Box display="flex" justifyContent="center" mb={2}>
