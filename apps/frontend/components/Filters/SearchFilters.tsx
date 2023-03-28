@@ -4,16 +4,16 @@ import { Dispatch, SetStateAction } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 
-<<<<<<< HEAD
 import { DateRange, DateRangeFilter } from './DateRangeFilter';
-=======
->>>>>>> c0e6a45 (fix: cleanup)
 import { DisasterFilter } from './DisasterFilter';
 import { CommuneFilter, DistrictFilter, ProvinceFilter } from './RegionFilters';
 
 interface SearchFormData {
   disTyp: string;
   dateRange: DateRange;
+  province: string;
+  district: string;
+  commune: string;
 }
 
 export const SearchFilters = ({
@@ -21,9 +21,12 @@ export const SearchFilters = ({
 }: {
   setDisasterType: Dispatch<SetStateAction<string>>;
 }): JSX.Element => {
-  const { control, handleSubmit } = useForm<SearchFormData>({
+  const { control, handleSubmit, watch } = useForm<SearchFormData>({
     defaultValues: {
       disTyp: '1',
+      province: '01',
+      district: '',
+      commune: '',
       dateRange: {
         startDate: dayjs(new Date()),
         endDate: dayjs(new Date()),
@@ -50,6 +53,8 @@ export const SearchFilters = ({
         control={control}
         render={({ field: { onChange, value } }) => (
           <DateRangeFilter value={value} onChange={onChange} />
+        )}
+      />
       <Controller
         name="province"
         control={control}
