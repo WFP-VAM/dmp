@@ -3,6 +3,8 @@ import { communes, districts, provinces } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
+const selectInputStyles = { mr: 3, minWidth: 120 };
+
 export const ProvinceFilter = ({
   value,
   onChange,
@@ -13,7 +15,7 @@ export const ProvinceFilter = ({
   return (
     <FormControl>
       <InputLabel>Province</InputLabel>
-      <Select value={value} onChange={onChange}>
+      <Select value={value} onChange={onChange} sx={selectInputStyles}>
         {provinces.map(provinceNumber => {
           return (
             <MenuItem value={provinceNumber} key={provinceNumber}>
@@ -48,7 +50,7 @@ export const DistrictFilter = ({
   return (
     <FormControl disabled={provinceValue !== '' ? false : true}>
       <InputLabel>District</InputLabel>
-      <Select value={value} onChange={onChange}>
+      <Select value={value} onChange={onChange} sx={selectInputStyles}>
         {districtsFiltered.map(districtNumber => {
           return (
             <MenuItem value={districtNumber} key={districtNumber}>
@@ -83,7 +85,7 @@ export const CommuneFilter = ({
   return (
     <FormControl disabled={districtValue !== '' ? false : true}>
       <InputLabel>Commune</InputLabel>
-      <Select value={value} onChange={onChange}>
+      <Select value={value} onChange={onChange} sx={selectInputStyles}>
         {communesFiltered.map(communeNumber => {
           return (
             <MenuItem value={communeNumber} key={communeNumber}>
