@@ -92,7 +92,7 @@ export const Login: NextPage = () => {
             />
           </div>
           {errors.email?.message != null && (
-            <Typography>{errors.email.message}</Typography>
+            <Typography color="red">{errors.email.message}</Typography>
           )}
           <button type="submit" className={style.submit}>
             <FormattedMessage id="login.submit" />
