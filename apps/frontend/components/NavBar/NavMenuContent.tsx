@@ -40,20 +40,24 @@ export const NavMenuContent = (): JSX.Element => {
   };
 
   return (
-    <>
-      <Box margin="30px 0px 0px 20px">
-        <Link href="/">
-          <IconButton sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
-            <Logo
-              src="/logo.svg"
-              alt="logo"
-              width={175}
-              height={175}
-              priority={true} //preloads image
-            />
-          </IconButton>
-        </Link>
-      </Box>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      sx={{ pt: 2 }}
+    >
+      <Link href="/">
+        <IconButton sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
+          <Logo
+            src="/logo.svg"
+            alt="logo"
+            width={175}
+            height={175}
+            priority={true} //preloads image
+          />
+        </IconButton>
+      </Link>
       <List>
         <ListItem key="forms">
           <Link
@@ -127,6 +131,6 @@ export const NavMenuContent = (): JSX.Element => {
           </MenuItem>
         </Select>
       </FormControl>
-    </>
+    </Box>
   );
 };
