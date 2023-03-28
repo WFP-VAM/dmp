@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 
 import { DisasterFilter } from './DisasterFilter';
@@ -20,7 +20,13 @@ export const SearchFilters = ({
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
-      <DisasterFilter control={control} />
+      <Controller
+        name={'DisTyp'}
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <DisasterFilter value={value} onChange={onChange} />
+        )}
+      />
       <Box display="flex" justifyContent="center" mb={2}>
         <Button sx={{ color: 'white' }} type="submit">
           <FormattedMessage
