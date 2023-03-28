@@ -4,7 +4,10 @@ import { Dispatch, SetStateAction } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 
+<<<<<<< HEAD
 import { DateRange, DateRangeFilter } from './DateRangeFilter';
+=======
+>>>>>>> c0e6a45 (fix: cleanup)
 import { DisasterFilter } from './DisasterFilter';
 import { CommuneFilter, DistrictFilter, ProvinceFilter } from './RegionFilters';
 
@@ -47,7 +50,6 @@ export const SearchFilters = ({
         control={control}
         render={({ field: { onChange, value } }) => (
           <DateRangeFilter value={value} onChange={onChange} />
-      {/* <DisasterFilter control={control} /> */}
       <Controller
         name="province"
         control={control}
