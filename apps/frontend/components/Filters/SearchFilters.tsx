@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { DateRange, DateRangeFilter } from './DateRangeFilter';
 import { DisasterFilter } from './DisasterFilter';
+import { RegionFilter } from './RegionFilter';
 
 interface SearchFormData {
   disTyp: string;
@@ -45,6 +46,13 @@ export const SearchFilters = ({
         control={control}
         render={({ field: { onChange, value } }) => (
           <DateRangeFilter value={value} onChange={onChange} />
+      {/* <DisasterFilter control={control} /> */}
+      <Controller
+        name="province"
+        defaultValue={'01'}
+        control={control}
+        render={({ field: { value, onChange } }) => (
+          <RegionFilter value={value} onChange={onChange} />
         )}
       />
       <Box display="flex" justifyContent="center" mb={2}>
