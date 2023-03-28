@@ -29,10 +29,6 @@ export const Login: NextPage = () => {
           type: 'server',
           message: 'Username or password is incorrect',
         });
-        setError('password', {
-          type: 'server',
-          message: 'Username or password is incorrect',
-        });
       });
   };
 
@@ -92,9 +88,7 @@ export const Login: NextPage = () => {
               })}
             />
           </div>
-          <Typography color="red">
-            {errors.email && errors.password?.message}
-          </Typography>
+          <Typography color="red">{errors.email?.message}</Typography>
           <button type="submit" className={style.submit}>
             <FormattedMessage id="login.submit" />
           </button>
