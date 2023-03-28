@@ -21,15 +21,18 @@ export const Login: NextPage = () => {
     setError,
     formState: { errors },
   } = useForm<LoginData>();
-  const onSubmit = (data: LoginData) => {
-    return login(data)
-      .then(() => router.push(Pages.Home))
-      .catch(() => {
-        setError('email', {
-          type: 'server',
-          message: 'Username or password is incorrect',
-        });
+
+  const onSubmit = async (data: LoginData) => {
+    try {
+      await login(data);
+
+      return await router.push(Pages.Home);
+    } catch {
+      setError('email', {
+        type: 'server',
+        message: 'Username or password is incorrect',
       });
+    }
   };
 
   return (
