@@ -41,7 +41,9 @@
   },
   "validation_search_params": {
     "disaster_type": "Disaster Type",
-    "incident_type": "Incident Type"
+    "incident_type": "Incident Type",
+    "start_date": "From",
+    "end_date": "To"
   },
   "disasters": {
     "1": "Flood",
