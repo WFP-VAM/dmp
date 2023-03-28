@@ -1,6 +1,8 @@
 import 'styles/global.css';
 import 'styles/stylesheet.css';
 import { ThemeProvider } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Inter } from '@next/font/google';
 import { AppProps } from 'next/app';
 import React from 'react';
@@ -45,9 +47,11 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
                       .then(response => response.data),
                 }}
               >
-                <div>
-                  <Component {...pageProps} />
-                </div>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <div>
+                    <Component {...pageProps} />
+                  </div>
+                </LocalizationProvider>
               </SWRConfig>
             </Intl>
           </LanguageWrapper>

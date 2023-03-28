@@ -217,6 +217,7 @@ importers:
       '@emotion/styled': ^11.10.6
       '@mui/icons-material': ^5.11.11
       '@mui/material': ^5.11.12
+      '@mui/x-date-pickers': ^6.0.3
       '@next/bundle-analyzer': 13.1.6
       '@next/font': 13.1.6
       '@testing-library/jest-dom': 5.16.5
@@ -229,6 +230,7 @@ importers:
       '@wfp-dmp/interfaces': workspace:*
       axios: 0.27.2
       axios-auth-refresh: 3.3.3
+      dayjs: ^1.11.7
       dependency-cruiser: 11.15.0
       dependency-cruiser-config-custom: workspace:*
       eslint-config-custom: workspace:*
@@ -255,10 +257,12 @@ importers:
       '@emotion/styled': 11.10.6_iki3fbpp77vbiozh2wfzadvccy
       '@mui/icons-material': 5.11.11_ibnbemtnp3dkfitirqpirek6pi
       '@mui/material': 5.11.12_gtewo3nsfkax3yx3e3vlddywna
+      '@mui/x-date-pickers': 6.0.3_nh7fqkil4zeqi5grosbfzpy4ji
       '@next/font': 13.1.6
       '@wfp-dmp/interfaces': link:../../packages/interfaces
       axios: 0.27.2
       axios-auth-refresh: 3.3.3_axios@0.27.2
+      dayjs: 1.11.7
       jwt-decode: 3.1.2
       next: 13.1.6_vyk55zyolcaieh7zfm7nf7uva4
       react: 18.2.0
@@ -2086,6 +2090,92 @@ packages:
       kuler: 2.0.0
     dev: false
 
+  /@date-io/core/2.16.0:
+    resolution: {integrity: sha512-DYmSzkr+jToahwWrsiRA2/pzMEtz9Bq1euJwoOuYwuwIYXnZFtHajY2E6a1VNVDc9jP8YUXK1BvnZH9mmT19Zg==}
+    dev: false
+
+  /@date-io/date-fns-jalali/2.16.0:
+    resolution: {integrity: sha512-MNVvGYwRiBydbvY7gvZM14W2kosIG29G1Ekw5qmYWOXkIIFngh6ZvV7/uVGDCW+gqlIeSz/XitZXA9n8RO0tJw==}
+    peerDependencies:
+      date-fns-jalali: ^2.13.0-0
+    peerDependenciesMeta:
+      date-fns-jalali:
+        optional: true
+    dependencies:
+      '@date-io/core': 2.16.0
+    dev: false
+
+  /@date-io/date-fns/2.16.0:
+    resolution: {integrity: sha512-bfm5FJjucqlrnQcXDVU5RD+nlGmL3iWgkHTq3uAZWVIuBu6dDmGa3m8a6zo2VQQpu8ambq9H22UyUpn7590joA==}
+    peerDependencies:
+      date-fns: ^2.0.0
+    peerDependenciesMeta:
+      date-fns:
+        optional: true
+    dependencies:
+      '@date-io/core': 2.16.0
+    dev: false
+
+  /@date-io/dayjs/2.16.0_dayjs@1.11.7:
+    resolution: {integrity: sha512-y5qKyX2j/HG3zMvIxTobYZRGnd1FUW2olZLS0vTj7bEkBQkjd2RO7/FEwDY03Z1geVGlXKnzIATEVBVaGzV4Iw==}
+    peerDependencies:
+      dayjs: ^1.8.17
+    peerDependenciesMeta:
+      dayjs:
+        optional: true
+    dependencies:
+      '@date-io/core': 2.16.0
+      dayjs: 1.11.7
+    dev: false
+
+  /@date-io/hijri/2.16.1:
+    resolution: {integrity: sha512-6BxY0mtnqj5cBiXluRs3uWN0mSJwGw0AB2ZxqtEHvBFoiSYEojW51AETnfPIWpdvDsBn+WAC7QrfBvQZnoyIkQ==}
+    peerDependencies:
+      moment-hijri: ^2.1.2
+    peerDependenciesMeta:
+      moment-hijri:
+        optional: true
+    dependencies:
+      '@date-io/moment': 2.16.1
+    transitivePeerDependencies:
+      - moment
+    dev: false
+
+  /@date-io/jalaali/2.16.1:
+    resolution: {integrity: sha512-GLw87G/WJ1DNrQHW8p/LqkqAqTUSqBSRin0H1pRPwCccB5Fh7GT64sadjzEvjW56lPJ0aq2vp5yI2eIjZajfrw==}
+    peerDependencies:
+      moment-jalaali: ^0.7.4 || ^0.8.0 || ^0.9.0
+    peerDependenciesMeta:
+      moment-jalaali:
+        optional: true
+    dependencies:
+      '@date-io/moment': 2.16.1
+    transitivePeerDependencies:
+      - moment
+    dev: false
+
+  /@date-io/luxon/2.16.1:
+    resolution: {integrity: sha512-aeYp5K9PSHV28946pC+9UKUi/xMMYoaGelrpDibZSgHu2VWHXrr7zWLEr+pMPThSs5vt8Ei365PO+84pCm37WQ==}
+    peerDependencies:
+      luxon: ^1.21.3 || ^2.x || ^3.x
+    peerDependenciesMeta:
+      luxon:
+        optional: true
+    dependencies:
+      '@date-io/core': 2.16.0
+    dev: false
+
+  /@date-io/moment/2.16.1:
+    resolution: {integrity: sha512-JkxldQxUqZBfZtsaCcCMkm/dmytdyq5pS1RxshCQ4fHhsvP5A7gSqPD22QbVXMcJydi3d3v1Y8BQdUKEuGACZQ==}
+    peerDependencies:
+      moment: ^2.24.0
+    peerDependenciesMeta:
+      moment:
+        optional: true
+    dependencies:
+      '@date-io/core': 2.16.0
+    dev: false
+
   /@emotion/babel-plugin/11.10.6:
     resolution: {integrity: sha512-p2dAqtVrkhSa7xz1u/m9eHYdLi+en8NowrmXeF/dKtJpU8lCWli8RUAati7NcSl0afsBott48pdnANuD0wh9QQ==}
     dependencies:
@@ -3104,6 +3194,80 @@ packages:
       prop-types: 15.8.1
       react: 18.2.0
       react-is: 18.2.0
+    dev: false
+
+  /@mui/utils/5.11.13_react@18.2.0:
+    resolution: {integrity: sha512-5ltA58MM9euOuUcnvwFJqpLdEugc9XFsRR8Gt4zZNb31XzMfSKJPR4eumulyhsOTK1rWf7K4D63NKFPfX0AxqA==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@types/prop-types': 15.7.5
+      '@types/react-is': 17.0.3
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-is: 18.2.0
+    dev: false
+
+  /@mui/x-date-pickers/6.0.3_nh7fqkil4zeqi5grosbfzpy4ji:
+    resolution: {integrity: sha512-TgKfWf47WiNzSAY3C8R+FQ2grtVveoS3WCtLf6E1I/O2adxruxXA+AFiIRVnfv8QX9QFLNayTKoaVUISg/PcXQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@emotion/react': ^11.9.0
+      '@emotion/styled': ^11.8.1
+      '@mui/material': ^5.4.1
+      '@mui/system': ^5.4.1
+      date-fns: ^2.25.0
+      date-fns-jalali: ^2.13.0-0
+      dayjs: ^1.10.7
+      luxon: ^3.0.2
+      moment: ^2.29.4
+      moment-hijri: ^2.1.2
+      moment-jalaali: ^0.7.4 || ^0.8.0 || ^0.9.0
+      react: ^17.0.2 || ^18.0.0
+      react-dom: ^17.0.2 || ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/react':
+        optional: true
+      '@emotion/styled':
+        optional: true
+      date-fns:
+        optional: true
+      date-fns-jalali:
+        optional: true
+      dayjs:
+        optional: true
+      luxon:
+        optional: true
+      moment:
+        optional: true
+      moment-hijri:
+        optional: true
+      moment-jalaali:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@date-io/core': 2.16.0
+      '@date-io/date-fns': 2.16.0
+      '@date-io/date-fns-jalali': 2.16.0
+      '@date-io/dayjs': 2.16.0_dayjs@1.11.7
+      '@date-io/hijri': 2.16.1
+      '@date-io/jalaali': 2.16.1
+      '@date-io/luxon': 2.16.1
+      '@date-io/moment': 2.16.1
+      '@emotion/react': 11.10.6_fn6mmk7tilns4p7ajkklhuudvi
+      '@emotion/styled': 11.10.6_iki3fbpp77vbiozh2wfzadvccy
+      '@mui/material': 5.11.12_gtewo3nsfkax3yx3e3vlddywna
+      '@mui/system': 5.11.12_67d4spduchcewoahqshwvfy33e
+      '@mui/utils': 5.11.13_react@18.2.0
+      '@types/react-transition-group': 4.4.5
+      clsx: 1.2.1
+      dayjs: 1.11.7
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-transition-group: 4.4.5_biqbaboplfbrettd7655fr4n2y
     dev: false
 
   /@nestjs/axios/2.0.0_xxngwmoaycbzgpku7ycvplegcy:
@@ -6643,6 +6807,10 @@ packages:
   /date-fns/2.29.2:
     resolution: {integrity: sha512-0VNbwmWJDS/G3ySwFSJA3ayhbURMTJLtwM2DTxf9CWondCnh6DTNlO9JgRSq6ibf4eD0lfMJNBxUdEAHHix+bA==}
     engines: {node: '>=0.11'}
+    dev: false
+
+  /dayjs/1.11.7:
+    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
     dev: false
 
   /debug/2.6.9:
