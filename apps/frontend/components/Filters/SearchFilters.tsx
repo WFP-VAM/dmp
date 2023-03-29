@@ -6,10 +6,12 @@ import { FormattedMessage } from 'react-intl';
 
 import { DateRange, DateRangeFilter } from './DateRangeFilter';
 import { DisasterFilter } from './DisasterFilter';
+import { RegionFilters } from './RegionFilters';
 
 interface SearchFormData {
   disTyp: string;
   dateRange: DateRange;
+  region: { province: string; district: string; commune: string };
 }
 
 export const SearchFilters = ({
@@ -20,6 +22,7 @@ export const SearchFilters = ({
   const { control, handleSubmit } = useForm<SearchFormData>({
     defaultValues: {
       disTyp: '1',
+      region: { province: '', district: '', commune: '' },
       dateRange: {
         startDate: dayjs(new Date()),
         endDate: dayjs(new Date()),
@@ -33,6 +36,13 @@ export const SearchFilters = ({
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
+      <Controller
+        name="region"
+        control={control}
+        render={({ field: { value, onChange } }) => (
+          <RegionFilters value={value} onChange={onChange} />
+        )}
+      />
       <Controller
         name={'disTyp'}
         control={control}

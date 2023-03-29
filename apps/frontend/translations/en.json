@@ -43,7 +43,10 @@
     "disaster_type": "Disaster Type",
     "incident_type": "Incident Type",
     "start_date": "From",
-    "end_date": "To"
+    "end_date": "To",
+    "province": "Province",
+    "district": "District",
+    "commune": "Commune"
   },
   "disasters": {
     "1": "Flood",
