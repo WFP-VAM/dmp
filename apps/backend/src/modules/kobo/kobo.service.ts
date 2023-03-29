@@ -58,10 +58,21 @@ export class KoboService {
     return data;
   }
 
-  async getForms<T extends DisasterType>(
-    province: string | undefined,
-    disTyp: string,
-  ): Promise<QueryResponse<T>> {
+  async getForms<T extends DisasterType>({
+    disTyp,
+    province,
+    district,
+    commune,
+    startDate,
+    endDate,
+  }: {
+    disTyp: string;
+    province: string | undefined;
+    district?: string;
+    commune?: string;
+    startDate?: string;
+    endDate?: string;
+  }): Promise<QueryResponse<T>> {
     const disasterType = computeDisasterTypeFromDistTyp(disTyp);
     const { data } = await this.httpService.axiosRef.get<QueryResponse<T>>(
       `assets/${AssetId[disasterType]}/data.json`,
@@ -69,7 +80,10 @@ export class KoboService {
         params: {
           query: {
             [koboKeys[disasterType].province]: province,
+            [koboKeys[disasterType].district]: district,
+            [koboKeys[disasterType].commune]: commune,
             [koboKeys[disasterType].disTyp]: disTyp,
+            _submission_time: { $gte: startDate, $lte: endDate },
           },
         },
       },

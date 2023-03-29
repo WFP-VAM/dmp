@@ -26,7 +26,7 @@ const defaultSearchFormData: SearchFormData = {
 export const FormSearch = () => {
   const [searchFormData, setSearchFormData] = useState(defaultSearchFormData);
 
-  const { data: formData, isLoading } = useGetForms(searchFormData.disTyp);
+  const { data: formData, isLoading } = useGetForms(searchFormData);
 
   return (
     <Box display="flex" flexDirection="column">
