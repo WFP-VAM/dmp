@@ -1,7 +1,7 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { communes, districts, provinces } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const getDistrictsFilteredByProvince = (provinceValue: string) => {
   return districts.filter((district: string) => {
@@ -24,13 +24,14 @@ interface Props {
   provinceValue: string;
   districtValue: string;
 }
-const selectInputStyles = { mr: 3, minWidth: 150 };
+
 export const RegionFilters = ({
   value,
   onChange,
   provinceValue,
   districtValue,
 }: Props): JSX.Element => {
+  const intl = useIntl();
   const districtsFiltered = useMemo(
     () => getDistrictsFilteredByProvince(provinceValue),
     [provinceValue],
@@ -41,55 +42,82 @@ export const RegionFilters = ({
     [districtValue],
   );
 
-  return (
-    <FormControl>
-      <InputLabel>Province</InputLabel>
-      <Select
-        value={value.province}
-        onChange={e => {
-          onChange({ province: e.target.value, district: '', commune: '' });
-        }}
-        sx={selectInputStyles}
-      >
-        {provinces.map(provinceNumber => {
-          return (
-            <MenuItem value={provinceNumber} key={provinceNumber}>
-              <FormattedMessage id={`provinces.${provinceNumber}`} />
-            </MenuItem>
-          );
-        })}
-      </Select>
+  const selectInputStyles = { mr: 3, minWidth: 200 };
 
-      <Select
-        value={value.district}
-        onChange={e => {
-          onChange({ ...value, district: e.target.value, commune: '' });
-        }}
-        sx={selectInputStyles}
-      >
-        {districtsFiltered.map(districtNumber => {
-          return (
-            <MenuItem value={districtNumber} key={districtNumber}>
-              <FormattedMessage id={`districts.${districtNumber}`} />
-            </MenuItem>
-          );
-        })}
-      </Select>
-      <Select
-        value={value.commune}
-        onChange={e => {
-          onChange({ ...value, commune: e.target.value });
-        }}
-        sx={selectInputStyles}
-      >
-        {communesFiltered.map(communeNumber => {
-          return (
-            <MenuItem value={communeNumber} key={communeNumber}>
-              <FormattedMessage id={`communes.${communeNumber}`} />
-            </MenuItem>
-          );
-        })}
-      </Select>
-    </FormControl>
+  return (
+    <Box display="flex" flexDirection="row" justifyContent="center" margin={2}>
+      <FormControl>
+        <InputLabel>
+          <FormattedMessage id="validation_search_params.province" />
+        </InputLabel>
+        <Select
+          value={value.province}
+          onChange={e => {
+            onChange({ province: e.target.value, district: '', commune: '' });
+          }}
+          sx={selectInputStyles}
+          label={intl.formatMessage({
+            id: 'validation_search_params.province',
+          })}
+        >
+          {provinces.map(provinceNumber => {
+            return (
+              <MenuItem value={provinceNumber} key={provinceNumber}>
+                <FormattedMessage id={`provinces.${provinceNumber}`} />
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+
+      <FormControl>
+        <InputLabel>
+          <FormattedMessage id="validation_search_params.district" />
+        </InputLabel>
+        <Select
+          value={value.district}
+          onChange={e => {
+            onChange({ ...value, district: e.target.value, commune: '' });
+          }}
+          sx={selectInputStyles}
+          label={intl.formatMessage({
+            id: 'validation_search_params.district',
+          })}
+        >
+          {districtsFiltered.map(districtNumber => {
+            return (
+              <MenuItem value={districtNumber} key={districtNumber}>
+                <FormattedMessage id={`districts.${districtNumber}`} />
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+
+      <FormControl>
+        <InputLabel>
+          <FormattedMessage id="validation_search_params.commune" />
+        </InputLabel>
+        <Select
+          disabled={districtValue === '' ? true : false}
+          value={value.commune}
+          onChange={e => {
+            onChange({ ...value, commune: e.target.value });
+          }}
+          sx={selectInputStyles}
+          label={intl.formatMessage({
+            id: 'validation_search_params.commune',
+          })}
+        >
+          {communesFiltered.map(communeNumber => {
+            return (
+              <MenuItem value={communeNumber} key={communeNumber}>
+                <FormattedMessage id={`communes.${communeNumber}`} />
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+    </Box>
   );
 };

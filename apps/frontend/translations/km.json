@@ -43,7 +43,10 @@
     "disaster_type": "ប្រភេទគ្រោះមហន្តរាយ",
     "incident_type": "ឧបទ្ទវហេតុ",
     "start_date": "ចាប់ពី",
-    "end_date": "រហូតដល់"
+    "end_date": "រហូតដល់",
+    "province": "Province",
+    "district": "District",
+    "commune": "Commune"
   },
   "disasters": {
     "1": "ទឹកជំនន់",

@@ -38,6 +38,18 @@ export const SearchFilters = ({
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
       <Controller
+        name="region"
+        control={control}
+        render={({ field: { value, onChange } }) => (
+          <RegionFilters
+            value={value}
+            onChange={onChange}
+            provinceValue={province}
+            districtValue={district}
+          />
+        )}
+      />
+      <Controller
         name={'disTyp'}
         control={control}
         render={({ field: { onChange, value } }) => (
@@ -49,18 +61,6 @@ export const SearchFilters = ({
         control={control}
         render={({ field: { onChange, value } }) => (
           <DateRangeFilter value={value} onChange={onChange} />
-        )}
-      />
-      <Controller
-        name="region"
-        control={control}
-        render={({ field: { value, onChange } }) => (
-          <RegionFilters
-            value={value}
-            onChange={onChange}
-            provinceValue={province}
-            districtValue={district}
-          />
         )}
       />
       <Box display="flex" justifyContent="center" mb={2}>
