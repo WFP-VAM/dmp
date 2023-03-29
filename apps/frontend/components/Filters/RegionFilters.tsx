@@ -3,19 +3,54 @@ import { communes, districts, provinces } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-const selectInputStyles = { mr: 3, minWidth: 120 };
+const getDistrictsFilteredByProvince = (provinceValue: string) => {
+  return districts.filter((district: string) => {
+    return district.startsWith(provinceValue);
+  });
+};
+const getCommunesFilteredByDistrict = (districtValue: string) => {
+  return communes.filter((commune: string) => {
+    return commune.startsWith(districtValue);
+  });
+};
 
-export const ProvinceFilter = ({
+interface Props {
+  value: { province: string; district: string; commune: string };
+  onChange: (regionValues: {
+    province: string;
+    district: string;
+    commune: string;
+  }) => void;
+  provinceValue: string;
+  districtValue: string;
+}
+const selectInputStyles = { mr: 3, minWidth: 150 };
+export const RegionFilters = ({
   value,
   onChange,
-}: {
-  value: string;
-  onChange: () => void;
-}): JSX.Element => {
+  provinceValue,
+  districtValue,
+}: Props): JSX.Element => {
+  const districtsFiltered = useMemo(
+    () => getDistrictsFilteredByProvince(provinceValue),
+    [provinceValue],
+  );
+
+  const communesFiltered = useMemo(
+    () => getCommunesFilteredByDistrict(districtValue),
+    [districtValue],
+  );
+
   return (
     <FormControl>
       <InputLabel>Province</InputLabel>
-      <Select value={value} onChange={onChange} sx={selectInputStyles}>
+      <Select
+        value={value.province}
+        onChange={e => {
+          onChange({ province: e.target.value, district: '', commune: '' });
+        }}
+        sx={selectInputStyles}
+      >
         {provinces.map(provinceNumber => {
           return (
             <MenuItem value={provinceNumber} key={provinceNumber}>
@@ -24,33 +59,14 @@ export const ProvinceFilter = ({
           );
         })}
       </Select>
-    </FormControl>
-  );
-};
 
-const getDistrictsFilteredByCommune = (provinceValue: string) => {
-  return districts.filter((district: string) => {
-    return district.startsWith(provinceValue);
-  });
-};
-export const DistrictFilter = ({
-  value,
-  onChange,
-  provinceValue,
-}: {
-  value: string;
-  onChange: () => void;
-  provinceValue: string;
-}): JSX.Element => {
-  const districtsFiltered = useMemo(
-    () => getDistrictsFilteredByCommune(provinceValue),
-    [provinceValue],
-  );
-
-  return (
-    <FormControl disabled={provinceValue !== '' ? false : true}>
-      <InputLabel>District</InputLabel>
-      <Select value={value} onChange={onChange} sx={selectInputStyles}>
+      <Select
+        value={value.district}
+        onChange={e => {
+          onChange({ ...value, district: e.target.value, commune: '' });
+        }}
+        sx={selectInputStyles}
+      >
         {districtsFiltered.map(districtNumber => {
           return (
             <MenuItem value={districtNumber} key={districtNumber}>
@@ -59,33 +75,13 @@ export const DistrictFilter = ({
           );
         })}
       </Select>
-    </FormControl>
-  );
-};
-
-const getCommunesFilteredByDistrict = (districtValue: string) => {
-  return communes.filter((commune: string) => {
-    return commune.startsWith(districtValue);
-  });
-};
-export const CommuneFilter = ({
-  value,
-  onChange,
-  districtValue,
-}: {
-  value: string;
-  onChange: () => void;
-  districtValue: string;
-}): JSX.Element => {
-  const communesFiltered = useMemo(
-    () => getCommunesFilteredByDistrict(districtValue),
-    [districtValue],
-  );
-
-  return (
-    <FormControl disabled={districtValue !== '' ? false : true}>
-      <InputLabel>Commune</InputLabel>
-      <Select value={value} onChange={onChange} sx={selectInputStyles}>
+      <Select
+        value={value.commune}
+        onChange={e => {
+          onChange({ ...value, commune: e.target.value });
+        }}
+        sx={selectInputStyles}
+      >
         {communesFiltered.map(communeNumber => {
           return (
             <MenuItem value={communeNumber} key={communeNumber}>

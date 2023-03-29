@@ -6,14 +6,12 @@ import { FormattedMessage } from 'react-intl';
 
 import { DateRange, DateRangeFilter } from './DateRangeFilter';
 import { DisasterFilter } from './DisasterFilter';
-import { CommuneFilter, DistrictFilter, ProvinceFilter } from './RegionFilters';
+import { RegionFilters } from './RegionFilters';
 
 interface SearchFormData {
   disTyp: string;
   dateRange: DateRange;
-  province: string;
-  district: string;
-  commune: string;
+  region: { province: string; district: string; commune: string };
 }
 
 export const SearchFilters = ({
@@ -24,9 +22,7 @@ export const SearchFilters = ({
   const { control, handleSubmit, watch } = useForm<SearchFormData>({
     defaultValues: {
       disTyp: '1',
-      province: '01',
-      district: '',
-      commune: '',
+      region: { province: '01', district: '', commune: '' },
       dateRange: {
         startDate: dayjs(new Date()),
         endDate: dayjs(new Date()),
@@ -37,7 +33,7 @@ export const SearchFilters = ({
   const submitHandler = (data: SearchFormData) => {
     setDisasterType(data.disTyp);
   };
-  const [provinceValue, districtValue] = watch(['province', 'district']);
+  const { province, district } = watch('region');
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
@@ -56,31 +52,14 @@ export const SearchFilters = ({
         )}
       />
       <Controller
-        name="province"
+        name="region"
         control={control}
         render={({ field: { value, onChange } }) => (
-          <ProvinceFilter value={value} onChange={onChange} />
-        )}
-      />
-      <Controller
-        name="district"
-        control={control}
-        render={({ field: { value, onChange } }) => (
-          <DistrictFilter
+          <RegionFilters
             value={value}
             onChange={onChange}
-            provinceValue={provinceValue}
-          />
-        )}
-      />
-      <Controller
-        name="commune"
-        control={control}
-        render={({ field: { value, onChange } }) => (
-          <CommuneFilter
-            value={value}
-            onChange={onChange}
-            districtValue={districtValue}
+            provinceValue={province}
+            districtValue={district}
           />
         )}
       />
