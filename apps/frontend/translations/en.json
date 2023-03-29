@@ -40,10 +40,10 @@
     }
   },
   "validation_search_params": {
-    "disaster_type": "ប្រភេទគ្រោះមហន្តរាយ",
-    "incident_type": "ឧបទ្ទវហេតុ",
-    "start_date": "ចាប់ពី",
-    "end_date": "រហូតដល់",
+    "disaster_type": "Disaster Type",
+    "incident_type": "Incident Type",
+    "start_date": "From",
+    "end_date": "To",
     "province": "Province",
     "district": "District",
     "commune": "Commune"
