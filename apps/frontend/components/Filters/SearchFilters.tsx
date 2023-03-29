@@ -22,7 +22,7 @@ export const SearchFilters = ({
   const { control, handleSubmit, watch } = useForm<SearchFormData>({
     defaultValues: {
       disTyp: '1',
-      region: { province: '01', district: '', commune: '' },
+      region: { province: '', district: '', commune: '' },
       dateRange: {
         startDate: dayjs(new Date()),
         endDate: dayjs(new Date()),
@@ -33,7 +33,7 @@ export const SearchFilters = ({
   const submitHandler = (data: SearchFormData) => {
     setDisasterType(data.disTyp);
   };
-  const { province, district } = watch('region');
+  const { province: provinceValue, district: districtValue } = watch('region');
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
@@ -44,8 +44,8 @@ export const SearchFilters = ({
           <RegionFilters
             value={value}
             onChange={onChange}
-            provinceValue={province}
-            districtValue={district}
+            provinceValue={provinceValue}
+            districtValue={districtValue}
           />
         )}
       />
