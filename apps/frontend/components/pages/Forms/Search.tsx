@@ -8,7 +8,7 @@ import {
   SearchFormData,
 } from 'components/Filters/SearchFilters';
 import { TableDisplay } from 'components/TableDisplay';
-import { useForms } from 'services/api/kobo/useForms';
+import { useGetForms } from 'services/api/kobo/useGetForms';
 
 const defaultSearchFormData: SearchFormData = {
   disTyp: DisasterMapping['flood'],
@@ -26,7 +26,7 @@ const defaultSearchFormData: SearchFormData = {
 export const FormSearch = () => {
   const [searchFormData, setSearchFormData] = useState(defaultSearchFormData);
 
-  const { data: formData, isLoading } = useForms(searchFormData.disTyp);
+  const { data: formData, isLoading } = useGetForms(searchFormData.disTyp);
 
   return (
     <Box display="flex" flexDirection="column">

@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import { ApiRoutes } from 'services/api/apiRoutes';
 import { apiClient } from 'services/api/client';
 
-export const useForms = (disasterType: string) => {
+export const useGetForms = (disasterType: string) => {
   const { data, isLoading } = useSWR(
     [ApiRoutes.forms, disasterType],
     async ([relativePath, disType]) => {
