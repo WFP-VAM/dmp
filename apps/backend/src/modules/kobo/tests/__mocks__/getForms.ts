@@ -18,7 +18,7 @@ export const getFormsMock = ({
   endDate,
 }: {
   disTyp: string;
-  province: string | undefined;
+  province?: string;
   district?: string;
   commune?: string;
   startDate?: string;
