@@ -22,22 +22,15 @@ interface Props {
     district: string;
     commune: string;
   }) => void;
-  provinceValue: string;
-  districtValue: string;
 }
 
-export const RegionFilters = ({
-  value,
-  onChange,
-  provinceValue,
-  districtValue,
-}: Props): JSX.Element => {
+export const RegionFilters = ({ value, onChange }: Props): JSX.Element => {
   const user = useGetMe();
   const allowedProvinces = useMemo(() => {
     if (user === undefined) {
       return [];
     }
-    if (user.roles.includes('admin')) {
+    if (['admin', 'ncdm'].includes(user.roles[0])) {
       return provinces;
     } else if (user.province === undefined) {
       console.log('Error! User must have a province');
@@ -50,13 +43,13 @@ export const RegionFilters = ({
 
   const intl = useIntl();
   const districtsFiltered = useMemo(
-    () => getDistrictsFilteredByProvince(provinceValue),
-    [provinceValue],
+    () => getDistrictsFilteredByProvince(value.province),
+    [value.province],
   );
 
   const communesFiltered = useMemo(
-    () => getCommunesFilteredByDistrict(districtValue),
-    [districtValue],
+    () => getCommunesFilteredByDistrict(value.district),
+    [value.district],
   );
 
   const selectInputStyles = { mr: 3, minWidth: 200 };
@@ -93,6 +86,7 @@ export const RegionFilters = ({
           <FormattedMessage id="validation_search_params.district" />
         </InputLabel>
         <Select
+          disabled={value.province === '' ? true : false}
           value={value.district}
           onChange={e => {
             onChange({ ...value, district: e.target.value, commune: '' });
@@ -117,7 +111,7 @@ export const RegionFilters = ({
           <FormattedMessage id="validation_search_params.commune" />
         </InputLabel>
         <Select
-          disabled={districtValue === '' ? true : false}
+          disabled={value.district === '' ? true : false}
           value={value.commune}
           onChange={e => {
             onChange({ ...value, commune: e.target.value });

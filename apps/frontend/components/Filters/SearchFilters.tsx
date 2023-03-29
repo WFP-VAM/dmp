@@ -19,7 +19,7 @@ export const SearchFilters = ({
 }: {
   setDisasterType: Dispatch<SetStateAction<string>>;
 }): JSX.Element => {
-  const { control, handleSubmit, watch } = useForm<SearchFormData>({
+  const { control, handleSubmit } = useForm<SearchFormData>({
     defaultValues: {
       disTyp: '1',
       region: { province: '', district: '', commune: '' },
@@ -33,7 +33,6 @@ export const SearchFilters = ({
   const submitHandler = (data: SearchFormData) => {
     setDisasterType(data.disTyp);
   };
-  const { province: provinceValue, district: districtValue } = watch('region');
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
@@ -41,12 +40,7 @@ export const SearchFilters = ({
         name="region"
         control={control}
         render={({ field: { value, onChange } }) => (
-          <RegionFilters
-            value={value}
-            onChange={onChange}
-            provinceValue={provinceValue}
-            districtValue={districtValue}
-          />
+          <RegionFilters value={value} onChange={onChange} />
         )}
       />
       <Controller
