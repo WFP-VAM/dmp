@@ -1,37 +1,31 @@
 import { Box, Button } from '@mui/material';
-import dayjs from 'dayjs';
 import { Dispatch, SetStateAction } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 
 import { DateRange, DateRangeFilter } from './DateRangeFilter';
 import { DisasterFilter } from './DisasterFilter';
-import { RegionFilters } from './RegionFilters';
+import { Region, RegionFilters } from './RegionFilters';
 
-interface SearchFormData {
+export interface SearchFormData {
   disTyp: string;
   dateRange: DateRange;
-  region: { province: string; district: string; commune: string };
+  region: Region;
 }
 
 export const SearchFilters = ({
-  setDisasterType,
+  initSearchFormData,
+  setSearchFormData,
 }: {
-  setDisasterType: Dispatch<SetStateAction<string>>;
+  initSearchFormData: SearchFormData;
+  setSearchFormData: Dispatch<SetStateAction<SearchFormData>>;
 }): JSX.Element => {
   const { control, handleSubmit } = useForm<SearchFormData>({
-    defaultValues: {
-      disTyp: '1',
-      region: { province: '', district: '', commune: '' },
-      dateRange: {
-        startDate: dayjs(new Date()),
-        endDate: dayjs(new Date()),
-      },
-    },
+    defaultValues: initSearchFormData,
   });
 
   const submitHandler = (data: SearchFormData) => {
-    setDisasterType(data.disTyp);
+    setSearchFormData(data);
   };
 
   return (

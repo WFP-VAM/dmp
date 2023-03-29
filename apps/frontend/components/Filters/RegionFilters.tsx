@@ -15,13 +15,16 @@ const getCommunesFilteredByDistrict = (districtValue: string) => {
     return commune.startsWith(districtValue);
   });
 };
+
+export interface Region {
+  province: string;
+  district: string;
+  commune: string;
+}
+
 interface Props {
-  value: { province: string; district: string; commune: string };
-  onChange: (regionValues: {
-    province: string;
-    district: string;
-    commune: string;
-  }) => void;
+  value: Region;
+  onChange: (regionValues: Region) => void;
 }
 
 export const RegionFilters = ({ value, onChange }: Props): JSX.Element => {

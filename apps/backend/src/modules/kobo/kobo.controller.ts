@@ -32,10 +32,19 @@ export class KoboController {
 
   @Get('forms')
   async getForms(
-    @UseProvince() province: string | undefined,
+    @UseProvince() provinceToEnforce: string | undefined,
     @Query() filters: GetFormsDto,
   ): Promise<DisasterDtoType[]> {
-    const response = await this.koboService.getForms(province, filters.DisTyp);
+    const province = provinceToEnforce === undefined ? filters.province : provinceToEnforce;
+
+    const response = await this.koboService.getForms({
+      disTyp: filters.disTyp,
+      province,
+      district: filters.district,
+      commune: filters.commune,
+      startDate: filters.startDate,
+      endDate: filters.endDate,
+    });
 
     return response.results;
   }
