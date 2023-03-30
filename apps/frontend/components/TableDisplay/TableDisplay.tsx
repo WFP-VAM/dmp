@@ -1,5 +1,4 @@
 import {
-  Link,
   Paper,
   Skeleton,
   Table,
@@ -17,6 +16,7 @@ import {
   koboKeys,
 } from '@wfp-dmp/interfaces';
 import { isDrought, isFlood } from '@wfp-dmp/interfaces/dist/kobo/utils';
+import Link from 'next/link';
 import path from 'path';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
