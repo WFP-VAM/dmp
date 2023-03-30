@@ -5,7 +5,6 @@ import {
   Box,
   FormControl,
   IconButton,
-  Link,
   List,
   ListItem,
   ListItemButton,
@@ -17,6 +16,7 @@ import {
   Typography,
 } from '@mui/material';
 import Logo from 'next/image';
+import Link from 'next/link';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useLanguageContext } from 'context';
@@ -62,7 +62,7 @@ export const NavMenuContent = (): JSX.Element => {
         <ListItem key="forms">
           <Link
             href="/forms/search"
-            sx={{ textDecoration: 'none', color: 'inherit' }}
+            style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <ListItemButton
               sx={{
