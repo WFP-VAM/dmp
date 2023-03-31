@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import { DisasterFilter } from 'components/Filters/DisasterFilter';
 import { RegionFilters } from 'components/Filters/RegionFilters';
 import { useGetForm } from 'services/api/kobo/useGetForm';
 
@@ -24,6 +25,7 @@ export const FormValidation = (): JSX.Element => {
         district: formattedForm.district,
         commune: formattedForm.commune,
       },
+      disTyp: formattedForm.disasterType,
     },
   });
   useEffect(() => {
@@ -39,6 +41,13 @@ export const FormValidation = (): JSX.Element => {
   return (
     <form>
       <Box>{JSON.stringify(form)}</Box>
+      <Controller
+        name="disTyp"
+        control={control}
+        render={({ field: { value, onChange } }) => (
+          <DisasterFilter value={value} onChange={onChange} />
+        )}
+      />
       {isLoading ? (
         <Skeleton />
       ) : (

@@ -1,18 +1,18 @@
 import {
-  Card,
-  CardContent,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
+  Box,
+  FormControl,
+  InputLabel,
+  ListSubheader,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
 } from '@mui/material';
 import { DisasterMapping, IncidentMapping } from '@wfp-dmp/interfaces';
-import { ChangeEvent } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 interface Props {
   value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: SelectChangeEvent) => void;
 }
 
 export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
@@ -26,56 +26,43 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
   );
 
   return (
-    <RadioGroup
-      value={value}
-      onChange={onChange}
-      sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginBottom: 3,
-      }}
-    >
-      <Card variant="outlined" sx={{ marginRight: 5 }}>
-        <CardContent>
-          <Typography variant="h6" sx={{ marginBottom: 1 }}>
-            <FormattedMessage
-              id="validation_search_params.disaster_type"
-              defaultMessage="Disaster Type"
-            />
-          </Typography>
-          {disasters.map(type => (
-            <FormControlLabel
-              key={type}
-              value={type}
-              control={<Radio />}
-              label={intl.formatMessage({
-                id: `disasters.${type}`,
-              })}
-            />
-          ))}
-        </CardContent>
-      </Card>
-      <Card variant="outlined" sx={{ maxWidth: 600, marginLeft: 5 }}>
-        <CardContent>
-          <Typography variant="h6" sx={{ marginBottom: 1 }}>
-            <FormattedMessage
-              id="validation_search_params.incident_type"
-              defaultMessage="Incident Type"
-            />
-          </Typography>
-          {incidents.map(type => (
-            <FormControlLabel
-              key={type}
-              value={type}
-              control={<Radio />}
-              label={intl.formatMessage({
-                id: `disasters.${type}`,
-              })}
-            />
-          ))}
-        </CardContent>
-      </Card>
-    </RadioGroup>
+    <Box display="flex" flexDirection="row" justifyContent="center" margin={2}>
+      <FormControl>
+        <InputLabel>
+          <FormattedMessage id="validation_search_params.disaster_type" />
+        </InputLabel>
+        <Select
+          value={value}
+          onChange={onChange}
+          sx={{ minWidth: 200 }}
+          label={intl.formatMessage({
+            id: 'validation_search_params.disaster_type',
+          })}
+        >
+          <ListSubheader>
+            <FormattedMessage id="validation_search_params.disaster_type" />
+          </ListSubheader>
+
+          {disasters.map(disaster => {
+            return (
+              <MenuItem value={disaster} key={disaster}>
+                <FormattedMessage id={`disasters.${disaster}`} />
+              </MenuItem>
+            );
+          })}
+          <ListSubheader>
+            <FormattedMessage id="validation_search_params.incident_type" />
+          </ListSubheader>
+
+          {incidents.map(incident => {
+            return (
+              <MenuItem value={incident} key={incident}>
+                <FormattedMessage id={`disasters.${incident}`} />
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+    </Box>
   );
 };
