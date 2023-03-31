@@ -36,7 +36,7 @@ export const FormValidation = ({
     },
   });
 
-  const [isEditMode] = useState(false);
+  const [isEditMode] = useState(true);
   const minWidth = 240;
 
   return (
@@ -48,7 +48,11 @@ export const FormValidation = ({
               name="disTyp"
               control={control}
               render={({ field: { value, onChange } }) => (
-                <DisasterSelect value={value} onChange={onChange} />
+                <DisasterSelect
+                  disabled={!isEditMode}
+                  value={value}
+                  onChange={onChange}
+                />
               )}
             />
           </Box>
@@ -56,7 +60,11 @@ export const FormValidation = ({
             name="region"
             control={control}
             render={({ field: { value, onChange } }) => (
-              <RegionFilters value={value} onChange={onChange} />
+              <RegionFilters
+                value={value}
+                onChange={onChange}
+                disableAll={!isEditMode}
+              />
             )}
           />
         </Box>

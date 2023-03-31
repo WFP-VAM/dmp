@@ -14,7 +14,11 @@ interface Props {
   disabled?: boolean;
 }
 
-export const DisasterSelect = ({ value, onChange }: Props): JSX.Element => {
+export const DisasterSelect = ({
+  value,
+  onChange,
+  disabled,
+}: Props): JSX.Element => {
   const intl = useIntl();
 
   return (
@@ -24,6 +28,7 @@ export const DisasterSelect = ({ value, onChange }: Props): JSX.Element => {
           <FormattedMessage id="validation_search_params.disaster_type" />
         </InputLabel>
         <Select
+          disabled={disabled}
           value={value}
           onChange={onChange}
           sx={{ minWidth: 200 }}
