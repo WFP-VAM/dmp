@@ -28,7 +28,6 @@ interface Props {
 }
 
 export const RegionFilters = ({ value, onChange }: Props): JSX.Element => {
-  console.log('form value', value);
   const user = useGetMe();
   const allowedProvinces = useMemo(() => {
     if (user === undefined) {
