@@ -6,7 +6,7 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
-import { IncidentMapping } from '@wfp-dmp/interfaces';
+import { DisasterMapping, IncidentMapping } from '@wfp-dmp/interfaces';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 interface Props {
@@ -17,14 +17,13 @@ interface Props {
 
 const selectOptions = (disasterType: string): string[] => {
   let opts;
-  if (disasterType === '1') {
-    opts = ['1'];
-  } else if (disasterType === '2') {
-    opts = ['2'];
+  if (
+    disasterType === DisasterMapping.flood ||
+    disasterType === DisasterMapping.drought
+  ) {
+    opts = [disasterType];
   } else {
-    opts = Object.keys(IncidentMapping).map(
-      incident => IncidentMapping[incident],
-    );
+    opts = Object.values(IncidentMapping);
   }
 
   return opts;
