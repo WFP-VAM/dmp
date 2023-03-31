@@ -6,6 +6,7 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
+import { IncidentMapping } from '@wfp-dmp/interfaces';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 interface Props {
@@ -14,12 +15,28 @@ interface Props {
   disabled?: boolean;
 }
 
+const selectOptions = (disasterType: string): string[] => {
+  let opts;
+  if (disasterType === '1') {
+    opts = ['1'];
+  } else if (disasterType === '2') {
+    opts = ['2'];
+  } else {
+    opts = Object.keys(IncidentMapping).map(
+      incident => IncidentMapping[incident],
+    );
+  }
+
+  return opts;
+};
+
 export const DisasterSelect = ({
   value,
   onChange,
   disabled,
 }: Props): JSX.Element => {
   const intl = useIntl();
+  console.log(value);
 
   return (
     <Box display="flex" flexDirection="row" justifyContent="center" margin={2}>
@@ -36,12 +53,10 @@ export const DisasterSelect = ({
             id: 'validation_search_params.disaster_type',
           })}
         >
-          {[1, 2, 3].map(disaster => {
-            const key = disaster.toString();
-
+          {selectOptions(value).map(disaster => {
             return (
-              <MenuItem value={key} key={key}>
-                <FormattedMessage id={`disaster_categories.${key}`} />
+              <MenuItem value={disaster} key={disaster}>
+                <FormattedMessage id={`disasters.${disaster}`} />
               </MenuItem>
             );
           })}
