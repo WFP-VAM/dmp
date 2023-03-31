@@ -1,3 +1,4 @@
+import { Box, TextField } from '@mui/material';
 import { DisasterDtoType } from '@wfp-dmp/interfaces';
 import { formatForm } from '@wfp-dmp/interfaces/dist/kobo/utils';
 import { useMemo } from 'react';
@@ -22,26 +23,44 @@ export const FormValidation = ({
         district: formattedForm.district,
         commune: formattedForm.commune,
       },
+      interviewer: formattedForm.reportName,
       disTyp: formattedForm.disasterType,
+      phone: formattedForm.phone,
     },
   });
 
   return (
     <form>
-      <Controller
-        name="disTyp"
-        control={control}
-        render={({ field: { value, onChange } }) => (
-          <DisasterFilter value={value} onChange={onChange} />
-        )}
-      />
-      <Controller
-        name="region"
-        control={control}
-        render={({ field: { value, onChange } }) => (
-          <RegionFilters value={value} onChange={onChange} />
-        )}
-      />
+      <Box display="flex" flexDirection="column">
+        <Controller
+          name="disTyp"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <DisasterFilter value={value} onChange={onChange} />
+          )}
+        />
+        <Controller
+          name="region"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <RegionFilters value={value} onChange={onChange} />
+          )}
+        />
+        <Controller
+          name="interviewer"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <TextField value={value} onChange={onChange} />
+          )}
+        />
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <TextField type="number" value={value} onChange={onChange} />
+          )}
+        />
+      </Box>
     </form>
   );
 };
