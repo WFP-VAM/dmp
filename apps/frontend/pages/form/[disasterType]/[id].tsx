@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
 
 import { LayoutWithNav } from 'components/Layout';
-import { FormValidation } from 'components/pages/Form';
+import { FormValidationContainer } from 'components/pages/Form/FormValidationContainer';
 
 const FormPage: NextPage = () => (
   <LayoutWithNav>
-    <FormValidation />
+    <FormValidationContainer />
   </LayoutWithNav>
 );
 
