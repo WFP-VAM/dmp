@@ -7,8 +7,8 @@ import { useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 
-import { DisasterFilter } from 'components/Filters/DisasterFilter';
 import { RegionFilters } from 'components/Filters/RegionFilters';
+import { DisasterSelect } from 'components/FormValidation/DisasterSelect';
 
 export const FormValidation = ({
   validationForm,
@@ -47,7 +47,7 @@ export const FormValidation = ({
               name="disTyp"
               control={control}
               render={({ field: { value, onChange } }) => (
-                <DisasterFilter value={value} onChange={onChange} />
+                <DisasterSelect value={value} onChange={onChange} />
               )}
             />
           </Box>

@@ -48,6 +48,7 @@
     "district": "District",
     "commune": "Commune"
   },
+  "disaster_categories": { "1": "Flood", "2": "Drought", "3": "Incident" },
   "disasters": {
     "1": "ទឹកជំនន់",
     "2": "រាំងស្ងួត",
