@@ -1,4 +1,4 @@
-import { Box, Skeleton } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import { DisasterType } from '@wfp-dmp/interfaces';
 import { useRouter } from 'next/router';
 
@@ -15,8 +15,11 @@ export const FormValidationContainer = (): JSX.Element => {
 
   return (
     <>
-      <Box>{JSON.stringify(form)}</Box>
-      {isLoading ? <Skeleton /> : <FormValidation validationForm={form} />}
+      {isLoading || form === undefined ? (
+        <Skeleton />
+      ) : (
+        <FormValidation validationForm={form} />
+      )}
     </>
   );
 };

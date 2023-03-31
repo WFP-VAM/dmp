@@ -21,21 +21,7 @@ export const isDrought = (form: DisasterDtoType): form is DroughtDto => {
   return koboKeys[DROUGHT].disTyp in form;
 };
 
-export const formatForm = (form: DisasterDtoType | undefined) => {
-  if (form === undefined) {
-    return {
-      province: '',
-      district: '',
-      commune: '',
-      disasterDate: '',
-      disasterType: '',
-      type: '',
-      reportName: '',
-      phone: '',
-      entryDate: '',
-      id: '',
-    };
-  }
+export const formatForm = (form: DisasterDtoType) => {
   if (isFlood(form)) {
     const keys = koboKeys[FLOOD];
 
@@ -80,6 +66,7 @@ export const formatForm = (form: DisasterDtoType | undefined) => {
       type: form[keys.disTyp],
       reportName: form[keys.entryName],
       phone: form[keys.phone],
+      entryDate: form[keys.entryDate],
       id: form[keys.id],
       approvalLink: path.join('/form', INCIDENT, form[keys.id].toString()),
     };

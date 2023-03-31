@@ -1,6 +1,8 @@
 import { Box, TextField } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 import { DisasterDtoType } from '@wfp-dmp/interfaces';
 import { formatForm } from '@wfp-dmp/interfaces/dist/kobo/utils';
+import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
@@ -11,7 +13,7 @@ import { RegionFilters } from 'components/Filters/RegionFilters';
 export const FormValidation = ({
   validationForm,
 }: {
-  validationForm: DisasterDtoType | undefined;
+  validationForm: DisasterDtoType;
 }): JSX.Element => {
   const intl = useIntl();
 
@@ -29,10 +31,12 @@ export const FormValidation = ({
       interviewer: formattedForm.reportName,
       disTyp: formattedForm.disasterType,
       phone: formattedForm.phone,
-      // reportDate: new Date(formattedForm.entryDate),
+      reportDate: dayjs(new Date(formattedForm.entryDate)),
+      incidentDate: dayjs(new Date(formattedForm.disasterDate)),
     },
   });
-  console.log(control._formValues);
+
+  const minWidth = 240;
 
   return (
     <form>
@@ -67,7 +71,7 @@ export const FormValidation = ({
                   })}
                   value={value}
                   onChange={onChange}
-                  sx={{ minWidth: 260 }}
+                  sx={{ minWidth: minWidth }}
                 />
               )}
             />
@@ -83,18 +87,43 @@ export const FormValidation = ({
                 type="number"
                 value={value}
                 onChange={onChange}
-                sx={{ minWidth: 260 }}
+                sx={{ minWidth: minWidth }}
               />
             )}
           />
         </Box>
-        {/* <Controller
-          name="reportDate"
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <DatePicker label="Report Date" value={value} onChange={onChange} />
-          )}
-        /> */}
+        <Box display="flex" flexDirection="row" sx={{ m: 2, mt: 5 }}>
+          <Box mr={6}>
+            <Controller
+              name="reportDate"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <DatePicker
+                  label={intl.formatMessage({
+                    id: 'forms_table.headers.entry_date',
+                  })}
+                  value={value}
+                  onChange={onChange}
+                  sx={{ minWidth: minWidth }}
+                />
+              )}
+            />
+          </Box>
+          <Controller
+            name="incidentDate"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <DatePicker
+                label={intl.formatMessage({
+                  id: 'forms_table.headers.dis_date',
+                })}
+                value={value}
+                onChange={onChange}
+                sx={{ minWidth: minWidth }}
+              />
+            )}
+          />
+        </Box>
       </Box>
     </form>
   );
