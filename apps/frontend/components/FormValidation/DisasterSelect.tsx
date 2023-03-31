@@ -36,7 +36,6 @@ export const DisasterSelect = ({
   disabled,
 }: Props): JSX.Element => {
   const intl = useIntl();
-  console.log(value);
 
   return (
     <Box display="flex" flexDirection="row" justifyContent="center" margin={2}>
