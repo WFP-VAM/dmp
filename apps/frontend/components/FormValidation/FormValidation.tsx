@@ -3,6 +3,7 @@ import { DisasterDtoType } from '@wfp-dmp/interfaces';
 import { formatForm } from '@wfp-dmp/interfaces/dist/kobo/utils';
 import { useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useIntl } from 'react-intl';
 
 import { DisasterFilter } from 'components/Filters/DisasterFilter';
 import { RegionFilters } from 'components/Filters/RegionFilters';
@@ -12,6 +13,8 @@ export const FormValidation = ({
 }: {
   validationForm: DisasterDtoType | undefined;
 }): JSX.Element => {
+  const intl = useIntl();
+
   const formattedForm = useMemo(
     () => formatForm(validationForm),
     [validationForm],
@@ -59,7 +62,9 @@ export const FormValidation = ({
               control={control}
               render={({ field: { value, onChange } }) => (
                 <TextField
-                  label="Reporter Name"
+                  label={intl.formatMessage({
+                    id: 'forms_table.headers.entry_name',
+                  })}
                   value={value}
                   onChange={onChange}
                   sx={{ minWidth: 260 }}
@@ -72,7 +77,9 @@ export const FormValidation = ({
             control={control}
             render={({ field: { value, onChange } }) => (
               <TextField
-                label="Reporter Contact"
+                label={intl.formatMessage({
+                  id: 'forms_table.headers.phone',
+                })}
                 type="number"
                 value={value}
                 onChange={onChange}
