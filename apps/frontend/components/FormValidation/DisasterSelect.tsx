@@ -11,6 +11,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 interface Props {
   value: string;
   onChange: (event: SelectChangeEvent) => void;
+  disabled?: boolean;
 }
 
 export const DisasterSelect = ({ value, onChange }: Props): JSX.Element => {

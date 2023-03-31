@@ -20,6 +20,7 @@ export interface Region {
   province: string;
   district: string;
   commune: string;
+  disabled?: boolean;
 }
 
 interface Props {

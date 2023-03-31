@@ -16,7 +16,7 @@ export const FormValidationContainer = (): JSX.Element => {
   return (
     <>
       {isLoading || form === undefined ? (
-        <Skeleton />
+        <Skeleton sx={{ minWidth: 800, minHeight: 600 }} />
       ) : (
         <FormValidation validationForm={form} />
       )}

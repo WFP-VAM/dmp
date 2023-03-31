@@ -3,7 +3,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { DisasterDtoType } from '@wfp-dmp/interfaces';
 import { formatForm } from '@wfp-dmp/interfaces/dist/kobo/utils';
 import dayjs from 'dayjs';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 
@@ -36,6 +36,7 @@ export const FormValidation = ({
     },
   });
 
+  const [isEditMode] = useState(false);
   const minWidth = 240;
 
   return (
@@ -66,6 +67,7 @@ export const FormValidation = ({
               control={control}
               render={({ field: { value, onChange } }) => (
                 <TextField
+                  disabled={!isEditMode}
                   label={intl.formatMessage({
                     id: 'forms_table.headers.entry_name',
                   })}
@@ -81,6 +83,7 @@ export const FormValidation = ({
             control={control}
             render={({ field: { value, onChange } }) => (
               <TextField
+                disabled={!isEditMode}
                 label={intl.formatMessage({
                   id: 'forms_table.headers.phone',
                 })}
@@ -99,6 +102,7 @@ export const FormValidation = ({
               control={control}
               render={({ field: { value, onChange } }) => (
                 <DatePicker
+                  disabled={!isEditMode}
                   label={intl.formatMessage({
                     id: 'forms_table.headers.entry_date',
                   })}
@@ -114,6 +118,7 @@ export const FormValidation = ({
             control={control}
             render={({ field: { value, onChange } }) => (
               <DatePicker
+                disabled={!isEditMode}
                 label={intl.formatMessage({
                   id: 'forms_table.headers.dis_date',
                 })}
