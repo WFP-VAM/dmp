@@ -1,7 +1,6 @@
 import { Box, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { DisasterDtoType } from '@wfp-dmp/interfaces';
-import { formatForm } from '@wfp-dmp/interfaces/dist/kobo/utils';
+import { DisasterDtoType, formatForm } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';

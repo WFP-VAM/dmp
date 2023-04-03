@@ -4,5 +4,5 @@ export { GetFormsDto } from './GetFormsDto';
 export { GetFormDto } from './GetFormDto';
 export { IncidentDto, IncidentQueryResponseDto } from './IncidentDto';
 export { koboKeys } from './keys';
-export { computeDisasterTypeFromDistTyp } from './utils';
+export { computeDisasterTypeFromDistTyp, formatForm } from './utils';
 export * from './constants';
