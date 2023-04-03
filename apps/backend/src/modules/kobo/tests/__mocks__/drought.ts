@@ -1,4 +1,4 @@
-import { DroughtDto } from '@wfp-dmp/interfaces';
+import { DroughtDto, ValidationStatusValue } from '@wfp-dmp/interfaces';
 
 export const droughtMock: DroughtDto = {
   _id: 2,
@@ -27,7 +27,7 @@ export const droughtMock: DroughtDto = {
   _notes: [],
   _validation_status: {
     timestamp: 1678914777,
-    uid: 'validation_status_not_approved',
+    uid: ValidationStatusValue.notApproved,
     by_whom: 'test',
     color: '#ff0000',
     label: 'Not Approved',

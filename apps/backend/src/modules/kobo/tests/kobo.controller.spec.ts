@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { AuthService } from '@auth/auth.service';
 import { User } from '@modules/user/user.entity';
 import { UserFactory } from '@modules/user/user.factory';
@@ -5,7 +6,15 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AppModule } from '@root/app.module';
-import { DisasterDtoType, DROUGHT, FLOOD, FloodDto, INCIDENT } from '@wfp-dmp/interfaces';
+import {
+  DisasterDtoType,
+  DROUGHT,
+  FLOOD,
+  FloodDto,
+  INCIDENT,
+  ValidationStatusDto,
+  ValidationStatusValue,
+} from '@wfp-dmp/interfaces';
 import request from 'supertest';
 import { Repository } from 'typeorm';
 
@@ -16,6 +25,8 @@ import { getFormMock } from './__mocks__/getForm';
 import { getFormsMock } from './__mocks__/getForms';
 import { getLastFormsMock } from './__mocks__/getLastForms';
 import { incidentMock } from './__mocks__/incident';
+import { patchValidationStatusMock } from './__mocks__/patchValidationStatus';
+import { validationStatusFactory } from './__mocks__/validationStatusFactory';
 
 describe('KoboController', () => {
   let app: INestApplication;
@@ -190,6 +201,30 @@ describe('KoboController', () => {
         .expect((response: { body: FloodDto }) => {
           expect(response.body).toEqual(floodMock);
           expect(getFormsSpy).toHaveBeenNthCalledWith(1, province, disasterType, id);
+        });
+    });
+  });
+  describe('PATCH form validation status', () => {
+    it('should return 200 and the service should use the right params', async () => {
+      const role = 'ncdm';
+      const disasterType = FLOOD;
+      const id = 'formTest';
+      const validationStatusValue = ValidationStatusValue.approved;
+
+      const getFormsSpy = jest
+        .spyOn(koboService, 'patchValidationStatus')
+        .mockImplementation(patchValidationStatusMock);
+
+      const user = await userFactory.createOne({ roles: [role] });
+      const accessToken = authService.createAccessToken(user, 10000);
+      await request(app.getHttpServer())
+        .patch('/kobo/form/validationStatus')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send({ id, disasterType, validationStatusValue })
+        .expect(200)
+        .expect((response: { body: ValidationStatusDto }) => {
+          expect(response.body).toEqual(validationStatusFactory(validationStatusValue));
+          expect(getFormsSpy).toHaveBeenNthCalledWith(1, disasterType, id, validationStatusValue);
         });
     });
   });

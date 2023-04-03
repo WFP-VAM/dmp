@@ -1,6 +1,6 @@
 import { UseProvince } from '@auth/user.decorator';
 import { Get } from '@decorators/httpDecorators';
-import { Controller, HttpException, HttpStatus, Param, Query } from '@nestjs/common';
+import { Body, Controller, HttpException, HttpStatus, Param, Patch, Query } from '@nestjs/common';
 import {
   DisasterDtoType,
   DROUGHT,
@@ -8,6 +8,8 @@ import {
   GetFormDto,
   GetFormsDto,
   INCIDENT,
+  PatchValidationStatusDto,
+  ValidationStatusDto,
 } from '@wfp-dmp/interfaces';
 
 import { KoboService } from './kobo.service';
@@ -61,5 +63,19 @@ export class KoboController {
     } catch (error) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     }
+  }
+
+  @Patch('form/validationStatus')
+  async patchValidationStatus(
+    @Body() body: PatchValidationStatusDto,
+  ): Promise<ValidationStatusDto> {
+    // TODO add province guard for PCDM
+    const response = await this.koboService.patchValidationStatus(
+      body.disasterType,
+      body.id,
+      body.validationStatusValue,
+    );
+
+    return response;
   }
 }

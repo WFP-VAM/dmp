@@ -14,6 +14,8 @@ import {
   IncidentDto,
   IncidentQueryResponseDto,
   koboKeys,
+  ValidationStatusDto,
+  ValidationStatusValue,
 } from '@wfp-dmp/interfaces';
 
 import { AssetId } from './constants';
@@ -105,6 +107,21 @@ export class KoboService {
             [koboKeys[disasterType].province]: province,
           },
         },
+      },
+    );
+
+    return data;
+  }
+
+  async patchValidationStatus(
+    disasterType: DisasterType,
+    id: string,
+    validationStatusValue: ValidationStatusValue,
+  ): Promise<ValidationStatusDto> {
+    const { data } = await this.httpService.axiosRef.patch<ValidationStatusDto>(
+      `assets/${AssetId[disasterType]}/data/${id}/validation_status`,
+      {
+        'validation_status.uid': validationStatusValue,
       },
     );
 
