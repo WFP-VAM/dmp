@@ -1,5 +1,4 @@
 import {
-  Link,
   Paper,
   Skeleton,
   Table,
@@ -9,75 +8,19 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import {
-  DisasterDtoType,
-  DROUGHT,
-  FLOOD,
-  INCIDENT,
-  koboKeys,
-} from '@wfp-dmp/interfaces';
-import { isDrought, isFlood } from '@wfp-dmp/interfaces/dist/kobo/utils';
-import path from 'path';
+import { DisasterDtoType } from '@wfp-dmp/interfaces';
+import { formatForm } from '@wfp-dmp/interfaces/dist/kobo/utils';
+import Link from 'next/link';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-const formatForms = (formData: DisasterDtoType[] | undefined) => {
-  if (formData === undefined) {
-    return [];
-  }
-  if (formData.length === 0) {
+const formatForms = (forms: DisasterDtoType[] | undefined) => {
+  if (forms === undefined || forms.length === 0) {
     return [];
   }
 
-  return formData.map(form => {
-    if (isFlood(form)) {
-      const keys = koboKeys[FLOOD];
-
-      return {
-        province: form[keys.province],
-        district: form[keys.district],
-        commune: form[keys.commune],
-        disasterDate: form[keys.disasterDate],
-        disasterType: form[keys.disTyp],
-        type: form[keys.disTyp],
-        reportName: form[keys.entryName],
-        phone: form[keys.phone],
-        entryDate: form[keys.entryDate],
-        approvalLink: path.join('/form', FLOOD, form[keys.id].toString()),
-        id: form[keys.id],
-      };
-    } else if (isDrought(form)) {
-      const keys = koboKeys[DROUGHT];
-
-      return {
-        province: form[keys.province],
-        district: form[keys.district],
-        commune: form[keys.commune],
-        disasterDate: form[keys.disasterDate],
-        disasterType: form[keys.disTyp],
-        type: form[keys.disTyp],
-        reportName: form[keys.entryName],
-        phone: form[keys.phone],
-        entryDate: form[keys.entryDate],
-        approvalLink: path.join('/form', DROUGHT, form[keys.id].toString()),
-        id: form[keys.id],
-      };
-    } else {
-      const keys = koboKeys[INCIDENT];
-
-      return {
-        province: form[keys.province],
-        district: form[keys.district],
-        commune: form[keys.commune],
-        disasterDate: form[keys.disasterDate],
-        disasterType: form[keys.disTyp],
-        type: form[keys.disTyp],
-        reportName: form[keys.entryName],
-        phone: form[keys.phone],
-        entryDate: form[keys.entryDate],
-        approvalLink: path.join('/form', INCIDENT, form[keys.id].toString()),
-      };
-    }
+  return forms.map(form => {
+    return formatForm(form);
   });
 };
 

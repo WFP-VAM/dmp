@@ -38,6 +38,7 @@ describe('KoboController', () => {
 
   afterEach(async () => {
     await userRepository.clear();
+    jest.resetAllMocks();
   });
 
   afterAll(async () => {
@@ -107,23 +108,66 @@ describe('KoboController', () => {
   });
 
   describe('GET forms', () => {
-    it('should return 200 and the service should receive province and the filter params', async () => {
+    it('should return 200 and the service should receive the filter params and use the PCDM province', async () => {
       const role = 'pcdm';
-      const province = '10';
+      const profileProvince = '20';
       const disTyp = '1';
+      const startDate = '2023-02-02';
+      const endDate = '2023-02-03';
+      const province = '10';
+      const district = '1010';
+      const commune = '10101010';
 
       const getFormsSpy = jest.spyOn(koboService, 'getForms').mockImplementation(getFormsMock);
 
-      const user = await userFactory.createOne({ roles: [role], province });
+      const user = await userFactory.createOne({ roles: [role], province: profileProvince });
       const accessToken = authService.createAccessToken(user, 10000);
       await request(app.getHttpServer())
         .get('/kobo/forms')
-        .query({ DisTyp: disTyp })
+        .query({ disTyp, startDate, endDate, province, district, commune })
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(200)
         .expect((response: { body: FloodDto[] }) => {
           expect(response.body).toEqual([floodMock]);
-          expect(getFormsSpy).toHaveBeenNthCalledWith(1, province, disTyp);
+          expect(getFormsSpy).toHaveBeenNthCalledWith(1, {
+            disTyp,
+            startDate,
+            endDate,
+            province: profileProvince,
+            district,
+            commune,
+          });
+        });
+    });
+
+    it('should return 200 and the service should receive the filter params for an NCDM', async () => {
+      const role = 'ncdm';
+      const disTyp = '1';
+      const startDate = '2023-02-02';
+      const endDate = '2023-02-03';
+      const province = '10';
+      const district = '1010';
+      const commune = '10101010';
+
+      const getFormsSpy = jest.spyOn(koboService, 'getForms').mockImplementation(getFormsMock);
+
+      const user = await userFactory.createOne({ roles: [role] });
+      const accessToken = authService.createAccessToken(user, 10000);
+      await request(app.getHttpServer())
+        .get('/kobo/forms')
+        .query({ disTyp, startDate, endDate, province, district, commune })
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect(200)
+        .expect((response: { body: FloodDto[] }) => {
+          expect(response.body).toEqual([floodMock]);
+          expect(getFormsSpy).toHaveBeenNthCalledWith(1, {
+            disTyp,
+            startDate,
+            endDate,
+            province,
+            district,
+            commune,
+          });
         });
     });
   });

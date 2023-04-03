@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   DroughtQueryResponseDto,
   FloodQueryResponseDto,
@@ -8,7 +9,21 @@ import { droughtMock } from './drought';
 import { floodMock } from './flood';
 import { incidentMock } from './incident';
 
-export const getFormsMock = (_: string | undefined, disTyp: string) => {
+export const getFormsMock = ({
+  disTyp,
+  province,
+  district,
+  commune,
+  startDate,
+  endDate,
+}: {
+  disTyp: string;
+  province?: string;
+  district?: string;
+  commune?: string;
+  startDate?: string;
+  endDate?: string;
+}) => {
   let response;
 
   switch (disTyp) {

@@ -5,8 +5,8 @@ import useSWR from 'swr';
 import { ApiRoutes } from 'services/api/apiRoutes';
 import { apiClient } from 'services/api/client';
 
-export const useForm = (formDisasterType: DisasterType, formId: string) => {
-  const { data } = useSWR(
+export const useGetForm = (formDisasterType: DisasterType, formId: string) => {
+  const { data, isLoading } = useSWR(
     [ApiRoutes.form, formDisasterType, formId],
     async ([relativePath, disasterType, id]) => {
       const url = path.join(relativePath, disasterType, id);
@@ -16,5 +16,5 @@ export const useForm = (formDisasterType: DisasterType, formId: string) => {
     },
   );
 
-  return data;
+  return { data, isLoading };
 };

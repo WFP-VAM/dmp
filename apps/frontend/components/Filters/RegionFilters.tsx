@@ -15,16 +15,25 @@ const getCommunesFilteredByDistrict = (districtValue: string) => {
     return commune.startsWith(districtValue);
   });
 };
-interface Props {
-  value: { province: string; district: string; commune: string };
-  onChange: (regionValues: {
-    province: string;
-    district: string;
-    commune: string;
-  }) => void;
+
+export interface Region {
+  province: string;
+  district: string;
+  commune: string;
+  disabled?: boolean;
 }
 
-export const RegionFilters = ({ value, onChange }: Props): JSX.Element => {
+interface Props {
+  value: Region;
+  onChange: (regionValues: Region) => void;
+  disableAll?: boolean;
+}
+
+export const RegionFilters = ({
+  value,
+  onChange,
+  disableAll,
+}: Props): JSX.Element => {
   const user = useGetMe();
   const allowedProvinces = useMemo(() => {
     if (user === undefined) {
@@ -61,7 +70,7 @@ export const RegionFilters = ({ value, onChange }: Props): JSX.Element => {
           <FormattedMessage id="validation_search_params.province" />
         </InputLabel>
         <Select
-          disabled={user === undefined ? true : false}
+          disabled={disableAll === true || user === undefined ? true : false}
           value={value.province}
           onChange={e => {
             onChange({ province: e.target.value, district: '', commune: '' });
@@ -86,7 +95,7 @@ export const RegionFilters = ({ value, onChange }: Props): JSX.Element => {
           <FormattedMessage id="validation_search_params.district" />
         </InputLabel>
         <Select
-          disabled={value.province === '' ? true : false}
+          disabled={disableAll === true || value.province === '' ? true : false}
           value={value.district}
           onChange={e => {
             onChange({ ...value, district: e.target.value, commune: '' });
@@ -111,7 +120,7 @@ export const RegionFilters = ({ value, onChange }: Props): JSX.Element => {
           <FormattedMessage id="validation_search_params.commune" />
         </InputLabel>
         <Select
-          disabled={value.district === '' ? true : false}
+          disabled={disableAll === true || value.district === '' ? true : false}
           value={value.commune}
           onChange={e => {
             onChange({ ...value, commune: e.target.value });
