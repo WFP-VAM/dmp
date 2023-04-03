@@ -1,11 +1,10 @@
-import { IsString } from 'class-validator';
+import { IsEnum, IsString } from 'class-validator';
 
-export class ValidationStatus {
+import { ValidationStatusValue } from './constants';
+
+export class ValidationStatusDto {
   @IsString() readonly timestamp!: number;
-  @IsString() readonly uid!:
-    | 'validation_status_approved'
-    | 'validation_status_on_hold'
-    | 'validation_status_not_approved';
+  @IsEnum(ValidationStatusValue) readonly uid!: ValidationStatusValue;
   @IsString() readonly by_whom!: string;
   @IsString() readonly color!: string;
   @IsString() readonly label!: string;

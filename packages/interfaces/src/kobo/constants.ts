@@ -10,6 +10,12 @@ export const INCIDENT = 'INCIDENT';
 export type DisasterType = typeof FLOOD | typeof DROUGHT | typeof INCIDENT;
 export type DisasterDtoType = FloodDto | DroughtDto | IncidentDto;
 
+export enum ValidationStatusValue {
+  approved = 'validation_status_approved',
+  onHold = 'validation_status_on_hold',
+  notApproved = 'validation_status_not_approved',
+}
+
 interface MappingTypes {
   [key: string]: string;
 }
