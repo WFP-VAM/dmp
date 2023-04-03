@@ -1,6 +1,10 @@
 import { IsEnum, IsString } from 'class-validator';
 
-import { ValidationStatusValue } from './constants';
+export enum ValidationStatusValue {
+  approved = 'validation_status_approved',
+  onHold = 'validation_status_on_hold',
+  notApproved = 'validation_status_not_approved',
+}
 
 export class ValidationStatusDto {
   @IsString() readonly timestamp!: number;
