@@ -48,6 +48,10 @@
     "district": "District",
     "commune": "Commune"
   },
+  "form_page": {
+    "approve": "Approve",
+    "reject": "Reject"
+  },
   "disasters": {
     "1": "Flood",
     "2": "Drought",
