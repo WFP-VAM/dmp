@@ -9,7 +9,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-import { ValidationStatus } from './ValidationStatusDto';
+import { ValidationStatusDto } from './ValidationStatusDto';
 
 export class FloodDto {
   @IsPositive() readonly '_id'!: number;
@@ -163,7 +163,7 @@ export class FloodDto {
   @IsDateString() readonly '_submission_time'!: string;
   @IsArray() readonly '_tags'!: unknown[];
   @IsArray() readonly '_notes'!: unknown[];
-  @ValidateNested() readonly '_validation_status'!: ValidationStatus | Record<string, never>;
+  @ValidateNested() readonly '_validation_status'!: ValidationStatusDto | Record<string, never>;
   @IsString() readonly '_submitted_by'!: string | null;
 }
 

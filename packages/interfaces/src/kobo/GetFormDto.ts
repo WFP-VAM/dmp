@@ -1,8 +1,9 @@
-import { IsString } from 'class-validator';
+import { IsIn, IsString } from 'class-validator';
 
-import { DisasterType } from './constants';
+import { DisasterType, DROUGHT, FLOOD, INCIDENT } from './constants';
 
 export class GetFormDto {
-  @IsString() readonly disasterType!: DisasterType;
+  @IsIn([FLOOD, DROUGHT, INCIDENT])
+  readonly disasterType!: DisasterType;
   @IsString() readonly id!: string;
 }
