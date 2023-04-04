@@ -37,7 +37,8 @@
     "language": {
       "english": "English",
       "khmer": "ភាសាខ្មែរ"
-    }
+    },
+    "banner": "ប្រព័ន្ធព័ត៌មានទាន់ហេតុការណ៍ និងអង្កេតតាមដានស្ថានការណ៍គ្រោះមហន្តរាយ"
   },
   "validation_search_params": {
     "disaster_type": "ប្រភេទគ្រោះមហន្តរាយ",
