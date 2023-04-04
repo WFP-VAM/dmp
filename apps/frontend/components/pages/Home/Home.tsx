@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { DisasterDtoType } from '@wfp-dmp/interfaces';
+import { FormattedMessage } from 'react-intl';
 import useSWR from 'swr';
 
 import { TableDisplay } from 'components/TableDisplay';
@@ -17,7 +18,7 @@ export const Home = (): JSX.Element => {
       {user && (
         <>
           <Typography variant="h3" mb={5}>
-            Welcome {user.name}!
+            <FormattedMessage id="navigation.banner" />
           </Typography>
         </>
       )}
