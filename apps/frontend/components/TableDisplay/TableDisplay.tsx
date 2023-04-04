@@ -37,32 +37,32 @@ export const TableDisplay = ({
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell>
+          <TableRow sx={{ backgroundColor: '#013399', color: 'white' }}>
+            <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.province" />
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.district" />
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.commune" />
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.dis_date" />
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.dis_type" />
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.entry_name" />
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.phone" />
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.entry_date" />
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.review_link" />
             </TableCell>
           </TableRow>

@@ -1,6 +1,6 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { DisasterDtoType } from '@wfp-dmp/interfaces';
-import Link from 'next/link';
+import { FormattedMessage } from 'react-intl';
 import useSWR from 'swr';
 
 import { TableDisplay } from 'components/TableDisplay';
@@ -17,12 +17,9 @@ export const Home = (): JSX.Element => {
     <Box>
       {user && (
         <>
-          <h1>
-            Welcome {user.name} to <a href="https://nextjs.org">Next.js!</a>
-          </h1>
-          <Link href="/profile">
-            <h2>Update your profile</h2>
-          </Link>
+          <Typography variant="h3" mb={5}>
+            <FormattedMessage id="navigation.banner" />
+          </Typography>
         </>
       )}
       <TableDisplay isLoading={isLoading} forms={lastForms} />
