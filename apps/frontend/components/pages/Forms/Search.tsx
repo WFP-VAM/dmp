@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import {
   SearchFilters,
@@ -33,6 +34,12 @@ export const FormSearch = () => {
       <SearchFilters
         initSearchFormData={searchFormData}
         setSearchFormData={setSearchFormData}
+        submitButtonContent={
+          <FormattedMessage
+            id="navigation.forms.search"
+            defaultMessage="Search"
+          />
+        }
       />
       <TableDisplay isLoading={isLoading} forms={formData} />
     </Box>

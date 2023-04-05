@@ -1,7 +1,6 @@
 import { Box, Button } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 
 import { DateRange, DateRangeFilter } from './DateRangeFilter';
 import { DisasterFilter } from './DisasterFilter';
@@ -16,9 +15,11 @@ export interface SearchFormData {
 export const SearchFilters = ({
   initSearchFormData,
   setSearchFormData,
+  submitButtonContent,
 }: {
   initSearchFormData: SearchFormData;
   setSearchFormData: Dispatch<SetStateAction<SearchFormData>>;
+  submitButtonContent: JSX.Element;
 }): JSX.Element => {
   const { control, handleSubmit } = useForm<SearchFormData>({
     defaultValues: initSearchFormData,
@@ -53,10 +54,7 @@ export const SearchFilters = ({
       />
       <Box display="flex" justifyContent="center" mb={2}>
         <Button sx={{ color: 'white' }} type="submit">
-          <FormattedMessage
-            id="navigation.forms.search"
-            defaultMessage="Search"
-          />
+          {submitButtonContent}
         </Button>
       </Box>
     </form>
