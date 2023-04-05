@@ -2,10 +2,10 @@ import { NextPage } from 'next';
 
 import { LayoutWithNav } from 'components/Layout';
 
-const SearchFormsPage: NextPage = () => (
+const ReportPage: NextPage = () => (
   <LayoutWithNav>
     <div />
   </LayoutWithNav>
 );
 
-export default SearchFormsPage;
+export default ReportPage;
