@@ -81,21 +81,26 @@ export const NavMenuContent = (): JSX.Element => {
           </Link>
         </ListItem>
         <ListItem key="reports">
-          <ListItemButton
-            disableTouchRipple={true}
-            sx={{
-              width: '100%',
-              borderRadius: '4px',
-            }}
+          <Link
+            href="/report"
+            style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            <ListItemIcon>
-              <ContentPasteIcon fontSize="medium" key="reports" />
-            </ListItemIcon>
-            <ListItemText
-              primary={intl.formatMessage({ id: 'navigation.reports' })}
-              primaryTypographyProps={{ fontSize: 16 }}
-            />
-          </ListItemButton>
+            <ListItemButton
+              disableTouchRipple={true}
+              sx={{
+                width: '100%',
+                borderRadius: '4px',
+              }}
+            >
+              <ListItemIcon>
+                <ContentPasteIcon fontSize="medium" key="reports" />
+              </ListItemIcon>
+              <ListItemText
+                primary={intl.formatMessage({ id: 'navigation.reports' })}
+                primaryTypographyProps={{ fontSize: 16 }}
+              />
+            </ListItemButton>
+          </Link>
         </ListItem>
         {isAdmin && (
           <ListItem key="admin">
