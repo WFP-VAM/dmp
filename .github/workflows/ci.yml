@@ -3,6 +3,7 @@ name: ⛷ PR tests
 env:
   CI: true
   NODE_VERSION: 18
+  NEXT_PUBLIC_API_BASE_URL: https://staging.dmp.ovio.org
 
 defaults:
   run:
@@ -92,8 +93,6 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
       - name: Build Interfaces & Frontend
-        with:
-          NEXT_PUBLIC_API_BASE_URL: https://staging.dmp.ovio.org
         run: pnpm turbo build
       - name: Export to static HTML
         run: |
