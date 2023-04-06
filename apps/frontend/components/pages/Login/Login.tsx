@@ -39,7 +39,7 @@ export const Login: NextPage = () => {
     <main>
       <Head>
         <meta name="description" content="login" />
-        <title>Login | Bifrost</title>
+        <title>Login | NCDM - DMP</title>
       </Head>
       <div className={style.container}>
         <h1>
