@@ -1,6 +1,6 @@
 import { Box, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { DisasterDtoType, formatForm } from '@wfp-dmp/interfaces';
+import { DisasterDtoType, FloodDto, formatForm } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -8,6 +8,8 @@ import { useIntl } from 'react-intl';
 
 import { RegionFilters } from 'components/Filters/RegionFilters';
 import { DisasterSelect } from 'components/FormValidation/DisasterSelect';
+
+import { A1FloodTable } from './FloodTables';
 
 export const FormValidation = ({
   validationForm,
@@ -20,7 +22,7 @@ export const FormValidation = ({
     () => formatForm(validationForm),
     [validationForm],
   );
-  const { control } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: {
       region: {
         province: formattedForm.province,
@@ -32,14 +34,24 @@ export const FormValidation = ({
       phone: formattedForm.phone,
       reportDate: dayjs(new Date(formattedForm.entryDate)),
       incidentDate: dayjs(new Date(formattedForm.disasterDate)),
+      floodSpecific: {
+        'g3/g4/TNumDeath': (validationForm as FloodDto)['g3/g4/TNumDeath'],
+        'g3/g4/NumMeDeath': (validationForm as FloodDto)['g3/g4/NumMeDeath'],
+        'g3/g4/NumFeDeath': (validationForm as FloodDto)['g3/g4/NumFeDeath'],
+        'g3/g5/NumTMising': (validationForm as FloodDto)['g3/g5/NumTMising'],
+      },
     },
   });
 
   const [isEditMode] = useState(false);
   const minWidth = 240;
 
+  const submitHandler = data => {
+    console.log(data);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(submitHandler)}>
       <Box display="flex" flexDirection="column" justifyContent={'center'}>
         <Box display="flex" flexDirection="row">
           <Box mr={7}>
@@ -137,6 +149,14 @@ export const FormValidation = ({
           />
         </Box>
       </Box>
+      <Controller
+        name="floodSpecific"
+        control={control}
+        render={({ field: { value, onChange } }) => (
+          <A1FloodTable value={value} onChange={onChange} />
+        )}
+      />
+      <input type="submit" />
     </form>
   );
 };
