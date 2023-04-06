@@ -1,56 +1,28 @@
-import Head from 'next/head';
-import Link from 'next/link';
+import { Box, Typography } from '@mui/material';
+import { DisasterDtoType } from '@wfp-dmp/interfaces';
+import { FormattedMessage } from 'react-intl';
+import useSWR from 'swr';
 
+import { TableDisplay } from 'components/TableDisplay';
+import { ApiRoutes } from 'services/api/apiRoutes';
 import { useGetMe } from 'services/api/user/useUser';
-
-import style from './Home.module.css';
 
 export const Home = (): JSX.Element => {
   const user = useGetMe();
+  const { data: lastForms, isLoading } = useSWR<DisasterDtoType[]>(
+    ApiRoutes.lastForms,
+  );
 
   return (
-    <div>
-      <Head>
-        <title>Bifrost</title>
-        <meta name="description" content="Generated with bifrost" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={style.main}>
-        {user && (
-          <>
-            <h1>
-              Welcome {user.name} to <a href="https://nextjs.org">Next.js!</a>
-            </h1>
-
-            <p>
-              Get started by editing <code>pages/index.tsx</code>
-            </p>
-
-            <div>
-              <a href="https://nextjs.org/docs">
-                <h2>Documentation &rarr;</h2>
-                <p>Find in-depth information about Next.js features and API.</p>
-              </a>
-
-              <a href="https://nextjs.org/learn">
-                <h2>Learn &rarr;</h2>
-                <p>
-                  Learn about Next.js in an interactive course with quizzes!
-                </p>
-              </a>
-
-              <a href="https://github.com/vercel/next.js/tree/canary/examples">
-                <h2>Examples &rarr;</h2>
-                <p>Discover and deploy boilerplate example Next.js projects.</p>
-              </a>
-            </div>
-            <Link href="/profile">
-              <h2>Update your profile</h2>
-            </Link>
-          </>
-        )}
-      </main>
-    </div>
+    <Box>
+      {user && (
+        <>
+          <Typography variant="h3" mb={5}>
+            <FormattedMessage id="navigation.banner" />
+          </Typography>
+        </>
+      )}
+      <TableDisplay isLoading={isLoading} forms={lastForms} />
+    </Box>
   );
 };

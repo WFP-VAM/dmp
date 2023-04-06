@@ -6,9 +6,31 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
 ## Useful commands
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+- `npm run build` compile typescript to js
+- `npm run watch` watch for changes and compile
+- `npm run test` perform the jest unit tests
+- `cdk deploy` deploy this stack to your default AWS account/region
+- `cdk diff` compare deployed stack with current state
+- `cdk synth` emits the synthesized CloudFormation template
+
+## Deploy the Backend
+
+The backend is deployed on AWS thanks to the CDK.
+
+To deploy the backend:
+
+- Set `/wfp/dmp/kobo/token`, `/wfp/dmp/kobo/floodAssetId`, `/wfp/dmp/kobo/incidentAssetId` and `/wfp/dmp/kobo/droughtAssetId` in the AWS Secret Manager.
+
+- Set `CDK_DEFAULT_REGION`, `CDK_DEFAULT_ACCOUNT`, `ALLOWED_HOST` as environment variables.
+
+- Run
+
+  ```bash
+  pnpm cdk deploy --profile <aws-profile> --context applicationName="<app-name>" --context hostedZoneDomainName="<domain-name>"
+  ```
+
+  where:
+
+  - <aws-profile> is your local aws profile
+  - <app-name> is the application name used by the CDK
+  - <domain-name> is the main domain name to use

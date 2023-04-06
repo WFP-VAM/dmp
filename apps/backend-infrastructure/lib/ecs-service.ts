@@ -70,6 +70,38 @@ export class ECSService extends NestedStack {
       },
     });
 
+    const adminjsCookieSecret = new Secret(this, 'adminjsCookieSecret', {
+      secretName: 'dmpAdminjsCookieSecret',
+    });
+
+    const adminjsSessionSecret = new Secret(this, 'adminjsSessionSecret', {
+      secretName: 'dmpAdminjsSessionSecret',
+    });
+
+    const koboToken = Secret.fromSecretNameV2(
+      this,
+      'koboToken',
+      '/wfp/dmp/kobo/token',
+    );
+
+    const floodAssetId = Secret.fromSecretNameV2(
+      this,
+      'koboFloodAssetId',
+      '/wfp/dmp/kobo/floodAssetId',
+    );
+
+    const incidentAssetId = Secret.fromSecretNameV2(
+      this,
+      'koboIncidentAssetId',
+      '/wfp/dmp/kobo/incidentAssetId',
+    );
+
+    const droughtAssetId = Secret.fromSecretNameV2(
+      this,
+      'koboDroughtAssetId',
+      '/wfp/dmp/kobo/droughtAssetId',
+    );
+
     const cluster = new Cluster(this, 'Cluster', { vpc });
     const loadBalancedService = new ApplicationLoadBalancedFargateService(
       this,
@@ -91,6 +123,14 @@ export class ECSService extends NestedStack {
               ecs_Secret.fromSecretsManager(superadminUsername),
             SUPERADMIN_PASSWORD:
               ecs_Secret.fromSecretsManager(superadminPassword),
+            ADMINJS_COOKIE_SECRET:
+              ecs_Secret.fromSecretsManager(adminjsCookieSecret),
+            ADMINJS_SESSION_SECRET:
+              ecs_Secret.fromSecretsManager(adminjsSessionSecret),
+            KOBO_TOKEN: ecs_Secret.fromSecretsManager(koboToken),
+            FLOOD_ASSET_ID: ecs_Secret.fromSecretsManager(floodAssetId),
+            INCIDENT_ASSET_ID: ecs_Secret.fromSecretsManager(incidentAssetId),
+            DROUGHT_ASSET_ID: ecs_Secret.fromSecretsManager(droughtAssetId),
           },
           image: ContainerImage.fromAsset(
             path.join(__dirname, '..', '..', '..'),

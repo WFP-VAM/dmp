@@ -7,6 +7,7 @@ const config = {
     '^@modules/(.*)': '<rootDir>/modules/$1',
     '^@testUtils/(.*)': '<rootDir>/testUtils/$1',
     '^@decorators/(.*)': '<rootDir>/decorators/$1',
+    '^@utils/(.*)': '<rootDir>/utils/$1',
     '^@root/(.*)': '<rootDir>/$1',
   },
   setupFiles: ['<rootDir>/testUtils/setup.ts'],

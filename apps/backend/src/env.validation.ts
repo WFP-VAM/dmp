@@ -50,6 +50,24 @@ class EnvironmentVariables {
 
   @IsString()
   SUPERADMIN_PASSWORD!: string;
+
+  @IsString()
+  ADMINJS_COOKIE_SECRET!: string;
+
+  @IsString()
+  ADMINJS_SESSION_SECRET!: string;
+
+  @IsString()
+  KOBO_TOKEN!: string;
+
+  @IsString()
+  FLOOD_ASSET_ID!: string;
+
+  @IsString()
+  DROUGHT_ASSET_ID!: string;
+
+  @IsString()
+  INCIDENT_ASSET_ID!: string;
 }
 
 export const validate = (config: Record<string, unknown>): EnvironmentVariables => {
