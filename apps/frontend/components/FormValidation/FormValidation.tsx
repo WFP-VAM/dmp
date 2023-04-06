@@ -1,39 +1,17 @@
-import { DisasterDtoType, formatCommonFields } from '@wfp-dmp/interfaces';
-import dayjs from 'dayjs';
-import { useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { DisasterDtoType, isDrought, isFlood } from '@wfp-dmp/interfaces';
 
-import { CommonFormFields } from './CommonFormFields';
+import { FloodFormValidation } from './FloodFormValidation/FloodFormValidation';
 
 export const FormValidation = ({
   validationForm,
 }: {
   validationForm: DisasterDtoType;
 }): JSX.Element => {
-  const formattedForm = useMemo(
-    () => formatCommonFields(validationForm),
-    [validationForm],
-  );
-  const { control } = useForm({
-    defaultValues: {
-      region: {
-        province: formattedForm.province,
-        district: formattedForm.district,
-        commune: formattedForm.commune,
-      },
-      interviewer: formattedForm.reportName,
-      disTyp: formattedForm.disasterType,
-      phone: formattedForm.phone,
-      reportDate: dayjs(new Date(formattedForm.entryDate)),
-      incidentDate: dayjs(new Date(formattedForm.disasterDate)),
-    },
-  });
+  if (isFlood(validationForm))
+    return <FloodFormValidation validationForm={validationForm} />;
 
-  const [isEditMode] = useState(false);
+  if (isDrought(validationForm)) return <div>WIP</div>;
 
-  return (
-    <form>
-      <CommonFormFields control={control} isEditMode={isEditMode} />
-    </form>
-  );
+  // incident
+  return <div>WIP</div>;
 };
