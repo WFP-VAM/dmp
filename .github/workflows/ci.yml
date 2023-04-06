@@ -92,6 +92,8 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
       - name: Build Interfaces & Frontend
+        with:
+          NEXT_PUBLIC_API_BASE_URL: https://staging.dmp.ovio.org
         run: pnpm turbo build
       - name: Export to static HTML
         run: |
