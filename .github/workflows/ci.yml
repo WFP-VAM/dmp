@@ -75,7 +75,7 @@ jobs:
         run: pnpm run security
 
   frontend_build_and_deploy:
-    needs: tests
+    needs: test
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     env:
