@@ -6,5 +6,5 @@ export { PatchValidationStatusDto } from './PatchValidationStatusDto';
 export { ValidationStatusDto, ValidationStatusValue } from './ValidationStatusDto';
 export { IncidentDto, IncidentQueryResponseDto } from './IncidentDto';
 export { koboKeys } from './keys';
-export { computeDisasterTypeFromDistTyp, formatForm } from './utils';
+export { computeDisasterTypeFromDistTyp, formatCommonFields } from './utils';
 export * from './constants';

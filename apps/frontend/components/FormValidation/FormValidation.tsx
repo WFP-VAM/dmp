@@ -1,4 +1,4 @@
-import { DisasterDtoType, formatForm } from '@wfp-dmp/interfaces';
+import { DisasterDtoType, formatCommonFields } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -11,7 +11,7 @@ export const FormValidation = ({
   validationForm: DisasterDtoType;
 }): JSX.Element => {
   const formattedForm = useMemo(
-    () => formatForm(validationForm),
+    () => formatCommonFields(validationForm),
     [validationForm],
   );
   const { control } = useForm({

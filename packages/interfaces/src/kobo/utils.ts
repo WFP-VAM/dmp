@@ -21,7 +21,7 @@ export const isDrought = (form: DisasterDtoType): form is DroughtDto => {
   return koboKeys[DROUGHT].disTyp in form;
 };
 
-export const formatForm = (form: DisasterDtoType) => {
+export const formatCommonFields = (form: DisasterDtoType) => {
   if (isFlood(form)) {
     const keys = koboKeys[FLOOD];
 

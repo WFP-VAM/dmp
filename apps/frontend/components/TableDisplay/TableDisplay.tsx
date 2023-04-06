@@ -8,8 +8,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { DisasterDtoType } from '@wfp-dmp/interfaces';
-import { formatForm } from '@wfp-dmp/interfaces/dist/kobo/utils';
+import { DisasterDtoType, formatCommonFields } from '@wfp-dmp/interfaces';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -20,7 +19,7 @@ const formatForms = (forms: DisasterDtoType[] | undefined) => {
   }
 
   return forms.map(form => {
-    return formatForm(form);
+    return formatCommonFields(form);
   });
 };
 
