@@ -1,5 +1,10 @@
-import { FloodDto, formatCommonFields } from '@wfp-dmp/interfaces';
+import {
+  FloodDto,
+  floodSpecificKeys,
+  formatCommonFields,
+} from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
+import { mapValues, pick } from 'lodash';
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -11,7 +16,10 @@ export const FloodFormValidation = ({
   validationForm: FloodDto;
 }): JSX.Element => {
   const formattedForm = useMemo(
-    () => formatCommonFields(validationForm),
+    () => ({
+      ...formatCommonFields(validationForm),
+      ...mapValues(floodSpecificKeys, value => validationForm[value]),
+    }),
     [validationForm],
   );
   const { control } = useForm({
@@ -26,6 +34,7 @@ export const FloodFormValidation = ({
       phone: formattedForm.phone,
       reportDate: dayjs(new Date(formattedForm.entryDate)),
       incidentDate: dayjs(new Date(formattedForm.disasterDate)),
+      ...pick(formattedForm, Object.keys(floodSpecificKeys)),
     },
   });
 
