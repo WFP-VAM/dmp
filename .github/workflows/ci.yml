@@ -90,11 +90,11 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
       - name: Install frontend dependencies
-        run: pnpm install --frozen-lockfile --filter frontend
+        run: pnpm install --frozen-lockfile
       - name: Build frontend
         run: |
           cd apps/frontend
-          yarn build
+          pnpm build
       - name: Deploy on surge
         uses: dswistowski/surge-sh-action@v1
         with:
