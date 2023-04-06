@@ -38,7 +38,8 @@
       "english": "English",
       "khmer": "ភាសាខ្មែរ"
     },
-    "banner": "Disaster Information and Monitoring System"
+    "banner": "Disaster Information and Monitoring System",
+    "logout": "Logout"
   },
   "validation_search_params": {
     "disaster_type": "Disaster Type",

@@ -1,8 +1,10 @@
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
+import LogoutIcon from '@mui/icons-material/Logout';
 import StarIcon from '@mui/icons-material/Star';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import {
   Box,
+  Button,
   FormControl,
   IconButton,
   List,
@@ -18,8 +20,12 @@ import {
 import Logo from 'next/image';
 import Link from 'next/link';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { mutate } from 'swr';
 
 import { useLanguageContext } from 'context';
+import { ApiRoutes } from 'services/api/apiRoutes';
+import { removeAccessToken } from 'services/api/auth/utils';
+import { apiClient } from 'services/api/client';
 import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
 import { env } from 'services/env';
 
@@ -37,6 +43,18 @@ export const NavMenuContent = (): JSX.Element => {
   const handleLanguageChange = (e: SelectChangeEvent) => {
     const newLanguage = e.target.value;
     setLanguage(newLanguage);
+  };
+
+  const handleLogoutClick = () => {
+    void logout();
+  };
+
+  const clearCache = () => mutate(() => true, undefined, { revalidate: false });
+  const logout = async () => {
+    void clearCache();
+    removeAccessToken();
+    ApiRoutes.logout;
+    await apiClient.post<unknown>(ApiRoutes.logout);
   };
 
   return (
@@ -136,6 +154,22 @@ export const NavMenuContent = (): JSX.Element => {
           </MenuItem>
         </Select>
       </FormControl>
+      <Button
+        className="logout"
+        onClick={handleLogoutClick}
+        sx={{
+          position: 'absolute',
+          bottom: 25,
+          left: 25,
+          fontSize: 16,
+          color: 'inherit',
+          backgroundColor: 'transparent',
+          textTransform: 'none',
+        }}
+        startIcon={<LogoutIcon />}
+      >
+        <FormattedMessage id="navigation.logout" />
+      </Button>
     </Box>
   );
 };
