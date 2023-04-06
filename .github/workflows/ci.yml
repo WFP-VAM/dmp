@@ -94,7 +94,9 @@ jobs:
       - name: Build Interfaces & Frontend
         run: pnpm turbo build
       - name: Export to static HTML
-        run: pnpm next export
+        run: |
+          cd apps/frontend
+          pnpm next export
       - name: Deploy on surge
         uses: dswistowski/surge-sh-action@v1
         with:
