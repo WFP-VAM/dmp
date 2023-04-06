@@ -87,19 +87,17 @@ jobs:
         id: setup-node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
-      - name: Build frontend
-        run: |
-          cd apps/frontend
-          pnpm build
+      - name: Build Interfaces & Frontend
+        run: pnpm turbo build
       - name: Deploy on surge
         uses: dswistowski/surge-sh-action@v1
         with:
           domain: ${{ env.surge_url }}
-          project: "apps/frontend/build/."
+          project: "apps/frontend/.next/."
           login: ${{ secrets.surge_login }}
           token: ${{ secrets.surge_token }}
       - name: Get current date
