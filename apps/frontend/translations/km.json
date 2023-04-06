@@ -5,7 +5,7 @@
     "warning": "Your username or password is invalid. Try again.",
     "email": {
       "label": "អ៊ីមែល",
-      "placeholder": "max@bifrost.io",
+      "placeholder": "max@ncdm.gov.kh",
       "error": {
         "required": "Please enter your email address",
         "invalid": "Please enter a valid email address"
