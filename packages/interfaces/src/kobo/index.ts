@@ -5,6 +5,6 @@ export { GetFormDto } from './GetFormDto';
 export { PatchValidationStatusDto } from './PatchValidationStatusDto';
 export { ValidationStatusDto, ValidationStatusValue } from './ValidationStatusDto';
 export { IncidentDto, IncidentQueryResponseDto } from './IncidentDto';
-export { koboKeys, floodSpecificKeys } from './keys';
+export { koboKeys, floodSpecificKeys, FloodSpecific } from './keys';
 export { computeDisasterTypeFromDistTyp, formatCommonFields, isFlood, isDrought } from './utils';
 export * from './constants';
