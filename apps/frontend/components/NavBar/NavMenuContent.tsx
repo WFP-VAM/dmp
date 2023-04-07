@@ -20,14 +20,11 @@ import {
 import Logo from 'next/image';
 import Link from 'next/link';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { mutate } from 'swr';
 
 import { useLanguageContext } from 'context';
-import { ApiRoutes } from 'services/api/apiRoutes';
-import { removeAccessToken } from 'services/api/auth/utils';
-import { apiClient } from 'services/api/client';
 import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
 import { env } from 'services/env';
+import { logout } from 'utils/logout';
 
 export const NavMenuContent = (): JSX.Element => {
   const intl = useIntl();
@@ -47,14 +44,6 @@ export const NavMenuContent = (): JSX.Element => {
 
   const handleLogoutClick = () => {
     void logout();
-  };
-
-  const clearCache = () => mutate(() => true, undefined, { revalidate: false });
-  const logout = async () => {
-    void clearCache();
-    removeAccessToken();
-    ApiRoutes.logout;
-    await apiClient.post<unknown>(ApiRoutes.logout);
   };
 
   return (
