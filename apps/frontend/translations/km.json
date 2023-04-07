@@ -81,6 +81,9 @@
       "review_link": "Review and Approval"
     }
   },
+  "report_page": {
+    "showReport": "បង្ហាញរបាយការណ៍"
+  },
   "provinces": {
     "01": "ខេត្តបន្ទាយមានជ័យ",
     "02": "ខេត្តបាត់ដំបង",

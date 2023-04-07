@@ -81,6 +81,9 @@
       "review_link": "Review and Approval"
     }
   },
+  "report_page": {
+    "showReport": "Show Report"
+  },
   "provinces": {
     "01": "Banteay Meanchey",
     "02": "Battambang",

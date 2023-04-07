@@ -8,10 +8,8 @@ import {
   SearchFilters,
   SearchFormData,
 } from 'components/Filters/SearchFilters';
-import { TableDisplay } from 'components/TableDisplay';
-import { useGetForms } from 'services/api/kobo/useGetForms';
 
-const defaultSearchFormData: SearchFormData = {
+const defaultSearchReportData: SearchFormData = {
   disTyp: DisasterMapping['flood'],
   region: {
     province: '',
@@ -24,24 +22,23 @@ const defaultSearchFormData: SearchFormData = {
   },
 };
 
-export const FormSearch = () => {
-  const [searchFormData, setSearchFormData] = useState(defaultSearchFormData);
-
-  const { data: formData, isLoading } = useGetForms(searchFormData);
+export const ReportContainer = () => {
+  const [searchReportData, setSearchReportData] = useState(
+    defaultSearchReportData,
+  );
 
   return (
     <Box display="flex" flexDirection="column">
       <SearchFilters
-        initSearchFormData={searchFormData}
-        setSearchFormData={setSearchFormData}
+        initSearchFormData={searchReportData}
+        setSearchFormData={setSearchReportData}
         submitButtonContent={
           <FormattedMessage
-            id="navigation.forms.search"
-            defaultMessage="Search"
+            id="report_page.showReport"
+            defaultMessage="Show Report"
           />
         }
       />
-      <TableDisplay isLoading={isLoading} forms={formData} />
     </Box>
   );
 };
