@@ -1,26 +1,7 @@
-import {
-  GridColDef,
-  GridColumnGroupingModel,
-  GridColumnHeaderParams,
-} from '@mui/x-data-grid';
-import { DisasterType, FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
-import { FormattedMessage } from 'react-intl';
+import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-const getColumnSetup = (field: string, disaster: DisasterType): GridColDef => ({
-  field,
-  width: 150,
-  editable: true,
-  renderHeader: (params: GridColumnHeaderParams) => (
-    <FormattedMessage id={`table.${disaster}.${params.field}`} />
-  ),
-});
-
-const getGroupSetup = (groupId: string, disaster: DisasterType) => ({
-  groupId: groupId,
-  renderHeaderGroup: () => (
-    <FormattedMessage id={`table.${disaster}.groupId.${groupId}`} />
-  ),
-});
+import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 export const A1Columns: GridColDef[] = [
   getColumnSetup(FloodSpecific.TNumDeath, FLOOD),
