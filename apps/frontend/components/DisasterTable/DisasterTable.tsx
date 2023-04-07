@@ -24,7 +24,7 @@ export const DisasterTable = ({
   console;
 
   return (
-    <div style={{ height: 250, width: '100%' }}>
+    <div style={{ height: 250, maxWidth: 1200 }}>
       <DataGrid
         showCellVerticalBorder
         showColumnVerticalBorder
