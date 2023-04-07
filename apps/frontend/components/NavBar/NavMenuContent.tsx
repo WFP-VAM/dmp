@@ -1,8 +1,10 @@
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
+import LogoutIcon from '@mui/icons-material/Logout';
 import StarIcon from '@mui/icons-material/Star';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import {
   Box,
+  Button,
   FormControl,
   IconButton,
   List,
@@ -22,6 +24,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useLanguageContext } from 'context';
 import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
 import { env } from 'services/env';
+import { logout } from 'utils/logout';
 
 export const NavMenuContent = (): JSX.Element => {
   const intl = useIntl();
@@ -38,6 +41,10 @@ export const NavMenuContent = (): JSX.Element => {
   const handleLanguageChange = (e: SelectChangeEvent) => {
     const newLanguage = e.target.value;
     setLanguage(newLanguage);
+  };
+
+  const handleLogoutClick = () => {
+    void logout();
   };
 
   return (
@@ -137,6 +144,22 @@ export const NavMenuContent = (): JSX.Element => {
           </MenuItem>
         </Select>
       </FormControl>
+      <Button
+        className="logout"
+        onClick={handleLogoutClick}
+        sx={{
+          position: 'absolute',
+          bottom: 25,
+          left: 25,
+          fontSize: 16,
+          color: 'inherit',
+          backgroundColor: 'transparent',
+          textTransform: 'none',
+        }}
+        startIcon={<LogoutIcon />}
+      >
+        <FormattedMessage id="navigation.logout" />
+      </Button>
     </Box>
   );
 };

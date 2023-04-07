@@ -38,7 +38,8 @@
       "english": "English",
       "khmer": "ភាសាខ្មែរ"
     },
-    "banner": "Disaster Information and Monitoring System"
+    "banner": "Disaster Information and Monitoring System",
+    "logout": "Logout"
   },
   "validation_search_params": {
     "disaster_type": "Disaster Type",
@@ -80,6 +81,9 @@
       "entry_date": "Report Entry Date",
       "review_link": "Review and Approval"
     }
+  },
+  "report_page": {
+    "showReport": "Show Report"
   },
   "provinces": {
     "01": "Banteay Meanchey",
