@@ -52,7 +52,7 @@ export const FloodFormValidation = ({
 
   const [isEditMode] = useState(false);
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = (data: unknown) => console.log(data);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

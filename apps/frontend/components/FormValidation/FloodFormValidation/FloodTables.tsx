@@ -2,7 +2,14 @@ import { floodSpecificKeys } from '@wfp-dmp/interfaces';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
 
-import { A1ColumnGroup, A1Columns } from './tablesConfig/A1Config';
+import {
+  NumAffected1ColumnGroup,
+  NumAffected1Columns,
+} from './tablesConfig/NumAffected-1';
+import {
+  NumAffected2ColumnGroup,
+  NumAffected2Columns,
+} from './tablesConfig/NumAffected-2';
 
 export type FloodSpecificType = Record<
   keyof typeof floodSpecificKeys,
@@ -23,8 +30,15 @@ export const FloodTables = ({
   return (
     <>
       <DisasterTable
-        columns={A1Columns}
-        columnGroup={A1ColumnGroup}
+        columns={NumAffected1Columns}
+        columnGroup={NumAffected1ColumnGroup}
+        data={[{ id: 1, ...value }]}
+        onChange={onChange}
+        isEditable={isEditMode}
+      />
+      <DisasterTable
+        columns={NumAffected2Columns}
+        columnGroup={NumAffected2ColumnGroup}
         data={[{ id: 1, ...value }]}
         onChange={onChange}
         isEditable={isEditMode}
