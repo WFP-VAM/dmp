@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -21,10 +22,8 @@ export const DisasterTable = ({
   onChange,
   isEditable,
 }: IProps): JSX.Element => {
-  console;
-
   return (
-    <div style={{ maxWidth: 1200, height: 240 }}>
+    <Box style={{ maxWidth: 1200, height: 240 }}>
       <DataGrid
         showCellVerticalBorder
         showColumnVerticalBorder
@@ -40,6 +39,6 @@ export const DisasterTable = ({
           return newRow;
         }}
       />
-    </div>
+    </Box>
   );
 };
