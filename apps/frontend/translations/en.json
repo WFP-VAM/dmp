@@ -85,6 +85,41 @@
   "report_page": {
     "showReport": "Show Report"
   },
+  "table": {
+    "FLOOD": {
+      "column": {
+        "NumVillAff": "Villages",
+        "NumFamAff": "Families",
+        "NumPeoAff": "Total People",
+        "NumFeAff": "Women",
+        "NumTDeath": "Total Dead",
+        "NumMeDeath": "Men",
+        "NumFeDeath": "Women",
+        "NumKidDeath": "Children",
+        "NumOldDeath": "Elderly",
+        "NumDisDeath": "Disabled",
+        "NumTMissing": "Total Missing",
+        "NumMeMissing": "Men",
+        "NumFeMissing": "Women",
+        "NumKidMissing": "Children",
+        "NumOldMissing": "Elderly",
+        "NumDisMissing": "Disabled",
+        "NumTInjure": "Total Injured",
+        "NumMeInjure": "Men",
+        "NumFeInjure": "Women",
+        "NumKidInjure": "Children",
+        "NumOldInjure": "Elderly",
+        "NumDisInjure": "Disabled"
+      },
+      "groupId": {
+        "victimsAffected": "Victims Affected",
+        "totalAffected": "Total Numbers Affected",
+        "deathToll": "Death Toll",
+        "missing": "Number Missing",
+        "injured": "Number Injured"
+      }
+    }
+  },
   "provinces": {
     "01": "Banteay Meanchey",
     "02": "Battambang",
