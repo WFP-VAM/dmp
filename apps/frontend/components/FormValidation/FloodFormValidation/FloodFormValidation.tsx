@@ -167,29 +167,33 @@ export const FloodFormValidation = ({
           />
         )}
       />
-      {!isEditMode && (
-        <Button
-          onClick={() => {
-            setIsEditMode(true);
-          }}
-        >
-          <FormattedMessage id="form_page.edit" />
-        </Button>
-      )}
-      {isEditMode && (
-        <>
-          <Button type="submit">
-            <FormattedMessage id="form_page.submit" />
-          </Button>
+      <Box display="flex" justifyContent="center">
+        {!isEditMode && (
           <Button
+            sx={{ color: 'white', margin: 2 }}
             onClick={() => {
-              setIsEditMode(false);
+              setIsEditMode(true);
             }}
           >
-            <FormattedMessage id="form_page.cancel" />
+            <FormattedMessage id="form_page.edit" />
           </Button>
-        </>
-      )}
+        )}
+        {isEditMode && (
+          <>
+            <Button type="submit" sx={{ color: 'white', margin: 2 }}>
+              <FormattedMessage id="form_page.submit" />
+            </Button>
+            <Button
+              sx={{ color: 'white', margin: 2 }}
+              onClick={() => {
+                setIsEditMode(false);
+              }}
+            >
+              <FormattedMessage id="form_page.cancel" />
+            </Button>
+          </>
+        )}
+      </Box>
     </form>
   );
 };
