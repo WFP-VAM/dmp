@@ -7,9 +7,9 @@ import {
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { mapValues, pick } from 'lodash';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { RegionFilters } from 'components/Filters/RegionFilters';
 
@@ -50,11 +50,10 @@ export const FloodFormValidation = ({
     },
   });
 
-  const [isEditMode, setIsEditMode] = useState(true);
-  const cancelEdit = () => {
+  const [isEditMode, setIsEditMode] = useState(false);
+  useEffect(() => {
     reset();
-    setIsEditMode(false);
-  };
+  }, [isEditMode, reset]);
 
   const onSubmit = (data: unknown) => console.log(data);
 
@@ -174,15 +173,21 @@ export const FloodFormValidation = ({
             setIsEditMode(true);
           }}
         >
-          Edit
+          <FormattedMessage id="form_page.edit" />
         </Button>
       )}
       {isEditMode && (
         <>
-          <Button type="submit">Submit</Button>
-          {/* <input type="button" onClick={reset} /> */}
-
-          <Button onClick={cancelEdit}>Cancel</Button>
+          <Button type="submit">
+            <FormattedMessage id="form_page.submit" />
+          </Button>
+          <Button
+            onClick={() => {
+              setIsEditMode(false);
+            }}
+          >
+            <FormattedMessage id="form_page.cancel" />
+          </Button>
         </>
       )}
     </form>
