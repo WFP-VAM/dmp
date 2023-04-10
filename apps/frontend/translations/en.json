@@ -52,7 +52,10 @@
   },
   "form_page": {
     "approve": "Approve",
-    "reject": "Reject"
+    "reject": "Reject",
+    "submit": "Submit",
+    "edit": "Edit",
+    "cancel": "Cancel"
   },
   "disasters": {
     "1": "Flood",

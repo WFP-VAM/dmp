@@ -1,4 +1,5 @@
-import { Box, TextField } from '@mui/material';
+/* eslint-disable max-lines */
+import { Box, Button, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import {
   FloodDto,
@@ -7,9 +8,9 @@ import {
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { mapValues, pick } from 'lodash';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { RegionFilters } from 'components/Filters/RegionFilters';
 
@@ -31,7 +32,7 @@ export const FloodFormValidation = ({
     }),
     [validationForm],
   );
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       region: {
         province: formattedForm.province,
@@ -50,7 +51,16 @@ export const FloodFormValidation = ({
     },
   });
 
-  const [isEditMode] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  // We set this state to avoid race condition between a field update and the reset coming from react hook form
+  const [shouldReset, setShouldReset] = useState(false);
+
+  useEffect(() => {
+    if (shouldReset) {
+      reset();
+      setShouldReset(false);
+    }
+  }, [shouldReset, reset]);
 
   const onSubmit = (data: unknown) => console.log(data);
 
@@ -164,7 +174,34 @@ export const FloodFormValidation = ({
           />
         )}
       />
-      <input type="submit" />
+      <Box display="flex" justifyContent="center">
+        {!isEditMode && (
+          <Button
+            sx={{ color: 'white', margin: 2 }}
+            onClick={() => {
+              setIsEditMode(true);
+            }}
+          >
+            <FormattedMessage id="form_page.edit" />
+          </Button>
+        )}
+        {isEditMode && (
+          <>
+            <Button type="submit" sx={{ color: 'white', margin: 2 }}>
+              <FormattedMessage id="form_page.submit" />
+            </Button>
+            <Button
+              sx={{ color: 'white', margin: 2 }}
+              onClick={() => {
+                setIsEditMode(false);
+                setShouldReset(true);
+              }}
+            >
+              <FormattedMessage id="form_page.cancel" />
+            </Button>
+          </>
+        )}
+      </Box>
     </form>
   );
 };

@@ -25,6 +25,12 @@ export const DisasterTable = ({
   return (
     <Box style={{ maxWidth: 1200, height: 240 }}>
       <DataGrid
+        sx={{
+          '& .MuiDataGrid-cell:focus': {
+            outline: isEditable ? '' : 'none',
+          },
+        }}
+        disableRowSelectionOnClick={!isEditable}
         showCellVerticalBorder
         showColumnVerticalBorder
         rows={data}
