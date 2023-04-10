@@ -1,4 +1,4 @@
-import { Box, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import {
   FloodDto,
@@ -31,7 +31,7 @@ export const FloodFormValidation = ({
     }),
     [validationForm],
   );
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       region: {
         province: formattedForm.province,
@@ -50,7 +50,11 @@ export const FloodFormValidation = ({
     },
   });
 
-  const [isEditMode] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(true);
+  const cancelEdit = () => {
+    reset();
+    setIsEditMode(false);
+  };
 
   const onSubmit = (data: unknown) => console.log(data);
 
@@ -164,7 +168,23 @@ export const FloodFormValidation = ({
           />
         )}
       />
-      <input type="submit" />
+      {!isEditMode && (
+        <Button
+          onClick={() => {
+            setIsEditMode(true);
+          }}
+        >
+          Edit
+        </Button>
+      )}
+      {isEditMode && (
+        <>
+          <Button type="submit">Submit</Button>
+          {/* <input type="button" onClick={reset} /> */}
+
+          <Button onClick={cancelEdit}>Cancel</Button>
+        </>
+      )}
     </form>
   );
 };
