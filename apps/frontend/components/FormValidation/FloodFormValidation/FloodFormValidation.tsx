@@ -52,6 +52,7 @@ export const FloodFormValidation = ({
   });
 
   const [isEditMode, setIsEditMode] = useState(false);
+  // We set this state to avoid race condition between a field update and the reset coming from react hook form
   const [shouldReset, setShouldReset] = useState(false);
 
   useEffect(() => {
