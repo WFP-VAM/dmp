@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { Box, Button, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import {
@@ -51,9 +52,14 @@ export const FloodFormValidation = ({
   });
 
   const [isEditMode, setIsEditMode] = useState(false);
+  const [shouldReset, setShouldReset] = useState(false);
+
   useEffect(() => {
-    reset();
-  }, [isEditMode, reset]);
+    if (shouldReset) {
+      reset();
+      setShouldReset(false);
+    }
+  }, [shouldReset, reset]);
 
   const onSubmit = (data: unknown) => console.log(data);
 
@@ -187,6 +193,7 @@ export const FloodFormValidation = ({
               sx={{ color: 'white', margin: 2 }}
               onClick={() => {
                 setIsEditMode(false);
+                setShouldReset(true);
               }}
             >
               <FormattedMessage id="form_page.cancel" />
