@@ -46,8 +46,8 @@ export const FloodFormValidation = ({
       incidentDate: dayjs(new Date(formattedForm.disasterDate)),
       floodSpecific: pick(
         formattedForm,
-        Object.keys(floodSpecificKeys),
-      ) as Record<keyof typeof floodSpecificKeys, string | undefined>,
+        Object.keys(floodSpecificKeys) as (keyof typeof floodSpecificKeys)[],
+      ),
     },
   });
 

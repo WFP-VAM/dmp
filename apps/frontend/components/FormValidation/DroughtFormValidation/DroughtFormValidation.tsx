@@ -46,8 +46,10 @@ export const DroughtFormValidation = ({
       incidentDate: dayjs(new Date(formattedForm.disasterDate)),
       droughtSpecific: pick(
         formattedForm,
-        Object.keys(droughtSpecificKeys),
-      ) as Record<keyof typeof droughtSpecificKeys, string | undefined>,
+        Object.keys(
+          droughtSpecificKeys,
+        ) as (keyof typeof droughtSpecificKeys)[],
+      ),
     },
   });
 
