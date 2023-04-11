@@ -3,7 +3,7 @@ import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const NumAffected1Columns: GridColDef[] = [
+export const NumAffectedColumns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.NumVillAff, INCIDENT),
   getColumnSetup(IncidentSpecific.NumPeoAff, INCIDENT, 120),
   getColumnSetup(IncidentSpecific.NumFamAff, INCIDENT),
@@ -28,7 +28,7 @@ export const NumAffected1Columns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.NumDisInjure, INCIDENT),
 ];
 
-export const NumAffected1ColumnGroup: GridColumnGroupingModel = [
+export const NumAffectedColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('victimsAffected', INCIDENT),
     children: [

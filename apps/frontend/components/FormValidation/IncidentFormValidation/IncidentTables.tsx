@@ -3,8 +3,8 @@ import { incidentSpecificKeys } from '@wfp-dmp/interfaces';
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
 
 import {
-  NumAffected1ColumnGroup,
-  NumAffected1Columns,
+  NumAffectedColumnGroup,
+  NumAffectedColumns,
 } from './tablesConfig/NumAffected';
 
 export type IncidentSpecificType = Record<
@@ -26,8 +26,8 @@ export const IncidentTables = ({
   return (
     <>
       <DisasterTable
-        columns={NumAffected1Columns}
-        columnGroup={NumAffected1ColumnGroup}
+        columns={NumAffectedColumns}
+        columnGroup={NumAffectedColumnGroup}
         data={[{ id: 1, ...value }]}
         onChange={onChange}
         isEditable={isEditMode}
