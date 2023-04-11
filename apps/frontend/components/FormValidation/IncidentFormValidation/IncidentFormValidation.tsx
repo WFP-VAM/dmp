@@ -46,8 +46,8 @@ export const IncidentFormValidation = ({
       incidentDate: dayjs(new Date(formattedForm.disasterDate)),
       incidentSpecific: pick(
         formattedForm,
-        Object.keys(incidentSpecificKeys),
-      ) as Record<keyof typeof incidentSpecificKeys, string | undefined>,
+        Object.keys(incidentSpecificKeys) as (keyof typeof incidentSpecificKeys)[],
+      )
     },
   });
 
