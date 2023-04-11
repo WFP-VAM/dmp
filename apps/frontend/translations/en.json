@@ -144,6 +144,39 @@
         "noWater": "Number of households lacking water",
         "deathToll": "Death Toll"
       }
+    },
+    "INCIDENT": {
+      "column": {
+        "NumVillAff": "Villages",
+        "NumPeoAff": "Total People",
+        "NumFamAff": "Families",
+        "NumFeAff": "Women",
+        "NumDeathTo": "Total Dead",
+        "NumMeDeath": "Men",
+        "NumFeDeath": "Women",
+        "NumKidDeath": "Children",
+        "NumOldDeath": "Elderly",
+        "NumDisDeath": "Disabled",
+        "ToNumMising": "Total Missing",
+        "NumMeMising": "Men",
+        "NumFeMising": "Women",
+        "NumKidMising": "Children",
+        "NumOldMising": "Elderly",
+        "NumDisMising": "Disabled",
+        "ToNumInjure": "Total Injured",
+        "NumMeInjure": "Men",
+        "NumFeInjure": "Women",
+        "NumKidInjure": "Children",
+        "NumOldInjure": "Elderly",
+        "NumDisInjure": "Disabled"
+      },
+      "groupId": {
+        "victimsAffected": "Victims Affected",
+        "totalAffected": "Total Numbers Affected",
+        "deathToll": "Death Toll",
+        "missing": "Number Missing",
+        "injured": "Number Injured"
+      }
     }
   },
   "provinces": {

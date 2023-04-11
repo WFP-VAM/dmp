@@ -2,6 +2,7 @@ import { DisasterDtoType, isDrought, isFlood } from '@wfp-dmp/interfaces';
 
 import { DroughtFormValidation } from './DroughtFormValidation/DroughtFormValidation';
 import { FloodFormValidation } from './FloodFormValidation/FloodFormValidation';
+import { IncidentFormValidation } from './IncidentFormValidation/IncidentFormValidation';
 
 export const FormValidation = ({
   validationForm,
@@ -15,5 +16,5 @@ export const FormValidation = ({
     return <DroughtFormValidation validationForm={validationForm} />;
 
   // incident
-  return <div>WIP</div>;
+  return <IncidentFormValidation validationForm={validationForm} />;
 };
