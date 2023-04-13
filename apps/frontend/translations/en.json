@@ -158,6 +158,10 @@
         "socialSectorAffected": "Social Sector Affected",
         "schoolsNoWater": "Schools",
         "healthCentersNoWater": "Health Centers and Hospitals"
+      },
+      "dropdowns": {
+        "elecPresent": "Having electricity",
+        "elecNotPresent": "Not having electricity"
       }
     },
     "INCIDENT": {
