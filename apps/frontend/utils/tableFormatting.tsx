@@ -9,7 +9,6 @@ export const getColumnSetup = (
   opts?: {
     type: 'singleSelect';
     valueOptions: { value: '1' | '2' | ''; label: string }[];
-    language: string;
   },
 ): GridColDef => {
   const fields = {

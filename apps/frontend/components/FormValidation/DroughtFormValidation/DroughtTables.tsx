@@ -1,7 +1,7 @@
 import { droughtSpecificKeys } from '@wfp-dmp/interfaces';
+import { useIntl } from 'react-intl';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
-import { useLanguageContext } from 'context';
 
 import {
   NumAffectedColumnGroup,
@@ -28,7 +28,7 @@ export const DroughtTables = ({
   onChange,
   isEditMode,
 }: IProps): JSX.Element => {
-  const { language } = useLanguageContext();
+  const intl = useIntl();
 
   return (
     <>
@@ -40,7 +40,7 @@ export const DroughtTables = ({
         isEditable={isEditMode}
       />
       <DisasterTable
-        columns={SocialSectorAffectedColumns(language)}
+        columns={SocialSectorAffectedColumns(intl)}
         columnGroup={SocialSectorAffectedColumnGroup}
         data={[{ id: 1, ...value }]}
         onChange={onChange}

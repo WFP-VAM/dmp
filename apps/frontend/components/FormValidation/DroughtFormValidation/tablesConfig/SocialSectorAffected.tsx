@@ -1,23 +1,10 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
-import { createIntl, createIntlCache } from 'react-intl';
+import { IntlShape } from 'react-intl';
 
-import { loadLocaleData } from 'providers';
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const SocialSectorAffectedColumns = (language: string): GridColDef[] => {
-  // This is optional but highly recommended
-  // since it prevents memory leak
-  const cache = createIntlCache();
-
-  const intl = createIntl(
-    {
-      locale: language,
-      messages: loadLocaleData(language),
-    },
-    cache,
-  );
-
+export const SocialSectorAffectedColumns = (intl: IntlShape): GridColDef[] => {
   return [
     getColumnSetup(DroughtSpecific.NumSchNoHo2, DROUGHT, 120),
     getColumnSetup(DroughtSpecific.BotSourTang, DROUGHT, 120),
@@ -41,7 +28,6 @@ export const SocialSectorAffectedColumns = (language: string): GridColDef[] => {
         },
         { value: '', label: '' },
       ],
-      language,
     }),
     getColumnSetup(DroughtSpecific.HealCenNoHo2, DROUGHT, 120),
     getColumnSetup(DroughtSpecific.HBotSourTang, DROUGHT, 120),
@@ -65,7 +51,6 @@ export const SocialSectorAffectedColumns = (language: string): GridColDef[] => {
         },
         { value: '', label: '' },
       ],
-      language,
     }),
   ];
 };
