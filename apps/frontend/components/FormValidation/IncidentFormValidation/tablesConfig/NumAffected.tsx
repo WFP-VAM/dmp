@@ -32,10 +32,10 @@ export const NumAffectedColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('victimsAffected', INCIDENT),
     children: [
+      { field: IncidentSpecific.NumVillAff },
       {
         ...getGroupSetup('totalAffected', INCIDENT),
         children: [
-          { field: IncidentSpecific.NumVillAff },
           { field: IncidentSpecific.NumPeoAff },
           { field: IncidentSpecific.NumFamAff },
           { field: IncidentSpecific.NumFeAff },
