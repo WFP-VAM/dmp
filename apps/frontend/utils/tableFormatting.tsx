@@ -8,7 +8,7 @@ export const getColumnSetup = (
   width = 90,
   opts?: {
     type: 'singleSelect';
-    valueOptions: { value: '1' | '2' | ''; label: string }[];
+    valueOptions: { value: '1' | '2' | ''; label: JSX.Element | '' }[];
   },
 ): GridColDef => {
   const fields = {
