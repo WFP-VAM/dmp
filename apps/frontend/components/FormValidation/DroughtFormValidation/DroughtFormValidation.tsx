@@ -32,7 +32,6 @@ export const DroughtFormValidation = ({
     }),
     [validationForm],
   );
-  console.log('FORM', formattedForm);
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       region: {
