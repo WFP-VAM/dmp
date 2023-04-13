@@ -1,6 +1,7 @@
 import { droughtSpecificKeys } from '@wfp-dmp/interfaces';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
+import { useLanguageContext } from 'context';
 
 import {
   NumAffectedColumnGroup,
@@ -23,10 +24,13 @@ export const DroughtTables = ({
   onChange,
   isEditMode,
 }: IProps): JSX.Element => {
+  const { language } = useLanguageContext();
+  const affectedColumns = NumAffectedColumns(language);
+
   return (
     <>
       <DisasterTable
-        columns={NumAffectedColumns}
+        columns={affectedColumns}
         columnGroup={NumAffectedColumnGroup}
         data={[{ id: 1, ...value }]}
         onChange={onChange}

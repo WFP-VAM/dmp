@@ -28,10 +28,11 @@ export const DroughtFormValidation = ({
   const formattedForm = useMemo(
     () => ({
       ...formatCommonFields(validationForm),
-      ...mapValues(droughtSpecificKeys, value => validationForm[value]),
+      ...mapValues(droughtSpecificKeys, value => validationForm[value] ?? ''),
     }),
     [validationForm],
   );
+
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       region: {
