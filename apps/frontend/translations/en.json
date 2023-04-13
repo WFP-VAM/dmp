@@ -137,12 +137,27 @@
         "NumFeDeath": "Women",
         "NumKidDeath": "Children",
         "NumOldDeath": "Elderly",
-        "NumDisDeath": "Disabled"
+        "NumDisDeath": "Disabled",
+        "NumSchNoHo2": "Total Schools Lacking Water",
+        "BotSourTang": "There is a water source and reservoir (dry/broken)",
+        "HSourNoTang": "Water source, no reservoir",
+        "NoSourHtang": "No water source, reservoir",
+        "NoBtSourTan": "No water source, no reservoir",
+        "Electric": "Have electricity?",
+        "HealCenNoHo2": "Total Health Centers Lacking Water",
+        "HBotSourTang": "There is a water source and reservoir (dry/broken)",
+        "HaSouNoTang": "Water source, no reservoir",
+        "NoSourHatan": "No water source, reservoir",
+        "NoBtSouTan": "No water source, no reservoir",
+        "ElecForHeal": "Have electricity?"
       },
       "groupId": {
         "victimsAffected": "Victims Affected",
         "noWater": "Number of households lacking water",
-        "deathToll": "Death Toll"
+        "deathToll": "Death Toll",
+        "socialSectorAffected": "Social Sector Affected",
+        "schoolsNoWater": "Schools",
+        "healthCentersNoWater": "Health Centers and Hospitals"
       }
     },
     "INCIDENT": {

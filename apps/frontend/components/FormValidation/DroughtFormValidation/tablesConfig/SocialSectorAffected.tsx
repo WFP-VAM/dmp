@@ -19,12 +19,12 @@ export const SocialSectorAffectedColumns = (language: string): GridColDef[] => {
   );
 
   return [
-    getColumnSetup(DroughtSpecific.NumSchNoHo2, DROUGHT, 70),
-    getColumnSetup(DroughtSpecific.BotSourTang, DROUGHT, 70),
-    getColumnSetup(DroughtSpecific.HSourNoTang, DROUGHT),
-    getColumnSetup(DroughtSpecific.NoSourHtang, DROUGHT, 70),
-    getColumnSetup(DroughtSpecific.NoBtSourTan, DROUGHT, 70),
-    getColumnSetup(DroughtSpecific.Electric, DROUGHT, 70, {
+    getColumnSetup(DroughtSpecific.NumSchNoHo2, DROUGHT, 120),
+    getColumnSetup(DroughtSpecific.BotSourTang, DROUGHT, 120),
+    getColumnSetup(DroughtSpecific.HSourNoTang, DROUGHT, 120),
+    getColumnSetup(DroughtSpecific.NoSourHtang, DROUGHT, 120),
+    getColumnSetup(DroughtSpecific.NoBtSourTan, DROUGHT, 120),
+    getColumnSetup(DroughtSpecific.Electric, DROUGHT, 120, {
       type: 'singleSelect',
       valueOptions: [
         {
@@ -43,12 +43,12 @@ export const SocialSectorAffectedColumns = (language: string): GridColDef[] => {
       ],
       language,
     }),
-    getColumnSetup(DroughtSpecific.HealCenNoHo2, DROUGHT, 70),
-    getColumnSetup(DroughtSpecific.HBotSourTang, DROUGHT, 70),
-    getColumnSetup(DroughtSpecific.HaSouNoTang, DROUGHT),
-    getColumnSetup(DroughtSpecific.NoSourHatan, DROUGHT, 70),
-    getColumnSetup(DroughtSpecific.NoBtSouTan, DROUGHT, 70),
-    getColumnSetup(DroughtSpecific.ElecForHeal, DROUGHT, 70, {
+    getColumnSetup(DroughtSpecific.HealCenNoHo2, DROUGHT, 120),
+    getColumnSetup(DroughtSpecific.HBotSourTang, DROUGHT, 120),
+    getColumnSetup(DroughtSpecific.HaSouNoTang, DROUGHT, 120),
+    getColumnSetup(DroughtSpecific.NoSourHatan, DROUGHT, 120),
+    getColumnSetup(DroughtSpecific.NoBtSouTan, DROUGHT, 120),
+    getColumnSetup(DroughtSpecific.ElecForHeal, DROUGHT, 120, {
       type: 'singleSelect',
       valueOptions: [
         {
