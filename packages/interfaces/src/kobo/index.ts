@@ -1,4 +1,5 @@
 export { FloodDto, FloodQueryResponseDto } from './FloodDto';
+export { PatchFloodFormDto } from './PatchFloodFormDto';
 export { DroughtDto, DroughtQueryResponseDto } from './DroughtDto';
 export { GetFormsDto } from './GetFormsDto';
 export { GetFormDto } from './GetFormDto';

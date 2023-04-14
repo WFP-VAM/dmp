@@ -42,12 +42,14 @@ export const DroughtFormValidation = ({
       interviewer: formattedForm.reportName,
       disTyp: formattedForm.disasterType,
       phone: formattedForm.phone,
-      reportDate: dayjs(new Date(formattedForm.entryDate)),
-      incidentDate: dayjs(new Date(formattedForm.disasterDate)),
+      reportDate: dayjs(formattedForm.entryDate, 'YYYY-MM-DD'),
+      incidentDate: dayjs(formattedForm.disasterDate, 'YYYY-MM-DD'),
       droughtSpecific: pick(
         formattedForm,
-        Object.keys(droughtSpecificKeys),
-      ) as Record<keyof typeof droughtSpecificKeys, string | undefined>,
+        Object.keys(
+          droughtSpecificKeys,
+        ) as (keyof typeof droughtSpecificKeys)[],
+      ),
     },
   });
 

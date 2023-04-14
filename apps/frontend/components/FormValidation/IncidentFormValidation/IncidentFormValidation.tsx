@@ -42,8 +42,8 @@ export const IncidentFormValidation = ({
       interviewer: formattedForm.reportName,
       disTyp: formattedForm.disasterType,
       phone: formattedForm.phone,
-      reportDate: dayjs(new Date(formattedForm.entryDate)),
-      incidentDate: dayjs(new Date(formattedForm.disasterDate)),
+      reportDate: dayjs(formattedForm.entryDate, 'YYYY-MM-DD'),
+      incidentDate: dayjs(formattedForm.disasterDate, 'YYYY-MM-DD'),
       incidentSpecific: pick(
         formattedForm,
         Object.keys(
