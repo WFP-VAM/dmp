@@ -240,7 +240,33 @@ describe('KoboController', () => {
       const user = await userFactory.createOne({ roles: [role] });
       const accessToken = authService.createAccessToken(user, 10000);
       await request(app.getHttpServer())
-        .patch(`/kobo/form/FLOOD/${id}`)
+        .patch(`/kobo/form/${disasterType}/${id}`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(data)
+        .expect(200)
+        .expect(() => {
+          expect(patchFormSpy).toHaveBeenNthCalledWith(1, disasterType, id, data);
+        });
+    });
+  });
+
+  describe('PATCH form drought', () => {
+    it('should return 200 and the service should use the right params', async () => {
+      const role = 'ncdm';
+      const disasterType = DROUGHT;
+      const id = 'formTest';
+      const data = {
+        'group_dg01m69/group_kx2wb92/NumMe': '10',
+        'group_em29q27/group_oh4fa74/Electric': '2',
+        'group_ve4vz14/q_Phone': null,
+      };
+
+      const patchFormSpy = jest.spyOn(koboService, 'patchForm').mockImplementation();
+
+      const user = await userFactory.createOne({ roles: [role] });
+      const accessToken = authService.createAccessToken(user, 10000);
+      await request(app.getHttpServer())
+        .patch(`/kobo/form/${disasterType}/${id}`)
         .set('Authorization', `Bearer ${accessToken}`)
         .send(data)
         .expect(200)
