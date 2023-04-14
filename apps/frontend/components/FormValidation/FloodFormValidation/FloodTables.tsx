@@ -1,4 +1,4 @@
-import { floodSpecificKeys } from '@wfp-dmp/interfaces';
+import { FloodSpecificType } from '@wfp-dmp/interfaces';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
 
@@ -8,15 +8,9 @@ import {
   NumAffected1Columns,
 } from './tablesConfig/NumAffected-1';
 
-export type FloodSpecificType = Record<
-  keyof typeof floodSpecificKeys,
-  string | undefined
->;
-
 interface IProps {
   value: FloodSpecificType;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onChange: (event: any) => void;
+  onChange: (event: FloodSpecificType) => void;
   isEditMode: boolean;
 }
 
@@ -35,7 +29,6 @@ export const FloodTables = ({
         isEditable={isEditMode}
       />
       <FloodCheckBoxes
-        threats={value.threat}
         onChange={onChange}
         value={value}
         isEditable={isEditMode}

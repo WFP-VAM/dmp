@@ -6,26 +6,24 @@ import {
   FormGroup,
   FormLabel,
 } from '@mui/material';
+import { FloodSpecificType } from '@wfp-dmp/interfaces';
 import { range, remove } from 'lodash';
 import { ChangeEvent, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { FloodSpecificType } from './FloodTables';
 export const FloodCheckBoxes = ({
-  threats,
   onChange,
   value,
   isEditable,
 }: {
-  threats: string | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange: (event: any) => void;
-  value: FloodSpecificType;
   isEditable: boolean;
+  value: FloodSpecificType;
 }) => {
   const intl = useIntl();
 
-  const [threatsArr, setThreatsArr] = useState(threats?.split(' ') ?? []);
+  const [threatsArr, setThreatsArr] = useState(value.threat?.split(' ') ?? []);
   const changeFn = (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
     const checkbox = event.target.name;
     const threatsCopy = [...threatsArr];
@@ -47,24 +45,24 @@ export const FloodCheckBoxes = ({
         <FormLabel>
           <FormattedMessage id="table.FLOOD.securityIssues.title" />
         </FormLabel>
-        {range(1, 15).map(int => {
-          const key = int.toString();
+        {range(1, 15).map(threatNum => {
+          const key = threatNum.toString();
 
           return (
-            <Box key={int}>
+            <Box key={threatNum}>
               <FormControlLabel
-                key={int}
+                key={threatNum}
                 control={
                   <Checkbox
                     disabled={!isEditable}
                     onChange={changeFn}
-                    name={int.toString()}
-                    key={int}
-                    checked={threats?.split(' ').includes(key)}
+                    name={threatNum.toString()}
+                    key={threatNum}
+                    checked={threatsArr.includes(key)}
                   />
                 }
                 label={intl.formatMessage({
-                  id: `table.FLOOD.securityIssues.${int}`,
+                  id: `table.FLOOD.securityIssues.${threatNum}`,
                 })}
               />
             </Box>
