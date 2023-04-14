@@ -1,10 +1,11 @@
 import { KoboCommonKeys } from '@wfp-dmp/interfaces';
 import { mapKeys, mapValues, omit } from 'lodash';
 
+import { DroughtFormType } from 'components/FormValidation/DroughtFormValidation/DroughtFormType';
 import { FloodFormType } from 'components/FormValidation/FloodFormValidation/FloodFormType';
 
 export const formatFormToRaw = (
-  formValues: FloodFormType,
+  formValues: FloodFormType | DroughtFormType,
   commonKeysMapping: Record<string, string>,
   specificKeysMapping: Record<string, string>,
 ) => {
