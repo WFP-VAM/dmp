@@ -39,6 +39,7 @@ export const FloodFormValidation = ({
     () => ({
       ...formatCommonFields(validationForm),
       ...mapValues(floodSpecificKeys, value => validationForm[value]),
+      // refactor logic to cleanly format all flood specific values
     }),
     [validationForm],
   );

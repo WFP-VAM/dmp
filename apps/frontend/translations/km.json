@@ -120,7 +120,8 @@
         "deathToll": "Death Toll",
         "missing": "Number Missing",
         "injured": "Number Injured"
-      }
+      },
+      "securityIssues": { "1": "One", "2": "tw2o", "3": "3", "4": "4" }
     },
     "DROUGHT": {
       "column": {
