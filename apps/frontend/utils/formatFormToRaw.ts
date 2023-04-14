@@ -1,17 +1,13 @@
-import {
-  FLOOD,
-  floodSpecificKeys,
-  KoboCommonKeys,
-  koboKeys,
-} from '@wfp-dmp/interfaces';
+import { KoboCommonKeys } from '@wfp-dmp/interfaces';
 import { mapKeys, mapValues, omit } from 'lodash';
 
 import { FloodFormType } from 'components/FormValidation/FloodFormValidation/FloodFormType';
 
-export const formatFloodFormToRaw = (formValues: FloodFormType) => {
-  const commonKeys: Record<string, string> = koboKeys[FLOOD];
-  const specificKeys: Record<string, string> = floodSpecificKeys;
-
+export const formatFormToRaw = (
+  formValues: FloodFormType,
+  commonKeysMapping: Record<string, string>,
+  specificKeysMapping: Record<string, string>,
+) => {
   const commonData: Omit<Record<KoboCommonKeys, string>, 'id'> = {
     province: formValues.region.province,
     district: formValues.region.district,
@@ -26,8 +22,8 @@ export const formatFloodFormToRaw = (formValues: FloodFormType) => {
   const specificData = omit(formValues.specific, ['id']);
 
   const koboFormatData = {
-    ...mapKeys(commonData, (_, key) => commonKeys[key]),
-    ...mapKeys(specificData, (_, key) => specificKeys[key]),
+    ...mapKeys(commonData, (_, key) => commonKeysMapping[key]),
+    ...mapKeys(specificData, (_, key) => specificKeysMapping[key]),
   };
 
   return mapValues(koboFormatData, value => (value === '' ? null : value));
