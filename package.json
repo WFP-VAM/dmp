@@ -44,7 +44,8 @@
   "pnpm": {
     "overrides": {
       "@babel/core>json5": "2.2.2",
-      "adminjs>flat": "5.0.2"
+      "adminjs>flat": "5.0.2",
+      "xml2js": "0.5.0"
     }
   }
 }
