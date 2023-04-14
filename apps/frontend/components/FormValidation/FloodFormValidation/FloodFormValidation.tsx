@@ -64,7 +64,6 @@ export const FloodFormValidation = ({
   const { trigger, isMutating } = usePatchForm(
     disasterType as DisasterType,
     id as string,
-    x,
   );
 
   const [isEditMode, setIsEditMode] = useState(false);
