@@ -1,29 +1,50 @@
 /* eslint-disable max-lines */
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import {
+  DisasterType,
   FloodDto,
   floodSpecificKeys,
   formatCommonFields,
 } from '@wfp-dmp/interfaces';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { mapValues, pick } from 'lodash';
+import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { RegionFilters } from 'components/Filters/RegionFilters';
+import { usePatchForm } from 'services/api/kobo/usePatchForm';
+import { formatFloodFormToRaw } from 'utils/formatFloodFormToRaw';
 
 import { DisasterSelect } from '../DisasterSelect';
 import { FloodTables } from './FloodTables';
 
 const minWidth = 240;
 
+export type FloodFormType = {
+  region: {
+    province: string;
+    district: string;
+    commune: string;
+  };
+  interviewer: string;
+  disTyp: string;
+  phone: string;
+  reportDate: Dayjs;
+  incidentDate: Dayjs;
+  floodSpecific: Record<keyof typeof floodSpecificKeys, string | undefined>;
+};
+
 export const FloodFormValidation = ({
   validationForm,
 }: {
   validationForm: FloodDto;
 }): JSX.Element => {
+  const router = useRouter();
+  const { disasterType, id } = router.query;
+
   const intl = useIntl();
   const formattedForm = useMemo(
     () => ({
@@ -32,7 +53,7 @@ export const FloodFormValidation = ({
     }),
     [validationForm],
   );
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset } = useForm<FloodFormType>({
     defaultValues: {
       region: {
         province: formattedForm.province,
@@ -42,14 +63,19 @@ export const FloodFormValidation = ({
       interviewer: formattedForm.reportName,
       disTyp: formattedForm.disasterType,
       phone: formattedForm.phone,
-      reportDate: dayjs(new Date(formattedForm.entryDate)),
-      incidentDate: dayjs(new Date(formattedForm.disasterDate)),
+      reportDate: dayjs(formattedForm.entryDate, 'YYYY-MM-DD'),
+      incidentDate: dayjs(formattedForm.disasterDate, 'YYYY-MM-DD'),
       floodSpecific: pick(
         formattedForm,
         Object.keys(floodSpecificKeys) as (keyof typeof floodSpecificKeys)[],
       ),
     },
   });
+
+  const { trigger, isMutating } = usePatchForm(
+    disasterType as DisasterType,
+    id as string,
+  );
 
   const [isEditMode, setIsEditMode] = useState(false);
   // We set this state to avoid race condition between a field update and the reset coming from react hook form
@@ -62,7 +88,21 @@ export const FloodFormValidation = ({
     }
   }, [shouldReset, reset]);
 
-  const onSubmit = (data: unknown) => console.log(data);
+  const onSubmit = (data: FloodFormType) => {
+    const triggerAndUpdateDefault = async () => {
+      try {
+        const status = await trigger(formatFloodFormToRaw(data));
+        if (status === 201) {
+          reset(data);
+          setIsEditMode(false);
+        }
+      } catch (error) {
+        setShouldReset(true);
+        console.error(error);
+      }
+    };
+    void triggerAndUpdateDefault();
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -187,7 +227,16 @@ export const FloodFormValidation = ({
         )}
         {isEditMode && (
           <>
-            <Button type="submit" sx={{ color: 'white', margin: 2 }}>
+            <Button
+              type="submit"
+              sx={{ color: 'white', margin: 2 }}
+              disabled={isMutating}
+              endIcon={
+                isMutating ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null
+              }
+            >
               <FormattedMessage id="form_page.submit" />
             </Button>
             <Button
@@ -196,6 +245,12 @@ export const FloodFormValidation = ({
                 setIsEditMode(false);
                 setShouldReset(true);
               }}
+              disabled={isMutating}
+              endIcon={
+                isMutating ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null
+              }
             >
               <FormattedMessage id="form_page.cancel" />
             </Button>
