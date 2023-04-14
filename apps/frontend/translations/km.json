@@ -52,7 +52,10 @@
   },
   "form_page": {
     "approve": "Approve",
-    "reject": "Reject"
+    "reject": "Reject",
+    "submit": "Submit",
+    "edit": "Edit",
+    "cancel": "Cancel"
   },
   "disasters": {
     "1": "ទឹកជំនន់",
@@ -84,6 +87,116 @@
   },
   "report_page": {
     "showReport": "បង្ហាញរបាយការណ៍"
+  },
+  "table": {
+    "FLOOD": {
+      "column": {
+        "NumVillAff": "Villages",
+        "NumFamAff": "Families",
+        "NumPeoAff": "Total People",
+        "NumFeAff": "Women",
+        "NumTDeath": "Total Dead",
+        "NumMeDeath": "Men",
+        "NumFeDeath": "Women",
+        "NumKidDeath": "Children",
+        "NumOldDeath": "Elderly",
+        "NumDisDeath": "Disabled",
+        "NumTMissing": "Total Missing",
+        "NumMeMissing": "Men",
+        "NumFeMissing": "Women",
+        "NumKidMissing": "Children",
+        "NumOldMissing": "Elderly",
+        "NumDisMissing": "Disabled",
+        "NumTInjure": "Total Injured",
+        "NumMeInjure": "Men",
+        "NumFeInjure": "Women",
+        "NumKidInjure": "Children",
+        "NumOldInjure": "Elderly",
+        "NumDisInjure": "Disabled"
+      },
+      "groupId": {
+        "victimsAffected": "Victims Affected",
+        "totalAffected": "Total Numbers Affected",
+        "deathToll": "Death Toll",
+        "missing": "Number Missing",
+        "injured": "Number Injured"
+      }
+    },
+    "DROUGHT": {
+      "column": {
+        "NumVillAff": "Villages",
+        "NumFamAff": "Families",
+        "NumPeoAff": "Total People",
+        "NumMe": "Men",
+        "NumFe": "Women",
+        "NumKid": "Children",
+        "NumOld": "Elderly",
+        "NumDisMising": "Disabled",
+        "TNumDeath": "Total Dead",
+        "NumMeDeath": "Men",
+        "NumFeDeath": "Women",
+        "NumKidDeath": "Children",
+        "NumOldDeath": "Elderly",
+        "NumDisDeath": "Disabled",
+        "NumSchNoHo2": "Total Schools Lacking Water",
+        "BotSourTang": "There is a water source and reservoir (dry/broken)",
+        "HSourNoTang": "Water source, no reservoir",
+        "NoSourHtang": "No water source, reservoir",
+        "NoBtSourTan": "No water source, no reservoir",
+        "Electric": "Have electricity?",
+        "HealCenNoHo2": "Total Health Centers Lacking Water",
+        "HBotSourTang": "There is a water source and reservoir (dry/broken)",
+        "HaSouNoTang": "Water source, no reservoir",
+        "NoSourHatan": "No water source, reservoir",
+        "NoBtSouTan": "No water source, no reservoir",
+        "ElecForHeal": "Have electricity?"
+      },
+      "groupId": {
+        "victimsAffected": "Victims Affected",
+        "noWater": "Number of households lacking water",
+        "deathToll": "Death Toll",
+        "socialSectorAffected": "Social Sector Affected",
+        "schoolsNoWater": "Schools",
+        "healthCentersNoWater": "Health Centers and Hospitals"
+      },
+      "dropdowns": {
+        "elecPresent": "Having electricity",
+        "elecNotPresent": "Not having electricity"
+      }
+    },
+    "INCIDENT": {
+      "column": {
+        "NumVillAff": "Villages",
+        "NumPeoAff": "Total People",
+        "NumFamAff": "Families",
+        "NumFeAff": "Women",
+        "NumDeathTo": "Total Dead",
+        "NumMeDeath": "Men",
+        "NumFeDeath": "Women",
+        "NumKidDeath": "Children",
+        "NumOldDeath": "Elderly",
+        "NumDisDeath": "Disabled",
+        "ToNumMising": "Total Missing",
+        "NumMeMising": "Men",
+        "NumFeMising": "Women",
+        "NumKidMising": "Children",
+        "NumOldMising": "Elderly",
+        "NumDisMising": "Disabled",
+        "ToNumInjure": "Total Injured",
+        "NumMeInjure": "Men",
+        "NumFeInjure": "Women",
+        "NumKidInjure": "Children",
+        "NumOldInjure": "Elderly",
+        "NumDisInjure": "Disabled"
+      },
+      "groupId": {
+        "victimsAffected": "Victims Affected",
+        "totalAffected": "Total Numbers Affected",
+        "deathToll": "Death Toll",
+        "missing": "Number Missing",
+        "injured": "Number Injured"
+      }
+    }
   },
   "provinces": {
     "01": "ខេត្តបន្ទាយមានជ័យ",

@@ -77,10 +77,6 @@ module.exports = {
       {
         paths: [
           {
-            name: 'lodash',
-            message: 'Please use lodash/{module} import instead',
-          },
-          {
             name: '.',
             message: 'Please use explicit import file',
           },

@@ -1,4 +1,4 @@
-import { DROUGHT, FLOOD, INCIDENT } from './constants';
+import { DROUGHT, FLOOD, INCIDENT } from '../constants';
 
 export const koboKeys = {
   [FLOOD]: {

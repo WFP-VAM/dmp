@@ -3,7 +3,7 @@ import * as path from 'path';
 import { DroughtDto } from './DroughtDto';
 import { FloodDto } from './FloodDto';
 import { DisasterDtoType, DROUGHT, FLOOD, INCIDENT } from './constants';
-import { koboKeys } from './keys';
+import { koboKeys } from './mapping';
 
 export const computeDisasterTypeFromDistTyp = (distTyp: string) => {
   if (isNaN(parseInt(distTyp))) throw Error('distTyp must be convertable to integer');
@@ -21,7 +21,7 @@ export const isDrought = (form: DisasterDtoType): form is DroughtDto => {
   return koboKeys[DROUGHT].disTyp in form;
 };
 
-export const formatForm = (form: DisasterDtoType) => {
+export const formatCommonFields = (form: DisasterDtoType) => {
   if (isFlood(form)) {
     const keys = koboKeys[FLOOD];
 
