@@ -14,6 +14,7 @@ import {
   IncidentDto,
   IncidentQueryResponseDto,
   koboKeys,
+  PatchFloodFormDto,
   ValidationStatusDto,
   ValidationStatusValue,
 } from '@wfp-dmp/interfaces';
@@ -126,5 +127,23 @@ export class KoboService {
     );
 
     return data;
+  }
+
+  async patchForm(
+    disasterType: DisasterType,
+    id: string,
+    fieldsToUpdate: PatchFloodFormDto,
+  ): Promise<number> {
+    const { data } = await this.httpService.axiosRef.patch<{ results: { status_code: number }[] }>(
+      `assets/${AssetId[disasterType]}/data/bulk`,
+      {
+        payload: {
+          submission_ids: [id],
+          data: fieldsToUpdate,
+        },
+      },
+    );
+
+    return data.results[0].status_code;
   }
 }

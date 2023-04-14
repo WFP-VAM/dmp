@@ -1,32 +1,23 @@
 import {
-  IsArray,
   IsDateString,
   IsIn,
   IsNumberString,
   IsOptional,
-  IsPositive,
   IsString,
   Length,
   Matches,
-  ValidateNested,
 } from 'class-validator';
 
-import { ValidationStatusDto } from './ValidationStatusDto';
-
-export class FloodDto {
-  @IsPositive() readonly '_id'!: number;
-  @IsString() readonly 'formhub/uuid'!: string;
-  @IsDateString() readonly 'start'!: string;
-  @IsDateString() readonly 'end'!: string;
-  @IsString() readonly 'g1/q_Enum'!: string;
-  @IsString() readonly 'g1/q_Funtion'!: string;
-  @IsString() readonly 'g1/q_Phone'!: string;
-  @IsDateString() readonly 'g1/Date_report'!: string;
-  @IsString() @Length(2) readonly 'g2/Province'!: string;
-  @IsString() @Length(4) readonly 'g2/District'!: string;
-  @IsString() @Length(6) readonly 'g2/Commune'!: string;
-  @IsDateString() readonly 'g2/Date_Dis'!: string;
-  @IsNumberString() readonly 'g2/DisTyp'!: string;
+export class PatchFloodFormDto {
+  @IsOptional() @IsString() readonly 'g1/q_Enum'!: string;
+  @IsOptional() @IsString() readonly 'g1/q_Funtion'!: string;
+  @IsOptional() @IsString() readonly 'g1/q_Phone'!: string;
+  @IsOptional() @IsDateString() readonly 'g1/Date_report'!: string;
+  @IsOptional() @IsString() @Length(2) readonly 'g2/Province'!: string;
+  @IsOptional() @IsString() @Length(4) readonly 'g2/District'!: string;
+  @IsOptional() @IsString() @Length(6) readonly 'g2/Commune'!: string;
+  @IsOptional() @IsDateString() readonly 'g2/Date_Dis'!: string;
+  @IsOptional() @IsNumberString() readonly 'g2/DisTyp'!: string;
   @IsOptional() @IsNumberString() readonly 'g2/flood_n'?: string;
   @IsOptional() @IsNumberString() readonly 'g3/g3_1/NumVillAff'?: string;
   @IsOptional() @IsNumberString() readonly 'g3/g3_1/g3_2/NumFamAff'?: string;
@@ -155,23 +146,4 @@ export class FloodDto {
   @IsOptional() @IsIn(['1', '2']) readonly 'g18/RicePrice'?: string;
   @IsOptional() @Matches(/^[0-9 ]+$/) readonly 'g19/threat'?: string;
   @IsOptional() @IsString() readonly 'g19/other'?: string;
-  @IsString() readonly '__version__'!: string;
-  @IsString() readonly 'meta/instanceID'!: string;
-  @IsString() readonly '_xform_id_string'!: string;
-  @IsString() readonly '_uuid'!: string;
-  @IsArray() readonly '_attachments'!: unknown[];
-  @IsString() readonly '_status'!: string;
-  @IsArray() readonly '_geolocation'!: (number | null)[];
-  @IsDateString() readonly '_submission_time'!: string;
-  @IsArray() readonly '_tags'!: unknown[];
-  @IsArray() readonly '_notes'!: unknown[];
-  @ValidateNested() readonly '_validation_status'!: ValidationStatusDto | Record<string, never>;
-  @IsString() readonly '_submitted_by'!: string | null;
-}
-
-export class FloodQueryResponseDto {
-  @IsPositive() readonly count!: number;
-  @IsString() readonly next!: string | null;
-  @IsString() readonly previous!: string | null;
-  @IsArray() readonly results!: FloodDto[];
 }
