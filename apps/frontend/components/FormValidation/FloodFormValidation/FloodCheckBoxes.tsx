@@ -1,46 +1,57 @@
 import {
+  Box,
   Checkbox,
   FormControl,
   FormControlLabel,
   FormGroup,
+  FormLabel,
 } from '@mui/material';
-import { ChangeEvent } from 'react';
-import { useIntl } from 'react-intl';
+import { range, remove } from 'lodash';
+import { ChangeEvent, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { FloodSpecificType } from './FloodTables';
-
 export const FloodCheckBoxes = ({
   threats,
   onChange,
   value,
   isEditable,
 }: {
-  threats: object;
-
+  threats: string | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange: (event: any) => void;
   value: FloodSpecificType;
   isEditable: boolean;
 }) => {
-  const changeFn = (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
-    const newThreats = { ...threats };
-    newThreats[event.target.name] = checked;
+  const intl = useIntl();
 
+  const [threatsArr, setThreatsArr] = useState(threats?.split(' ') ?? []);
+  const changeFn = (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    const checkbox = event.target.name;
+    const threatsCopy = [...threatsArr];
+    if (checked) {
+      threatsCopy.push(checkbox);
+    } else {
+      remove(threatsCopy, threat => threat === checkbox);
+    }
     onChange({
       ...value,
-      threat: newThreats,
+      threat: threatsCopy.join(' '),
     });
+    setThreatsArr(threatsCopy);
   };
-  const intl = useIntl();
 
   return (
     <FormControl component="fieldset" sx={{ m: 3 }} variant="standard">
       <FormGroup>
-        {[1, 2, 3, 4].map(int => {
+        <FormLabel>
+          <FormattedMessage id="table.FLOOD.securityIssues.title" />
+        </FormLabel>
+        {range(1, 15).map(int => {
           const key = int.toString();
 
           return (
-            <>
+            <Box key={int}>
               <FormControlLabel
                 key={int}
                 control={
@@ -49,14 +60,14 @@ export const FloodCheckBoxes = ({
                     onChange={changeFn}
                     name={int.toString()}
                     key={int}
-                    checked={threats[key] === true ? true : false}
+                    checked={threats?.split(' ').includes(key)}
                   />
                 }
                 label={intl.formatMessage({
                   id: `table.FLOOD.securityIssues.${int}`,
                 })}
               />
-            </>
+            </Box>
           );
         })}
       </FormGroup>

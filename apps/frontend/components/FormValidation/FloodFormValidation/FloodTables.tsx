@@ -10,7 +10,7 @@ import {
 
 export type FloodSpecificType = Record<
   keyof typeof floodSpecificKeys,
-  string | object | undefined
+  string | undefined
 >;
 
 interface IProps {

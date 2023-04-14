@@ -10,7 +10,7 @@ import {
   koboKeys,
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
-import { pick } from 'lodash';
+import { mapValues, pick } from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -38,7 +38,7 @@ export const FloodFormValidation = ({
   const formattedForm = useMemo(
     () => ({
       ...formatCommonFields(validationForm),
-      ...formatFloodSpecificFields(validationForm),
+      ...mapValues(floodSpecificKeys, value => validationForm[value]),
     }),
     [validationForm],
   );

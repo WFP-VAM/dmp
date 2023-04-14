@@ -8,11 +8,5 @@ export { PatchValidationStatusDto } from './PatchValidationStatusDto';
 export { ValidationStatusDto, ValidationStatusValue } from './ValidationStatusDto';
 export { IncidentDto, IncidentQueryResponseDto } from './IncidentDto';
 export * from './mapping';
-export {
-  computeDisasterTypeFromDistTyp,
-  formatCommonFields,
-  isFlood,
-  isDrought,
-  formatFloodSpecificFields,
-} from './utils';
+export { computeDisasterTypeFromDistTyp, formatCommonFields, isFlood, isDrought } from './utils';
 export * from './constants';
