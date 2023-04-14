@@ -6,7 +6,7 @@ import {
 } from '@wfp-dmp/interfaces';
 import { mapKeys, mapValues, omit } from 'lodash';
 
-import { FloodFormType } from 'components/FormValidation/FloodFormValidation/FloodFormValidation';
+import { FloodFormType } from 'components/FormValidation/FloodFormValidation/FloodFormType';
 
 export const formatFloodFormToRaw = (formValues: FloodFormType) => {
   const commonKeys: Record<string, string> = koboKeys[FLOOD];

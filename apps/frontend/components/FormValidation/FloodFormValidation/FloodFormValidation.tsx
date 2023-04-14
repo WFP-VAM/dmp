@@ -7,7 +7,7 @@ import {
   floodSpecificKeys,
   formatCommonFields,
 } from '@wfp-dmp/interfaces';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { mapValues, pick } from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
@@ -19,23 +19,10 @@ import { usePatchForm } from 'services/api/kobo/usePatchForm';
 import { formatFloodFormToRaw } from 'utils/formatFloodFormToRaw';
 
 import { DisasterSelect } from '../DisasterSelect';
+import { FloodFormType } from './FloodFormType';
 import { FloodTables } from './FloodTables';
 
 const minWidth = 240;
-
-export type FloodFormType = {
-  region: {
-    province: string;
-    district: string;
-    commune: string;
-  };
-  interviewer: string;
-  disTyp: string;
-  phone: string;
-  reportDate: Dayjs;
-  incidentDate: Dayjs;
-  floodSpecific: Record<keyof typeof floodSpecificKeys, string | undefined>;
-};
 
 export const FloodFormValidation = ({
   validationForm,
