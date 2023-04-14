@@ -4,20 +4,19 @@ import {
   FormControlLabel,
   FormGroup,
 } from '@mui/material';
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent } from 'react';
 import { useIntl } from 'react-intl';
 
 import { FloodSpecificType } from './FloodTables';
 
 export const FloodCheckBoxes = ({
   threats,
-  setFormattedThreatsString,
   onChange,
   value,
   isEditable,
 }: {
-  setFormattedThreatsString: Dispatch<SetStateAction<object>>;
   threats: object;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange: (event: any) => void;
   value: FloodSpecificType;
@@ -27,7 +26,6 @@ export const FloodCheckBoxes = ({
     const newThreats = { ...threats };
     newThreats[event.target.name] = checked;
 
-    setFormattedThreatsString(newThreats);
     onChange({
       ...value,
       threat: newThreats,

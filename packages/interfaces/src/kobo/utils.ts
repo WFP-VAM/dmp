@@ -1,9 +1,10 @@
+import { mapValues, reduce } from 'lodash';
 import * as path from 'path';
 
 import { DroughtDto } from './DroughtDto';
 import { FloodDto } from './FloodDto';
 import { DisasterDtoType, DROUGHT, FLOOD, INCIDENT } from './constants';
-import { koboKeys } from './mapping';
+import { FloodSpecific, floodSpecificKeys, koboKeys } from './mapping';
 
 export const computeDisasterTypeFromDistTyp = (distTyp: string) => {
   if (isNaN(parseInt(distTyp))) throw Error('distTyp must be convertable to integer');
@@ -68,4 +69,36 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       approvalLink: path.join('/form', INCIDENT, form[keys.id].toString()),
     };
   }
+};
+
+const formatFloodCheckboxes = (threats: undefined | string) => {
+  if (threats === undefined) {
+    return {};
+  } else {
+    const threatsArr = threats.split(' ');
+
+    return reduce(
+      threatsArr,
+      (obj: { [x: string]: boolean }, threat: string) => {
+        obj[threat] = true;
+
+        return obj;
+      },
+      {},
+    );
+  }
+};
+
+export const formatFloodSpecificFields = (form: FloodDto) => {
+  const key = floodSpecificKeys[FloodSpecific.threat];
+  const threats = form[key];
+
+  const checkboxes = formatFloodCheckboxes(threats);
+
+  const floodSpecificFields = {
+    ...mapValues(floodSpecificKeys, (value) => form[value]),
+    [FloodSpecific.threat]: checkboxes,
+  };
+
+  return { floodSpecific: floodSpecificFields };
 };

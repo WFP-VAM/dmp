@@ -342,19 +342,23 @@ importers:
       '@nestjs/common': 9.0.11
       '@nestjs/mapped-types': 1.1.0
       '@types/jest': 29.0.3
+      '@types/lodash': 4.14.185
       '@types/node': ^18.15.11
       class-validator: 0.14.0
       dependency-cruiser: 11.15.0
       dependency-cruiser-config-custom: workspace:*
       eslint-config-custom: workspace:*
       jest: 29.0.3
+      lodash: 4.17.21
       ts-jest: 28.0.8
       tsconfig: workspace:*
       typescript: 4.7.4
     dependencies:
       '@nestjs/common': 9.0.11_toz6vqqtcfluygz7ti3yp3tjaq
       '@nestjs/mapped-types': 1.1.0_t3bcxxkl5nx2c25vep5wbhwdga
+      '@types/lodash': 4.14.185
       class-validator: 0.14.0
+      lodash: 4.17.21
     devDependencies:
       '@types/jest': 29.0.3
       '@types/node': 18.15.11
@@ -4649,7 +4653,6 @@ packages:
 
   /@types/lodash/4.14.185:
     resolution: {integrity: sha512-evMDG1bC4rgQg4ku9tKpuMh5iBNEwNa3tf9zRHdP1qlv+1WUg44xat4IxCE14gIpZRGUUWAx2VhItCZc25NfMA==}
-    dev: true
 
   /@types/mime/3.0.1:
     resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
