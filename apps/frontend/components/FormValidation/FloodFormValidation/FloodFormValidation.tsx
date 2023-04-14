@@ -52,7 +52,7 @@ export const FloodFormValidation = ({
       phone: formattedForm.phone,
       reportDate: dayjs(formattedForm.entryDate, 'YYYY-MM-DD'),
       incidentDate: dayjs(formattedForm.disasterDate, 'YYYY-MM-DD'),
-      floodSpecific: pick(
+      specific: pick(
         formattedForm,
         Object.keys(floodSpecificKeys) as (keyof typeof floodSpecificKeys)[],
       ),
@@ -191,7 +191,7 @@ export const FloodFormValidation = ({
         </Box>
       </Box>
       <Controller
-        name="floodSpecific"
+        name="specific"
         control={control}
         render={({ field: { value, onChange } }) => (
           <FloodTables

@@ -23,7 +23,7 @@ export const formatFloodFormToRaw = (formValues: FloodFormType) => {
     disasterDate: formValues.incidentDate.format('YYYY-MM-DD'),
   };
 
-  const specificData = omit(formValues.floodSpecific, ['id']);
+  const specificData = omit(formValues.specific, ['id']);
 
   const koboFormatData = {
     ...mapKeys(commonData, (_, key) => commonKeys[key]),

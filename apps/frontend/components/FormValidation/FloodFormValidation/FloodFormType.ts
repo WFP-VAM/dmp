@@ -12,5 +12,5 @@ export type FloodFormType = {
   phone: string;
   reportDate: Dayjs;
   incidentDate: Dayjs;
-  floodSpecific: Record<keyof typeof floodSpecificKeys, string | undefined>;
+  specific: Record<keyof typeof floodSpecificKeys, string | undefined>;
 };

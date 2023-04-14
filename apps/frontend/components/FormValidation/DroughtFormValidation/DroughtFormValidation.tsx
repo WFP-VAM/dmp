@@ -44,7 +44,7 @@ export const DroughtFormValidation = ({
       phone: formattedForm.phone,
       reportDate: dayjs(formattedForm.entryDate, 'YYYY-MM-DD'),
       incidentDate: dayjs(formattedForm.disasterDate, 'YYYY-MM-DD'),
-      droughtSpecific: pick(
+      specific: pick(
         formattedForm,
         Object.keys(
           droughtSpecificKeys,
@@ -166,7 +166,7 @@ export const DroughtFormValidation = ({
         </Box>
       </Box>
       <Controller
-        name="droughtSpecific"
+        name="specific"
         control={control}
         render={({ field: { value, onChange } }) => (
           <DroughtTables
