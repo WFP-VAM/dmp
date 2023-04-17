@@ -1,6 +1,4 @@
 /* eslint-disable max-lines */
-import { floodSpecificKeys } from 'index';
-
 import { DroughtDto } from './DroughtDto';
 import { FloodDto } from './FloodDto';
 import { IncidentDto } from './IncidentDto';
@@ -11,8 +9,6 @@ export const INCIDENT = 'INCIDENT';
 
 export type DisasterType = typeof FLOOD | typeof DROUGHT | typeof INCIDENT;
 export type DisasterDtoType = FloodDto | DroughtDto | IncidentDto;
-
-export type FloodSpecificType = Record<keyof typeof floodSpecificKeys, string | undefined>;
 
 interface MappingTypes {
   [key: string]: string;

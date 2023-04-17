@@ -15,6 +15,5 @@ export const FormValidation = ({
   if (isDrought(validationForm))
     return <DroughtFormValidation validationForm={validationForm} />;
 
-  // incident
   return <IncidentFormValidation validationForm={validationForm} />;
 };
