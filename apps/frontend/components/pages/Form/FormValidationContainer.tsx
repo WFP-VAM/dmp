@@ -1,47 +1,12 @@
-import CancelIcon from '@mui/icons-material/Cancel';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import PendingIcon from '@mui/icons-material/Pending';
-import { Box, Button, CircularProgress, Skeleton, Stack } from '@mui/material';
+import { Box, Button, CircularProgress, Skeleton } from '@mui/material';
 import { DisasterType, ValidationStatusValue } from '@wfp-dmp/interfaces';
 import { useRouter } from 'next/router';
 import { FormattedMessage } from 'react-intl';
 
 import { FormValidation } from 'components/FormValidation/FormValidation';
+import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
 import { useGetForm } from 'services/api/kobo/useGetForm';
 import { usePatchValidationStatus } from 'services/api/kobo/usePatchValidationStatus';
-const validationIndicator = (valStatus: ValidationStatusValue | undefined) => {
-  let id;
-  let icon;
-  let color;
-  switch (valStatus) {
-    case ValidationStatusValue.approved:
-      id = 'valStatus.approved';
-      icon = <CheckCircleIcon />;
-      color = 'green';
-      break;
-    case ValidationStatusValue.notApproved:
-      id = 'valStatus.notApproved';
-      icon = <CancelIcon />;
-      color = 'red';
-      break;
-    default:
-      id = 'valStatus.onHold';
-      icon = <PendingIcon />;
-      color = 'yellow';
-  }
-
-  return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      gap={1}
-      sx={{ backgroundColor: color, m: 2, p: 1, borderRadius: 1 }}
-    >
-      {icon}
-      <FormattedMessage id={id} />
-    </Stack>
-  );
-};
 
 export const FormValidationContainer = (): JSX.Element => {
   const router = useRouter();
@@ -63,7 +28,7 @@ export const FormValidationContainer = (): JSX.Element => {
         <FormValidation validationForm={form} />
       )}
       <Box display="flex" flexDirection="column" alignItems="center">
-        {validationIndicator(form?._validation_status.uid)}
+        <ValidationIndicator valStatus={form?._validation_status.uid} />
         <Box display="flex" justifyContent="center">
           <Button
             sx={{ color: 'white', backgroundColor: 'red', mr: 2 }}
