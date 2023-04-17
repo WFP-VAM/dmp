@@ -3,9 +3,11 @@ import { Box, Button, CircularProgress, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import {
   DisasterType,
+  FLOOD,
   FloodDto,
   floodSpecificKeys,
   formatCommonFields,
+  koboKeys,
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { mapValues, pick } from 'lodash';
@@ -16,7 +18,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { RegionFilters } from 'components/Filters/RegionFilters';
 import { usePatchForm } from 'services/api/kobo/usePatchForm';
-import { formatFloodFormToRaw } from 'utils/formatFloodFormToRaw';
+import { formatFormToRaw } from 'utils/formatFormToRaw';
 
 import { DisasterSelect } from '../DisasterSelect';
 import { FloodFormType } from './FloodFormType';
@@ -52,7 +54,7 @@ export const FloodFormValidation = ({
       phone: formattedForm.phone,
       reportDate: dayjs(formattedForm.entryDate, 'YYYY-MM-DD'),
       incidentDate: dayjs(formattedForm.disasterDate, 'YYYY-MM-DD'),
-      floodSpecific: pick(
+      specific: pick(
         formattedForm,
         Object.keys(floodSpecificKeys) as (keyof typeof floodSpecificKeys)[],
       ),
@@ -78,7 +80,9 @@ export const FloodFormValidation = ({
   const onSubmit = (data: FloodFormType) => {
     const triggerAndUpdateDefault = async () => {
       try {
-        const status = await trigger(formatFloodFormToRaw(data));
+        const status = await trigger(
+          formatFormToRaw(data, koboKeys[FLOOD], floodSpecificKeys),
+        );
         if (status === 201) {
           reset(data);
           setIsEditMode(false);
@@ -191,7 +195,7 @@ export const FloodFormValidation = ({
         </Box>
       </Box>
       <Controller
-        name="floodSpecific"
+        name="specific"
         control={control}
         render={({ field: { value, onChange } }) => (
           <FloodTables

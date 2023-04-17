@@ -1,7 +1,7 @@
-import { floodSpecificKeys } from '@wfp-dmp/interfaces';
+import { droughtSpecificKeys } from '@wfp-dmp/interfaces';
 import { Dayjs } from 'dayjs';
 
-export type FloodFormType = {
+export type DroughtFormType = {
   region: {
     province: string;
     district: string;
@@ -12,5 +12,5 @@ export type FloodFormType = {
   phone: string;
   reportDate: Dayjs;
   incidentDate: Dayjs;
-  specific: Record<keyof typeof floodSpecificKeys, string | undefined>;
+  specific: Record<keyof typeof droughtSpecificKeys, string | undefined>;
 };
