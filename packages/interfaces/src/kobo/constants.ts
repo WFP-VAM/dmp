@@ -1,8 +1,9 @@
 /* eslint-disable max-lines */
+import { floodSpecificKeys } from 'index';
+
 import { DroughtDto } from './DroughtDto';
 import { FloodDto } from './FloodDto';
 import { IncidentDto } from './IncidentDto';
-import { floodSpecificKeys } from './mapping';
 
 export const FLOOD = 'FLOOD';
 export const DROUGHT = 'DROUGHT';
