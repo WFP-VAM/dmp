@@ -248,6 +248,7 @@ importers:
       react-dom: 18.2.0
       react-hook-form: 7.35.0
       react-intl: 6.1.1
+      react-to-print: ^2.14.12
       stylelint: 14.11.0
       stylelint-config-prettier: 9.0.3
       stylelint-config-standard: 28.0.0
@@ -275,6 +276,7 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.35.0_react@18.2.0
       react-intl: 6.1.1_qtbnez4q7bzoc4eqybg3efzzxe
+      react-to-print: 2.14.12_biqbaboplfbrettd7655fr4n2y
       swr: 2.1.1_react@18.2.0
     devDependencies:
       '@axe-core/react': 4.4.4
@@ -12398,6 +12400,17 @@ packages:
     dependencies:
       prop-types: 15.8.1
       react: 18.2.0
+    dev: false
+
+  /react-to-print/2.14.12_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-qFJAwvDFd95Z+FWNqitt+HaB1/z+Zdd0MMrNOPUSus3fG32vqv512yB+HXhQ94J3HKoyqaIg44v0Zfc6xUBqlg==}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-transition-group/4.4.5_biqbaboplfbrettd7655fr4n2y:
