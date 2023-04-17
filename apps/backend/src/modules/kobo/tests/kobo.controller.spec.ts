@@ -228,4 +228,25 @@ describe('KoboController', () => {
         });
     });
   });
+  describe('PATCH form flood', () => {
+    it('should return 200 and the service should use the right params', async () => {
+      const role = 'ncdm';
+      const disasterType = FLOOD;
+      const id = 'formTest';
+      const data = { 'g3/g3_1/g3_2/NumFamAff': '10', 'g1/q_Phone': null };
+
+      const patchFormSpy = jest.spyOn(koboService, 'patchForm').mockImplementation();
+
+      const user = await userFactory.createOne({ roles: [role] });
+      const accessToken = authService.createAccessToken(user, 10000);
+      await request(app.getHttpServer())
+        .patch(`/kobo/form/FLOOD/${id}`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(data)
+        .expect(200)
+        .expect(() => {
+          expect(patchFormSpy).toHaveBeenNthCalledWith(1, disasterType, id, data);
+        });
+    });
+  });
 });
