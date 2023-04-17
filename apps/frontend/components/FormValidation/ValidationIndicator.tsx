@@ -23,11 +23,6 @@ export const ValidationIndicator = ({
       icon = <CancelIcon />;
       color = 'red';
       break;
-    case ValidationStatusValue.onHold:
-      id = 'valStatus.onHold';
-      icon = <PendingIcon />;
-      color = 'yellow';
-      break;
     default:
       id = 'valStatus.onHold';
       icon = <PendingIcon />;
