@@ -30,6 +30,11 @@
     },
     "submit": "Update"
   },
+  "valStatus": {
+    "approved": "Report approved",
+    "notApproved": "Report approval rejected",
+    "onHold": "Report not yet approved"
+  },
   "navigation": {
     "forms": { "header": "Forms", "search": "Search" },
     "reports": "Reports",
