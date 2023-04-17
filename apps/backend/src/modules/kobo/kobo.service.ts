@@ -14,6 +14,7 @@ import {
   IncidentDto,
   IncidentQueryResponseDto,
   koboKeys,
+  PatchDroughtFormDto,
   PatchFloodFormDto,
   ValidationStatusDto,
   ValidationStatusValue,
@@ -132,7 +133,7 @@ export class KoboService {
   async patchForm(
     disasterType: DisasterType,
     id: string,
-    fieldsToUpdate: PatchFloodFormDto,
+    fieldsToUpdate: PatchFloodFormDto | PatchDroughtFormDto,
   ): Promise<number> {
     const { data } = await this.httpService.axiosRef.patch<{ results: { status_code: number }[] }>(
       `assets/${AssetId[disasterType]}/data/bulk`,

@@ -44,7 +44,7 @@ export const IncidentFormValidation = ({
       phone: formattedForm.phone,
       reportDate: dayjs(formattedForm.entryDate, 'YYYY-MM-DD'),
       incidentDate: dayjs(formattedForm.disasterDate, 'YYYY-MM-DD'),
-      incidentSpecific: pick(
+      specific: pick(
         formattedForm,
         Object.keys(
           incidentSpecificKeys,
@@ -166,7 +166,7 @@ export const IncidentFormValidation = ({
         </Box>
       </Box>
       <Controller
-        name="incidentSpecific"
+        name="specific"
         control={control}
         render={({ field: { value, onChange } }) => (
           <IncidentTables

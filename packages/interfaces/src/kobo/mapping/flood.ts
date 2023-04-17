@@ -1,5 +1,7 @@
 /* eslint-disable max-lines */
 
+export type FloodSpecificType = Record<keyof typeof floodSpecificKeys, string | undefined>;
+
 export const floodSpecificKeys = {
   NumVillAff: 'g3/g3_1/NumVillAff',
   NumFamAff: 'g3/g3_1/g3_2/NumFamAff',
