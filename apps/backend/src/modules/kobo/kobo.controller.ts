@@ -10,6 +10,7 @@ import {
   INCIDENT,
   PatchDroughtFormDto,
   PatchFloodFormDto,
+  PatchIncidentFormDto,
   PatchValidationStatusDto,
   ValidationStatusDto,
 } from '@wfp-dmp/interfaces';
@@ -97,6 +98,16 @@ export class KoboController {
     @Body() body: PatchDroughtFormDto,
   ): Promise<{ status: number }> {
     const status = await this.koboService.patchForm(DROUGHT, id, body);
+
+    return { status };
+  }
+
+  @Patch(`form/${INCIDENT}/:id`)
+  async patchIncidentForm(
+    @Param('id') id: string,
+    @Body() body: PatchIncidentFormDto,
+  ): Promise<{ status: number }> {
+    const status = await this.koboService.patchForm(INCIDENT, id, body);
 
     return { status };
   }
