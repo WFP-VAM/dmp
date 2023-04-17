@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { FormattedMessage } from 'react-intl';
 
 import { FormValidation } from 'components/FormValidation/FormValidation';
+import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
 import { useGetForm } from 'services/api/kobo/useGetForm';
 import { usePatchValidationStatus } from 'services/api/kobo/usePatchValidationStatus';
 
@@ -26,8 +27,8 @@ export const FormValidationContainer = (): JSX.Element => {
       ) : (
         <FormValidation validationForm={form} />
       )}
-      <Box>
-        <Box>{JSON.stringify(form?._validation_status)}</Box>
+      <Box display="flex" flexDirection="column" alignItems="center">
+        <ValidationIndicator valStatus={form?._validation_status.uid} />
         <Box display="flex" justifyContent="center">
           <Button
             sx={{ color: 'white', backgroundColor: 'red', mr: 2 }}
