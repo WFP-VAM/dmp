@@ -4,9 +4,11 @@ import PendingIcon from '@mui/icons-material/Pending';
 import { Stack } from '@mui/material';
 import { ValidationStatusValue } from '@wfp-dmp/interfaces';
 import { FormattedMessage } from 'react-intl';
-export const ValidationIndicator = (
-  valStatus: ValidationStatusValue | undefined,
-) => {
+export const ValidationIndicator = ({
+  valStatus,
+}: {
+  valStatus: ValidationStatusValue | undefined;
+}) => {
   let id;
   let icon;
   let color;
@@ -32,7 +34,7 @@ export const ValidationIndicator = (
       direction="row"
       alignItems="center"
       gap={1}
-      sx={{ backgroundColor: color, m: 2, p: 1, borderRadius: 1 }}
+      sx={{ backgroundColor: color, m: 2, p: 1 }}
     >
       {icon}
       <FormattedMessage id={id} />
