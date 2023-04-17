@@ -28,7 +28,7 @@ export const FormValidationContainer = (): JSX.Element => {
         <FormValidation validationForm={form} />
       )}
       <Box display="flex" flexDirection="column" alignItems="center">
-        <ValidationIndicator valStatus={form?._validation_status.uid} />
+        <ValidationIndicator form={form} />
         <Box display="flex" justifyContent="center">
           <Button
             sx={{ color: 'white', backgroundColor: 'red', mr: 2 }}
