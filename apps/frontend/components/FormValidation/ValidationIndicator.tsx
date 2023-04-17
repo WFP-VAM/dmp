@@ -2,17 +2,13 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 import { Stack } from '@mui/material';
-import { DisasterDtoType, ValidationStatusValue } from '@wfp-dmp/interfaces';
+import { ValidationStatusValue } from '@wfp-dmp/interfaces';
 import { FormattedMessage } from 'react-intl';
 export const ValidationIndicator = ({
-  form,
+  valStatus,
 }: {
-  form: DisasterDtoType | undefined;
+  valStatus: ValidationStatusValue | undefined;
 }) => {
-  if (form === undefined) {
-    return <></>;
-  }
-  const valStatus = form._validation_status.uid;
   let id;
   let icon;
   let color;
