@@ -3,9 +3,10 @@ import { mapKeys, mapValues, omit } from 'lodash';
 
 import { DroughtFormType } from 'components/FormValidation/DroughtFormValidation/DroughtFormType';
 import { FloodFormType } from 'components/FormValidation/FloodFormValidation/FloodFormType';
+import { IncidentFormType } from 'components/FormValidation/IncidentFormValidation/IncidentFormType';
 
 export const formatFormToRaw = (
-  formValues: FloodFormType | DroughtFormType,
+  formValues: FloodFormType | DroughtFormType | IncidentFormType,
   commonKeysMapping: Record<string, string>,
   specificKeysMapping: Record<string, string>,
 ) => {

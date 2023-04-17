@@ -1,20 +1,27 @@
 /* eslint-disable max-lines */
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import {
+  DisasterType,
   formatCommonFields,
+  INCIDENT,
   IncidentDto,
   incidentSpecificKeys,
+  koboKeys,
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { mapValues, pick } from 'lodash';
+import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { RegionFilters } from 'components/Filters/RegionFilters';
+import { usePatchForm } from 'services/api/kobo/usePatchForm';
+import { formatFormToRaw } from 'utils/formatFormToRaw';
 
 import { DisasterSelect } from '../DisasterSelect';
+import { IncidentFormType } from './IncidentFormType';
 import { IncidentTables } from './IncidentTables';
 
 const minWidth = 240;
@@ -24,6 +31,9 @@ export const IncidentFormValidation = ({
 }: {
   validationForm: IncidentDto;
 }): JSX.Element => {
+  const router = useRouter();
+  const { disasterType, id } = router.query;
+
   const intl = useIntl();
   const formattedForm = useMemo(
     () => ({
@@ -32,7 +42,7 @@ export const IncidentFormValidation = ({
     }),
     [validationForm],
   );
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset } = useForm<IncidentFormType>({
     defaultValues: {
       region: {
         province: formattedForm.province,
@@ -53,6 +63,11 @@ export const IncidentFormValidation = ({
     },
   });
 
+  const { trigger, isMutating } = usePatchForm(
+    disasterType as DisasterType,
+    id as string,
+  );
+
   const [isEditMode, setIsEditMode] = useState(false);
   // We set this state to avoid race condition between a field update and the reset coming from react hook form
   const [shouldReset, setShouldReset] = useState(false);
@@ -64,7 +79,23 @@ export const IncidentFormValidation = ({
     }
   }, [shouldReset, reset]);
 
-  const onSubmit = (data: unknown) => console.log(data);
+  const onSubmit = (data: IncidentFormType) => {
+    const triggerAndUpdateDefault = async () => {
+      try {
+        const status = await trigger(
+          formatFormToRaw(data, koboKeys[INCIDENT], incidentSpecificKeys),
+        );
+        if (status === 201) {
+          reset(data);
+          setIsEditMode(false);
+        }
+      } catch (error) {
+        setShouldReset(true);
+        console.error(error);
+      }
+    };
+    void triggerAndUpdateDefault();
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -189,7 +220,16 @@ export const IncidentFormValidation = ({
         )}
         {isEditMode && (
           <>
-            <Button type="submit" sx={{ color: 'white', margin: 2 }}>
+            <Button
+              type="submit"
+              sx={{ color: 'white', margin: 2 }}
+              disabled={isMutating}
+              endIcon={
+                isMutating ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null
+              }
+            >
               <FormattedMessage id="form_page.submit" />
             </Button>
             <Button
@@ -198,6 +238,12 @@ export const IncidentFormValidation = ({
                 setIsEditMode(false);
                 setShouldReset(true);
               }}
+              disabled={isMutating}
+              endIcon={
+                isMutating ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null
+              }
             >
               <FormattedMessage id="form_page.cancel" />
             </Button>
