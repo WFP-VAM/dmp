@@ -97,11 +97,9 @@ export const TableDisplay = ({
                 </TableCell>
                 <TableCell>{formattedForm.disasterDate}</TableCell>
                 <TableCell>
-                  <FormattedMessage
-                    id={`disasters.${formattedForm.disasterType}`}
-                  />
+                  <FormattedMessage id={`disasters.${formattedForm.disTyp}`} />
                 </TableCell>
-                <TableCell>{formattedForm.reportName}</TableCell>
+                <TableCell>{formattedForm.entryName}</TableCell>
                 <TableCell>{formattedForm.phone}</TableCell>
                 <TableCell>{formattedForm.entryDate}</TableCell>
                 <TableCell>
