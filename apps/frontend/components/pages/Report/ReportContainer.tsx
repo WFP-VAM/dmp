@@ -8,9 +8,8 @@ import {
   SearchFilters,
   SearchFormData,
 } from 'components/Filters/SearchFilters';
+import { Report } from 'components/Report/Report';
 import { useGetForms } from 'services/api/kobo/useGetForms';
-
-import { Report } from './Report';
 
 const defaultSearchReportData: SearchFormData = {
   disTyp: DisasterMapping['flood'],
