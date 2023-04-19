@@ -6,11 +6,10 @@ import {
   FLOOD,
   FloodDto,
   floodSpecificKeys,
-  formatCommonFields,
   koboKeys,
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
-import { mapValues, pick } from 'lodash';
+import { pick } from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -19,6 +18,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { RegionFilters } from 'components/Filters/RegionFilters';
 import { usePatchForm } from 'services/api/kobo/usePatchForm';
 import { formatFormToRaw } from 'utils/formatFormToRaw';
+import { formatFloodFields } from 'utils/formatRawToForm';
 
 import { DisasterSelect } from '../DisasterSelect';
 import { FloodFormType } from './FloodFormType';
@@ -36,10 +36,7 @@ export const FloodFormValidation = ({
 
   const intl = useIntl();
   const formattedForm = useMemo(
-    () => ({
-      ...formatCommonFields(validationForm),
-      ...mapValues(floodSpecificKeys, value => validationForm[value]),
-    }),
+    () => formatFloodFields(validationForm),
     [validationForm],
   );
   const { control, handleSubmit, reset } = useForm<FloodFormType>({
