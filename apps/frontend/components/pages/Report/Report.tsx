@@ -6,6 +6,8 @@ import {
   isFloodArray,
 } from '@wfp-dmp/interfaces';
 
+import { FloodReport } from './FloodReport/FloodReport';
+
 export const Report = ({
   forms,
 }: {
@@ -13,7 +15,7 @@ export const Report = ({
 }) => {
   if (forms.length === 0) return null;
 
-  if (isFloodArray(forms)) return <div>{JSON.stringify(forms)}</div>;
+  if (isFloodArray(forms)) return <FloodReport forms={forms} />;
 
   if (isDroughtArray(forms)) return <div>WIP DROUGHT</div>;
 
