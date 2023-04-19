@@ -2,6 +2,7 @@ import * as path from 'path';
 
 import { DroughtDto } from './DroughtDto';
 import { FloodDto } from './FloodDto';
+import { IncidentDto } from './IncidentDto';
 import { DisasterDtoType, DROUGHT, FLOOD, INCIDENT } from './constants';
 import { koboKeys } from './mapping';
 
@@ -19,6 +20,18 @@ export const isFlood = (form: DisasterDtoType): form is FloodDto => {
 };
 export const isDrought = (form: DisasterDtoType): form is DroughtDto => {
   return koboKeys[DROUGHT].disTyp in form;
+};
+
+export const isFloodArray = (
+  forms: FloodDto[] | DroughtDto[] | IncidentDto[],
+): forms is FloodDto[] => {
+  return koboKeys[FLOOD].disTyp in forms[0];
+};
+
+export const isDroughtArray = (
+  forms: FloodDto[] | DroughtDto[] | IncidentDto[],
+): forms is DroughtDto[] => {
+  return koboKeys[FLOOD].disTyp in forms[0];
 };
 
 export const formatCommonFields = (form: DisasterDtoType) => {

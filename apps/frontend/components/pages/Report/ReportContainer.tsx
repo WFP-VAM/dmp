@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -8,6 +8,9 @@ import {
   SearchFilters,
   SearchFormData,
 } from 'components/Filters/SearchFilters';
+import { useGetForms } from 'services/api/kobo/useGetForms';
+
+import { Report } from './Report';
 
 const defaultSearchReportData: SearchFormData = {
   disTyp: DisasterMapping['flood'],
@@ -27,6 +30,8 @@ export const ReportContainer = () => {
     defaultSearchReportData,
   );
 
+  const { data: formsData, isLoading } = useGetForms(searchReportData);
+
   return (
     <Box display="flex" flexDirection="column">
       <SearchFilters
@@ -39,6 +44,15 @@ export const ReportContainer = () => {
           />
         }
       />
+      {(isLoading || formsData === undefined) && (
+        <Skeleton
+          variant="rounded"
+          sx={{ minWidth: 800, minHeight: 400, mt: 5 }}
+        />
+      )}
+      {formsData !== undefined && formsData.length > 0 && (
+        <Report forms={formsData} />
+      )}
     </Box>
   );
 };
