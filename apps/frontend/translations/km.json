@@ -30,6 +30,11 @@
     },
     "submit": "ធ្វើបច្ចុប្បន្នភាព"
   },
+  "valStatus": {
+    "approved": "Report approved",
+    "notApproved": "Report approval rejected",
+    "onHold": "Report not yet approved"
+  },
   "navigation": {
     "forms": { "header": "Forms", "search": "Search" },
     "reports": "Reports",
@@ -120,6 +125,23 @@
         "deathToll": "Death Toll",
         "missing": "Number Missing",
         "injured": "Number Injured"
+      },
+      "securityIssues": {
+        "title": "Threats Identified",
+        "1": "Have children lost / separated from their parents",
+        "2": "Increased violence against children",
+        "3": "Increased number of children helping parents earn money",
+        "4": "Increased activity of selling child labor",
+        "5": "Increased number of children dropping out of school",
+        "6": "No entertainment for children",
+        "7": "Number of pregnant women",
+        "8": "Many orphaned children / youth",
+        "9": "Many families want to migrate",
+        "10": "Sexual harassment occurred",
+        "11": "Increased number of children / women traveling far for water and food",
+        "12": "Children / women temporarily staying in the open / without proper shelter",
+        "13": "Temporary shelters do not have proper security arrangements",
+        "14": "Other"
       }
     },
     "DROUGHT": {

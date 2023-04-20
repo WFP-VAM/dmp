@@ -1,16 +1,12 @@
-import { floodSpecificKeys } from '@wfp-dmp/interfaces';
+import { FloodSpecificType } from '@wfp-dmp/interfaces';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
 
+import { FloodCheckBoxes } from './FloodCheckBoxes';
 import {
   NumAffected1ColumnGroup,
   NumAffected1Columns,
 } from './tablesConfig/NumAffected-1';
-
-export type FloodSpecificType = Record<
-  keyof typeof floodSpecificKeys,
-  string | undefined
->;
 
 interface IProps {
   value: FloodSpecificType;
@@ -30,6 +26,11 @@ export const FloodTables = ({
         columnGroup={NumAffected1ColumnGroup}
         data={[{ id: 1, ...value }]}
         onChange={onChange}
+        isEditable={isEditMode}
+      />
+      <FloodCheckBoxes
+        onChange={onChange}
+        value={value}
         isEditable={isEditMode}
       />
     </>
