@@ -275,4 +275,30 @@ describe('KoboController', () => {
         });
     });
   });
+
+  describe('PATCH form incident', () => {
+    it('should return 200 and the service should use the right params', async () => {
+      const role = 'ncdm';
+      const disasterType = INCIDENT;
+      const id = 'formTest';
+      const data = {
+        'G2/Specify': 'specify',
+        'group_tc1fy38/group_th37h10/NumMeMising': '2',
+        'group_fh3jp70/group_ez5mr58/SchDam': null,
+      };
+
+      const patchFormSpy = jest.spyOn(koboService, 'patchForm').mockImplementation();
+
+      const user = await userFactory.createOne({ roles: [role] });
+      const accessToken = authService.createAccessToken(user, 10000);
+      await request(app.getHttpServer())
+        .patch(`/kobo/form/${disasterType}/${id}`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(data)
+        .expect(200)
+        .expect(() => {
+          expect(patchFormSpy).toHaveBeenNthCalledWith(1, disasterType, id, data);
+        });
+    });
+  });
 });

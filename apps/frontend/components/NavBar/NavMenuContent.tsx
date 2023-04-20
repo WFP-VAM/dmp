@@ -31,6 +31,7 @@ export const NavMenuContent = (): JSX.Element => {
   const isAdmin = useIsSignedInUserAdmin();
 
   const handleAdminClick = () => {
+    // TODO - Use apiClient.baseUrl?
     const baseURL = env('NEXT_PUBLIC_API_BASE_URL');
     const path = new URL('/admin/login', baseURL).toString();
     window.location.href = path;

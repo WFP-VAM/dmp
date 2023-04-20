@@ -54,6 +54,7 @@ jobs:
         run: pnpm test
       - name: Dependency Cruiser
         run: pnpm test:circular
+
   security-check:
     runs-on: ubuntu-latest
     steps:
@@ -72,3 +73,48 @@ jobs:
         run: pnpm install
       - name: Check for vulnerable dependencies
         run: pnpm run security
+
+  frontend_build_and_deploy:
+    needs: test
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    env:
+      surge_url: wfp-dmp-${{ github.event.pull_request.number }}.surge.sh
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.3
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build Interfaces & Frontend
+        run: pnpm turbo build
+        env:
+          NEXT_PUBLIC_API_BASE_URL: https://staging.dmp.ovio.org
+      - name: Export to static HTML
+        run: |
+          cd apps/frontend
+          ./gen_env.sh staging
+          pnpm next export
+      - name: Deploy on surge
+        uses: dswistowski/surge-sh-action@v1
+        with:
+          domain: ${{ env.surge_url }}
+          project: "apps/frontend/out/."
+          login: ${{ secrets.surge_login }}
+          token: ${{ secrets.surge_token }}
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%S')"
+      - name: Comment PR
+        uses: marocchino/sticky-pull-request-comment@v1
+        continue-on-error: true
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          message: |
+            Build succeeded and deployed at https://${{ env.surge_url }} 
+            (hash ${{ github.event.pull_request.head.sha }} deployed at ${{ steps.date.outputs.date }})
