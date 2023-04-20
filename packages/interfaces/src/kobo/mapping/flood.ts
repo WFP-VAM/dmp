@@ -3,6 +3,7 @@
 export type FloodSpecificType = Record<keyof typeof floodSpecificKeys, string | undefined>;
 
 export const floodSpecificKeys = {
+  floodN: 'g2/flood_n',
   NumVillAff: 'g3/g3_1/NumVillAff',
   NumFamAff: 'g3/g3_1/g3_2/NumFamAff',
   NumPeoAff: 'g3/g3_1/g3_2/NumPeoAff',
@@ -133,6 +134,7 @@ export const floodSpecificKeys = {
 } as const;
 
 export enum FloodSpecific {
+  floodN = 'floodN',
   NumVillAff = 'NumVillAff',
   NumFamAff = 'NumFamAff',
   NumPeoAff = 'NumPeoAff',
