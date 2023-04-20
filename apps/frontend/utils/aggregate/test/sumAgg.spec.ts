@@ -14,6 +14,7 @@ describe('sumAgg', () => {
       { a: '1', b: 'v1' },
       { b: 'v2' },
       { a: '', b: 'v1' },
+      { a: undefined, b: 'v2' },
       { a: '3', b: 'v1' },
     ];
     expect(sumAgg('a', group)).toEqual({ a: 4 });

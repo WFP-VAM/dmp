@@ -15,6 +15,7 @@ describe('countAgg', () => {
       { b: 'v2' },
       { a: 'v2', b: 'v1' },
       { a: '', b: 'v1' },
+      { a: undefined, b: 'v2' },
     ];
     expect(countAgg('a', group)).toEqual({ a: 2 });
   });

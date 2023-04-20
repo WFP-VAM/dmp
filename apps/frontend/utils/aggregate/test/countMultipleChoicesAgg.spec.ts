@@ -18,6 +18,7 @@ describe('countMultipleChoicesAgg', () => {
     const group = [
       { a: '1 2 3', b: 'v1' },
       { a: '', b: 'v2' },
+      { a: undefined, b: 'v2' },
       { b: 'v2' },
       { a: '3 4', b: 'v1' },
     ];

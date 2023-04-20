@@ -5,7 +5,10 @@ export const countCategoriesAgg = (
   group: Record<string, string | undefined>[],
 ) => {
   const countCategoriesValue = chain(group)
-    .filter(object => has(object, key) && object[key] !== '')
+    .filter(
+      object =>
+        has(object, key) && object[key] !== undefined && object[key] !== '',
+    )
     .groupBy(key)
     .mapValues(ar => ar.length)
     .mapKeys((_, category) => `${key}_${category}`)

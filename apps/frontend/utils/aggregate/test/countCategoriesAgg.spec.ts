@@ -19,6 +19,7 @@ describe('countCategoriesAgg', () => {
       { a: '1', b: 'v1' },
       { a: '1', b: 'v2' },
       { a: '', b: 'v2' },
+      { a: undefined, b: 'v2' },
       { b: 'v1' },
       { a: '3', b: 'v1' },
     ];
