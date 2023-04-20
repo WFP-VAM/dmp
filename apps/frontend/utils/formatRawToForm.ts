@@ -11,7 +11,7 @@ import { mapValues } from 'lodash';
 
 export const formatFloodFields = (
   form: FloodDto,
-): Record<string, string | number | undefined> => ({
+): Record<string, string | undefined> => ({
   ...formatCommonFields(form),
   ...mapValues(floodSpecificKeys, value => form[value]),
 });

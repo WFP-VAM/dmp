@@ -47,7 +47,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.entryName]: form[keys.entryName],
       [KoboCommonKeys.phone]: form[keys.phone],
       [KoboCommonKeys.entryDate]: form[keys.entryDate],
-      [KoboCommonKeys.id]: form[keys.id],
+      [KoboCommonKeys.id]: form[keys.id].toString(),
       approvalLink: path.join('/form', FLOOD, form[keys.id].toString()),
     };
   } else if (isDrought(form)) {
@@ -62,7 +62,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.entryName]: form[keys.entryName],
       [KoboCommonKeys.phone]: form[keys.phone],
       [KoboCommonKeys.entryDate]: form[keys.entryDate],
-      [KoboCommonKeys.id]: form[keys.id],
+      [KoboCommonKeys.id]: form[keys.id].toString(),
       approvalLink: path.join('/form', DROUGHT, form[keys.id].toString()),
     };
   } else {
@@ -77,7 +77,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.entryName]: form[keys.entryName],
       [KoboCommonKeys.phone]: form[keys.phone],
       [KoboCommonKeys.entryDate]: form[keys.entryDate],
-      [KoboCommonKeys.id]: form[keys.id],
+      [KoboCommonKeys.id]: form[keys.id].toString(),
       approvalLink: path.join('/form', INCIDENT, form[keys.id].toString()),
     };
   }
