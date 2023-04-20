@@ -11,7 +11,9 @@ const bootstrap = async () => {
   const app = await NestFactory.create(AppModule, { logger });
 
   if (typeof process.env.ALLOWED_HOST === 'string') {
-    app.enableCors({ credentials: true, origin: process.env.ALLOWED_HOST });
+    // Enable CORS for ALLOWED_HOST and PR test sites.
+    const allowedOrigins = [process.env.ALLOWED_HOST, "https:\/\/wfp-dmp-[0-9]+.surge\.sh$"]
+    app.enableCors({ credentials: true, origin: allowedOrigins });
   }
 
   app.use(cookieParser());
