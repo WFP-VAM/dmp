@@ -37,7 +37,7 @@ jobs:
         with:
           aws-region: ${{ vars.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-      - name: '🚀 Deploy staging'
+      - name: '🚀 Deploy production'
         env:
           CDK_DEFAULT_REGION: ${{ vars.AWS_REGION }}
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
