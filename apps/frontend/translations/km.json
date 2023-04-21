@@ -91,7 +91,8 @@
     }
   },
   "report_page": {
-    "showReport": "បង្ហាញរបាយការណ៍"
+    "showReport": "បង្ហាញរបាយការណ៍",
+    "noData": "គ្មានទិន្នន័យ"
   },
   "table": {
     "FLOOD": {

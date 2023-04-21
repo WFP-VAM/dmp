@@ -49,9 +49,7 @@ export const ReportContainer = () => {
           sx={{ minWidth: 800, minHeight: 400, mt: 5 }}
         />
       )}
-      {formsData !== undefined && formsData.length > 0 && (
-        <Report forms={formsData} />
-      )}
+      {formsData !== undefined && <Report forms={formsData} />}
     </Box>
   );
 };
