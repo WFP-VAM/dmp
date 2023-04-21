@@ -1,5 +1,6 @@
 import { compact, uniq } from 'lodash';
 
+/** counts the unique non nullable values for a given 'key' in an array of object */
 export const countAgg = (
   key: string,
   group: Record<string, string | undefined>[],

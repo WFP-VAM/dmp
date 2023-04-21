@@ -1,5 +1,6 @@
 import { chain, maxBy, omit } from 'lodash';
 
+// Regex to check that a date as the following format: YYYY-MM-DD
 const DATE_PATTERN = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
 
 export const filterNFlood = (

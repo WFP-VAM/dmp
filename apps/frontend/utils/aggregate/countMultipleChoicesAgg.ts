@@ -1,5 +1,10 @@
 import { compact, flatten, mapKeys } from 'lodash';
 
+/** counts the number of time a choice for a multiple-choice appears for a given 'key' in an array of object.
+ * Kobo stores multiple-choices in a string. Format: "choice1 choice2"
+ * this function parses the strings, count the occurence of each choices though the whole array
+ * returns: an object with one entry for each choice (format : {<initial-key>-<choice-value>: count, ...})
+ */
 export const countMultipleChoicesAgg = (
   key: string,
   group: Record<string, string | undefined>[],
