@@ -31,7 +31,7 @@ export const isFloodArray = (
 export const isDroughtArray = (
   forms: FloodDto[] | DroughtDto[] | IncidentDto[],
 ): forms is DroughtDto[] => {
-  return koboKeys[FLOOD].disTyp in forms[0];
+  return koboKeys[DROUGHT].disTyp in forms[0];
 };
 
 export const formatCommonFields = (form: DisasterDtoType) => {
