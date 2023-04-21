@@ -38,6 +38,7 @@ const nextConfig = {
   reactStrictMode: true,
   // experimental, however will be released the default in Nextjs 12.2.0
   swcMinify: true,
+  images: { unoptimized: true },
 
   headers: async () => [
     {
