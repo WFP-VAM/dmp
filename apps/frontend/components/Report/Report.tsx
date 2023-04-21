@@ -9,6 +9,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 
 import { FloodReport } from './FloodReport/FloodReport';
+import { IncidentReport } from './IncidentReport/IncidentReport';
 
 export const Report = ({
   forms,
@@ -28,5 +29,5 @@ export const Report = ({
 
   if (isDroughtArray(forms)) return <div>WIP DROUGHT</div>;
 
-  return <div>WIP INCIDENT</div>;
+  return <IncidentReport forms={forms} />;
 };
