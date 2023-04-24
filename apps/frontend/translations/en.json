@@ -221,7 +221,7 @@
       }
     }
   },
-  "provinces": {
+  "province": {
     "01": "Banteay Meanchey",
     "02": "Battambang",
     "03": "Kampong Cham",
@@ -248,7 +248,7 @@
     "24": "Pailin",
     "25": "Tboung Khmum"
   },
-  "districts": {
+  "district": {
     "0102": "Mongkol Borei",
     "0103": "Phnum Srok",
     "0104": "Preah Netr Preah",
@@ -447,7 +447,7 @@
     "2506": "Suong",
     "2507": "Tboung Khmum"
   },
-  "communes": {
+  "commune": {
     "010201": "Banteay Neang",
     "010202": "Bat Trang",
     "010203": "Chamnaom",
