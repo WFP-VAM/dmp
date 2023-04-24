@@ -1,4 +1,8 @@
-import { floodSpecificKeysArray, FloodSpecificType, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import {
+  floodSpecificKeysArray,
+  FloodSpecificType,
+  KoboCommonKeys,
+} from '@wfp-dmp/interfaces';
 import { omit } from 'lodash';
 
 import { aggregate } from '../aggregate';
@@ -7,14 +11,8 @@ import { filterNFlood } from '../filterNFlood';
 const firstKeys = [KoboCommonKeys.province, KoboCommonKeys.district];
 
 const sumKeys = Object.values(
-  omit(floodSpecificKeysArray, [
-    'floodN',
-    'RicePrice',
-    'threat',
-    'other',
-  ]),
+  omit(floodSpecificKeysArray, ['floodN', 'RicePrice', 'threat', 'other']),
 );
-
 
 const countCategoriesKeys: FloodSpecificType[] = ['RicePrice'];
 const countMultipleChoicesKeys: FloodSpecificType[] = ['threat'];
