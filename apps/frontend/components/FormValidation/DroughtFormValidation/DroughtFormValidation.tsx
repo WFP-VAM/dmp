@@ -6,11 +6,10 @@ import {
   DROUGHT,
   DroughtDto,
   droughtSpecificKeys,
-  formatCommonFields,
   koboKeys,
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
-import { mapValues, pick } from 'lodash';
+import { pick } from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -19,6 +18,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { RegionFilters } from 'components/Filters/RegionFilters';
 import { usePatchForm } from 'services/api/kobo/usePatchForm';
 import { formatFormToRaw } from 'utils/formatFormToRaw';
+import { formatDroughtFields } from 'utils/formatRawToForm';
 
 import { DisasterSelect } from '../DisasterSelect';
 import { DroughtFormType } from './DroughtFormType';
@@ -36,10 +36,7 @@ export const DroughtFormValidation = ({
 
   const intl = useIntl();
   const formattedForm = useMemo(
-    () => ({
-      ...formatCommonFields(validationForm),
-      ...mapValues(droughtSpecificKeys, value => validationForm[value] ?? ''),
-    }),
+    () => formatDroughtFields(validationForm),
     [validationForm],
   );
   const { control, handleSubmit, reset } = useForm<DroughtFormType>({
@@ -49,8 +46,8 @@ export const DroughtFormValidation = ({
         district: formattedForm.district,
         commune: formattedForm.commune,
       },
-      interviewer: formattedForm.reportName,
-      disTyp: formattedForm.disasterType,
+      interviewer: formattedForm.entryName,
+      disTyp: formattedForm.disTyp,
       phone: formattedForm.phone,
       reportDate: dayjs(formattedForm.entryDate, 'YYYY-MM-DD'),
       incidentDate: dayjs(formattedForm.disasterDate, 'YYYY-MM-DD'),
