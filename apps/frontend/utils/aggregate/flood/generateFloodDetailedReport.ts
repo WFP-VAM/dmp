@@ -1,6 +1,6 @@
 import {
+  FloodSpecific,
   floodSpecificKeysArray,
-  FloodSpecificType,
   KoboCommonKeys,
 } from '@wfp-dmp/interfaces';
 import { omit } from 'lodash';
@@ -14,8 +14,8 @@ const sumKeys = Object.values(
   omit(floodSpecificKeysArray, ['floodN', 'RicePrice', 'threat', 'other']),
 );
 
-const countCategoriesKeys: FloodSpecificType[] = ['RicePrice'];
-const countMultipleChoicesKeys: FloodSpecificType[] = ['threat'];
+const countCategoriesKeys: FloodSpecific[] = ['RicePrice'];
+const countMultipleChoicesKeys: FloodSpecific[] = ['threat'];
 
 export const generateFloodDetailedReport = (
   data: Record<string, string | undefined>[],

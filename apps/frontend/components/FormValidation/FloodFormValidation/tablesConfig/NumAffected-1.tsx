@@ -1,10 +1,10 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecificType } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 // TODO - Finish reorganizing this file for typing
-const NumAffected1ColumnsKeys: FloodSpecificType[] = [
+const NumAffected1ColumnsKeys: FloodSpecific[] = [
   'NumVillAff',
   'NumPeoAff',
   'NumFamAff',
@@ -34,8 +34,8 @@ export const NumAffected1Columns: GridColDef[] = NumAffected1ColumnsKeys.map(
   key => getColumnSetup(key, FLOOD),
 );
 
-const keyAsField = (key: FloodSpecificType) => ({ field: key });
-const keysAsChildren = (keys: FloodSpecificType[]) => keys.map(keyAsField);
+const keyAsField = (key: FloodSpecific) => ({ field: key });
+const keysAsChildren = (keys: FloodSpecific[]) => keys.map(keyAsField);
 
 export const NumAffected1ColumnGroup: GridColumnGroupingModel = [
   {
