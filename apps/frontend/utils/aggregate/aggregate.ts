@@ -47,5 +47,6 @@ export const aggregate = ({
         ...countMultipleChoicesValues,
       ) as Record<string, string | number | undefined>;
     })
+    .sortBy(groupKey)
     .value();
 };
