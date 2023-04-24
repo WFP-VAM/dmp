@@ -3,15 +3,14 @@ import {
   floodSpecificKeysArray,
   KoboCommonKeys,
 } from '@wfp-dmp/interfaces';
-import { omit } from 'lodash';
 
 import { aggregate } from '../aggregate';
 import { filterNFlood } from '../filterNFlood';
 
 const firstKeys = [KoboCommonKeys.province, KoboCommonKeys.district];
 
-const sumKeys = Object.values(
-  omit(floodSpecificKeysArray, ['floodN', 'RicePrice', 'threat', 'other']),
+const sumKeys = floodSpecificKeysArray.filter(
+  k => !['floodN', 'RicePrice', 'threat', 'other'].includes(k),
 );
 
 const countCategoriesKeys: FloodSpecific[] = ['RicePrice'];
