@@ -54,3 +54,12 @@ export const getGroupSetup = (groupId: string, disaster: DisasterType) => ({
     <FormattedMessage id={`table.${disaster}.groupId.${groupId}`} />
   ),
 });
+
+export const addDetailedReportLocationColumns = (
+  columns: GridColDef[],
+): GridColDef[] => [
+  getLocationColumnSetup(KoboCommonKeys.province),
+  getLocationColumnSetup(KoboCommonKeys.district),
+  getLocationColumnSetup(KoboCommonKeys.commune),
+  ...columns,
+];
