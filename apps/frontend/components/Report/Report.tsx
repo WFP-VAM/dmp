@@ -34,5 +34,5 @@ export const Report = ({
   if (isDroughtArray(forms))
     return <DroughtReport forms={forms} isDetailedReport={isDetailedReport} />;
 
-  return <IncidentReport forms={forms} />;
+  return <IncidentReport forms={forms} isDetailedReport={isDetailedReport} />;
 };

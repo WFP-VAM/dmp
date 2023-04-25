@@ -1,21 +1,37 @@
 import { IncidentDto } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
-import { generateIncidentDetailedReport } from 'utils/aggregate/generateIncidentReport';
+import {
+  generateIncidentBriefReport,
+  generateIncidentDetailedReport,
+} from 'utils/aggregate/generateIncidentReport';
 import { formatIncidentFields } from 'utils/formatRawToForm';
 
-export const IncidentReport = ({ forms }: { forms: IncidentDto[] }) => {
-  const detailedReport = useMemo(
-    () =>
-      generateIncidentDetailedReport(
-        forms.map(form => formatIncidentFields(form)),
-      ),
-    [forms],
-  );
+import { BriefIncidentReport } from './BriefIncidentReport';
+import { DetailedIncidentReport } from './DetailedIncidentReport';
+
+export const IncidentReport = ({
+  forms,
+  isDetailedReport,
+}: {
+  forms: IncidentDto[];
+  isDetailedReport: boolean;
+}) => {
+  const report = useMemo(() => {
+    const formattedForms = forms.map(form => formatIncidentFields(form));
+
+    return isDetailedReport
+      ? generateIncidentDetailedReport(formattedForms)
+      : generateIncidentBriefReport(formattedForms);
+  }, [forms, isDetailedReport]);
 
   return (
     <>
-      <div>{JSON.stringify(detailedReport)}</div>
+      {isDetailedReport ? (
+        <DetailedIncidentReport report={report} />
+      ) : (
+        <BriefIncidentReport report={report} />
+      )}
     </>
   );
 };

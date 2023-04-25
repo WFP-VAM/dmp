@@ -1,8 +1,10 @@
 import { IncidentSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { aggregate } from './aggregate';
-
-const firstKeys = [KoboCommonKeys.province, KoboCommonKeys.district];
+import {
+  briefReportCountKeys,
+  detailedReportFirstKeys,
+} from './commonReportAggregateKeys';
 
 const sumKeys = Object.values(IncidentSpecific);
 
@@ -12,7 +14,18 @@ export const generateIncidentDetailedReport = (
   return aggregate({
     data,
     groupKey: KoboCommonKeys.commune,
-    firstKeys,
+    firstKeys: detailedReportFirstKeys,
+    sumKeys,
+  });
+};
+
+export const generateIncidentBriefReport = (
+  data: Record<string, string | undefined>[],
+) => {
+  return aggregate({
+    data,
+    groupKey: KoboCommonKeys.province,
+    countKeys: briefReportCountKeys,
     sumKeys,
   });
 };
