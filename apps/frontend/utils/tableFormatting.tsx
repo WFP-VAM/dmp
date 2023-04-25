@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl';
 
 export const getColumnSetup = (
   field: string,
-  disaster: DisasterType,
+  disaster: DisasterType | 'COMMON',
   width = 90,
   opts?: {
     type: 'singleSelect';
@@ -61,5 +61,14 @@ export const addDetailedReportLocationColumns = (
   getLocationColumnSetup(KoboCommonKeys.province),
   getLocationColumnSetup(KoboCommonKeys.district),
   getLocationColumnSetup(KoboCommonKeys.commune),
+  ...columns,
+];
+
+export const addBriefReportLocationColumns = (
+  columns: GridColDef[],
+): GridColDef[] => [
+  getLocationColumnSetup(KoboCommonKeys.province),
+  getColumnSetup(KoboCommonKeys.district, 'COMMON'),
+  getColumnSetup(KoboCommonKeys.commune, 'COMMON'),
   ...columns,
 ];

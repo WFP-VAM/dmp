@@ -221,6 +221,12 @@
         "missing": "Number Missing",
         "injured": "Number Injured"
       }
+    },
+    "COMMON": {
+      "column": {
+        "district": "District",
+        "commune": "Commune"
+      }
     }
   },
   "province": {

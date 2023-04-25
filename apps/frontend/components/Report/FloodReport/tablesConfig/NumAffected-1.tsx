@@ -4,10 +4,16 @@ import {
   NumAffected1ColumnGroup,
   NumAffected1Columns,
 } from 'components/FormValidation/FloodFormValidation/tablesConfig/NumAffected-1';
-import { addDetailedReportLocationColumns } from 'utils/tableFormatting';
+import {
+  addBriefReportLocationColumns,
+  addDetailedReportLocationColumns,
+} from 'utils/tableFormatting';
 
 export const detailedNumAffected1Columns: GridColDef[] =
   addDetailedReportLocationColumns(NumAffected1Columns);
 
-export const detailedNumAffected1ColumnGroup: GridColumnGroupingModel =
+export const briefNumAffected1Columns: GridColDef[] =
+  addBriefReportLocationColumns(NumAffected1Columns);
+
+export const reportNumAffected1ColumnGroup: GridColumnGroupingModel =
   NumAffected1ColumnGroup;

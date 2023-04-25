@@ -1,9 +1,9 @@
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
 
 import {
-  detailedNumAffected1ColumnGroup,
   detailedNumAffected1Columns,
-} from './detailedTablesConfig/detailedNumAffected-1';
+  reportNumAffected1ColumnGroup,
+} from './tablesConfig/NumAffected-1';
 
 export const DetailedFloodReport = ({
   report,
@@ -13,7 +13,7 @@ export const DetailedFloodReport = ({
   return (
     <DisasterTable
       columns={detailedNumAffected1Columns}
-      columnGroup={detailedNumAffected1ColumnGroup}
+      columnGroup={reportNumAffected1ColumnGroup}
       data={report}
       isEditable={false}
       getRowId={(row: { commune: string }) => row.commune}
