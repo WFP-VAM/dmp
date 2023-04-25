@@ -9,6 +9,7 @@ import {
   SearchFormData,
 } from 'components/Filters/SearchFilters';
 import { Report } from 'components/Report/Report';
+import { ReportSwitch } from 'components/ReportSwitch';
 import { useGetForms } from 'services/api/kobo/useGetForms';
 
 const defaultSearchReportData: SearchFormData = {
@@ -29,6 +30,8 @@ export const ReportContainer = () => {
     defaultSearchReportData,
   );
 
+  const [isDetailedReport, setIsDetailedReport] = useState(false);
+
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 
   return (
@@ -42,6 +45,12 @@ export const ReportContainer = () => {
             defaultMessage="Show Report"
           />
         }
+      />
+      <ReportSwitch
+        value={isDetailedReport}
+        onChange={(event, checked) => {
+          setIsDetailedReport(checked);
+        }}
       />
       {(isLoading || formsData === undefined) && (
         <Skeleton

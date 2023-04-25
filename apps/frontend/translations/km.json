@@ -92,7 +92,9 @@
   },
   "report_page": {
     "showReport": "បង្ហាញរបាយការណ៍",
-    "noData": "គ្មានទិន្នន័យ"
+    "noData": "គ្មានទិន្នន័យ",
+    "brief": "សង្ខេប",
+    "detailed": "លម្អិត"
   },
   "table": {
     "FLOOD": {

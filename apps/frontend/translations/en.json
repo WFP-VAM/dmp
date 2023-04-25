@@ -92,7 +92,9 @@
   },
   "report_page": {
     "showReport": "Show Report",
-    "noData": "No Data"
+    "noData": "No Data",
+    "brief": "Brief",
+    "detailed": "Detailed"
   },
   "table": {
     "FLOOD": {
