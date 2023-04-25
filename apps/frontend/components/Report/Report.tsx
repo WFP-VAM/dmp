@@ -14,8 +14,10 @@ import { IncidentReport } from './IncidentReport/IncidentReport';
 
 export const Report = ({
   forms,
+  isDetailedReport,
 }: {
   forms: FloodDto[] | DroughtDto[] | IncidentDto[];
+  isDetailedReport: boolean;
 }) => {
   if (forms.length === 0)
     return (
@@ -26,7 +28,8 @@ export const Report = ({
       </Box>
     );
 
-  if (isFloodArray(forms)) return <FloodReport forms={forms} />;
+  if (isFloodArray(forms))
+    return <FloodReport forms={forms} isDetailedReport={isDetailedReport} />;
 
   if (isDroughtArray(forms)) return <DroughtReport forms={forms} />;
 
