@@ -83,7 +83,7 @@ export const RegionFilters = ({
           {allowedProvinces.map(provinceNumber => {
             return (
               <MenuItem value={provinceNumber} key={provinceNumber}>
-                <FormattedMessage id={`provinces.${provinceNumber}`} />
+                <FormattedMessage id={`province.${provinceNumber}`} />
               </MenuItem>
             );
           })}
@@ -108,7 +108,7 @@ export const RegionFilters = ({
           {districtsFiltered.map(districtNumber => {
             return (
               <MenuItem value={districtNumber} key={districtNumber}>
-                <FormattedMessage id={`districts.${districtNumber}`} />
+                <FormattedMessage id={`district.${districtNumber}`} />
               </MenuItem>
             );
           })}
@@ -133,7 +133,7 @@ export const RegionFilters = ({
           {communesFiltered.map(communeNumber => {
             return (
               <MenuItem value={communeNumber} key={communeNumber}>
-                <FormattedMessage id={`communes.${communeNumber}`} />
+                <FormattedMessage id={`commune.${communeNumber}`} />
               </MenuItem>
             );
           })}

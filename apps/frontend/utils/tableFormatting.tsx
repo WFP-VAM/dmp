@@ -1,5 +1,9 @@
-import { GridColDef, GridColumnHeaderParams } from '@mui/x-data-grid';
-import { DisasterType } from '@wfp-dmp/interfaces';
+import {
+  GridColDef,
+  GridColumnHeaderParams,
+  GridRenderCellParams,
+} from '@mui/x-data-grid';
+import { DisasterType, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import { FormattedMessage } from 'react-intl';
 
 export const getColumnSetup = (
@@ -22,6 +26,26 @@ export const getColumnSetup = (
   };
 
   return { ...fields, ...opts };
+};
+
+export const getLocationColumnSetup = (
+  field:
+    | KoboCommonKeys.province
+    | KoboCommonKeys.district
+    | KoboCommonKeys.commune,
+  width = 90,
+): GridColDef => {
+  return {
+    field,
+    width,
+    editable: true,
+    renderHeader: (params: GridColumnHeaderParams) => (
+      <FormattedMessage id={`forms_table.headers.${params.field}`} />
+    ),
+    renderCell: (params: GridRenderCellParams) => (
+      <FormattedMessage id={`${field}.${params.value as string}`} />
+    ),
+  };
 };
 
 export const getGroupSetup = (groupId: string, disaster: DisasterType) => ({

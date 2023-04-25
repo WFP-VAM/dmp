@@ -83,17 +83,13 @@ export const TableDisplay = ({
             {formattedForms.map(formattedForm => (
               <TableRow key={formattedForm.id}>
                 <TableCell>
-                  <FormattedMessage
-                    id={`provinces.${formattedForm.province}`}
-                  />
+                  <FormattedMessage id={`province.${formattedForm.province}`} />
                 </TableCell>
                 <TableCell>
-                  <FormattedMessage
-                    id={`districts.${formattedForm.district}`}
-                  />
+                  <FormattedMessage id={`district.${formattedForm.district}`} />
                 </TableCell>
                 <TableCell>
-                  <FormattedMessage id={`communes.${formattedForm.commune}`} />
+                  <FormattedMessage id={`commune.${formattedForm.commune}`} />
                 </TableCell>
                 <TableCell>{formattedForm.disasterDate}</TableCell>
                 <TableCell>
