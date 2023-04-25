@@ -31,7 +31,8 @@ export const Report = ({
   if (isFloodArray(forms))
     return <FloodReport forms={forms} isDetailedReport={isDetailedReport} />;
 
-  if (isDroughtArray(forms)) return <DroughtReport forms={forms} />;
+  if (isDroughtArray(forms))
+    return <DroughtReport forms={forms} isDetailedReport={isDetailedReport} />;
 
   return <IncidentReport forms={forms} />;
 };
