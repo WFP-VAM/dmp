@@ -1,7 +1,7 @@
 import { IncidentDto } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
-import { generateIncidentDetailedReport } from 'utils/aggregate/incident/generateIncidentDetailedReport';
+import { generateIncidentDetailedReport } from 'utils/aggregate/generateIncidentReport';
 import { formatIncidentFields } from 'utils/formatRawToForm';
 
 export const IncidentReport = ({ forms }: { forms: IncidentDto[] }) => {

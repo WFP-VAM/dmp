@@ -1,8 +1,8 @@
 import { FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import { omit } from 'lodash';
 
-import { aggregate } from '../aggregate';
-import { filterNFlood } from '../filterNFlood';
+import { aggregate } from './aggregate';
+import { filterNFlood } from './filterNFlood';
 
 const firstKeys = [KoboCommonKeys.province, KoboCommonKeys.district];
 

@@ -1,7 +1,7 @@
 import { DroughtDto } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
-import { generateDroughtDetailedReport } from 'utils/aggregate/drought/generateDroughtDetailedReport';
+import { generateDroughtDetailedReport } from 'utils/aggregate/generateDroughtReport';
 import { formatDroughtFields } from 'utils/formatRawToForm';
 
 export const DroughtReport = ({ forms }: { forms: DroughtDto[] }) => {

@@ -2,7 +2,7 @@ import { FloodDto } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
-import { generateFloodDetailedReport } from 'utils/aggregate/flood/generateFloodDetailedReport';
+import { generateFloodDetailedReport } from 'utils/aggregate/generateFloodReport';
 import { formatFloodFields } from 'utils/formatRawToForm';
 
 import {

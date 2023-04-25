@@ -1,7 +1,7 @@
 import { DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import { omit } from 'lodash';
 
-import { aggregate } from '../aggregate';
+import { aggregate } from './aggregate';
 
 const firstKeys = [KoboCommonKeys.province, KoboCommonKeys.district];
 
