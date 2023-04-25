@@ -1,10 +1,12 @@
 import { FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import { omit } from 'lodash';
 
-import { aggregate } from '../aggregate';
-import { filterNFlood } from '../filterNFlood';
-
-const firstKeys = [KoboCommonKeys.province, KoboCommonKeys.district];
+import { aggregate } from './aggregate';
+import {
+  briefReportCountKeys,
+  detailedReportFirstKeys,
+} from './commonReportAggregateKeys';
+import { filterNFlood } from './filterNFlood';
 
 const sumKeys = Object.values(
   omit(FloodSpecific, [
@@ -31,8 +33,28 @@ export const generateFloodDetailedReport = (
   return aggregate({
     data: filteredData,
     groupKey: KoboCommonKeys.commune,
-    firstKeys,
+    firstKeys: detailedReportFirstKeys,
     sumKeys,
+    countCategoriesKeys,
+    countMultipleChoicesKeys,
+  });
+};
+
+export const generateFloodBriefReport = (
+  data: Record<string, string | undefined>[],
+) => {
+  const filteredData = filterNFlood(
+    data,
+    KoboCommonKeys.commune,
+    KoboCommonKeys.disasterDate,
+    FloodSpecific.floodN,
+  );
+
+  return aggregate({
+    data: filteredData,
+    groupKey: KoboCommonKeys.province,
+    sumKeys,
+    countKeys: briefReportCountKeys,
     countCategoriesKeys,
     countMultipleChoicesKeys,
   });

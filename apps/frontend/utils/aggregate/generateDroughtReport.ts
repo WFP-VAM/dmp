@@ -1,9 +1,11 @@
 import { DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import { omit } from 'lodash';
 
-import { aggregate } from '../aggregate';
-
-const firstKeys = [KoboCommonKeys.province, KoboCommonKeys.district];
+import { aggregate } from './aggregate';
+import {
+  briefReportCountKeys,
+  detailedReportFirstKeys,
+} from './commonReportAggregateKeys';
 
 const countCategoriesKeys = [
   DroughtSpecific.Electric,
@@ -23,8 +25,20 @@ export const generateDroughtDetailedReport = (
   return aggregate({
     data,
     groupKey: KoboCommonKeys.commune,
-    firstKeys,
+    firstKeys: detailedReportFirstKeys,
     sumKeys,
+    countCategoriesKeys,
+  });
+};
+
+export const generateDroughtBriefReport = (
+  data: Record<string, string | undefined>[],
+) => {
+  return aggregate({
+    data,
+    groupKey: KoboCommonKeys.province,
+    sumKeys,
+    countKeys: briefReportCountKeys,
     countCategoriesKeys,
   });
 };

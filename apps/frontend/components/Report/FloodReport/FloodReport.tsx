@@ -1,31 +1,37 @@
 import { FloodDto } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
-import { DisasterTable } from 'components/DisasterTable/DisasterTable';
-import { generateFloodDetailedReport } from 'utils/aggregate/flood/generateFloodDetailedReport';
+import {
+  generateFloodBriefReport,
+  generateFloodDetailedReport,
+} from 'utils/aggregate/generateFloodReport';
 import { formatFloodFields } from 'utils/formatRawToForm';
 
-import {
-  detailedNumAffected1ColumnGroup,
-  detailedNumAffected1Columns,
-} from './detailedTablesConfig/detailedNumAffected-1';
+import { BriefFloodReport } from './BriefFloodReport';
+import { DetailedFloodReport } from './DetailedFloodReport';
 
-export const FloodReport = ({ forms }: { forms: FloodDto[] }) => {
-  const detailedReport = useMemo(
-    () =>
-      generateFloodDetailedReport(forms.map(form => formatFloodFields(form))),
-    [forms],
-  );
+export const FloodReport = ({
+  forms,
+  isDetailedReport,
+}: {
+  forms: FloodDto[];
+  isDetailedReport: boolean;
+}) => {
+  const report = useMemo(() => {
+    const formattedForms = forms.map(form => formatFloodFields(form));
+
+    return isDetailedReport
+      ? generateFloodDetailedReport(formattedForms)
+      : generateFloodBriefReport(formattedForms);
+  }, [forms, isDetailedReport]);
 
   return (
     <>
-      <DisasterTable
-        columns={detailedNumAffected1Columns}
-        columnGroup={detailedNumAffected1ColumnGroup}
-        data={detailedReport}
-        isEditable={false}
-        getRowId={(row: { commune: string }) => row.commune}
-      />
+      {isDetailedReport ? (
+        <DetailedFloodReport report={report} />
+      ) : (
+        <BriefFloodReport report={report} />
+      )}
     </>
   );
 };

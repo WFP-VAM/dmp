@@ -1,21 +1,37 @@
 import { DroughtDto } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
-import { generateDroughtDetailedReport } from 'utils/aggregate/drought/generateDroughtDetailedReport';
+import {
+  generateDroughtBriefReport,
+  generateDroughtDetailedReport,
+} from 'utils/aggregate/generateDroughtReport';
 import { formatDroughtFields } from 'utils/formatRawToForm';
 
-export const DroughtReport = ({ forms }: { forms: DroughtDto[] }) => {
-  const detailedReport = useMemo(
-    () =>
-      generateDroughtDetailedReport(
-        forms.map(form => formatDroughtFields(form)),
-      ),
-    [forms],
-  );
+import { BriefDroughtReport } from './BriefDroughtReport';
+import { DetailedDroughtReport } from './DetailedDroughtReport';
+
+export const DroughtReport = ({
+  forms,
+  isDetailedReport,
+}: {
+  forms: DroughtDto[];
+  isDetailedReport: boolean;
+}) => {
+  const report = useMemo(() => {
+    const formattedForms = forms.map(form => formatDroughtFields(form));
+
+    return isDetailedReport
+      ? generateDroughtDetailedReport(formattedForms)
+      : generateDroughtBriefReport(formattedForms);
+  }, [forms, isDetailedReport]);
 
   return (
     <>
-      <div>{JSON.stringify(detailedReport)}</div>
+      {isDetailedReport ? (
+        <DetailedDroughtReport report={report} />
+      ) : (
+        <BriefDroughtReport report={report} />
+      )}
     </>
   );
 };
