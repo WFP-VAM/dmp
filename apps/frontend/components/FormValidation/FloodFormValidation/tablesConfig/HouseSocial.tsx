@@ -4,22 +4,22 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 export const HouseSocialColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumHouAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumHouDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumSchoAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumSchoDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumAffHeal, FLOOD),
-  getColumnSetup(FloodSpecific.NumDamHeal, FLOOD),
-  getColumnSetup(FloodSpecific.NumPagoAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumPagoDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumBuilAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumBuilDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumShopAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumShopDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumWareHAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumWareHDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumCraftAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumCraftDam, FLOOD),
+  getColumnSetup(FloodSpecific.NumHouAff, FLOOD, 65),
+  getColumnSetup(FloodSpecific.NumHouDam, FLOOD, 75),
+  getColumnSetup(FloodSpecific.NumSchoAff, FLOOD, 65),
+  getColumnSetup(FloodSpecific.NumSchoDam, FLOOD, 75),
+  getColumnSetup(FloodSpecific.NumAffHeal, FLOOD, 65),
+  getColumnSetup(FloodSpecific.NumDamHeal, FLOOD, 75),
+  getColumnSetup(FloodSpecific.NumPagoAff, FLOOD, 65),
+  getColumnSetup(FloodSpecific.NumPagoDam, FLOOD, 75),
+  getColumnSetup(FloodSpecific.NumBuilAff, FLOOD, 65),
+  getColumnSetup(FloodSpecific.NumBuilDam, FLOOD, 75),
+  getColumnSetup(FloodSpecific.NumShopAff, FLOOD, 65),
+  getColumnSetup(FloodSpecific.NumShopDam, FLOOD, 75),
+  getColumnSetup(FloodSpecific.NumWareHAff, FLOOD, 65),
+  getColumnSetup(FloodSpecific.NumWareHDam, FLOOD, 75),
+  getColumnSetup(FloodSpecific.NumCraftAff, FLOOD, 65),
+  getColumnSetup(FloodSpecific.NumCraftDam, FLOOD, 75),
 ];
 
 export const HouseSocialColumnGroup: GridColumnGroupingModel = [

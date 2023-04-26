@@ -4,12 +4,12 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 export const ShelterNeedsColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumFamTent, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumPeoTent, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumFamBuil, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumPeoBuil, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumFamRela, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumPeoRela, FLOOD, 200),
+  getColumnSetup(FloodSpecific.NumFamTent, FLOOD, 150),
+  getColumnSetup(FloodSpecific.NumPeoTent, FLOOD, 150),
+  getColumnSetup(FloodSpecific.NumFamBuil, FLOOD, 150),
+  getColumnSetup(FloodSpecific.NumPeoBuil, FLOOD, 150),
+  getColumnSetup(FloodSpecific.NumFamRela, FLOOD, 150),
+  getColumnSetup(FloodSpecific.NumPeoRela, FLOOD, 150),
 ];
 
 export const ShelterNeedsColumnGroup: GridColumnGroupingModel = [

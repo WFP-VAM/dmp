@@ -4,12 +4,12 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 export const EducationNeedsColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumTemSch, FLOOD, 200),
-  getColumnSetup(FloodSpecific.StuAcTemSch, FLOOD, 200),
-  getColumnSetup(FloodSpecific.SchUseSafe, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumStu, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumSchStop, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumStuNoCla, FLOOD, 200),
+  getColumnSetup(FloodSpecific.NumTemSch, FLOOD, 150),
+  getColumnSetup(FloodSpecific.StuAcTemSch, FLOOD, 150),
+  getColumnSetup(FloodSpecific.SchUseSafe, FLOOD, 150),
+  getColumnSetup(FloodSpecific.NumStu, FLOOD, 150),
+  getColumnSetup(FloodSpecific.NumSchStop, FLOOD, 150),
+  getColumnSetup(FloodSpecific.NumStuNoCla, FLOOD, 150),
 ];
 
 export const EducationNeedsColumnGroup: GridColumnGroupingModel = [
