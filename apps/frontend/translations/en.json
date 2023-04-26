@@ -221,7 +221,23 @@
         "FamNoFod7d": "Number of Families in Need of Food from the Next 7 Days",
         "NumActShop": "Number Opened",
         "NumNoActShop": "Number Closed",
-        "RicePrice": "Rice Price in Affected Areas"
+        "RicePrice": "Rice Price in Affected Areas",
+        "RicePrice_1": "Number of Locations with Rising Price",
+        "RicePrice_2": "Number of Locations with Stable Price",
+        "threat_1": "Children lost / separated from their parents",
+        "threat_2": "Violence against children",
+        "threat_3": "Children helping parents earn money",
+        "threat_4": "Activity of selling child labor",
+        "threat_5": "Number of children dropping out of school",
+        "threat_6": "No entertainment for children",
+        "threat_7": "Number of pregnant women",
+        "threat_8": "Many orphaned children",
+        "threat_9": "Many families want to migrate",
+        "threat_10": "Sexual harassment occurred",
+        "threat_11": "Children / women traveling far for water and food",
+        "threat_12": "Children / women temporarily without proper shelter",
+        "threat_13": "Temporary shelters without security arrangements",
+        "threat_14": "Other"
       },
       "groupId": {
         "victimsAffected": "Victims Affected",
@@ -276,7 +292,9 @@
         "healthNeeds": "Needs in Health Sector",
         "foodNeeds": "Needs in Food",
         "foodPeople": "People Lacking Food",
-        "foodMarket": "Markets Status"
+        "foodMarket": "Markets Status",
+        "reportRicePrice": "Rice Price",
+        "reportThreat": "Threats identified since the disaster (number of locations)"
       },
       "dropdowns": {
         "RicePriceUp": "Rising Price",

@@ -68,7 +68,7 @@ export const addBriefReportLocationColumns = (
   columns: GridColDef[],
 ): GridColDef[] => [
   getLocationColumnSetup(KoboCommonKeys.province),
-  getColumnSetup(KoboCommonKeys.district, 'COMMON'),
-  getColumnSetup(KoboCommonKeys.commune, 'COMMON'),
+  getColumnSetup(KoboCommonKeys.district, 'COMMON', 60),
+  getColumnSetup(KoboCommonKeys.commune, 'COMMON', 78),
   ...columns,
 ];
