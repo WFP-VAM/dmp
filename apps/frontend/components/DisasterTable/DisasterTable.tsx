@@ -39,6 +39,7 @@ export const DisasterTable = ({
           wordWrap: 'break-word !important',
           lineHeight: 'normal',
         },
+        mb: 1,
       }}
       disableRowSelectionOnClick={!isEditable}
       showCellVerticalBorder

@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 export const getColumnSetup = (
   field: string,
   disaster: DisasterType | 'COMMON',
-  width = 90,
+  width = 80,
   opts?: {
     type: 'singleSelect';
     valueOptions: { value: '1' | '2' | ''; label: string }[];
