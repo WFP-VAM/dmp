@@ -4,7 +4,7 @@ import { IntlShape } from 'react-intl';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const SocialSectorAffectedColumns = (intl: IntlShape): GridColDef[] => {
+const SocialSectorAffectedColumns = (intl: IntlShape): GridColDef[] => {
   return [
     getColumnSetup(DroughtSpecific.NumSchNoHo2, DROUGHT, 120),
     getColumnSetup(DroughtSpecific.BotSourTang, DROUGHT, 120),
@@ -55,7 +55,7 @@ export const SocialSectorAffectedColumns = (intl: IntlShape): GridColDef[] => {
   ];
 };
 
-export const SocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
+const SocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('socialSectorAffected', DROUGHT),
     children: [
@@ -84,3 +84,8 @@ export const SocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const getSocialSectorAffectedColumnSettings = (intl: IntlShape) => ({
+  columns: SocialSectorAffectedColumns(intl),
+  columnGroup: SocialSectorAffectedColumnGroup,
+});
