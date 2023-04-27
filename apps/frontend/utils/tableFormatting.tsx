@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 export const getColumnSetup = (
   field: string,
   disaster: DisasterType | 'COMMON',
-  width = 80,
+  minWidth = 80,
   opts?: {
     type: 'singleSelect';
     valueOptions: { value: '1' | '2' | ''; label: string }[];
@@ -17,7 +17,8 @@ export const getColumnSetup = (
 ): GridColDef => {
   const fields = {
     field,
-    width,
+    minWidth,
+    flex: 1,
     editable: true,
 
     renderHeader: (params: GridColumnHeaderParams) => (
@@ -28,7 +29,7 @@ export const getColumnSetup = (
   return { ...fields, ...opts };
 };
 
-export const getLocationColumnSetup = (
+const getLocationColumnSetup = (
   field:
     | KoboCommonKeys.province
     | KoboCommonKeys.district
@@ -47,6 +48,18 @@ export const getLocationColumnSetup = (
     ),
   };
 };
+
+const getLocationCountColumnSetup = (
+  field: string,
+  disaster: DisasterType | 'COMMON',
+  width = 80,
+): GridColDef => ({
+  field,
+  width,
+  renderHeader: (params: GridColumnHeaderParams) => (
+    <FormattedMessage id={`table.${disaster}.column.${params.field}`} />
+  ),
+});
 
 export const getGroupSetup = (groupId: string, disaster: DisasterType) => ({
   groupId: groupId,
@@ -68,7 +81,7 @@ export const addBriefReportLocationColumns = (
   columns: GridColDef[],
 ): GridColDef[] => [
   getLocationColumnSetup(KoboCommonKeys.province),
-  getColumnSetup(KoboCommonKeys.district, 'COMMON', 60),
-  getColumnSetup(KoboCommonKeys.commune, 'COMMON', 78),
+  getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 60),
+  getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 78),
   ...columns,
 ];
