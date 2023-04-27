@@ -6,17 +6,17 @@ import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 const WaterHouseholdColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NuVilNedHep, DROUGHT),
   getColumnSetup(DroughtSpecific.TNuFamNeHo2, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumPeople, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumMen, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumWomen, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumKids, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumElder, DROUGHT),
+  getColumnSetup(DroughtSpecific.NumPeople, DROUGHT, 70),
+  getColumnSetup(DroughtSpecific.NumMen, DROUGHT, 60),
+  getColumnSetup(DroughtSpecific.NumWomen, DROUGHT, 70),
+  getColumnSetup(DroughtSpecific.NumKids, DROUGHT, 70),
+  getColumnSetup(DroughtSpecific.NumElder, DROUGHT, 70),
   getColumnSetup(DroughtSpecific.NumDis, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumWatTank, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.NuStorageFam, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.NumWateTank, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.NumFilter, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.NumWatePur, DROUGHT, 120),
+  getColumnSetup(DroughtSpecific.NumWatTank, DROUGHT, 110),
+  getColumnSetup(DroughtSpecific.NuStorageFam, DROUGHT, 110),
+  getColumnSetup(DroughtSpecific.NumWateTank, DROUGHT, 110),
+  getColumnSetup(DroughtSpecific.NumFilter, DROUGHT, 90),
+  getColumnSetup(DroughtSpecific.NumWatePur, DROUGHT, 100),
 ];
 
 const WaterHouseholdColumnGroup: GridColumnGroupingModel = [
