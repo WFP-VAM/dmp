@@ -97,8 +97,8 @@ export enum FloodSpecific {
   LatrineDam = 'LatrineDam',
   RiverBreak = 'RiverBreak',
   RiverBreakLo = 'RiverBreakLo',
-  BrolayAff = 'BrolayAff',
-  BrolayDam = 'BrolayDam',
+  BrolayAff = 'BrolayAff', // not used
+  BrolayDam = 'BrolayDam', // not used
   NumFamTent = 'NumFamTent',
   NumPeoTent = 'NumPeoTent',
   NumFamBuil = 'NumFamBuil',

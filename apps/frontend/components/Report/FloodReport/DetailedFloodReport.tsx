@@ -1,9 +1,6 @@
-import { DisasterTable } from 'components/DisasterTable/DisasterTable';
+import { DetailedReportDisasterTable } from 'components/DisasterTable/DetailedReportDisasterTable';
 
-import {
-  detailedNumAffected1ColumnGroup,
-  detailedNumAffected1Columns,
-} from './detailedTablesConfig/detailedNumAffected-1';
+import { floodReportTablesMapping } from './floodReportTablesMapping';
 
 export const DetailedFloodReport = ({
   report,
@@ -11,12 +8,15 @@ export const DetailedFloodReport = ({
   report: Record<string, string | number | undefined>[];
 }): JSX.Element => {
   return (
-    <DisasterTable
-      columns={detailedNumAffected1Columns}
-      columnGroup={detailedNumAffected1ColumnGroup}
-      data={report}
-      isEditable={false}
-      getRowId={(row: { commune: string }) => row.commune}
-    />
+    <>
+      {floodReportTablesMapping.map((tableSetting, index) => (
+        <DetailedReportDisasterTable
+          columns={tableSetting.columns}
+          columnGroup={tableSetting.columnGroup}
+          data={report}
+          key={index}
+        />
+      ))}
+    </>
   );
 };

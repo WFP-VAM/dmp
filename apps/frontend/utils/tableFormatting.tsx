@@ -8,8 +8,8 @@ import { FormattedMessage } from 'react-intl';
 
 export const getColumnSetup = (
   field: string,
-  disaster: DisasterType,
-  width = 90,
+  disaster: DisasterType | 'COMMON',
+  width = 80,
   opts?: {
     type: 'singleSelect';
     valueOptions: { value: '1' | '2' | ''; label: string }[];
@@ -54,3 +54,21 @@ export const getGroupSetup = (groupId: string, disaster: DisasterType) => ({
     <FormattedMessage id={`table.${disaster}.groupId.${groupId}`} />
   ),
 });
+
+export const addDetailedReportLocationColumns = (
+  columns: GridColDef[],
+): GridColDef[] => [
+  getLocationColumnSetup(KoboCommonKeys.province),
+  getLocationColumnSetup(KoboCommonKeys.district),
+  getLocationColumnSetup(KoboCommonKeys.commune),
+  ...columns,
+];
+
+export const addBriefReportLocationColumns = (
+  columns: GridColDef[],
+): GridColDef[] => [
+  getLocationColumnSetup(KoboCommonKeys.province),
+  getColumnSetup(KoboCommonKeys.district, 'COMMON', 60),
+  getColumnSetup(KoboCommonKeys.commune, 'COMMON', 78),
+  ...columns,
+];
