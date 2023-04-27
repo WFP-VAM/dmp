@@ -3,7 +3,7 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const ReportFoodNeedsColumns: GridColDef[] = [
+const ReportFoodNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumFamNoFod, FLOOD, 140),
   getColumnSetup(FloodSpecific.NumPeoNoFod, FLOOD, 140),
   getColumnSetup(FloodSpecific.FamNoFod7d, FLOOD, 220),
@@ -13,7 +13,7 @@ export const ReportFoodNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.RicePrice + '_2', FLOOD, 150),
 ];
 
-export const ReportFoodNeedsColumnGroup: GridColumnGroupingModel = [
+const ReportFoodNeedsColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('foodNeeds', FLOOD),
     children: [
@@ -42,3 +42,8 @@ export const ReportFoodNeedsColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const ReportFoodNeedsColumnSettings = {
+  columns: ReportFoodNeedsColumns,
+  columnGroup: ReportFoodNeedsColumnGroup,
+};

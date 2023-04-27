@@ -3,7 +3,7 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const EducationNeedsColumns: GridColDef[] = [
+const EducationNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumTemSch, FLOOD, 150),
   getColumnSetup(FloodSpecific.StuAcTemSch, FLOOD, 150),
   getColumnSetup(FloodSpecific.SchUseSafe, FLOOD, 150),
@@ -12,7 +12,7 @@ export const EducationNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumStuNoCla, FLOOD, 150),
 ];
 
-export const EducationNeedsColumnGroup: GridColumnGroupingModel = [
+const EducationNeedsColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('educationNeeds', FLOOD),
     children: [
@@ -40,3 +40,8 @@ export const EducationNeedsColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const EducationNeedsSettings = {
+  columns: EducationNeedsColumns,
+  columnGroup: EducationNeedsColumnGroup,
+};

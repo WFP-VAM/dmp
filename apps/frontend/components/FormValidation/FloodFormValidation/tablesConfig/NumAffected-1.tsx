@@ -3,7 +3,7 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const NumAffected1Columns: GridColDef[] = [
+const NumAffected1Columns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumVillAff, FLOOD, 70),
   getColumnSetup(FloodSpecific.NumPeoAff, FLOOD, 70),
   getColumnSetup(FloodSpecific.NumFamAff, FLOOD, 70),
@@ -28,7 +28,7 @@ export const NumAffected1Columns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumDisInjure, FLOOD, 70),
 ];
 
-export const NumAffected1ColumnGroup: GridColumnGroupingModel = [
+const NumAffected1ColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('victimsAffected', FLOOD),
     children: [
@@ -77,3 +77,8 @@ export const NumAffected1ColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const NumAffected1ColumnSettings = {
+  columns: NumAffected1Columns,
+  columnGroup: NumAffected1ColumnGroup,
+};

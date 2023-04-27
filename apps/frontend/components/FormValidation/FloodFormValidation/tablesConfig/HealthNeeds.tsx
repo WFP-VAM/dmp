@@ -3,7 +3,7 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const HealthNeedsColumns: GridColDef[] = [
+const HealthNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NonActingH, FLOOD, 200),
   getColumnSetup(FloodSpecific.PeoCanAceH, FLOOD, 200),
   getColumnSetup(FloodSpecific.NumDoctor, FLOOD, 200),
@@ -11,7 +11,7 @@ export const HealthNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumStaff, FLOOD, 200),
 ];
 
-export const HealthNeedsColumnGroup: GridColumnGroupingModel = [
+const HealthNeedsColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('healthNeeds', FLOOD),
     children: [
@@ -23,3 +23,8 @@ export const HealthNeedsColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const HealthNeedsColumnSettings = {
+  columns: HealthNeedsColumns,
+  columnGroup: HealthNeedsColumnGroup,
+};

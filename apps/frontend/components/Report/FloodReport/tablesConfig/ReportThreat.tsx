@@ -3,7 +3,7 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const ReportThreatColumns: GridColDef[] = [
+const ReportThreatColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.threat + '_1', FLOOD, 110),
   getColumnSetup(FloodSpecific.threat + '_2', FLOOD, 90),
   getColumnSetup(FloodSpecific.threat + '_3', FLOOD, 110),
@@ -20,7 +20,7 @@ export const ReportThreatColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.threat + '_14', FLOOD, 60),
 ];
 
-export const ReportThreatColumnGroup: GridColumnGroupingModel = [
+const ReportThreatColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('reportThreat', FLOOD),
     children: [
@@ -41,3 +41,8 @@ export const ReportThreatColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const ReportThreatColumnSettings = {
+  columns: ReportThreatColumns,
+  columnGroup: ReportThreatColumnGroup,
+};

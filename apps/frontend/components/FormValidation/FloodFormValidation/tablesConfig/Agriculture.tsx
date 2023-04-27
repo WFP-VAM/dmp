@@ -3,7 +3,7 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const AgricultureColumns: GridColDef[] = [
+const AgricultureColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.FarmAff, FLOOD, 65),
   getColumnSetup(FloodSpecific.FarmDam, FLOOD, 75),
   getColumnSetup(FloodSpecific.SamNabAff, FLOOD, 65),
@@ -21,7 +21,7 @@ export const AgricultureColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.BirdMissing, FLOOD, 75),
 ];
 
-export const AgricultureColumnGroup: GridColumnGroupingModel = [
+const AgricultureColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('agriculture', FLOOD),
     children: [
@@ -73,3 +73,8 @@ export const AgricultureColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const AgricultureColumnSettings = {
+  columns: AgricultureColumns,
+  columnGroup: AgricultureColumnGroup,
+};

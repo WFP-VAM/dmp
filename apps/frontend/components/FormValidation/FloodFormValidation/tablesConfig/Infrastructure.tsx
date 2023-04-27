@@ -3,7 +3,7 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const InfrastructureColumns: GridColDef[] = [
+const InfrastructureColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.RubberRoAff, FLOOD, 90),
   getColumnSetup(FloodSpecific.RubberRoDam, FLOOD, 90),
   getColumnSetup(FloodSpecific.ConcretAff, FLOOD, 90),
@@ -18,7 +18,7 @@ export const InfrastructureColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.DrainageDam, FLOOD, 90),
 ];
 
-export const InfrastructureColumnGroup: GridColumnGroupingModel = [
+const InfrastructureColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('infrastructure', FLOOD),
     children: [
@@ -67,3 +67,8 @@ export const InfrastructureColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const InfrastructureColumnSettings = {
+  columns: InfrastructureColumns,
+  columnGroup: InfrastructureColumnGroup,
+};

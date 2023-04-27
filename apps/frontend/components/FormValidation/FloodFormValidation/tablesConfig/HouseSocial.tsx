@@ -3,7 +3,7 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const HouseSocialColumns: GridColDef[] = [
+const HouseSocialColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumHouAff, FLOOD, 65),
   getColumnSetup(FloodSpecific.NumHouDam, FLOOD, 75),
   getColumnSetup(FloodSpecific.NumSchoAff, FLOOD, 65),
@@ -22,7 +22,7 @@ export const HouseSocialColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumCraftDam, FLOOD, 75),
 ];
 
-export const HouseSocialColumnGroup: GridColumnGroupingModel = [
+const HouseSocialColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('houseSocial', FLOOD),
     children: [
@@ -85,3 +85,8 @@ export const HouseSocialColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const HouseSocialColumnSettings = {
+  columns: HouseSocialColumns,
+  columnGroup: HouseSocialColumnGroup,
+};

@@ -3,7 +3,7 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const IrrigationColumns: GridColDef[] = [
+const IrrigationColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.DamAff, FLOOD),
   getColumnSetup(FloodSpecific.DamDamaged, FLOOD),
   getColumnSetup(FloodSpecific.WatGateAff, FLOOD),
@@ -20,7 +20,7 @@ export const IrrigationColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.RiverBreakLo, FLOOD),
 ];
 
-export const IrrigationColumnGroup: GridColumnGroupingModel = [
+const IrrigationColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('irrigation', FLOOD),
     children: [
@@ -76,3 +76,8 @@ export const IrrigationColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const IrrigationColumnSettings = {
+  columns: IrrigationColumns,
+  columnGroup: IrrigationColumnGroup,
+};

@@ -3,7 +3,7 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const WaterNeedsColumns: GridColDef[] = [
+const WaterNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumFamNoWa, FLOOD, 200),
   getColumnSetup(FloodSpecific.NumPeoNoWa, FLOOD, 200),
   getColumnSetup(FloodSpecific.TimeAceWa, FLOOD, 200),
@@ -11,7 +11,7 @@ export const WaterNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NuFamNoLat, FLOOD, 200),
 ];
 
-export const WaterNeedsColumnGroup: GridColumnGroupingModel = [
+const WaterNeedsColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('waterNeeds', FLOOD),
     children: [
@@ -28,3 +28,8 @@ export const WaterNeedsColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const WaterNeedsColumnSettings = {
+  columns: WaterNeedsColumns,
+  columnGroup: WaterNeedsColumnGroup,
+};

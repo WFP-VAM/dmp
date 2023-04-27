@@ -4,7 +4,7 @@ import { IntlShape } from 'react-intl';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const getFoodNeedsColumns = (intl: IntlShape): GridColDef[] => [
+const getFoodNeedsColumns = (intl: IntlShape): GridColDef[] => [
   getColumnSetup(FloodSpecific.NumFamNoFod, FLOOD, 200),
   getColumnSetup(FloodSpecific.NumPeoNoFod, FLOOD, 200),
   getColumnSetup(FloodSpecific.FamNoFod7d, FLOOD, 200),
@@ -30,7 +30,7 @@ export const getFoodNeedsColumns = (intl: IntlShape): GridColDef[] => [
   }),
 ];
 
-export const FoodNeedsColumnGroup: GridColumnGroupingModel = [
+const FoodNeedsColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('foodNeeds', FLOOD),
     children: [
@@ -53,3 +53,8 @@ export const FoodNeedsColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const getFoodNeedsColumnSettings = (intl: IntlShape) => ({
+  columns: getFoodNeedsColumns(intl),
+  columnGroup: FoodNeedsColumnGroup,
+});

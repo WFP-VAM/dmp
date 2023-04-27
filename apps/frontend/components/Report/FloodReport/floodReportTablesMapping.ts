@@ -1,64 +1,28 @@
-import {
-  AgricultureColumnGroup,
-  AgricultureColumns,
-} from 'components/FormValidation/FloodFormValidation/tablesConfig/Agriculture';
-import {
-  EducationNeedsColumnGroup,
-  EducationNeedsColumns,
-} from 'components/FormValidation/FloodFormValidation/tablesConfig/EducationNeeds';
-import {
-  HealthNeedsColumnGroup,
-  HealthNeedsColumns,
-} from 'components/FormValidation/FloodFormValidation/tablesConfig/HealthNeeds';
-import {
-  HouseSocialColumnGroup,
-  HouseSocialColumns,
-} from 'components/FormValidation/FloodFormValidation/tablesConfig/HouseSocial';
-import {
-  InfrastructureColumnGroup,
-  InfrastructureColumns,
-} from 'components/FormValidation/FloodFormValidation/tablesConfig/Infrastructure';
-import {
-  IrrigationColumnGroup,
-  IrrigationColumns,
-} from 'components/FormValidation/FloodFormValidation/tablesConfig/Irrigation';
-import {
-  NumAffected1ColumnGroup,
-  NumAffected1Columns,
-} from 'components/FormValidation/FloodFormValidation/tablesConfig/NumAffected-1';
-import {
-  NumAffected2ColumnGroup,
-  NumAffected2Columns,
-} from 'components/FormValidation/FloodFormValidation/tablesConfig/NumAffected-2';
-import {
-  ShelterNeedsColumnGroup,
-  ShelterNeedsColumns,
-} from 'components/FormValidation/FloodFormValidation/tablesConfig/ShelterNeeds';
-import {
-  WaterNeedsColumnGroup,
-  WaterNeedsColumns,
-} from 'components/FormValidation/FloodFormValidation/tablesConfig/WaterNeeds';
+import { AgricultureColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/Agriculture';
+import { EducationNeedsSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/EducationNeeds';
+import { HealthNeedsColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/HealthNeeds';
+import { HouseSocialColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/HouseSocial';
+import { InfrastructureColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/Infrastructure';
+import { IrrigationColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/Irrigation';
+import { NumAffected1ColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/NumAffected-1';
+import { NumAffected2ColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/NumAffected-2';
+import { ShelterNeedsColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/ShelterNeeds';
+import { WaterNeedsColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/WaterNeeds';
 
-import {
-  ReportFoodNeedsColumnGroup,
-  ReportFoodNeedsColumns,
-} from './tablesConfig/ReportFoodNeeds';
-import {
-  ReportThreatColumnGroup,
-  ReportThreatColumns,
-} from './tablesConfig/ReportThreat';
+import { ReportFoodNeedsColumnSettings } from './tablesConfig/ReportFoodNeeds';
+import { ReportThreatColumnSettings } from './tablesConfig/ReportThreat';
 
 export const floodReportTablesMapping = [
-  { columns: NumAffected1Columns, columnGroup: NumAffected1ColumnGroup },
-  { columns: NumAffected2Columns, columnGroup: NumAffected2ColumnGroup },
-  { columns: HouseSocialColumns, columnGroup: HouseSocialColumnGroup },
-  { columns: AgricultureColumns, columnGroup: AgricultureColumnGroup },
-  { columns: InfrastructureColumns, columnGroup: InfrastructureColumnGroup },
-  { columns: IrrigationColumns, columnGroup: IrrigationColumnGroup },
-  { columns: ShelterNeedsColumns, columnGroup: ShelterNeedsColumnGroup },
-  { columns: EducationNeedsColumns, columnGroup: EducationNeedsColumnGroup },
-  { columns: WaterNeedsColumns, columnGroup: WaterNeedsColumnGroup },
-  { columns: HealthNeedsColumns, columnGroup: HealthNeedsColumnGroup },
-  { columns: ReportFoodNeedsColumns, columnGroup: ReportFoodNeedsColumnGroup },
-  { columns: ReportThreatColumns, columnGroup: ReportThreatColumnGroup },
+  NumAffected1ColumnSettings,
+  NumAffected2ColumnSettings,
+  HouseSocialColumnSettings,
+  AgricultureColumnSettings,
+  InfrastructureColumnSettings,
+  IrrigationColumnSettings,
+  ShelterNeedsColumnSettings,
+  EducationNeedsSettings,
+  WaterNeedsColumnSettings,
+  HealthNeedsColumnSettings,
+  ReportFoodNeedsColumnSettings,
+  ReportThreatColumnSettings,
 ];
