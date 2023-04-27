@@ -3,32 +3,32 @@ import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const NumAffectedColumns: GridColDef[] = [
-  getColumnSetup(IncidentSpecific.NumVillAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumPeoAff, INCIDENT, 120),
-  getColumnSetup(IncidentSpecific.NumFamAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumFeAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumDeathTo, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumMeDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumFeDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumKidDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumOldDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumDisDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.ToNumMising, INCIDENT, 120),
-  getColumnSetup(IncidentSpecific.NumMeMising, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumFeMising, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumKidMising, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumOldMising, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumDisMising, INCIDENT),
-  getColumnSetup(IncidentSpecific.ToNumInjure, INCIDENT, 120),
-  getColumnSetup(IncidentSpecific.NumMeInjure, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumFeInjure, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumKidInjure, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumOldInjure, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumDisInjure, INCIDENT),
+const NumAffected1Columns: GridColDef[] = [
+  getColumnSetup(IncidentSpecific.NumVillAff, INCIDENT, 70),
+  getColumnSetup(IncidentSpecific.NumPeoAff, INCIDENT, 65),
+  getColumnSetup(IncidentSpecific.NumFamAff, INCIDENT, 70),
+  getColumnSetup(IncidentSpecific.NumFeAff, INCIDENT, 60),
+  getColumnSetup(IncidentSpecific.NumDeathTo, INCIDENT, 60),
+  getColumnSetup(IncidentSpecific.NumMeDeath, INCIDENT, 50),
+  getColumnSetup(IncidentSpecific.NumFeDeath, INCIDENT, 70),
+  getColumnSetup(IncidentSpecific.NumKidDeath, INCIDENT, 70),
+  getColumnSetup(IncidentSpecific.NumOldDeath, INCIDENT, 60),
+  getColumnSetup(IncidentSpecific.NumDisDeath, INCIDENT, 60),
+  getColumnSetup(IncidentSpecific.ToNumMising, INCIDENT, 65),
+  getColumnSetup(IncidentSpecific.NumMeMising, INCIDENT, 50),
+  getColumnSetup(IncidentSpecific.NumFeMising, INCIDENT, 70),
+  getColumnSetup(IncidentSpecific.NumKidMising, INCIDENT, 70),
+  getColumnSetup(IncidentSpecific.NumOldMising, INCIDENT, 60),
+  getColumnSetup(IncidentSpecific.NumDisMising, INCIDENT, 65),
+  getColumnSetup(IncidentSpecific.ToNumInjure, INCIDENT, 60),
+  getColumnSetup(IncidentSpecific.NumMeInjure, INCIDENT, 50),
+  getColumnSetup(IncidentSpecific.NumFeInjure, INCIDENT, 60),
+  getColumnSetup(IncidentSpecific.NumKidInjure, INCIDENT, 65),
+  getColumnSetup(IncidentSpecific.NumOldInjure, INCIDENT, 55),
+  getColumnSetup(IncidentSpecific.NumDisInjure, INCIDENT, 70),
 ];
 
-export const NumAffectedColumnGroup: GridColumnGroupingModel = [
+const NumAffected1ColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('victimsAffected', INCIDENT),
     children: [
@@ -77,3 +77,8 @@ export const NumAffectedColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const NumAffected1ColumnSettings = {
+  columns: NumAffected1Columns,
+  columnGroup: NumAffected1ColumnGroup,
+};
