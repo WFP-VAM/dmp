@@ -36,6 +36,7 @@
     "onHold": "Report not yet approved"
   },
   "navigation": {
+    "home": "Home",
     "forms": { "header": "Forms", "search": "Search" },
     "reports": "Reports",
     "admin": "ទំព័រអ្នកគ្រប់គ្រង",
