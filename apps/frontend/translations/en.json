@@ -99,6 +99,7 @@
   },
   "table": {
     "FLOOD": {
+      "floodN": "Flood Number",
       "column": {
         "NumVillAff": "Villages",
         "NumFamAff": "Families",
