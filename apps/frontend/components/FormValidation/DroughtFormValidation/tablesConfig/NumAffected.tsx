@@ -3,7 +3,7 @@ import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const NumAffectedColumns: GridColDef[] = [
+const NumAffectedColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NumVillAff, DROUGHT, 70),
   getColumnSetup(DroughtSpecific.NumFamAff, DROUGHT, 70),
   getColumnSetup(DroughtSpecific.NumPeoAff, DROUGHT),
@@ -20,7 +20,7 @@ export const NumAffectedColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NumDisDeath, DROUGHT, 70),
 ];
 
-export const NumAffectedColumnGroup: GridColumnGroupingModel = [
+const NumAffectedColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('victimsAffected', DROUGHT),
     children: [
@@ -51,3 +51,8 @@ export const NumAffectedColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const NumAffectedColumnSettings = {
+  columns: NumAffectedColumns,
+  columnGroup: NumAffectedColumnGroup,
+};

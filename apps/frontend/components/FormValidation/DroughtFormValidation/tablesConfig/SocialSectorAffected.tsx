@@ -4,14 +4,14 @@ import { IntlShape } from 'react-intl';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-export const SocialSectorAffectedColumns = (intl: IntlShape): GridColDef[] => {
+const SocialSectorAffectedColumns = (intl: IntlShape): GridColDef[] => {
   return [
-    getColumnSetup(DroughtSpecific.NumSchNoHo2, DROUGHT, 120),
-    getColumnSetup(DroughtSpecific.BotSourTang, DROUGHT, 120),
-    getColumnSetup(DroughtSpecific.HSourNoTang, DROUGHT, 120),
-    getColumnSetup(DroughtSpecific.NoSourHtang, DROUGHT, 120),
-    getColumnSetup(DroughtSpecific.NoBtSourTan, DROUGHT, 120),
-    getColumnSetup(DroughtSpecific.Electric, DROUGHT, 120, {
+    getColumnSetup(DroughtSpecific.NumSchNoHo2, DROUGHT, 100),
+    getColumnSetup(DroughtSpecific.BotSourTang, DROUGHT, 150),
+    getColumnSetup(DroughtSpecific.HSourNoTang, DROUGHT, 100),
+    getColumnSetup(DroughtSpecific.NoSourHtang, DROUGHT, 100),
+    getColumnSetup(DroughtSpecific.NoBtSourTan, DROUGHT, 100),
+    getColumnSetup(DroughtSpecific.Electric, DROUGHT, 100, {
       type: 'singleSelect',
       valueOptions: [
         {
@@ -30,11 +30,11 @@ export const SocialSectorAffectedColumns = (intl: IntlShape): GridColDef[] => {
       ],
     }),
     getColumnSetup(DroughtSpecific.HealCenNoHo2, DROUGHT, 120),
-    getColumnSetup(DroughtSpecific.HBotSourTang, DROUGHT, 120),
-    getColumnSetup(DroughtSpecific.HaSouNoTang, DROUGHT, 120),
-    getColumnSetup(DroughtSpecific.NoSourHatan, DROUGHT, 120),
-    getColumnSetup(DroughtSpecific.NoBtSouTan, DROUGHT, 120),
-    getColumnSetup(DroughtSpecific.ElecForHeal, DROUGHT, 120, {
+    getColumnSetup(DroughtSpecific.HBotSourTang, DROUGHT, 150),
+    getColumnSetup(DroughtSpecific.HaSouNoTang, DROUGHT, 100),
+    getColumnSetup(DroughtSpecific.NoSourHatan, DROUGHT, 100),
+    getColumnSetup(DroughtSpecific.NoBtSouTan, DROUGHT, 100),
+    getColumnSetup(DroughtSpecific.ElecForHeal, DROUGHT, 100, {
       type: 'singleSelect',
       valueOptions: [
         {
@@ -55,7 +55,7 @@ export const SocialSectorAffectedColumns = (intl: IntlShape): GridColDef[] => {
   ];
 };
 
-export const SocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
+const SocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('socialSectorAffected', DROUGHT),
     children: [
@@ -84,3 +84,8 @@ export const SocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
     ],
   },
 ];
+
+export const getSocialSectorAffectedColumnSettings = (intl: IntlShape) => ({
+  columns: SocialSectorAffectedColumns(intl),
+  columnGroup: SocialSectorAffectedColumnGroup,
+});

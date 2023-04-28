@@ -60,7 +60,23 @@ const authenticate = async (email: string, password: string) => {
         return {
           adminJsOptions: {
             rootPath: '/admin',
-            branding: { logo: false, companyName: 'WFP DMP', withMadeWithLove: false },
+            branding: {
+              logo: false,
+              companyName: 'Disaster Monitoring Platform',
+              withMadeWithLove: false,
+              favicon: 'https://dmp.ovio.org/favicon.ico',
+            },
+            locale: {
+              language: 'en',
+              translations: {
+                labels: {
+                  loginWelcome: 'WFP DMP', // the big title
+                },
+                messages: {
+                  loginWelcome: 'Administration Panel', // the smaller text
+                },
+              },
+            },
           },
           auth: {
             authenticate,
