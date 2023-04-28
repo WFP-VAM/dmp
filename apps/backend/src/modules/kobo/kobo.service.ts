@@ -53,7 +53,7 @@ export class KoboService {
       {
         params: {
           query: {
-            _submission_time: { $gt: formatDateToStringDate(startDate) },
+            [koboKeys[disasterType].entryDate]: { $gt: formatDateToStringDate(startDate) },
             [koboKeys[disasterType].province]: province,
           },
         },
@@ -88,7 +88,7 @@ export class KoboService {
             [koboKeys[disasterType].district]: district,
             [koboKeys[disasterType].commune]: commune,
             [koboKeys[disasterType].disTyp]: disTyp,
-            _submission_time: { $gte: startDate, $lte: endDate },
+            [koboKeys[disasterType].entryDate]: { $gte: startDate, $lte: endDate },
           },
         },
       },
