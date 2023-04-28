@@ -9,6 +9,7 @@ const ReportSocialSectorAffectedColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.HSourNoTang, DROUGHT, 80),
   getColumnSetup(DroughtSpecific.NoSourHtang, DROUGHT, 80),
   getColumnSetup(DroughtSpecific.NoBtSourTan, DROUGHT, 80),
+  // This field is categorical, the number 1 and 2 are the possible values in Kobo. They are counted separately in the report
   getColumnSetup(DroughtSpecific.Electric + '_1', DROUGHT, 65),
   getColumnSetup(DroughtSpecific.Electric + '_2', DROUGHT, 65),
   getColumnSetup(DroughtSpecific.HealCenNoHo2, DROUGHT, 105),
@@ -16,6 +17,7 @@ const ReportSocialSectorAffectedColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.HaSouNoTang, DROUGHT, 80),
   getColumnSetup(DroughtSpecific.NoSourHatan, DROUGHT, 70),
   getColumnSetup(DroughtSpecific.NoBtSouTan, DROUGHT, 75),
+  // This field is categorical, the number 1 and 2 are the possible values in Kobo. They are counted separately in the report
   getColumnSetup(DroughtSpecific.ElecForHeal + '_1', DROUGHT, 65),
   getColumnSetup(DroughtSpecific.ElecForHeal + '_2', DROUGHT, 65),
 ];

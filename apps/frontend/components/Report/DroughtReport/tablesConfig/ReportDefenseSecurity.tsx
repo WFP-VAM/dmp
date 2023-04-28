@@ -4,6 +4,7 @@ import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 const ReportDefenseSecurityColumns: GridColDef[] = [
+  // Those fields are categorical, the number 1 and 2 are the possible values in Kobo.  They are counted separately in the report
   getColumnSetup(DroughtSpecific.NuKidColWat + '_1', DROUGHT),
   getColumnSetup(DroughtSpecific.NuKidColWat + '_2', DROUGHT),
   getColumnSetup(DroughtSpecific.IfYes + '_1', DROUGHT, 60),
