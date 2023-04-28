@@ -3,14 +3,7 @@ import { useIntl } from 'react-intl';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
 
-import {
-  NumAffectedColumnGroup,
-  NumAffectedColumns,
-} from './tablesConfig/NumAffected';
-import {
-  SocialSectorAffectedColumnGroup,
-  SocialSectorAffectedColumns,
-} from './tablesConfig/SocialSectorAffected';
+import { getDroughtTablesMapping } from './droughtTablesMapping';
 
 export type DroughtSpecificType = Record<
   keyof typeof droughtSpecificKeys,
@@ -32,20 +25,16 @@ export const DroughtTables = ({
 
   return (
     <>
-      <DisasterTable
-        columns={NumAffectedColumns}
-        columnGroup={NumAffectedColumnGroup}
-        data={[{ id: 1, ...value }]}
-        onChange={onChange}
-        isEditable={isEditMode}
-      />
-      <DisasterTable
-        columns={SocialSectorAffectedColumns(intl)}
-        columnGroup={SocialSectorAffectedColumnGroup}
-        data={[{ id: 1, ...value }]}
-        onChange={onChange}
-        isEditable={isEditMode}
-      />
+      {getDroughtTablesMapping(intl).map((tableSetting, index) => (
+        <DisasterTable
+          columns={tableSetting.columns}
+          columnGroup={tableSetting.columnGroup}
+          data={[{ id: 1, ...value }]}
+          onChange={onChange}
+          isEditable={isEditMode}
+          key={index}
+        />
+      ))}
     </>
   );
 };

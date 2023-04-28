@@ -4,6 +4,7 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 const ReportThreatColumns: GridColDef[] = [
+  // This field is a multiple choice, the number 1, 2, ..., 14 are the possible values in Kobo.  They are counted separately in the report
   getColumnSetup(FloodSpecific.threat + '_1', FLOOD, 110),
   getColumnSetup(FloodSpecific.threat + '_2', FLOOD, 90),
   getColumnSetup(FloodSpecific.threat + '_3', FLOOD, 110),
