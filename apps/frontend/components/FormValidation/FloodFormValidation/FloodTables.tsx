@@ -1,12 +1,11 @@
-import { FloodSpecificType } from '@wfp-dmp/interfaces';
+import { TextField } from '@mui/material';
+import { FloodSpecific, FloodSpecificType } from '@wfp-dmp/interfaces';
+import { useIntl } from 'react-intl';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
 
 import { FloodCheckBoxes } from './FloodCheckBoxes';
-import {
-  NumAffected1ColumnGroup,
-  NumAffected1Columns,
-} from './tablesConfig/NumAffected-1';
+import { getFloodTablesMapping } from './floodTablesMapping';
 
 interface IProps {
   value: FloodSpecificType;
@@ -19,15 +18,32 @@ export const FloodTables = ({
   onChange,
   isEditMode,
 }: IProps): JSX.Element => {
+  const intl = useIntl();
+
   return (
     <>
-      <DisasterTable
-        columns={NumAffected1Columns}
-        columnGroup={NumAffected1ColumnGroup}
-        data={[{ id: 1, ...value }]}
-        onChange={onChange}
-        isEditable={isEditMode}
+      <TextField
+        disabled={!isEditMode}
+        label={intl.formatMessage({
+          id: 'table.FLOOD.floodN',
+        })}
+        type="number"
+        value={value.floodN}
+        onChange={event =>
+          onChange({ ...value, [FloodSpecific.floodN]: event.target.value })
+        }
+        sx={{ m: 2 }}
       />
+      {getFloodTablesMapping(intl).map((tableSetting, index) => (
+        <DisasterTable
+          columns={tableSetting.columns}
+          columnGroup={tableSetting.columnGroup}
+          data={[{ id: 1, ...value }]}
+          onChange={onChange}
+          isEditable={isEditMode}
+          key={index}
+        />
+      ))}
       <FloodCheckBoxes
         onChange={onChange}
         value={value}

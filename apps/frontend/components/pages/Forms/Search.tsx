@@ -19,8 +19,8 @@ const defaultSearchFormData: SearchFormData = {
     commune: '',
   },
   dateRange: {
-    startDate: dayjs(new Date()),
-    endDate: dayjs(new Date()),
+    startDate: dayjs().subtract(1, 'month'),
+    endDate: dayjs(),
   },
 };
 

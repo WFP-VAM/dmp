@@ -3,14 +3,13 @@ import { Box, Button, CircularProgress, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import {
   DisasterType,
-  formatCommonFields,
   INCIDENT,
   IncidentDto,
   incidentSpecificKeys,
   koboKeys,
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
-import { mapValues, pick } from 'lodash';
+import { pick } from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -19,6 +18,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { RegionFilters } from 'components/Filters/RegionFilters';
 import { usePatchForm } from 'services/api/kobo/usePatchForm';
 import { formatFormToRaw } from 'utils/formatFormToRaw';
+import { formatIncidentFields } from 'utils/formatRawToForm';
 
 import { DisasterSelect } from '../DisasterSelect';
 import { IncidentFormType } from './IncidentFormType';
@@ -36,10 +36,7 @@ export const IncidentFormValidation = ({
 
   const intl = useIntl();
   const formattedForm = useMemo(
-    () => ({
-      ...formatCommonFields(validationForm),
-      ...mapValues(incidentSpecificKeys, value => validationForm[value]),
-    }),
+    () => formatIncidentFields(validationForm),
     [validationForm],
   );
   const { control, handleSubmit, reset } = useForm<IncidentFormType>({
@@ -49,8 +46,8 @@ export const IncidentFormValidation = ({
         district: formattedForm.district,
         commune: formattedForm.commune,
       },
-      interviewer: formattedForm.reportName,
-      disTyp: formattedForm.disasterType,
+      interviewer: formattedForm.entryName,
+      disTyp: formattedForm.disTyp,
       phone: formattedForm.phone,
       reportDate: dayjs(formattedForm.entryDate, 'YYYY-MM-DD'),
       incidentDate: dayjs(formattedForm.disasterDate, 'YYYY-MM-DD'),

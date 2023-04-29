@@ -2,10 +2,7 @@ import { incidentSpecificKeys } from '@wfp-dmp/interfaces';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
 
-import {
-  NumAffectedColumnGroup,
-  NumAffectedColumns,
-} from './tablesConfig/NumAffected';
+import { incidenTablesMapping } from './incidentTablesMapping';
 
 export type IncidentSpecificType = Record<
   keyof typeof incidentSpecificKeys,
@@ -25,13 +22,16 @@ export const IncidentTables = ({
 }: IProps): JSX.Element => {
   return (
     <>
-      <DisasterTable
-        columns={NumAffectedColumns}
-        columnGroup={NumAffectedColumnGroup}
-        data={[{ id: 1, ...value }]}
-        onChange={onChange}
-        isEditable={isEditMode}
-      />
+      {incidenTablesMapping.map((tableSetting, index) => (
+        <DisasterTable
+          columns={tableSetting.columns}
+          columnGroup={tableSetting.columnGroup}
+          data={[{ id: 1, ...value }]}
+          onChange={onChange}
+          isEditable={isEditMode}
+          key={index}
+        />
+      ))}
     </>
   );
 };

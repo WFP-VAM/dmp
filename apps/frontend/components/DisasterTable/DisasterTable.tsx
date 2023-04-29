@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -11,7 +10,9 @@ interface IProps {
   columnGroup: GridColumnGroupingModel;
   data: Record<string, string | number | undefined>[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onChange: (event: any) => void;
+  onChange?: (event: any) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getRowId?: (row: any) => string;
   isEditable: boolean;
 }
 
@@ -20,31 +21,42 @@ export const DisasterTable = ({
   columnGroup,
   data,
   onChange,
+  getRowId,
   isEditable,
 }: IProps): JSX.Element => {
   return (
-    <Box style={{ maxWidth: 1200, height: 240 }}>
-      <DataGrid
-        sx={{
-          '& .MuiDataGrid-cell:focus': {
-            outline: isEditable ? '' : 'none',
-          },
-        }}
-        disableRowSelectionOnClick={!isEditable}
-        showCellVerticalBorder
-        showColumnVerticalBorder
-        rows={data}
-        columns={columns}
-        hideFooter
-        experimentalFeatures={{ columnGrouping: true }}
-        columnGroupingModel={columnGroup}
-        isCellEditable={() => isEditable}
-        processRowUpdate={(newRow: GridRowModel) => {
-          onChange(newRow);
+    <DataGrid
+      sx={{
+        '& .MuiDataGrid-cell:focus': {
+          outline: isEditable ? '' : 'none',
+        },
+        '& .MuiDataGrid-cell': {
+          whiteSpace: 'normal !important',
+          wordWrap: 'break-word !important',
+        },
+        '& .MuiDataGrid-columnHeaderTitleContainerContent': {
+          whiteSpace: 'normal !important',
+          wordWrap: 'break-word !important',
+          lineHeight: 'normal',
+        },
+        mb: 1,
+      }}
+      disableRowSelectionOnClick={!isEditable}
+      showCellVerticalBorder
+      showColumnVerticalBorder
+      rows={data}
+      columns={columns}
+      hideFooter
+      experimentalFeatures={{ columnGrouping: true }}
+      columnGroupingModel={columnGroup}
+      isCellEditable={() => isEditable}
+      processRowUpdate={(newRow: GridRowModel) => {
+        if (onChange) onChange(newRow);
 
-          return newRow;
-        }}
-      />
-    </Box>
+        return newRow;
+      }}
+      getRowId={getRowId}
+      autoHeight
+    />
   );
 };
