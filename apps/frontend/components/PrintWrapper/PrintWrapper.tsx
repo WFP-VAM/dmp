@@ -8,7 +8,6 @@ const printStyles = (
     styles={{
       '@media print': {
         'html, body': {
-          minWidth: '1400px !important',
           fontSize: '0.9em',
         },
       },
