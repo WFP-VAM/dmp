@@ -39,7 +39,8 @@ export const DisasterTable = ({
           wordWrap: 'break-word !important',
           lineHeight: 'normal',
         },
-        mb: 1,
+        mt: 1,
+        breakInside: 'avoid',
       }}
       disableRowSelectionOnClick={!isEditable}
       showCellVerticalBorder
@@ -57,6 +58,8 @@ export const DisasterTable = ({
       }}
       getRowId={getRowId}
       autoHeight
+      columnHeaderHeight={75}
+      disableVirtualization
     />
   );
 };
