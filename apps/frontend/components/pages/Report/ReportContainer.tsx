@@ -8,6 +8,7 @@ import {
   SearchFilters,
   SearchFormData,
 } from 'components/Filters/SearchFilters';
+import { PrintHeader } from 'components/PrintHeader';
 import { PrintWrapper } from 'components/PrintWrapper';
 import { Report } from 'components/Report/Report';
 import { ReportSwitch } from 'components/ReportSwitch';
@@ -36,34 +37,35 @@ export const ReportContainer = () => {
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 
   return (
-    <PrintWrapper>
-      <Box display="flex" flexDirection="column">
-        <SearchFilters
-          initSearchFormData={searchReportData}
-          setSearchFormData={setSearchReportData}
-          submitButtonContent={
-            <FormattedMessage
-              id="report_page.showReport"
-              defaultMessage="Show Report"
-            />
-          }
-        />
-        <ReportSwitch
-          value={isDetailedReport}
-          onChange={(event, checked) => {
-            setIsDetailedReport(checked);
-          }}
-        />
-        {(isLoading || formsData === undefined) && (
-          <Skeleton
-            variant="rounded"
-            sx={{ minWidth: 800, minHeight: 400, mt: 5 }}
+    <Box display="flex" flexDirection="column">
+      <SearchFilters
+        initSearchFormData={searchReportData}
+        setSearchFormData={setSearchReportData}
+        submitButtonContent={
+          <FormattedMessage
+            id="report_page.showReport"
+            defaultMessage="Show Report"
           />
-        )}
-        {formsData !== undefined && (
+        }
+      />
+      <ReportSwitch
+        value={isDetailedReport}
+        onChange={(event, checked) => {
+          setIsDetailedReport(checked);
+        }}
+      />
+      {(isLoading || formsData === undefined) && (
+        <Skeleton
+          variant="rounded"
+          sx={{ minWidth: 800, minHeight: 400, mt: 5 }}
+        />
+      )}
+      {formsData !== undefined && (
+        <PrintWrapper>
+          <PrintHeader searchReportData={searchReportData} />
           <Report forms={formsData} isDetailedReport={isDetailedReport} />
-        )}
-      </Box>
-    </PrintWrapper>
+        </PrintWrapper>
+      )}
+    </Box>
   );
 };
