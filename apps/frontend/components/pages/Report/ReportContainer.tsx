@@ -2,7 +2,7 @@ import PrintIcon from '@mui/icons-material/Print';
 import { Box, IconButton, Skeleton } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useReactToPrint } from 'react-to-print';
 
@@ -15,6 +15,7 @@ import { PrintWrapper } from 'components/PrintWrapper';
 import { Report } from 'components/Report/Report';
 import { ReportSwitch } from 'components/ReportSwitch';
 import { useGetForms } from 'services/api/kobo/useGetForms';
+import { dropNotApproved } from 'utils/dropNotApproved';
 
 const defaultSearchReportData: SearchFormData = {
   disTyp: DisasterMapping['flood'],
@@ -37,6 +38,10 @@ export const ReportContainer = () => {
   const [isDetailedReport, setIsDetailedReport] = useState(false);
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
+
+  const filteredFormsData = useMemo(() => {
+    return formsData !== undefined ? dropNotApproved(formsData) : undefined;
+  }, [formsData]);
 
   const printRef = useRef(null);
   const handlePrint = useReactToPrint({
@@ -66,17 +71,20 @@ export const ReportContainer = () => {
           <PrintIcon />
         </IconButton>
       </Box>
-      {(isLoading || formsData === undefined) && (
+      {(isLoading || filteredFormsData === undefined) && (
         <Skeleton
           variant="rounded"
           sx={{ minWidth: 800, minHeight: 400, mt: 5 }}
         />
       )}
-      {formsData !== undefined && (
+      {filteredFormsData !== undefined && (
         <>
           <PrintWrapper printRef={printRef}>
             <PrintHeader searchReportData={searchReportData} />
-            <Report forms={formsData} isDetailedReport={isDetailedReport} />
+            <Report
+              forms={filteredFormsData}
+              isDetailedReport={isDetailedReport}
+            />
           </PrintWrapper>
           <Box display="flex" justifyContent="center">
             <IconButton onClick={handlePrint} color="primary">
