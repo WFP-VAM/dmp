@@ -5,6 +5,8 @@ interface Props {
   children: ReactNode;
 }
 export const Layout = ({ children }: Props): JSX.Element => {
+  // Warning: the maxWidth will influence the way the PDF are generated
+  // TODO investigate how to reduce this value without changing th PDF display
   return (
     <Box
       flexGrow={1}
@@ -13,7 +15,7 @@ export const Layout = ({ children }: Props): JSX.Element => {
       alignItems="center"
       sx={{ p: 1 }}
     >
-      <Box maxWidth={1400}>{children}</Box>
+      <Box maxWidth={1500}>{children}</Box>
     </Box>
   );
 };

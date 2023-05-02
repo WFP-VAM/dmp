@@ -10,7 +10,7 @@ export const ReportSwitch = ({
   onChange: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
 }): JSX.Element => {
   return (
-    <Grid container alignItems="center" spacing={1}>
+    <Grid container alignItems="center" spacing={1} maxWidth={200}>
       <Grid item>
         <FormattedMessage id="report_page.brief" />
       </Grid>
