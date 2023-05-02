@@ -73,10 +73,17 @@ export const ReportContainer = () => {
         />
       )}
       {formsData !== undefined && (
-        <PrintWrapper printRef={printRef}>
-          <PrintHeader searchReportData={searchReportData} />
-          <Report forms={formsData} isDetailedReport={isDetailedReport} />
-        </PrintWrapper>
+        <>
+          <PrintWrapper printRef={printRef}>
+            <PrintHeader searchReportData={searchReportData} />
+            <Report forms={formsData} isDetailedReport={isDetailedReport} />
+          </PrintWrapper>
+          <Box display="flex" justifyContent="center">
+            <IconButton onClick={handlePrint} color="primary">
+              <PrintIcon />
+            </IconButton>
+          </Box>
+        </>
       )}
     </Box>
   );
