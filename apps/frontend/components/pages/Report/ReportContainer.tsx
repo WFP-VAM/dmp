@@ -86,7 +86,7 @@ export const ReportContainer = () => {
               isDetailedReport={isDetailedReport}
             />
           </PrintWrapper>
-          <Box display="flex" justifyContent="center">
+          <Box display="flex" justifyContent="left">
             <IconButton onClick={handlePrint} color="primary">
               <PrintIcon />
             </IconButton>
