@@ -1,7 +1,7 @@
 import { Box, Skeleton } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -11,6 +11,7 @@ import {
 import { Report } from 'components/Report/Report';
 import { ReportSwitch } from 'components/ReportSwitch';
 import { useGetForms } from 'services/api/kobo/useGetForms';
+import { dropNotApproved } from 'utils/dropNotApproved';
 
 const defaultSearchReportData: SearchFormData = {
   disTyp: DisasterMapping['flood'],
@@ -34,6 +35,10 @@ export const ReportContainer = () => {
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 
+  const filteredFormsData = useMemo(() => {
+    return formsData !== undefined ? dropNotApproved(formsData) : undefined;
+  }, [formsData]);
+
   return (
     <Box display="flex" flexDirection="column">
       <SearchFilters
@@ -52,14 +57,14 @@ export const ReportContainer = () => {
           setIsDetailedReport(checked);
         }}
       />
-      {(isLoading || formsData === undefined) && (
+      {(isLoading || filteredFormsData === undefined) && (
         <Skeleton
           variant="rounded"
           sx={{ minWidth: 800, minHeight: 400, mt: 5 }}
         />
       )}
-      {formsData !== undefined && (
-        <Report forms={formsData} isDetailedReport={isDetailedReport} />
+      {filteredFormsData !== undefined && (
+        <Report forms={filteredFormsData} isDetailedReport={isDetailedReport} />
       )}
     </Box>
   );
