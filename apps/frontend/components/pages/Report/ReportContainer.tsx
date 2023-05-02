@@ -1,8 +1,10 @@
-import { Box, Skeleton } from '@mui/material';
+import PrintIcon from '@mui/icons-material/Print';
+import { Box, IconButton, Skeleton } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { useReactToPrint } from 'react-to-print';
 
 import {
   SearchFilters,
@@ -36,6 +38,11 @@ export const ReportContainer = () => {
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 
+  const printRef = useRef(null);
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+  });
+
   return (
     <Box display="flex" flexDirection="column">
       <SearchFilters
@@ -48,12 +55,17 @@ export const ReportContainer = () => {
           />
         }
       />
-      <ReportSwitch
-        value={isDetailedReport}
-        onChange={(event, checked) => {
-          setIsDetailedReport(checked);
-        }}
-      />
+      <Box display="flex">
+        <ReportSwitch
+          value={isDetailedReport}
+          onChange={(event, checked) => {
+            setIsDetailedReport(checked);
+          }}
+        />
+        <IconButton onClick={handlePrint} color="primary">
+          <PrintIcon />
+        </IconButton>
+      </Box>
       {(isLoading || formsData === undefined) && (
         <Skeleton
           variant="rounded"
@@ -61,7 +73,7 @@ export const ReportContainer = () => {
         />
       )}
       {formsData !== undefined && (
-        <PrintWrapper>
+        <PrintWrapper printRef={printRef}>
           <PrintHeader searchReportData={searchReportData} />
           <Report forms={formsData} isDetailedReport={isDetailedReport} />
         </PrintWrapper>

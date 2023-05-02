@@ -1,7 +1,5 @@
-import PrintIcon from '@mui/icons-material/Print';
-import { Box, GlobalStyles, IconButton } from '@mui/material';
-import { ReactNode, useRef } from 'react';
-import { useReactToPrint } from 'react-to-print';
+import { Box, GlobalStyles } from '@mui/material';
+import { MutableRefObject, ReactNode } from 'react';
 
 const printStyles = (
   <GlobalStyles
@@ -20,25 +18,14 @@ const printStyles = (
 );
 
 interface Props {
+  printRef: MutableRefObject<null>;
   children: ReactNode;
 }
-export const PrintWrapper = ({ children }: Props): JSX.Element => {
-  const componentRef = useRef(null);
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
-
+export const PrintWrapper = ({ printRef, children }: Props): JSX.Element => {
   return (
-    <>
-      <Box ref={componentRef}>
-        {printStyles}
-        {children}
-      </Box>
-      <Box display="flex" justifyContent="center">
-        <IconButton onClick={handlePrint} color="primary">
-          <PrintIcon />
-        </IconButton>
-      </Box>
-    </>
+    <Box ref={printRef}>
+      {printStyles}
+      {children}
+    </Box>
   );
 };
