@@ -19,7 +19,7 @@ The backend is deployed on AWS thanks to the CDK.
 
 To deploy the backend:
 
-- Set `/wfp/dmp/kobo/token`, `/wfp/dmp/kobo/floodAssetId`, `/wfp/dmp/kobo/incidentAssetId` and `/wfp/dmp/kobo/droughtAssetId` in the AWS Secret Manager.
+- Set `/wfp/dmp/kobo/token`, `/wfp/dmp/kobo/floodAssetId`, `/wfp/dmp/kobo/incidentAssetId`, `/wfp/dmp/kobo/droughtAssetId`, `/wfp/dmp/telegram/telegramNcdmChatId`, `/wfp/dmp/telegram/telegramPcdmChatId` and `/wfp/dmp/telegram/telegramBotToken` in the AWS Secret Manager.
 
 - Set `CDK_DEFAULT_REGION`, `CDK_DEFAULT_ACCOUNT`, `ALLOWED_HOST` as environment variables.
 
