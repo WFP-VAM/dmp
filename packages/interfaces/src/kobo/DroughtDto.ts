@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsArray,
   IsDateString,
@@ -18,8 +19,8 @@ export class DroughtDto {
   @IsDateString() readonly 'end'!: string;
   @IsString() readonly 'group_ve4vz14/q_Enum'!: string;
   @IsDateString() readonly 'group_ve4vz14/Date_report'!: string;
-  @IsString() readonly 'group_ve4vz14/q_Funtion'!: string;
-  @IsString() readonly 'group_ve4vz14/q_Phone'!: string;
+  @IsOptional() @IsString() readonly 'group_ve4vz14/q_Funtion'!: string;
+  @IsOptional() @IsString() readonly 'group_ve4vz14/q_Phone'!: string;
   @IsString() @Length(2) readonly 'group_yu9nq00/Province'!: string;
   @IsString() @Length(4) readonly 'group_yu9nq00/District'!: string;
   @IsString() @Length(6) readonly 'group_yu9nq00/Commune'!: string;
@@ -108,6 +109,7 @@ export class DroughtDto {
   @IsOptional() @IsNumberString() readonly 'group_hp5cn05/TreatOccur'?: string;
   @IsString() readonly '__version__'!: string;
   @IsString() readonly 'meta/instanceID'!: string;
+  @IsOptional() @IsString() readonly 'meta/deprecatedID'?: string;
   @IsString() readonly '_xform_id_string'!: string;
   @IsString() readonly '_uuid'!: string;
   @IsArray() readonly '_attachments'!: unknown[];
@@ -116,8 +118,11 @@ export class DroughtDto {
   @IsDateString() readonly '_submission_time'!: string;
   @IsArray() readonly '_tags'!: unknown[];
   @IsArray() readonly '_notes'!: unknown[];
-  @ValidateNested() readonly '_validation_status'!: ValidationStatusDto | Record<string, never>;
-  @IsString() readonly '_submitted_by'!: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsOptional() @ValidateNested() @Type(() => ValidationStatusDto) readonly '_validation_status'!:
+    | ValidationStatusDto
+    | Record<string, never>;
+  @IsOptional() @IsString() readonly '_submitted_by'!: string | null;
 }
 
 export class DroughtQueryResponseDto {

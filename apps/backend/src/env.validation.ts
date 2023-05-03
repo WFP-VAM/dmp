@@ -68,6 +68,9 @@ class EnvironmentVariables {
 
   @IsString()
   INCIDENT_ASSET_ID!: string;
+
+  @IsString()
+  WEBHOOK_TOKEN!: string;
 }
 
 export const validate = (config: Record<string, unknown>): EnvironmentVariables => {
