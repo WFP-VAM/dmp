@@ -5,19 +5,19 @@ import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 const ReportThreatColumns: GridColDef[] = [
   // This field is a multiple choice, the number 1, 2, ..., 14 are the possible values in Kobo.  They are counted separately in the report
-  getColumnSetup(FloodSpecific.threat + '_1', FLOOD, 110),
-  getColumnSetup(FloodSpecific.threat + '_2', FLOOD, 90),
-  getColumnSetup(FloodSpecific.threat + '_3', FLOOD, 110),
-  getColumnSetup(FloodSpecific.threat + '_4', FLOOD, 90),
-  getColumnSetup(FloodSpecific.threat + '_5', FLOOD, 130),
+  getColumnSetup(FloodSpecific.threat + '_1', FLOOD, 80),
+  getColumnSetup(FloodSpecific.threat + '_2', FLOOD, 65),
+  getColumnSetup(FloodSpecific.threat + '_3', FLOOD, 90),
+  getColumnSetup(FloodSpecific.threat + '_4', FLOOD, 75),
+  getColumnSetup(FloodSpecific.threat + '_5', FLOOD, 100),
   getColumnSetup(FloodSpecific.threat + '_6', FLOOD, 100),
-  getColumnSetup(FloodSpecific.threat + '_7', FLOOD, 90),
-  getColumnSetup(FloodSpecific.threat + '_8', FLOOD, 90),
-  getColumnSetup(FloodSpecific.threat + '_9', FLOOD, 100),
-  getColumnSetup(FloodSpecific.threat + '_10', FLOOD, 95),
-  getColumnSetup(FloodSpecific.threat + '_11', FLOOD, 130),
-  getColumnSetup(FloodSpecific.threat + '_12', FLOOD, 140),
-  getColumnSetup(FloodSpecific.threat + '_13', FLOOD, 140),
+  getColumnSetup(FloodSpecific.threat + '_7', FLOOD, 70),
+  getColumnSetup(FloodSpecific.threat + '_8', FLOOD, 70),
+  getColumnSetup(FloodSpecific.threat + '_9', FLOOD, 70),
+  getColumnSetup(FloodSpecific.threat + '_10', FLOOD, 80),
+  getColumnSetup(FloodSpecific.threat + '_11', FLOOD, 110),
+  getColumnSetup(FloodSpecific.threat + '_12', FLOOD, 110),
+  getColumnSetup(FloodSpecific.threat + '_13', FLOOD, 110),
   getColumnSetup(FloodSpecific.threat + '_14', FLOOD, 60),
 ];
 
