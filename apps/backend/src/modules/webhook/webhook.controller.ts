@@ -3,28 +3,31 @@ import { Body, Controller, UseGuards } from '@nestjs/common';
 import { DROUGHT, DroughtDto, FLOOD, FloodDto, INCIDENT, IncidentDto } from '@wfp-dmp/interfaces';
 
 import { WebhookGuard } from './webhook.guard';
+import { WebhookService } from './webhook.service';
 
 @Controller('webhook')
 @UseGuards(WebhookGuard)
 export class WebhookController {
-  @Post(FLOOD, { isPublic: true })
-  postFloodWebhook(@Body() body: FloodDto): string {
-    console.log(FLOOD, body._id);
+  constructor(private readonly webhookService: WebhookService) {}
 
-    return 'ok';
+  @Post(FLOOD, { isPublic: true })
+  async postFloodWebhook(@Body() body: FloodDto): Promise<string> {
+    const response = await this.webhookService.sendAlerts(FLOOD, body);
+
+    return response;
   }
 
   @Post(DROUGHT, { isPublic: true })
-  postDroughtWebhook(@Body() body: DroughtDto): string {
-    console.log(body._id);
+  async postDroughtWebhook(@Body() body: DroughtDto): Promise<string> {
+    const response = await this.webhookService.sendAlerts(DROUGHT, body);
 
-    return 'ok';
+    return response;
   }
 
   @Post(INCIDENT, { isPublic: true })
-  postIncidentWebhook(@Body() body: IncidentDto): string {
-    console.log(body._id);
+  async postIncidentWebhook(@Body() body: IncidentDto): Promise<string> {
+    const response = await this.webhookService.sendAlerts(INCIDENT, body);
 
-    return 'ok';
+    return response;
   }
 }

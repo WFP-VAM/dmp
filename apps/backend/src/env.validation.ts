@@ -71,6 +71,15 @@ class EnvironmentVariables {
 
   @IsString()
   WEBHOOK_TOKEN!: string;
+
+  @IsString()
+  TELEGRAM_BOT_TOKEN!: string;
+
+  @IsString()
+  TELEGRAM_PCDM_CHAT_ID!: string;
+
+  @IsString()
+  TELEGRAM_NCDM_CHAT_ID!: string;
 }
 
 export const validate = (config: Record<string, unknown>): EnvironmentVariables => {
