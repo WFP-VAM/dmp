@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import {
   aws_elasticloadbalancingv2,
   NestedStack,
@@ -102,6 +103,28 @@ export class ECSService extends NestedStack {
       '/wfp/dmp/kobo/droughtAssetId',
     );
 
+    const webhookToken = new Secret(this, 'webhookToken', {
+      secretName: 'dmpWebhookToken',
+    });
+
+    const telegramBotToken = Secret.fromSecretNameV2(
+      this,
+      'telegramBotToken',
+      '/wfp/dmp/telegram/telegramBotToken',
+    );
+
+    const telegramPcdmChatId = Secret.fromSecretNameV2(
+      this,
+      'telegramPcdmChatId',
+      '/wfp/dmp/telegram/telegramPcdmChatId',
+    );
+
+    const telegramNcdmChatId = Secret.fromSecretNameV2(
+      this,
+      'telegramNcdmChatId',
+      '/wfp/dmp/telegram/telegramNcdmChatId',
+    );
+
     const cluster = new Cluster(this, 'Cluster', { vpc });
     const loadBalancedService = new ApplicationLoadBalancedFargateService(
       this,
@@ -131,6 +154,12 @@ export class ECSService extends NestedStack {
             FLOOD_ASSET_ID: ecs_Secret.fromSecretsManager(floodAssetId),
             INCIDENT_ASSET_ID: ecs_Secret.fromSecretsManager(incidentAssetId),
             DROUGHT_ASSET_ID: ecs_Secret.fromSecretsManager(droughtAssetId),
+            WEBHOOK_TOKEN: ecs_Secret.fromSecretsManager(webhookToken),
+            TELEGRAM_BOT_TOKEN: ecs_Secret.fromSecretsManager(telegramBotToken),
+            TELEGRAM_PCDM_CHAT_ID:
+              ecs_Secret.fromSecretsManager(telegramPcdmChatId),
+            TELEGRAM_NCDM_CHAT_ID:
+              ecs_Secret.fromSecretsManager(telegramNcdmChatId),
           },
           image: ContainerImage.fromAsset(
             path.join(__dirname, '..', '..', '..'),

@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsArray,
   IsDateString,
@@ -17,8 +18,8 @@ export class IncidentDto {
   @IsDateString() readonly 'start'!: string;
   @IsDateString() readonly 'end'!: string;
   @IsString() readonly 'G1/q_Enum'!: string;
-  @IsString() readonly 'G1/q_Funtion'!: string;
-  @IsString() readonly 'G1/q_Phone'!: string;
+  @IsOptional() @IsString() readonly 'G1/q_Funtion'!: string;
+  @IsOptional() @IsString() readonly 'G1/q_Phone'!: string;
   @IsDateString() readonly 'G1/Date_report'!: string;
   @IsDateString() readonly 'G2/Date_Dis'!: string;
   @IsNumberString() readonly 'G2/DisTyp'!: string;
@@ -97,6 +98,7 @@ export class IncidentDto {
   @IsOptional() @IsNumberString() readonly 'group_gh6ag70/group_gu1xp89/FarmAf'?: string;
   @IsString() readonly '__version__'!: string;
   @IsString() readonly 'meta/instanceID'!: string;
+  @IsOptional() @IsString() readonly 'meta/deprecatedID'?: string;
   @IsString() readonly '_xform_id_string'!: string;
   @IsString() readonly '_uuid'!: string;
   @IsArray() readonly '_attachments'!: unknown[];
@@ -105,8 +107,11 @@ export class IncidentDto {
   @IsDateString() readonly '_submission_time'!: string;
   @IsArray() readonly '_tags'!: unknown[];
   @IsArray() readonly '_notes'!: unknown[];
-  @ValidateNested() readonly '_validation_status'!: ValidationStatusDto | Record<string, never>;
-  @IsString() readonly '_submitted_by'!: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsOptional() @ValidateNested() @Type(() => ValidationStatusDto) readonly '_validation_status'!:
+    | ValidationStatusDto
+    | Record<string, never>;
+  @IsOptional() @IsString() readonly '_submitted_by'!: string | null;
 }
 
 export class IncidentQueryResponseDto {

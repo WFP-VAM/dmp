@@ -345,18 +345,22 @@ importers:
       '@nestjs/mapped-types': 1.1.0
       '@types/jest': 29.0.3
       '@types/node': ^18.15.11
+      class-transformer: 0.5.1
       class-validator: 0.14.0
       dependency-cruiser: 11.15.0
       dependency-cruiser-config-custom: workspace:*
       eslint-config-custom: workspace:*
       jest: 29.0.3
+      reflect-metadata: 0.1.13
       ts-jest: 28.0.8
       tsconfig: workspace:*
       typescript: 4.7.4
     dependencies:
-      '@nestjs/common': 9.0.11_toz6vqqtcfluygz7ti3yp3tjaq
-      '@nestjs/mapped-types': 1.1.0_t3bcxxkl5nx2c25vep5wbhwdga
+      '@nestjs/common': 9.0.11_r72jqgu3m7fr66qxp7vl4agwte
+      '@nestjs/mapped-types': 1.1.0_nqguhz3f6ktijqzxi52vm6i7s4
+      class-transformer: 0.5.1
       class-validator: 0.14.0
+      reflect-metadata: 0.1.13
     devDependencies:
       '@types/jest': 29.0.3
       '@types/node': 18.15.11
@@ -3374,30 +3378,6 @@ packages:
       tslib: 2.4.0
       uuid: 8.3.2
 
-  /@nestjs/common/9.0.11_toz6vqqtcfluygz7ti3yp3tjaq:
-    resolution: {integrity: sha512-oYLIcOal3QOwcqt6goXovRNg8ZkalyOMjH0oYYzfJLrait6P7c6nAeWHu4qFDThY7GoZHEanLgji1qlqVEW09g==}
-    peerDependencies:
-      cache-manager: '*'
-      class-transformer: '*'
-      class-validator: '*'
-      reflect-metadata: ^0.1.12
-      rxjs: ^7.1.0
-    peerDependenciesMeta:
-      cache-manager:
-        optional: true
-      class-transformer:
-        optional: true
-      class-validator:
-        optional: true
-    dependencies:
-      class-validator: 0.14.0
-      iterare: 1.2.1
-      reflect-metadata: 0.1.13
-      rxjs: 7.5.6
-      tslib: 2.4.0
-      uuid: 8.3.2
-    dev: false
-
   /@nestjs/config/2.2.0_3mdbamkp7cmelffjfexsjo7tau:
     resolution: {integrity: sha512-78Eg6oMbCy3D/YvqeiGBTOWei1Jwi3f2pSIZcZ1QxY67kYsJzTRTkwRT8Iv30DbK0sGKc1mcloDLD5UXgZAZtg==}
     peerDependencies:
@@ -3471,24 +3451,6 @@ packages:
     dependencies:
       '@nestjs/common': 9.0.11_r72jqgu3m7fr66qxp7vl4agwte
       class-transformer: 0.5.1
-      class-validator: 0.14.0
-      reflect-metadata: 0.1.13
-    dev: false
-
-  /@nestjs/mapped-types/1.1.0_t3bcxxkl5nx2c25vep5wbhwdga:
-    resolution: {integrity: sha512-+2kSly4P1QI+9eGt+/uGyPdEG1hVz7nbpqPHWZVYgoqz8eOHljpXPag+UCVRw9zo2XCu4sgNUIGe8Uk0+OvUQg==}
-    peerDependencies:
-      '@nestjs/common': ^7.0.8 || ^8.0.0 || ^9.0.0
-      class-transformer: ^0.2.0 || ^0.3.0 || ^0.4.0 || ^0.5.0
-      class-validator: ^0.11.1 || ^0.12.0 || ^0.13.0
-      reflect-metadata: ^0.1.12
-    peerDependenciesMeta:
-      class-transformer:
-        optional: true
-      class-validator:
-        optional: true
-    dependencies:
-      '@nestjs/common': 9.0.11_toz6vqqtcfluygz7ti3yp3tjaq
       class-validator: 0.14.0
       reflect-metadata: 0.1.13
     dev: false
