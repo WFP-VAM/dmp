@@ -22,6 +22,7 @@ interface DatabaseProps extends NestedStackProps {
   vpc: IVpc;
   applicationName: string;
   dbName: string;
+  stage: string;
 }
 
 class Database extends NestedStack {
@@ -31,7 +32,7 @@ class Database extends NestedStack {
 
   constructor(scope: Construct, id: string, props: DatabaseProps) {
     super(scope, id, props);
-    const { vpc, applicationName, dbName } = props;
+    const { vpc, applicationName, dbName, stage } = props;
     this.dbName = dbName;
     const dbSecurityGroup = new SecurityGroup(this, 'DBClusterSecurityGroup', {
       vpc,
@@ -50,7 +51,7 @@ class Database extends NestedStack {
     );
 
     this.dbSecret = new Secret(this, 'DBCredentialsSecret', {
-      secretName: `${dbName}-credentials`,
+      secretName: `${applicationName}-${stage}-${dbName}-credentials`,
       generateSecretString: {
         secretStringTemplate: JSON.stringify({
           username: applicationName,

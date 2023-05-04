@@ -12,15 +12,19 @@ const DBNAME = 'nestdb';
 const ALLOWED_HOST = process.env.ALLOWED_HOST ?? '';
 if (ALLOWED_HOST === '') throw 'Missing ALLOWED_HOST env';
 
+interface NestProps {
+  stage: string;
+  applicationName: string;
+}
+
 class NestStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, props: StackProps & NestProps) {
     super(scope, id, props);
+
+    const { applicationName, stage } = props;
 
     const vpc = new NestVpc(this, NestVpc.name, {});
 
-    const applicationName = this.node.tryGetContext(
-      'applicationName',
-    ) as string;
     const hostedZoneDomainName = this.node.tryGetContext(
       'hostedZoneDomainName',
     ) as string;
@@ -32,6 +36,7 @@ class NestStack extends Stack {
       applicationName,
       vpc: vpc.vpc,
       dbName: DBNAME,
+      stage,
     });
 
     const certificate = new Certificate(this, Certificate.name, {
@@ -48,11 +53,11 @@ class NestStack extends Stack {
       vpc: vpc.vpc,
       applicationName,
       allowedHost: ALLOWED_HOST,
+      stage,
     });
 
     new Route53Record(this, Route53Record.name, {
       hostedZoneDomainName,
-      applicationName,
       loadBalancer: ecsServiceStack.loadBalancer,
     });
   }

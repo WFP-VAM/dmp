@@ -27,6 +27,7 @@ export interface ECSServiceProps extends NestedStackProps {
   dbPort: string;
   applicationName: string;
   allowedHost: string;
+  stage: string;
 }
 
 export class ECSService extends NestedStack {
@@ -44,10 +45,13 @@ export class ECSService extends NestedStack {
       certificate,
       applicationName,
       allowedHost,
+      stage,
     } = props;
 
+    const stageApplicationName = `${applicationName}-${stage}`;
+
     const nestSecret = new Secret(this, 'nestSecret', {
-      secretName: `${applicationName}-nest-secret`,
+      secretName: `${stageApplicationName}-nest-secret`,
 
       generateSecretString: {
         secretStringTemplate: JSON.stringify({}),
@@ -57,7 +61,7 @@ export class ECSService extends NestedStack {
     });
 
     const superadminUsername = new Secret(this, 'superadminUser', {
-      secretName: 'Superadmin-Username',
+      secretName: `${stageApplicationName}-Superadmin-Username`,
       generateSecretString: {
         excludeUppercase: true,
         excludePunctuation: true,
@@ -65,64 +69,34 @@ export class ECSService extends NestedStack {
       },
     });
     const superadminPassword = new Secret(this, 'superadminPassword', {
-      secretName: 'Superadmin-Password',
+      secretName: `${stageApplicationName}-Superadmin-Password`,
       generateSecretString: {
         passwordLength: 12,
       },
     });
 
     const adminjsCookieSecret = new Secret(this, 'adminjsCookieSecret', {
-      secretName: 'dmpAdminjsCookieSecret',
+      secretName: `${stageApplicationName}-AdminjsCookieSecret`,
     });
 
     const adminjsSessionSecret = new Secret(this, 'adminjsSessionSecret', {
-      secretName: 'dmpAdminjsSessionSecret',
+      secretName: `${stageApplicationName}-AdminjsSessionSecret`,
     });
 
-    const koboToken = Secret.fromSecretNameV2(
+    const koboSecret = Secret.fromSecretNameV2(
       this,
-      'koboToken',
-      '/wfp/dmp/kobo/token',
-    );
-
-    const floodAssetId = Secret.fromSecretNameV2(
-      this,
-      'koboFloodAssetId',
-      '/wfp/dmp/kobo/floodAssetId',
-    );
-
-    const incidentAssetId = Secret.fromSecretNameV2(
-      this,
-      'koboIncidentAssetId',
-      '/wfp/dmp/kobo/incidentAssetId',
-    );
-
-    const droughtAssetId = Secret.fromSecretNameV2(
-      this,
-      'koboDroughtAssetId',
-      '/wfp/dmp/kobo/droughtAssetId',
+      'koboSecret',
+      `/${applicationName}/${stage}/kobo`,
     );
 
     const webhookToken = new Secret(this, 'webhookToken', {
-      secretName: 'dmpWebhookToken',
+      secretName: `${stageApplicationName}-WebhookToken`,
     });
 
-    const telegramBotToken = Secret.fromSecretNameV2(
+    const telegramSecret = Secret.fromSecretNameV2(
       this,
-      'telegramBotToken',
-      '/wfp/dmp/telegram/telegramBotToken',
-    );
-
-    const telegramPcdmChatId = Secret.fromSecretNameV2(
-      this,
-      'telegramPcdmChatId',
-      '/wfp/dmp/telegram/telegramPcdmChatId',
-    );
-
-    const telegramNcdmChatId = Secret.fromSecretNameV2(
-      this,
-      'telegramNcdmChatId',
-      '/wfp/dmp/telegram/telegramNcdmChatId',
+      'telegramSecret',
+      `/${applicationName}/${stage}/telegram`,
     );
 
     const cluster = new Cluster(this, 'Cluster', { vpc });
@@ -150,16 +124,32 @@ export class ECSService extends NestedStack {
               ecs_Secret.fromSecretsManager(adminjsCookieSecret),
             ADMINJS_SESSION_SECRET:
               ecs_Secret.fromSecretsManager(adminjsSessionSecret),
-            KOBO_TOKEN: ecs_Secret.fromSecretsManager(koboToken),
-            FLOOD_ASSET_ID: ecs_Secret.fromSecretsManager(floodAssetId),
-            INCIDENT_ASSET_ID: ecs_Secret.fromSecretsManager(incidentAssetId),
-            DROUGHT_ASSET_ID: ecs_Secret.fromSecretsManager(droughtAssetId),
+            KOBO_TOKEN: ecs_Secret.fromSecretsManager(koboSecret, 'token'),
+            FLOOD_ASSET_ID: ecs_Secret.fromSecretsManager(
+              koboSecret,
+              'floodAssetId',
+            ),
+            INCIDENT_ASSET_ID: ecs_Secret.fromSecretsManager(
+              koboSecret,
+              'incidentAssetId',
+            ),
+            DROUGHT_ASSET_ID: ecs_Secret.fromSecretsManager(
+              koboSecret,
+              'droughtAssetId',
+            ),
             WEBHOOK_TOKEN: ecs_Secret.fromSecretsManager(webhookToken),
-            TELEGRAM_BOT_TOKEN: ecs_Secret.fromSecretsManager(telegramBotToken),
-            TELEGRAM_PCDM_CHAT_ID:
-              ecs_Secret.fromSecretsManager(telegramPcdmChatId),
-            TELEGRAM_NCDM_CHAT_ID:
-              ecs_Secret.fromSecretsManager(telegramNcdmChatId),
+            TELEGRAM_BOT_TOKEN: ecs_Secret.fromSecretsManager(
+              telegramSecret,
+              'botToken',
+            ),
+            TELEGRAM_PCDM_CHAT_ID: ecs_Secret.fromSecretsManager(
+              telegramSecret,
+              'pcdmChatId',
+            ),
+            TELEGRAM_NCDM_CHAT_ID: ecs_Secret.fromSecretsManager(
+              telegramSecret,
+              'ncdmChatId',
+            ),
           },
           image: ContainerImage.fromAsset(
             path.join(__dirname, '..', '..', '..'),

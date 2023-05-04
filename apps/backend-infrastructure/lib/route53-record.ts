@@ -11,7 +11,6 @@ import { Construct } from 'constructs';
 export interface Route53RecordProps extends NestedStackProps {
   loadBalancer: IApplicationLoadBalancer;
   hostedZoneDomainName: string;
-  applicationName: string;
 }
 
 export class Route53Record extends NestedStack {
