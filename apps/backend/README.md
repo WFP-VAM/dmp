@@ -76,6 +76,8 @@ pnpm migration:run
 
 To setup the Telegram notifications when a new form is available:
 
+Check first that the telegram secrets have been setup in the secret manager.
+
 - In Kobo, for each form:
   - Go to `SETTINGS`
   - Click on `REST Services` and then on `REGISTER A NEW SERVICE`
