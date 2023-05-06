@@ -1,5 +1,6 @@
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import HistoryIcon from '@mui/icons-material/History';
+import LanguageIcon from '@mui/icons-material/Language';
 import LogoutIcon from '@mui/icons-material/Logout';
 import StarIcon from '@mui/icons-material/Star';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
@@ -148,7 +149,11 @@ export const NavMenuContent = (): JSX.Element => {
         )}
       </List>
       <FormControl sx={{ padding: 4 }}>
-        <Select value={language} onChange={handleLanguageChange}>
+        <Select
+          value={language}
+          onChange={handleLanguageChange}
+          startAdornment={<LanguageIcon />}
+        >
           <MenuItem value="en">
             <FormattedMessage
               id="navigation.language.english"
