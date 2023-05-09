@@ -77,7 +77,7 @@ export const NavMenuContent = (): JSX.Element => {
               }}
             >
               <ListItemIcon>
-                <HomeIcon fontSize="medium" key="forms" />
+                <HomeIcon fontSize="medium" key="home" />
               </ListItemIcon>
               <ListItemText
                 primary={intl.formatMessage({ id: 'navigation.home' })}
