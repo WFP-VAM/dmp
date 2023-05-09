@@ -36,7 +36,7 @@
     "onHold": "Report not yet approved"
   },
   "navigation": {
-    "latest": "Most Recent",
+    "home": "Home",
     "forms": { "header": "Forms", "search": "Search" },
     "reports": "Reports",
     "admin": "ទំព័រអ្នកគ្រប់គ្រង",
@@ -87,7 +87,7 @@
       "dis_type": "Disaster Type",
       "entry_name": "Reporter Name",
       "phone": "Phone",
-      "entry_date": "Entry Date",
+      "entry_date": "Report Entry Date",
       "review_link": "Review and Approval"
     }
   },
