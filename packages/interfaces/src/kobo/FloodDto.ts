@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsArray,
   IsDateString,
@@ -19,8 +20,8 @@ export class FloodDto {
   @IsDateString() readonly 'start'!: string;
   @IsDateString() readonly 'end'!: string;
   @IsString() readonly 'g1/q_Enum'!: string;
-  @IsString() readonly 'g1/q_Funtion'!: string;
-  @IsString() readonly 'g1/q_Phone'!: string;
+  @IsOptional() @IsString() readonly 'g1/q_Funtion'!: string;
+  @IsOptional() @IsString() readonly 'g1/q_Phone'!: string;
   @IsDateString() readonly 'g1/Date_report'!: string;
   @IsString() @Length(2) readonly 'g2/Province'!: string;
   @IsString() @Length(4) readonly 'g2/District'!: string;
@@ -157,6 +158,7 @@ export class FloodDto {
   @IsOptional() @IsString() readonly 'g19/other'?: string;
   @IsString() readonly '__version__'!: string;
   @IsString() readonly 'meta/instanceID'!: string;
+  @IsOptional() @IsString() readonly 'meta/deprecatedID'?: string;
   @IsString() readonly '_xform_id_string'!: string;
   @IsString() readonly '_uuid'!: string;
   @IsArray() readonly '_attachments'!: unknown[];
@@ -165,8 +167,11 @@ export class FloodDto {
   @IsDateString() readonly '_submission_time'!: string;
   @IsArray() readonly '_tags'!: unknown[];
   @IsArray() readonly '_notes'!: unknown[];
-  @ValidateNested() readonly '_validation_status'!: ValidationStatusDto | Record<string, never>;
-  @IsString() readonly '_submitted_by'!: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsOptional() @ValidateNested() @Type(() => ValidationStatusDto) readonly '_validation_status'!:
+    | ValidationStatusDto
+    | Record<string, never>;
+  @IsOptional() @IsString() readonly '_submitted_by'!: string | null;
 }
 
 export class FloodQueryResponseDto {

@@ -71,3 +71,18 @@ pnpm migration:generate migration/YourMigrationName
 # Run all pending migrations
 pnpm migration:run
 ```
+
+## Telegram notifications
+
+To setup the Telegram notifications when a new form is available:
+
+Check first that the telegram secrets have been setup in the secret manager.
+
+- In Kobo, for each form:
+  - Go to `SETTINGS`
+  - Click on `REST Services` and then on `REGISTER A NEW SERVICE`
+  - Add:
+    - A name
+    - An endpoint URL: `<Environment backend URL>/webhook/<FLOOD or DROUGHT or INCIDENT>`
+    - A custom http Headers `authorization` : `Bearer <dmpWebhookToken from the AWS SecretManager>`
+  - Click on `CREATE`

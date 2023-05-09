@@ -1,4 +1,4 @@
-import { IsEnum, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export enum ValidationStatusValue {
   approved = 'validation_status_approved',
@@ -7,9 +7,9 @@ export enum ValidationStatusValue {
 }
 
 export class ValidationStatusDto {
-  @IsString() readonly timestamp!: number;
-  @IsEnum(ValidationStatusValue) readonly uid!: ValidationStatusValue;
-  @IsString() readonly by_whom!: string;
-  @IsString() readonly color!: string;
-  @IsString() readonly label!: string;
+  @IsOptional() @IsNumber() readonly timestamp!: number;
+  @IsOptional() @IsEnum(ValidationStatusValue) readonly uid!: ValidationStatusValue;
+  @IsOptional() @IsString() readonly by_whom!: string;
+  @IsOptional() @IsString() readonly color!: string;
+  @IsOptional() @IsString() readonly label!: string;
 }

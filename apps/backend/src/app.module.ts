@@ -20,6 +20,7 @@ import { KoboModule } from './modules/kobo/kobo.module';
 import { LoggerMiddleware } from './modules/logger/logger.middleware';
 import { LoggerModule } from './modules/logger/logger.module';
 import { UserModule } from './modules/user/user.module';
+import { WebhookModule } from './modules/webhook/webhook.module';
 
 AdminJS.registerAdapter({ Database, Resource });
 
@@ -102,6 +103,7 @@ const authenticate = async (email: string, password: string) => {
     AuthModule,
     LoggerModule,
     KoboModule,
+    WebhookModule,
   ],
   controllers: [AppController],
   providers: [
