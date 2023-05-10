@@ -1,5 +1,5 @@
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
-import HistoryIcon from '@mui/icons-material/History';
+import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import StarIcon from '@mui/icons-material/Star';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
@@ -68,7 +68,7 @@ export const NavMenuContent = (): JSX.Element => {
         </IconButton>
       </Link>
       <List>
-        <ListItem key="latest">
+        <ListItem key="home">
           <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
             <ListItemButton
               sx={{
@@ -77,10 +77,10 @@ export const NavMenuContent = (): JSX.Element => {
               }}
             >
               <ListItemIcon>
-                <HistoryIcon fontSize="medium" key="latest" />
+                <HomeIcon fontSize="medium" key="home" />
               </ListItemIcon>
               <ListItemText
-                primary={intl.formatMessage({ id: 'navigation.latest' })}
+                primary={intl.formatMessage({ id: 'navigation.home' })}
                 primaryTypographyProps={{ fontSize: 16 }}
               />
             </ListItemButton>
