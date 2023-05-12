@@ -1,0 +1,31 @@
+version: 1
+applications:
+  - frontend:
+      phases:
+        preBuild:
+          commands:
+            - nvm use 18
+            - npm install -g pnpm@^8
+            - cd ../..
+            - rm -rf apps/frontend/.next/cache
+            - pnpm install --virtual-store-dir apps/frontend/node_modules/.pnpm
+        build:
+          commands:
+            - pnpm build
+            - cd apps/frontend
+            - env | grep -e NEXT_PUBLIC_ > .env.production
+            - ./gen_env.sh production
+        postBuild:
+          commands:
+            # - allfiles=$(ls -al ./.next/standalone/**/*.js)
+            # - npx esbuild $allfiles --minify --outdir=.next/standalone --platform=node --target=node16 --format=cjs --allow-overwrite
+            - du -h -d1 public
+            - du -h -d2 .next
+            - cd ../..
+            - du -h -d2 .
+            - du -h -d2 apps/frontend
+      artifacts:
+        baseDirectory: .next
+        files:
+          - '**/*'
+    appRoot: apps/frontend
