@@ -15,13 +15,11 @@ applications:
             - cd apps/frontend
             - env | grep -e NEXT_PUBLIC_ > .env.production
             - ./gen_env.sh production
-            # minify standalone folder
-            - find ./.next/standalone -type f -name "*.js" | xargs npx esbuild --minify --outdir=.next/standalone --platform=node --target=node16 --format=cjs --allow-overwrite
         postBuild:
           commands:
-            - ./minify.sh
+            - ./minify.sh # minify the standalone folder to save space
             - rm -rf .next/cache
-            - du -h -d2 .
+            - du -h -d2 .next
 
       artifacts:
         baseDirectory: .next
