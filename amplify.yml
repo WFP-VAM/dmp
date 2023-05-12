@@ -19,12 +19,14 @@ applications:
         postBuild:
           commands:
             # - ./minify.sh # minify the standalone folder to save space
-            - rm -rf .next/cache
             - du -h -d2 .next
             - du -h -d2 out
-
       artifacts:
         baseDirectory: out
         files:
           - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+  
     appRoot: apps/frontend
