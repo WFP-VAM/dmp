@@ -63,7 +63,7 @@ jobs:
       - name: Build Interfaces & Frontend
         run: pnpm turbo build
         env:
-          NEXT_PUBLIC_API_BASE_URL: https://staging.dmp.ovio.org
+          NEXT_PUBLIC_API_BASE_URL: https://staging-api-dmp.ovio.org
       - name: Export to static HTML
         run: |
           cd apps/frontend
