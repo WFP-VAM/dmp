@@ -41,7 +41,7 @@ const nextConfig = {
   images: { unoptimized: true },
 
   // standalone folder for deploys
-  output: 'standalone',
+  // output: 'standalone',
 
   headers: async () => [
     {

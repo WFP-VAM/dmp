@@ -15,14 +15,16 @@ applications:
             - cd apps/frontend
             - env | grep -e NEXT_PUBLIC_ > .env.production
             - ./gen_env.sh production
+            - pnpm next export
         postBuild:
           commands:
             - ./minify.sh # minify the standalone folder to save space
             - rm -rf .next/cache
             - du -h -d2 .next
+            - du -h -d2 out
 
       artifacts:
-        baseDirectory: .next
+        baseDirectory: out
         files:
           - '**/*'
     appRoot: apps/frontend
