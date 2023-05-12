@@ -19,6 +19,7 @@ applications:
           commands:
             # - allfiles=$(ls -al ./.next/standalone/**/*.js)
             # - npx esbuild $allfiles --minify --outdir=.next/standalone --platform=node --target=node16 --format=cjs --allow-overwrite
+            - ./minify.sh
             - cd ../..
             - du -h -d2 .
             - rm -rf apps/frontend/.next/cache
