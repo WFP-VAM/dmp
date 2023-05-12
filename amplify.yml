@@ -7,7 +7,6 @@ applications:
             - nvm use 18
             - npm install -g pnpm@^8
             - cd ../..
-            - rm -rf apps/frontend/.next/cache
             - pnpm install --virtual-store-dir apps/frontend/node_modules/.pnpm
         build:
           commands:
@@ -15,12 +14,7 @@ applications:
             - cd apps/frontend
             - env | grep -e NEXT_PUBLIC_ > .env.production
             - ./gen_env.sh production
-            - pnpm next export
-        postBuild:
-          commands:
-            # - ./minify.sh # minify the standalone folder to save space
-            - du -h -d2 .next
-            - du -h -d2 out
+            - pnpm next export # export static files
       artifacts:
         baseDirectory: out
         files:
