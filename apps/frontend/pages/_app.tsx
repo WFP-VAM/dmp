@@ -4,13 +4,16 @@ import { ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Inter } from '@next/font/google';
+import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { SWRConfig } from 'swr';
 
 import { AppCrashFallback, ErrorBoundary } from 'components';
+import { AuthGuard } from 'components/AuthGuard/AuthGuard';
 import { LanguageWrapper } from 'context';
+import { AuthProvider } from 'context/auth';
 import { Intl } from 'providers';
 import { apiClient } from 'services/api/client';
 import { muiTheme } from 'theme/muiTheme';
@@ -23,10 +26,17 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
   });
 }
 
+export type NextApplicationPage<P = unknown, IP = unknown> = NextPage<P, IP> & {
+  requireAuth?: boolean;
+};
+
 // https://nextjs.org/docs/basic-features/font-optimization
 const inter = Inter({ subsets: ['latin'] });
 
-const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
+const MyApp = ({
+  Component,
+  pageProps,
+}: AppProps & { Component: NextApplicationPage }): JSX.Element => {
   return (
     <>
       <style jsx global>{`
@@ -48,9 +58,19 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
                 }}
               >
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <div>
-                    <Component {...pageProps} />
-                  </div>
+                  <AuthProvider>
+                    {Component.requireAuth ?? false ? (
+                      <AuthGuard>
+                        <div>
+                          <Component {...pageProps} />
+                        </div>
+                      </AuthGuard>
+                    ) : (
+                      <div>
+                        <Component {...pageProps} />
+                      </div>
+                    )}
+                  </AuthProvider>
                 </LocalizationProvider>
               </SWRConfig>
             </Intl>
