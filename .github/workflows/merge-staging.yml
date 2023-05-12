@@ -43,3 +43,36 @@ jobs:
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
           ALLOWED_HOST: ${{ secrets.ALLOWED_HOST }}
         run: cd apps/backend-infrastructure && pnpm cdk deploy --context applicationName="${{ secrets.APPLICATION_NAME }}" --context hostedZoneDomainName="${{ secrets.DOMAIN_NAME }}"
+
+  deploy_staging_surge:
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      surge_url: staging-wfp-dmp.surge.sh
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.3
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build Interfaces & Frontend
+        run: pnpm turbo build
+        env:
+          NEXT_PUBLIC_API_BASE_URL: https://staging.dmp.ovio.org
+      - name: Export to static HTML
+        run: |
+          cd apps/frontend
+          ./gen_env.sh staging
+          pnpm next export
+      - name: Deploy on surge
+        uses: dswistowski/surge-sh-action@v1
+        with:
+          domain: ${{ env.surge_url }}
+          project: "apps/frontend/out/."
+          login: ${{ secrets.surge_login }}
+          token: ${{ secrets.surge_token }}
