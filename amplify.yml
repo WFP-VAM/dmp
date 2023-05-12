@@ -19,11 +19,9 @@ applications:
           commands:
             # - allfiles=$(ls -al ./.next/standalone/**/*.js)
             # - npx esbuild $allfiles --minify --outdir=.next/standalone --platform=node --target=node16 --format=cjs --allow-overwrite
-            - du -h -d1 public
-            - du -h -d2 .next
             - cd ../..
             - du -h -d2 .
-            - du -h -d2 apps/frontend
+            - rm -rf apps/frontend/.next/cache
       artifacts:
         baseDirectory: .next
         files:
