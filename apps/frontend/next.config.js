@@ -40,6 +40,9 @@ const nextConfig = {
   swcMinify: true,
   images: { unoptimized: true },
 
+  // standalone folder for deploys
+  output: 'standalone',
+
   headers: async () => [
     {
       // Apply these headers to all routes in your application.
