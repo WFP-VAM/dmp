@@ -20,9 +20,9 @@ applications:
         postBuild:
           commands:
             - ./minify.sh
-            - cd ../..
             - du -h -d2 .
-            - rm -rf apps/frontend/.next/cache
+            - rm -rf .next/cache
+
       artifacts:
         baseDirectory: .next
         files:
