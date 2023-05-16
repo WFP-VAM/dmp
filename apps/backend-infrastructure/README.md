@@ -34,3 +34,5 @@ To deploy the backend:
   - <aws-profile> is your local aws profile
   - <app-name> is the application name used by the CDK
   - <domain-name> is the main domain name to use
+
+For more information check [here](https://www.notion.so/m33/Kobo-Deployment-52c5bacbf4214eb9ac2156ac94de032e)
