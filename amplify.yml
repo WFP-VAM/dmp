@@ -1,0 +1,26 @@
+version: 1
+applications:
+  - frontend:
+      phases:
+        preBuild:
+          commands:
+            - nvm use 18
+            - npm install -g pnpm@^7
+            - cd ../..
+            - pnpm install --virtual-store-dir apps/frontend/node_modules/.pnpm
+        build:
+          commands:
+            - pnpm build
+            - cd apps/frontend
+            - env | grep -e NEXT_PUBLIC_ > .env.production
+            - ./gen_env.sh production
+            - pnpm next export # export static files
+      artifacts:
+        baseDirectory: out
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+  
+    appRoot: apps/frontend
