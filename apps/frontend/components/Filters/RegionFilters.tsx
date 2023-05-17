@@ -3,7 +3,7 @@ import { communes, districts, provinces } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useGetMe } from 'services/api/user/useUser';
+import { useAuth } from 'context/auth';
 
 const getDistrictsFilteredByProvince = (provinceValue: string) => {
   return districts.filter((district: string) => {
@@ -34,7 +34,7 @@ export const RegionFilters = ({
   onChange,
   disableAll,
 }: Props): JSX.Element => {
-  const user = useGetMe();
+  const { user } = useAuth();
   const allowedProvinces = useMemo(() => {
     if (user === undefined) {
       return [];

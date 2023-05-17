@@ -1,12 +1,14 @@
-import { NextPage } from 'next';
-
 import { LayoutWithNav } from 'components/Layout';
 import { ReportContainer } from 'components/pages/Report';
 
-const ReportPage: NextPage = () => (
+import { NextApplicationPage } from './_app';
+
+const ReportPage: NextApplicationPage = () => (
   <LayoutWithNav>
     <ReportContainer />
   </LayoutWithNav>
 );
+
+ReportPage.requireAuth = true;
 
 export default ReportPage;
