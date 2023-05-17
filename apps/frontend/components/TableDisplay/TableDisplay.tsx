@@ -9,6 +9,8 @@ import {
   TableRow,
 } from '@mui/material';
 import { DisasterDtoType, formatCommonFields } from '@wfp-dmp/interfaces';
+import { ValidationStatusValue } from '@wfp-dmp/interfaces/dist/kobo/ValidationStatusDto';
+// import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -18,9 +20,16 @@ const formatForms = (forms: DisasterDtoType[] | undefined) => {
     return [];
   }
 
-  return forms.map(form => {
-    return formatCommonFields(form);
-  });
+  return (
+    forms
+      .map(form => {
+        return formatCommonFields(form);
+      })
+      // Filter out rejected reports
+      .filter(
+        form => form.validation_status !== ValidationStatusValue.notApproved,
+      )
+  );
 };
 
 export const TableDisplay = ({
@@ -100,6 +109,7 @@ export const TableDisplay = ({
                 <TableCell>{formattedForm.entryDate}</TableCell>
                 <TableCell>
                   <Link href={formattedForm.approvalLink}>Review</Link>
+                  {/* <ValidationIndicator valStatus={formattedForm.validation_status} /> */}
                 </TableCell>
               </TableRow>
             ))}

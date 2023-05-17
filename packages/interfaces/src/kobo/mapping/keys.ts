@@ -10,6 +10,7 @@ export enum KoboCommonKeys {
   entryDate = 'entryDate',
   disTyp = 'disTyp',
   id = 'id',
+  validation_status = 'validation_status'
 }
 
 export const koboKeys = {
@@ -23,6 +24,7 @@ export const koboKeys = {
     [KoboCommonKeys.entryDate]: 'g1/Date_report',
     [KoboCommonKeys.disTyp]: 'g2/DisTyp',
     [KoboCommonKeys.id]: '_id',
+    [KoboCommonKeys.validation_status]: '_validation_status',
   },
   [DROUGHT]: {
     [KoboCommonKeys.district]: 'group_yu9nq00/District',
@@ -34,6 +36,7 @@ export const koboKeys = {
     [KoboCommonKeys.entryDate]: 'group_ve4vz14/Date_report',
     [KoboCommonKeys.disTyp]: 'group_yu9nq00/DisTyp',
     [KoboCommonKeys.id]: '_id',
+    [KoboCommonKeys.validation_status]: '_validation_status',
   },
   [INCIDENT]: {
     [KoboCommonKeys.district]: 'G2/District',
@@ -45,5 +48,6 @@ export const koboKeys = {
     [KoboCommonKeys.entryDate]: 'G1/Date_report',
     [KoboCommonKeys.disTyp]: 'G2/DisTyp',
     [KoboCommonKeys.id]: '_id',
+    [KoboCommonKeys.validation_status]: '_validation_status',
   },
 } as const;
