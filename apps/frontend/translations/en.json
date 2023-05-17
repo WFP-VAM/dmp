@@ -89,6 +89,9 @@
       "phone": "Phone",
       "entry_date": "Entry Date",
       "review_link": "Review and Approval"
+    },
+    "link": {
+      "review": "Review"
     }
   },
   "report_page": {

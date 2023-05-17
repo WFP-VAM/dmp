@@ -99,7 +99,9 @@ export const TableDisplay = ({
                 <TableCell>{formattedForm.phone}</TableCell>
                 <TableCell>{formattedForm.entryDate}</TableCell>
                 <TableCell>
-                  <Link href={formattedForm.approvalLink}>Review</Link>
+                  <Link href={formattedForm.approvalLink}>
+                    <FormattedMessage id={'forms_table.link.review'} />
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}
