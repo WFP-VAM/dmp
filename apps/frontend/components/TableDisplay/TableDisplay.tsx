@@ -9,7 +9,11 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { DisasterDtoType, formatCommonFields } from '@wfp-dmp/interfaces';
+import {
+  DisasterDtoType,
+  formatCommonFields,
+  ValidationStatusValue,
+} from '@wfp-dmp/interfaces';
 import { orderBy } from 'lodash';
 import Link from 'next/link';
 import { useMemo } from 'react';
@@ -111,7 +115,9 @@ export const TableDisplay = ({
                     <Link href={formattedForm.approvalLink}>Review</Link>
                     &nbsp;
                     <ValidationIndicator
-                      valStatus={formattedForm.validation_status}
+                      valStatus={
+                        formattedForm.validation_status as ValidationStatusValue
+                      }
                       iconOnly
                     />
                   </Typography>

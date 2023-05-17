@@ -9,7 +9,7 @@ export const ValidationIndicator = ({
   valStatus,
   iconOnly = false,
 }: {
-  valStatus: ValidationStatusValue | undefined;
+  valStatus?: ValidationStatusValue | undefined;
   iconOnly?: boolean;
 }) => {
   let id;

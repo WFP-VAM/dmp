@@ -19,6 +19,7 @@ export const formatFormToRaw = (
     phone: formValues.phone,
     entryDate: formValues.reportDate.format('YYYY-MM-DD'),
     disasterDate: formValues.incidentDate.format('YYYY-MM-DD'),
+    validation_status: 'waiting_for_approval',
   };
 
   const specificData = omit(formValues.specific, ['id']);
