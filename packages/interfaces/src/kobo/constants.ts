@@ -30,7 +30,7 @@ export const IncidentMapping: MappingTypes = {
   drowning: '10',
   collapse: '11',
   weapon: '12',
-  other: '99',
+  all: '99',
 };
 
 export const provinces: string[] = [
