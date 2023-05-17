@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import { DisasterDtoType, formatCommonFields } from '@wfp-dmp/interfaces';
+import { orderBy } from 'lodash';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -22,10 +23,12 @@ const formatForms = (forms: DisasterDtoType[] | undefined) => {
     return [];
   }
 
-  // Filter out rejected forms
-  return dropNotApproved(forms).map(form => {
+  // Filter out rejected forms and order by date descending
+  const formattedForms = dropNotApproved(forms).map(form => {
     return formatCommonFields(form);
   });
+
+  return orderBy(formattedForms, 'disasterDate', 'desc');
 };
 
 export const TableDisplay = ({
