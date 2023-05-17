@@ -7,32 +7,25 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
-import {
-  DisasterDtoType,
-  formatCommonFields,
-  ValidationStatusValue,
-} from '@wfp-dmp/interfaces';
-// import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
+import { DisasterDtoType, formatCommonFields } from '@wfp-dmp/interfaces';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
+
+import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
+import { dropNotApproved } from 'utils/dropNotApproved';
 
 const formatForms = (forms: DisasterDtoType[] | undefined) => {
   if (forms === undefined || forms.length === 0) {
     return [];
   }
 
-  return (
-    forms
-      .map(form => {
-        return formatCommonFields(form);
-      })
-      // Filter out rejected reports
-      .filter(
-        form => form.validation_status !== ValidationStatusValue.notApproved,
-      )
-  );
+  // Filter out rejected forms
+  return dropNotApproved(forms).map(form => {
+    return formatCommonFields(form);
+  });
 };
 
 export const TableDisplay = ({
@@ -111,8 +104,14 @@ export const TableDisplay = ({
                 <TableCell>{formattedForm.phone}</TableCell>
                 <TableCell>{formattedForm.entryDate}</TableCell>
                 <TableCell>
-                  <Link href={formattedForm.approvalLink}>Review</Link>
-                  {/* <ValidationIndicator valStatus={formattedForm.validation_status} /> */}
+                  <Typography display="flex" fontSize="inherit">
+                    <Link href={formattedForm.approvalLink}>Review</Link>
+                    &nbsp;
+                    <ValidationIndicator
+                      valStatus={formattedForm.validation_status}
+                      iconOnly
+                    />
+                  </Typography>
                 </TableCell>
               </TableRow>
             ))}
