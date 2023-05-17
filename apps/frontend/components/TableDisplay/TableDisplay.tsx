@@ -8,8 +8,11 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { DisasterDtoType, formatCommonFields } from '@wfp-dmp/interfaces';
-import { ValidationStatusValue } from '@wfp-dmp/interfaces/dist/kobo/ValidationStatusDto';
+import {
+  DisasterDtoType,
+  formatCommonFields,
+  ValidationStatusValue,
+} from '@wfp-dmp/interfaces';
 // import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
 import Link from 'next/link';
 import { useMemo } from 'react';

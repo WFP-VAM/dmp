@@ -49,7 +49,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.entryDate]: form[keys.entryDate],
       [KoboCommonKeys.id]: form[keys.id].toString(),
       [KoboCommonKeys.validation_status]: (
-        form[keys.validation_status]?.uid || 'waiting_for_approval'
+        form[keys.validation_status].uid || 'waiting_for_approval'
       ).toString(),
       approvalLink: path.join('/form', FLOOD, form[keys.id].toString()),
     };
@@ -67,7 +67,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.entryDate]: form[keys.entryDate],
       [KoboCommonKeys.id]: form[keys.id].toString(),
       [KoboCommonKeys.validation_status]: (
-        form[keys.validation_status]?.uid || 'waiting_for_approval'
+        form[keys.validation_status].uid || 'waiting_for_approval'
       ).toString(),
       approvalLink: path.join('/form', DROUGHT, form[keys.id].toString()),
     };
@@ -85,7 +85,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.entryDate]: form[keys.entryDate],
       [KoboCommonKeys.id]: form[keys.id].toString(),
       [KoboCommonKeys.validation_status]: (
-        form[keys.validation_status]?.uid || 'waiting_for_approval'
+        form[keys.validation_status].uid || 'waiting_for_approval'
       ).toString(),
       approvalLink: path.join('/form', INCIDENT, form[keys.id].toString()),
     };

@@ -10,7 +10,7 @@ export enum KoboCommonKeys {
   entryDate = 'entryDate',
   disTyp = 'disTyp',
   id = 'id',
-  validation_status = 'validation_status'
+  validation_status = 'validation_status',
 }
 
 export const koboKeys = {
