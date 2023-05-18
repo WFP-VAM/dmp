@@ -44,6 +44,14 @@ export const TableDisplay = ({
 }): JSX.Element => {
   const formattedForms = useMemo(() => formatForms(forms), [forms]);
 
+  if (!isLoading && formattedForms.length === 0) {
+    return (
+      <Typography>
+        <FormattedMessage id="forms_table.no_forms" />
+      </Typography>
+    );
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -111,16 +119,17 @@ export const TableDisplay = ({
                 <TableCell>{formattedForm.phone}</TableCell>
                 <TableCell>{formattedForm.entryDate}</TableCell>
                 <TableCell>
-                  <Typography display="flex" fontSize="inherit">
-                    <Link href={formattedForm.approvalLink}>Review</Link>
-                    &nbsp;
+                  <Link
+                    href={formattedForm.approvalLink}
+                    style={{ textDecoration: 'none' }}
+                  >
                     <ValidationIndicator
                       valStatus={
                         formattedForm.validation_status as ValidationStatusValue
                       }
                       iconOnly
                     />
-                  </Typography>
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}

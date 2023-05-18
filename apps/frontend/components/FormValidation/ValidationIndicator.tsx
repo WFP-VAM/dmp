@@ -1,7 +1,7 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
-import { Stack, Tooltip } from '@mui/material';
+import { Stack, Tooltip, Typography } from '@mui/material';
 import { ValidationStatusValue } from '@wfp-dmp/interfaces';
 import { FormattedMessage } from 'react-intl';
 
@@ -34,9 +34,13 @@ export const ValidationIndicator = ({
 
   if (iconOnly) {
     return (
-      <Tooltip title={<FormattedMessage id={id} />}>
-        <Icon htmlColor={color} />
-      </Tooltip>
+      <Typography display="flex" fontSize="inherit">
+        <Tooltip title={<FormattedMessage id={id} />}>
+          <Icon htmlColor={color} />
+        </Tooltip>
+        &nbsp;
+        <FormattedMessage id={id} />
+      </Typography>
     );
   }
 

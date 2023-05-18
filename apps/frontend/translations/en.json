@@ -80,6 +80,7 @@
     "100": "All Incidents"
   },
   "forms_table": {
+    "no_forms": "No forms match your search parameters.",
     "headers": {
       "province": "Province",
       "district": "District",

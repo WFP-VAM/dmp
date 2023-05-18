@@ -31,9 +31,9 @@
     "submit": "ធ្វើបច្ចុប្បន្នភាព"
   },
   "valStatus": {
-    "approved": "Report approved",
-    "notApproved": "Report approval rejected",
-    "onHold": "Report not yet approved"
+    "approved": "Approved",
+    "notApproved": "Rejected",
+    "onHold": "Not Yet Approved"
   },
   "navigation": {
     "home": "Home",
@@ -80,6 +80,7 @@
     "100": "ឧប្បត្តិហេតុទាំងអស់។"
   },
   "forms_table": {
+    "no_forms": "គ្មានទម្រង់ដែលត្រូវគ្នានឹងប៉ារ៉ាម៉ែត្រស្វែងរករបស់អ្នកទេ។",
     "headers": {
       "province": "Province",
       "district": "District",
