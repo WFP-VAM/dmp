@@ -76,7 +76,8 @@
     "10": "Drowning",
     "11": "Collapse",
     "12": "Unexploded Weapon",
-    "99": "All Incidents"
+    "99": "Other Incidents",
+    "100": "All Incidents"
   },
   "forms_table": {
     "headers": {

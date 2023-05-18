@@ -79,8 +79,8 @@ export class KoboService {
     endDate?: string;
   }): Promise<QueryResponse<T>> {
     const disasterType = computeDisasterTypeFromDistTyp(disTyp);
-    // 99 is a special incident number meant to get "all incidents".
-    const getAllIncidents = disTyp === '99';
+    // 100 is a special incident number meant to get "all incidents".
+    const getAllIncidents = disTyp === '100';
     const { data } = await this.httpService.axiosRef.get<QueryResponse<T>>(
       `assets/${AssetId[disasterType]}/data.json`,
       {
