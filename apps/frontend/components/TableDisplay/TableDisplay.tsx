@@ -32,7 +32,11 @@ const formatForms = (forms: DisasterDtoType[] | undefined) => {
     return formatCommonFields(form);
   });
 
-  return orderBy(formattedForms, 'disasterDate', 'desc');
+  return orderBy(
+    formattedForms,
+    ['disasterDate', 'submissionTime'],
+    ['desc', 'desc'],
+  );
 };
 
 export const TableDisplay = ({
@@ -125,7 +129,7 @@ export const TableDisplay = ({
                   >
                     <ValidationIndicator
                       valStatus={
-                        formattedForm.validation_status as ValidationStatusValue
+                        formattedForm.validationStatus as ValidationStatusValue
                       }
                       iconOnly
                     />

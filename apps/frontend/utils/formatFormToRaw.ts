@@ -12,7 +12,7 @@ export const formatFormToRaw = (
 ) => {
   const commonData: Omit<
     Record<KoboCommonKeys, string>,
-    'id' | 'validation_status'
+    'id' | 'validationStatus' | 'submissionTime'
   > = {
     province: formValues.region.province,
     district: formValues.region.district,
