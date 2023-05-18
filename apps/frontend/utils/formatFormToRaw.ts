@@ -10,7 +10,10 @@ export const formatFormToRaw = (
   commonKeysMapping: Record<string, string>,
   specificKeysMapping: Record<string, string>,
 ) => {
-  const commonData: Omit<Record<KoboCommonKeys, string>, 'id'> = {
+  const commonData: Omit<
+    Record<KoboCommonKeys, string>,
+    'id' | 'validation_status'
+  > = {
     province: formValues.region.province,
     district: formValues.region.district,
     commune: formValues.region.commune,
@@ -19,7 +22,6 @@ export const formatFormToRaw = (
     phone: formValues.phone,
     entryDate: formValues.reportDate.format('YYYY-MM-DD'),
     disasterDate: formValues.incidentDate.format('YYYY-MM-DD'),
-    validation_status: 'waiting_for_approval',
   };
 
   const specificData = omit(formValues.specific, ['id']);
