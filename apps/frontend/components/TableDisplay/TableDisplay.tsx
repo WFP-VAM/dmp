@@ -7,20 +7,37 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
-import { DisasterDtoType, formatCommonFields } from '@wfp-dmp/interfaces';
+import {
+  DisasterDtoType,
+  formatCommonFields,
+  ValidationStatusValue,
+} from '@wfp-dmp/interfaces';
+import { orderBy } from 'lodash';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
+
+import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
+import { dropNotApproved } from 'utils/dropNotApproved';
 
 const formatForms = (forms: DisasterDtoType[] | undefined) => {
   if (forms === undefined || forms.length === 0) {
     return [];
   }
 
-  return forms.map(form => {
+  // Filter out rejected forms and order by date descending
+  // using disasterDate then submissionTime.
+  const formattedForms = dropNotApproved(forms).map(form => {
     return formatCommonFields(form);
   });
+
+  return orderBy(
+    formattedForms,
+    ['disasterDate', 'submissionTime'],
+    ['desc', 'desc'],
+  );
 };
 
 export const TableDisplay = ({
@@ -31,6 +48,14 @@ export const TableDisplay = ({
   isLoading: boolean;
 }): JSX.Element => {
   const formattedForms = useMemo(() => formatForms(forms), [forms]);
+
+  if (!isLoading && formattedForms.length === 0) {
+    return (
+      <Typography>
+        <FormattedMessage id="forms_table.no_forms" />
+      </Typography>
+    );
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -99,8 +124,16 @@ export const TableDisplay = ({
                 <TableCell>{formattedForm.phone}</TableCell>
                 <TableCell>{formattedForm.entryDate}</TableCell>
                 <TableCell>
-                  <Link href={formattedForm.approvalLink}>
-                    <FormattedMessage id={'forms_table.link.review'} />
+                  <Link
+                    href={formattedForm.approvalLink}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <ValidationIndicator
+                      valStatus={
+                        formattedForm.validationStatus as ValidationStatusValue
+                      }
+                      textVersion
+                    />
                   </Link>
                 </TableCell>
               </TableRow>

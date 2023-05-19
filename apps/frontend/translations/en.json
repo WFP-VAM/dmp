@@ -76,9 +76,11 @@
     "10": "Drowning",
     "11": "Collapse",
     "12": "Unexploded Weapon",
-    "99": "Other Incidents"
+    "99": "Other Incidents",
+    "100": "All Incidents"
   },
   "forms_table": {
+    "no_forms": "No forms match your search parameters.",
     "headers": {
       "province": "Province",
       "district": "District",
@@ -89,9 +91,6 @@
       "phone": "Phone",
       "entry_date": "Entry Date",
       "review_link": "Review and Approval"
-    },
-    "link": {
-      "review": "Review"
     }
   },
   "report_page": {

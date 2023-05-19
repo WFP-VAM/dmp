@@ -170,7 +170,7 @@ export class FloodDto {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   @IsOptional() @ValidateNested() @Type(() => ValidationStatusDto) readonly '_validation_status'!:
     | ValidationStatusDto
-    | Record<string, never>;
+    | Record<string, undefined>;
   @IsOptional() @IsString() readonly '_submitted_by'!: string | null;
 }
 

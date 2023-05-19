@@ -10,7 +10,10 @@ export const formatFormToRaw = (
   commonKeysMapping: Record<string, string>,
   specificKeysMapping: Record<string, string>,
 ) => {
-  const commonData: Omit<Record<KoboCommonKeys, string>, 'id'> = {
+  const commonData: Omit<
+    Record<KoboCommonKeys, string>,
+    'id' | 'validationStatus' | 'submissionTime'
+  > = {
     province: formValues.region.province,
     district: formValues.region.district,
     commune: formValues.region.commune,
