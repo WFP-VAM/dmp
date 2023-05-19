@@ -29,7 +29,6 @@ export const usePatchForm = (
         status: number;
       }>(url, arg);
 
-      console.log(status);
       // If the edit was successful, update the validation status to "onHold".
       if (status === 201) {
         await validationTrigger(ValidationStatusValue.onHold);
