@@ -1,8 +1,9 @@
-import { chain, maxBy, omit } from 'lodash';
+import { chain, omit, orderBy } from 'lodash';
 
 // Regex to check that a date as the following format: YYYY-MM-DD
 const DATE_PATTERN = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
 
+// TODO - Type this function.
 export const filterNFlood = (
   data: Record<string, string | undefined>[],
   communeKey: string,
@@ -29,7 +30,15 @@ export const filterNFlood = (
     dataWithGroupKey,
   )
     .groupBy(tmpNFloodKey)
-    .map(array => omit(maxBy(array, disasterDateKey), tmpNFloodKey))
+    .map(array => {
+      const sortedForms = orderBy(
+        array,
+        [disasterDateKey, 'submissionTime'],
+        ['desc', 'desc'],
+      );
+
+      return omit(sortedForms[0], tmpNFloodKey);
+    })
     .value();
 
   return filteredData;
