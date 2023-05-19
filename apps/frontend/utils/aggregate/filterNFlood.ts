@@ -29,7 +29,7 @@ export const filterNFlood = (
     dataWithGroupKey,
   )
     .groupBy(tmpNFloodKey)
-    .map(array => omit(maxBy(array, disasterDateKey), tmpNFloodKey))
+    .map(array => omit(maxBy(array, 'submissionTime'), tmpNFloodKey))
     .value();
 
   return filteredData;
