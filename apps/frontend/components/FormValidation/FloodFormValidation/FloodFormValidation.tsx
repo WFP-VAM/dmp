@@ -7,7 +7,6 @@ import {
   FloodDto,
   floodSpecificKeys,
   koboKeys,
-  ValidationStatusValue,
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { pick } from 'lodash';
@@ -18,7 +17,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { RegionFilters } from 'components/Filters/RegionFilters';
 import { usePatchForm } from 'services/api/kobo/usePatchForm';
-import { usePatchValidationStatus } from 'services/api/kobo/usePatchValidationStatus';
 import { formatFormToRaw } from 'utils/formatFormToRaw';
 import { formatFloodFields } from 'utils/formatRawToForm';
 
@@ -65,11 +63,6 @@ export const FloodFormValidation = ({
     id as string,
   );
 
-  const { trigger: validationTrigger } = usePatchValidationStatus(
-    disasterType as DisasterType,
-    id as string,
-  );
-
   const [isEditMode, setIsEditMode] = useState(false);
   // We set this state to avoid race condition between a field update and the reset coming from react hook form
   const [shouldReset, setShouldReset] = useState(false);
@@ -91,8 +84,6 @@ export const FloodFormValidation = ({
           reset(data);
           setIsEditMode(false);
         }
-        // reset validation status
-        await validationTrigger(ValidationStatusValue.onHold);
       } catch (error) {
         setShouldReset(true);
         console.error(error);
