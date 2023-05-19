@@ -1,17 +1,18 @@
 /* Hide arrow buttons for input numbers because a lot of our columns are too narrwow to show them properly. */
 /* Works for Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
+/* input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
+} */
 
 /* Works for Firefox */
-input[type="number"] {
+/* input[type="number"] {
   -moz-appearance: textfield;
-}
+} */
 
 /* Override the base styling to make editing fields easier. */
-.MuiInputBase-input {
-   padding: 5px !important;
+.css-yz9k0d-MuiInputBase-input {
+   padding-right: 5px !important;
+   padding-left: 5px !important;
  }
