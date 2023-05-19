@@ -7,10 +7,10 @@ import { FormattedMessage } from 'react-intl';
 
 export const ValidationIndicator = ({
   valStatus,
-  iconOnly = false,
+  textVersion = false,
 }: {
-  valStatus?: ValidationStatusValue | undefined;
-  iconOnly?: boolean;
+  valStatus: ValidationStatusValue | undefined;
+  textVersion?: boolean;
 }) => {
   let id;
   let Icon;
@@ -32,7 +32,7 @@ export const ValidationIndicator = ({
       color = 'yellow';
   }
 
-  if (iconOnly) {
+  if (textVersion) {
     return (
       <Typography display="flex" fontSize="inherit">
         <Tooltip title={<FormattedMessage id={id} />}>

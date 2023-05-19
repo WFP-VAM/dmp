@@ -28,6 +28,7 @@ const formatForms = (forms: DisasterDtoType[] | undefined) => {
   }
 
   // Filter out rejected forms and order by date descending
+  // using disasterDate then submissionTime.
   const formattedForms = dropNotApproved(forms).map(form => {
     return formatCommonFields(form);
   });
@@ -131,7 +132,7 @@ export const TableDisplay = ({
                       valStatus={
                         formattedForm.validationStatus as ValidationStatusValue
                       }
-                      iconOnly
+                      textVersion
                     />
                   </Link>
                 </TableCell>

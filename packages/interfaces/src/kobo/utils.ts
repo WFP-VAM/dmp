@@ -3,6 +3,7 @@ import * as path from 'path';
 import { DroughtDto } from './DroughtDto';
 import { FloodDto } from './FloodDto';
 import { IncidentDto } from './IncidentDto';
+import { ValidationStatusValue } from './ValidationStatusDto';
 import { DisasterDtoType, DROUGHT, FLOOD, INCIDENT } from './constants';
 import { KoboCommonKeys, koboKeys } from './mapping';
 
@@ -49,7 +50,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.entryDate]: form[keys.entryDate],
       [KoboCommonKeys.id]: form[keys.id].toString(),
       [KoboCommonKeys.validationStatus]: (
-        form[keys.validationStatus].uid ?? 'waiting_for_approval'
+        form[keys.validationStatus].uid ?? ValidationStatusValue.onHold
       ).toString(),
       [KoboCommonKeys.submissionTime]: form[keys.submissionTime],
       approvalLink: path.join('/form', FLOOD, form[keys.id].toString()),
@@ -68,7 +69,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.entryDate]: form[keys.entryDate],
       [KoboCommonKeys.id]: form[keys.id].toString(),
       [KoboCommonKeys.validationStatus]: (
-        form[keys.validationStatus].uid ?? 'waiting_for_approval'
+        form[keys.validationStatus].uid ?? ValidationStatusValue.onHold
       ).toString(),
       [KoboCommonKeys.submissionTime]: form[keys.submissionTime],
       approvalLink: path.join('/form', DROUGHT, form[keys.id].toString()),
@@ -87,7 +88,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.entryDate]: form[keys.entryDate],
       [KoboCommonKeys.id]: form[keys.id].toString(),
       [KoboCommonKeys.validationStatus]: (
-        form[keys.validationStatus].uid ?? 'waiting_for_approval'
+        form[keys.validationStatus].uid ?? ValidationStatusValue.onHold
       ).toString(),
       [KoboCommonKeys.submissionTime]: form[keys.submissionTime],
       approvalLink: path.join('/form', INCIDENT, form[keys.id].toString()),
