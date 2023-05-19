@@ -1,5 +1,6 @@
 import 'styles/global.css';
 import 'styles/stylesheet.css';
+import 'styles/tableFormatting.css';
 import { ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';

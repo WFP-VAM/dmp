@@ -1,0 +1,4 @@
+/* Override the base styling to make editing fields easier. */
+.MuiInputBase-input {
+   padding: 5px !important;
+ }
