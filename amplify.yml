@@ -14,12 +14,13 @@ applications:
             - cd apps/frontend
             - env | grep -e NEXT_PUBLIC_ > .env.production
             - ./gen_env.sh production
+            - pnpm next export # export static files
       artifacts:
-        baseDirectory: .next
+        baseDirectory: out
         files:
           - '**/*'
       cache:
         paths:
           - node_modules/**/*
-
+  
     appRoot: apps/frontend
