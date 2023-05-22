@@ -18,11 +18,11 @@ applications:
             - cd out
             - cp index.html 200.html
       artifacts:
-        baseDirectory: out
+        baseDirectory: .next
         files:
           - '**/*'
       cache:
         paths:
           - node_modules/**/*
-  
+
     appRoot: apps/frontend
