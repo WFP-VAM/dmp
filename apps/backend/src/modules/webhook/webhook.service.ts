@@ -1,6 +1,8 @@
 import { HttpService } from '@nestjs/axios';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { DisasterDtoType, DisasterType, formatCommonFields } from '@wfp-dmp/interfaces';
+import { DisasterDtoType, DisasterType } from '@wfp-dmp/interfaces';
+
+import { generateTelegramMessage } from './telegram';
 
 const telegramPcdmChatId = process.env.TELEGRAM_PCDM_CHAT_ID;
 const telegramNcdmChatId = process.env.TELEGRAM_NCDM_CHAT_ID;
@@ -37,10 +39,7 @@ export class WebhookService {
       throw new Error('frontendUrl is not defined');
     }
 
-    const commonFields = formatCommonFields(form);
-    const text = `New ${disasterType.toLowerCase()} form reported by _${
-      commonFields.entryName
-    }_ : [form](${new URL(commonFields.approvalLink, frontendUrl).toString()})`;
+    const text = generateTelegramMessage(disasterType, form);
 
     await Promise.all([
       this.sendTelegramMessage(telegramPcdmChatId, text),
