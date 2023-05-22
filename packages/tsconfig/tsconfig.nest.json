@@ -13,6 +13,7 @@
     "esModuleInterop": true,
     "target": "es6",
     "sourceMap": true,
-    "allowJs": true
+    "allowJs": true,
+    "resolveJsonModule": true
   }
 }
