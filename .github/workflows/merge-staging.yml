@@ -45,7 +45,6 @@ jobs:
         run: cd apps/backend-infrastructure && pnpm cdk deploy --context applicationName="${{ secrets.APPLICATION_NAME }}" --context hostedZoneDomainName="${{ secrets.DOMAIN_NAME }}"
 
   deploy_staging_surge:
-    needs: test
     runs-on: ubuntu-latest
     env:
       surge_url: staging-wfp-dmp.surge.sh

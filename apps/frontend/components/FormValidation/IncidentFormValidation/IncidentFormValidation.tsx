@@ -150,7 +150,7 @@ export const IncidentFormValidation = ({
                 label={intl.formatMessage({
                   id: 'forms_table.headers.phone',
                 })}
-                type="number"
+                type="tel"
                 value={value}
                 onChange={onChange}
                 sx={{ minWidth: minWidth }}

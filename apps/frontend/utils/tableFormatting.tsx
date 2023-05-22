@@ -10,10 +10,10 @@ export const getColumnSetup = (
   field: string,
   disaster: DisasterType | 'COMMON',
   minWidth = 80,
-  opts?: {
-    type: 'singleSelect';
-    valueOptions: { value: '1' | '2' | ''; label: string }[];
-  },
+  opts: {
+    type: 'singleSelect' | 'number';
+    valueOptions?: { value: '1' | '2' | ''; label: string }[];
+  } = { type: 'number' },
 ): GridColDef => {
   const fields = {
     field,
