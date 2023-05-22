@@ -17,8 +17,9 @@ applications:
             - pnpm next export # export static files
             - cd out
             - cp index.html 200.html
+            - cd ..
       artifacts:
-        baseDirectory: .next
+        baseDirectory: out
         files:
           - '**/*'
       cache:
