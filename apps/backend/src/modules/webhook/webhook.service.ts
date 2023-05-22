@@ -1,11 +1,11 @@
 import { HttpService } from '@nestjs/axios';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { DisasterDtoType, DisasterType, formatCommonFields } from '@wfp-dmp/interfaces';
+import { DisasterDtoType, DisasterType } from '@wfp-dmp/interfaces';
+
+import { generateTelegramMessage } from './telegram';
 
 const telegramPcdmChatId = process.env.TELEGRAM_PCDM_CHAT_ID;
 const telegramNcdmChatId = process.env.TELEGRAM_NCDM_CHAT_ID;
-// Refactor not to use ALLOWED_HOST
-const frontendUrl = process.env.ALLOWED_HOST;
 
 @Injectable()
 export class WebhookService {
@@ -33,14 +33,8 @@ export class WebhookService {
     if (telegramNcdmChatId === undefined) {
       throw new Error('telegramNcdmChatId is not defined');
     }
-    if (frontendUrl === undefined) {
-      throw new Error('frontendUrl is not defined');
-    }
 
-    const commonFields = formatCommonFields(form);
-    const text = `New ${disasterType.toLowerCase()} form reported by _${
-      commonFields.entryName
-    }_ : [form](${new URL(commonFields.approvalLink, frontendUrl).toString()})`;
+    const text = generateTelegramMessage(disasterType, form);
 
     await Promise.all([
       this.sendTelegramMessage(telegramPcdmChatId, text),
