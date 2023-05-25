@@ -15,6 +15,7 @@ import {
   ValidationStatusDto,
   ValidationStatusValue,
 } from '@wfp-dmp/interfaces';
+import qs from 'qs';
 import request from 'supertest';
 import { Repository } from 'typeorm';
 
@@ -122,7 +123,7 @@ describe('KoboController', () => {
     it('should return 200 and the service should receive the filter params and use the PCDM province', async () => {
       const role = 'pcdm';
       const profileProvince = '20';
-      const disTyp = '1';
+      const disTyps = ['1'];
       const startDate = '2023-02-02';
       const endDate = '2023-02-03';
       const province = '10';
@@ -135,13 +136,13 @@ describe('KoboController', () => {
       const accessToken = authService.createAccessToken(user, 10000);
       await request(app.getHttpServer())
         .get('/kobo/forms')
-        .query({ disTyp, startDate, endDate, province, district, commune })
+        .query(qs.stringify({ disTyps, startDate, endDate, province, district, commune }))
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(200)
         .expect((response: { body: FloodDto[] }) => {
           expect(response.body).toEqual([floodMock]);
           expect(getFormsSpy).toHaveBeenNthCalledWith(1, {
-            disTyp,
+            disTyps,
             startDate,
             endDate,
             province: profileProvince,
@@ -153,7 +154,7 @@ describe('KoboController', () => {
 
     it('should return 200 and the service should receive the filter params for an NCDM', async () => {
       const role = 'ncdm';
-      const disTyp = '1';
+      const disTyps = ['3', '4'];
       const startDate = '2023-02-02';
       const endDate = '2023-02-03';
       const province = '10';
@@ -166,13 +167,13 @@ describe('KoboController', () => {
       const accessToken = authService.createAccessToken(user, 10000);
       await request(app.getHttpServer())
         .get('/kobo/forms')
-        .query({ disTyp, startDate, endDate, province, district, commune })
+        .query(qs.stringify({ disTyps, startDate, endDate, province, district, commune }))
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(200)
         .expect((response: { body: FloodDto[] }) => {
-          expect(response.body).toEqual([floodMock]);
+          expect(response.body).toEqual([incidentMock]);
           expect(getFormsSpy).toHaveBeenNthCalledWith(1, {
-            disTyp,
+            disTyps,
             startDate,
             endDate,
             province,

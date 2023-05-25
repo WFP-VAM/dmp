@@ -22,7 +22,11 @@ export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
       <Typography>
         <FormattedMessage id="validation_search_params.disaster_type" />
         {' : '}
-        <FormattedMessage id={`disasters.${searchReportData.disTyp}`} />
+        {searchReportData.disTyps.map(disTyp => (
+          <>
+            <FormattedMessage key={disTyp} id={`disasters.${disTyp}`} />{' '}
+          </>
+        ))}
       </Typography>
       {searchReportData.region.province !== '' ? (
         <Typography ml={3}>

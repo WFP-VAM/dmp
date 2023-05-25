@@ -12,7 +12,7 @@ import { TableDisplay } from 'components/TableDisplay';
 import { useGetForms } from 'services/api/kobo/useGetForms';
 
 const defaultSearchFormData: SearchFormData = {
-  disTyp: DisasterMapping['flood'],
+  disTyps: [DisasterMapping['flood']],
   region: {
     province: '',
     district: '',

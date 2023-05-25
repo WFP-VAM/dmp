@@ -64,23 +64,22 @@ export class KoboService {
   }
 
   async getForms<T extends DisasterType>({
-    disTyp,
+    disTyps,
     province,
     district,
     commune,
     startDate,
     endDate,
   }: {
-    disTyp: string;
+    disTyps: string[];
     province: string | undefined;
     district?: string;
     commune?: string;
     startDate?: string;
     endDate?: string;
   }): Promise<QueryResponse<T>> {
-    const disasterType = computeDisasterTypeFromDistTyp(disTyp);
-    // 100 is a special incident number meant to get "all incidents".
-    const getAllIncidents = disTyp === '100';
+    const disasterType = computeDisasterTypeFromDistTyp(disTyps[0]);
+
     const { data } = await this.httpService.axiosRef.get<QueryResponse<T>>(
       `assets/${AssetId[disasterType]}/data.json`,
       {
@@ -90,7 +89,7 @@ export class KoboService {
             [koboKeys[disasterType].district]: district,
             [koboKeys[disasterType].commune]: commune,
             [koboKeys[disasterType].entryDate]: { $gte: startDate, $lte: endDate },
-            ...(!getAllIncidents && { [koboKeys[disasterType].disTyp]: disTyp }),
+            [koboKeys[disasterType].disTyp]: { $in: disTyps },
           },
         },
       },

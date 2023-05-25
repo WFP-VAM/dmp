@@ -6,29 +6,51 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
-import { DisasterMapping, IncidentMapping } from '@wfp-dmp/interfaces';
-import { ChangeEvent } from 'react';
+import { DisasterMapping, INCIDENT } from '@wfp-dmp/interfaces';
+import { ChangeEvent, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { IncidentCheckBoxes } from './IncidentCheckboxes';
+
+const floodDroughtKeys = Object.keys(DisasterMapping).map(
+  disaster => DisasterMapping[disaster],
+);
 interface Props {
-  value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  value: string[];
+  onChange: (newValue: string[]) => void;
 }
 
 export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
   const intl = useIntl();
+  // value can contain more than one element only for incident
+  // radio value "1", "2" or INCIDENT
+  const [radioValue, setRadioValue] = useState(
+    floodDroughtKeys.includes(value[0]) ? value[0] : INCIDENT,
+  );
+  const [incidents, setIncidents] = useState<string[]>(
+    floodDroughtKeys.includes(value[0]) ? [] : value,
+  );
 
-  const disasters = Object.keys(DisasterMapping).map(
-    disaster => DisasterMapping[disaster],
-  );
-  const incidents = Object.keys(IncidentMapping).map(
-    incident => IncidentMapping[incident],
-  );
+  const onRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const radio = event.target.value;
+    setRadioValue(radio);
+
+    if (floodDroughtKeys.includes(radio)) {
+      onChange([radio]);
+    } else {
+      onChange(incidents);
+    }
+  };
+
+  const onCheckboxesChange = (newValue: string[]) => {
+    setIncidents(newValue);
+    onChange(newValue);
+  };
 
   return (
     <RadioGroup
-      value={value}
-      onChange={onChange}
+      value={radioValue}
+      onChange={onRadioChange}
       sx={{
         display: 'flex',
         flexDirection: 'row',
@@ -44,7 +66,7 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
               defaultMessage="Disaster Type"
             />
           </Typography>
-          {disasters.map(type => (
+          {floodDroughtKeys.map(type => (
             <FormControlLabel
               key={type}
               value={type}
@@ -56,7 +78,10 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
           ))}
         </CardContent>
       </Card>
-      <Card variant="outlined" sx={{ maxWidth: 600, marginLeft: 5 }}>
+      <Card
+        variant="outlined"
+        sx={{ minHeight: 100, minWidth: 400, maxWidth: 600, marginLeft: 5 }}
+      >
         <CardContent>
           <Typography variant="h6" sx={{ marginBottom: 1 }}>
             <FormattedMessage
@@ -64,16 +89,20 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
               defaultMessage="Incident Type"
             />
           </Typography>
-          {incidents.map(type => (
-            <FormControlLabel
-              key={type}
-              value={type}
-              control={<Radio />}
-              label={intl.formatMessage({
-                id: `disasters.${type}`,
-              })}
+          <FormControlLabel
+            key={INCIDENT}
+            value={INCIDENT}
+            control={<Radio />}
+            label={intl.formatMessage({
+              id: `disasters.${INCIDENT}`,
+            })}
+          />
+          {radioValue === INCIDENT && (
+            <IncidentCheckBoxes
+              value={incidents}
+              onChange={onCheckboxesChange}
             />
-          ))}
+          )}
         </CardContent>
       </Card>
     </RadioGroup>

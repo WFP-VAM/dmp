@@ -10,14 +10,14 @@ import { floodMock } from './flood';
 import { incidentMock } from './incident';
 
 export const getFormsMock = ({
-  disTyp,
+  disTyps,
   province,
   district,
   commune,
   startDate,
   endDate,
 }: {
-  disTyp: string;
+  disTyps: string[];
   province?: string;
   district?: string;
   commune?: string;
@@ -26,7 +26,7 @@ export const getFormsMock = ({
 }) => {
   let response;
 
-  switch (disTyp) {
+  switch (disTyps[0]) {
     case '1':
       response = {
         count: 1,

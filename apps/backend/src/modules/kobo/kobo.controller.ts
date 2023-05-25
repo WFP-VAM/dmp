@@ -42,8 +42,10 @@ export class KoboController {
   ): Promise<DisasterDtoType[]> {
     const province = provinceToEnforce === undefined ? filters.province : provinceToEnforce;
 
+    if (filters.disTyps.length === 0) return [];
+
     const response = await this.koboService.getForms({
-      disTyp: filters.disTyp,
+      disTyps: filters.disTyps,
       province,
       district: filters.district,
       commune: filters.commune,

@@ -18,7 +18,7 @@ import { useGetForms } from 'services/api/kobo/useGetForms';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
 const defaultSearchReportData: SearchFormData = {
-  disTyp: DisasterMapping['flood'],
+  disTyps: [DisasterMapping['flood']],
   region: {
     province: '',
     district: '',
