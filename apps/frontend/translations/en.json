@@ -77,8 +77,7 @@
     "11": "Collapse",
     "12": "Unexploded Weapon",
     "99": "Other Incidents",
-    "100": "All Incidents",
-    "INCIDENT": "Incident"
+    "100": "All Incidents"
   },
   "forms_table": {
     "no_forms": "No forms match your search parameters.",

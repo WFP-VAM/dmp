@@ -94,7 +94,7 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
             value={INCIDENT}
             control={<Radio />}
             label={intl.formatMessage({
-              id: `disasters.${INCIDENT}`,
+              id: `disasters.99`,
             })}
           />
           {radioValue === INCIDENT && (
