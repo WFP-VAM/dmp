@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { formatDateToStringDate, substractDaysToDate } from '@utils/date';
 import {
-  computeDisasterTypeFromDistTyp,
+  computeDisasterTypeFromDistTyps,
   DisasterType,
   DROUGHT,
   DroughtDto,
@@ -78,11 +78,7 @@ export class KoboService {
     startDate?: string;
     endDate?: string;
   }): Promise<QueryResponse<T>> {
-    // the disaters type: flood, drought and incident are in three different assets in Kobo
-    // for now the  disater list can contain multiple elements only if it is incident
-    // all the elements of the list are from the same disaster type
-    // so to find the disaster type we check only the first element for now
-    const disasterType = computeDisasterTypeFromDistTyp(disTyps[0]);
+    const disasterType = computeDisasterTypeFromDistTyps(disTyps);
 
     const { data } = await this.httpService.axiosRef.get<QueryResponse<T>>(
       `assets/${AssetId[disasterType]}/data.json`,

@@ -6,16 +6,19 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
-import { DisasterMapping, INCIDENT } from '@wfp-dmp/interfaces';
+import {
+  computeDisasterTypeFromDistTyps,
+  DisasterMapping,
+  DROUGHT,
+  FLOOD,
+  INCIDENT,
+} from '@wfp-dmp/interfaces';
 import { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { IncidentSelect } from './IncidentSelect';
 
-const floodDroughtKeys = Object.keys(DisasterMapping).map(
-  disaster => DisasterMapping[disaster],
-);
-const disasterKeys = [...floodDroughtKeys, INCIDENT];
+const disasters = [FLOOD, DROUGHT, INCIDENT];
 
 interface Props {
   value: string[];
@@ -25,20 +28,23 @@ interface Props {
 export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
   const intl = useIntl();
   // value can contain more than one element only for incident
-  //disaster type value "1", "2" or INCIDENT
-  const [disasterType, setDisasterType] = useState(
-    floodDroughtKeys.includes(value[0]) ? value[0] : INCIDENT,
-  );
+  // value can be empty if it is an INCIDENT
+  const disTyp =
+    value.length === 0 ? INCIDENT : computeDisasterTypeFromDistTyps(value);
+
+  const [disasterType, setDisasterType] = useState<string>(disTyp);
   const [incidents, setIncidents] = useState<string[]>(
-    floodDroughtKeys.includes(value[0]) ? [] : value,
+    disTyp === INCIDENT ? value : [],
   );
 
   const onDisasterTypeChange = (event: SelectChangeEvent) => {
     const newValue = event.target.value;
     setDisasterType(newValue);
 
-    if (floodDroughtKeys.includes(newValue)) {
-      onChange([newValue]);
+    if (newValue === FLOOD) {
+      onChange([DisasterMapping.flood]);
+    } else if (newValue === DROUGHT) {
+      onChange([DisasterMapping.drought]);
     } else {
       onChange(incidents);
     }
@@ -69,10 +75,10 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
           })}
           sx={{ minWidth: 150, mr: 2 }}
         >
-          {disasterKeys.map(disasterKey => {
+          {disasters.map(disaster => {
             return (
-              <MenuItem value={disasterKey} key={disasterKey}>
-                <FormattedMessage id={`disasters.${disasterKey}`} />
+              <MenuItem value={disaster} key={disaster}>
+                <FormattedMessage id={`disasters.${disaster}`} />
               </MenuItem>
             );
           })}
