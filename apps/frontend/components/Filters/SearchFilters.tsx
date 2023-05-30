@@ -45,7 +45,7 @@ export const SearchFilters = ({
           <DisasterFilter value={value} onChange={onChange} />
         )}
       />
-      <Box display="flex" justifyContent="left" alignItems="center" mb={2}>
+      <Box display="flex" justifyContent="left" alignItems="center" m={2}>
         <Controller
           name="dateRange"
           control={control}
@@ -53,7 +53,7 @@ export const SearchFilters = ({
             <DateRangeFilter value={value} onChange={onChange} />
           )}
         />
-        <Button sx={{ color: 'white', maxHeight: 50 }} type="submit">
+        <Button sx={{ color: 'white', maxHeight: 50, ml: 2 }} type="submit">
           {submitButtonContent}
         </Button>
       </Box>
