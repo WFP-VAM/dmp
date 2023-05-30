@@ -64,7 +64,7 @@ export const RegionFilters = ({
   const selectInputStyles = { mr: 3, minWidth: 200 };
 
   return (
-    <Box display="flex" flexDirection="row" justifyContent="center" margin={2}>
+    <Box display="flex" flexDirection="row" justifyContent="left" margin={2}>
       <FormControl>
         <InputLabel>
           <FormattedMessage id="validation_search_params.province" />

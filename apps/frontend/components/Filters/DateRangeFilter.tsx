@@ -18,7 +18,7 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
   const intl = useIntl();
 
   return (
-    <Box display="flex" justifyContent="center" mb={3}>
+    <Box display="flex" justifyContent="left" m={2}>
       <DatePicker
         label={intl.formatMessage({
           id: 'validation_search_params.start_date',

@@ -12,7 +12,7 @@ export const Layout = ({ children }: Props): JSX.Element => {
       flexGrow={1}
       display="flex"
       flexDirection="column"
-      alignItems="center"
+      alignItems="left"
       sx={{ p: 1 }}
     >
       <Box maxWidth={1500}>{children}</Box>

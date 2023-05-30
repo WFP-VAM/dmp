@@ -53,9 +53,9 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
     <Box
       display="flex"
       flexDirection="row"
-      justifyContent="center"
+      justifyContent="left"
       alignItems="center"
-      margin={4}
+      margin={2}
     >
       <FormControl>
         <InputLabel>

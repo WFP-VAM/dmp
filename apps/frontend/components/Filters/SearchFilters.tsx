@@ -45,15 +45,15 @@ export const SearchFilters = ({
           <DisasterFilter value={value} onChange={onChange} />
         )}
       />
-      <Controller
-        name="dateRange"
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <DateRangeFilter value={value} onChange={onChange} />
-        )}
-      />
-      <Box display="flex" justifyContent="center" mb={2}>
-        <Button sx={{ color: 'white' }} type="submit">
+      <Box display="flex" justifyContent="left" alignItems="center" mb={2}>
+        <Controller
+          name="dateRange"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <DateRangeFilter value={value} onChange={onChange} />
+          )}
+        />
+        <Button sx={{ color: 'white', maxHeight: 50 }} type="submit">
           {submitButtonContent}
         </Button>
       </Box>
