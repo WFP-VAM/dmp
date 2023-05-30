@@ -7,6 +7,7 @@ import {
   OutlinedInput,
   Select,
   SelectChangeEvent,
+  Typography,
 } from '@mui/material';
 import { IncidentMapping } from '@wfp-dmp/interfaces';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -35,10 +36,17 @@ export const IncidentSelect = ({
 }) => {
   const intl = useIntl();
 
+  const isAllSelected = value.length === incidentsKeys.length;
+
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const {
       target: { value: newValue },
     } = event;
+    if (newValue[newValue.length - 1] === 'all') {
+      onChange(value.length === incidentsKeys.length ? [] : incidentsKeys);
+
+      return;
+    }
     onChange(
       // On autofill we get a stringified value.
       typeof newValue === 'string' ? newValue.split(',') : newValue,
@@ -75,6 +83,21 @@ export const IncidentSelect = ({
         }
         MenuProps={MenuProps}
       >
+        <MenuItem key="allSelected" value="all">
+          <Checkbox
+            checked={isAllSelected}
+            indeterminate={
+              value.length > 0 && value.length < incidentsKeys.length
+            }
+          />
+          <ListItemText
+            primary={
+              <Typography fontWeight="bold">
+                <FormattedMessage id="disasters.ALL_INCIDENTS" />
+              </Typography>
+            }
+          />
+        </MenuItem>
         {incidentsKeys.map(incidentKey => (
           <MenuItem key={incidentKey} value={incidentKey}>
             <Checkbox checked={value.indexOf(incidentKey) > -1} />
