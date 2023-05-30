@@ -10,7 +10,7 @@ import { DisasterMapping, INCIDENT } from '@wfp-dmp/interfaces';
 import { ChangeEvent, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { IncidentCheckBoxes } from './IncidentCheckboxes';
+import { IncidentSelect } from './IncidentSelect';
 
 const floodDroughtKeys = Object.keys(DisasterMapping).map(
   disaster => DisasterMapping[disaster],
@@ -98,10 +98,7 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
             })}
           />
           {radioValue === INCIDENT && (
-            <IncidentCheckBoxes
-              value={incidents}
-              onChange={onCheckboxesChange}
-            />
+            <IncidentSelect value={incidents} onChange={onCheckboxesChange} />
           )}
         </CardContent>
       </Card>
