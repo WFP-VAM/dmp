@@ -7,7 +7,7 @@ import { DisasterFilter } from './DisasterFilter';
 import { Region, RegionFilters } from './RegionFilters';
 
 export interface SearchFormData {
-  disTyp: string;
+  disTyps: string[];
   dateRange: DateRange;
   region: Region;
 }
@@ -39,21 +39,21 @@ export const SearchFilters = ({
         )}
       />
       <Controller
-        name={'disTyp'}
+        name={'disTyps'}
         control={control}
         render={({ field: { onChange, value } }) => (
           <DisasterFilter value={value} onChange={onChange} />
         )}
       />
-      <Controller
-        name="dateRange"
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <DateRangeFilter value={value} onChange={onChange} />
-        )}
-      />
-      <Box display="flex" justifyContent="center" mb={2}>
-        <Button sx={{ color: 'white' }} type="submit">
+      <Box display="flex" justifyContent="left" alignItems="center" m={2}>
+        <Controller
+          name="dateRange"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <DateRangeFilter value={value} onChange={onChange} />
+          )}
+        />
+        <Button sx={{ color: 'white', maxHeight: 50, ml: 2 }} type="submit">
           {submitButtonContent}
         </Button>
       </Box>

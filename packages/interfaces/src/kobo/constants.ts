@@ -30,9 +30,6 @@ export const IncidentMapping: MappingTypes = {
   drowning: '10',
   collapse: '11',
   weapon: '12',
-  // 100 is a special incident number processed by the backend
-  // to get "all incidents".
-  all: '100',
   // Hide other incidents from the selection menu.
   // other: '99',
 };

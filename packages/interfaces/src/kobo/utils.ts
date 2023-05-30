@@ -16,6 +16,14 @@ export const computeDisasterTypeFromDistTyp = (distTyp: string) => {
   return INCIDENT;
 };
 
+export const computeDisasterTypeFromDistTyps = (disTyps: string[]) => {
+  // the disaters type: flood, drought and incident are in three different assets in Kobo
+  // for now the  disater list can contain multiple elements only if it is incident
+  // all the elements of the list are from the same disaster type
+  // so to find the disaster type we check only the first element for now
+  return computeDisasterTypeFromDistTyp(disTyps[0]);
+};
+
 export const isFlood = (form: DisasterDtoType): form is FloodDto => {
   return koboKeys[FLOOD].disTyp in form;
 };

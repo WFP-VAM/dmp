@@ -6,7 +6,7 @@ import { ApiRoutes } from 'services/api/apiRoutes';
 import { apiClient } from 'services/api/client';
 
 export const useGetForms = ({
-  disTyp: inputDisTyp,
+  disTyps: inputDisTyps,
   region: inputRegion,
   dateRange: inputDateRange,
 }: SearchFormData) => {
@@ -22,7 +22,7 @@ export const useGetForms = ({
   const { data, isLoading } = useSWR(
     [
       ApiRoutes.forms,
-      inputDisTyp,
+      inputDisTyps,
       inputStartDate,
       inputEndDate,
       inputProvince,
@@ -31,7 +31,7 @@ export const useGetForms = ({
     ],
     async ([
       relativePath,
-      disTyp,
+      disTyps,
       startDate,
       endDate,
       province,
@@ -41,7 +41,7 @@ export const useGetForms = ({
       const { data: formsData } = await apiClient.get<
         FloodDto[] | DroughtDto[] | IncidentDto[] | []
       >(relativePath, {
-        params: { disTyp, startDate, endDate, province, district, commune },
+        params: { disTyps, startDate, endDate, province, district, commune },
       });
 
       return formsData;

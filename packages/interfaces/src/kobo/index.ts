@@ -11,6 +11,7 @@ export { IncidentDto, IncidentQueryResponseDto } from './IncidentDto';
 export * from './mapping';
 export {
   computeDisasterTypeFromDistTyp,
+  computeDisasterTypeFromDistTyps,
   formatCommonFields,
   isFlood,
   isDrought,
