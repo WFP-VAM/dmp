@@ -40,7 +40,7 @@ export const ReportContainer = () => {
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 
   const filteredFormsData = useMemo(() => {
-    return formsData !== undefined ? dropNotApproved(formsData) : undefined;
+    return formsData !== undefined ? dropNotApproved(formsData) : [];
   }, [formsData]);
 
   const printRef = useRef(null);
@@ -71,13 +71,13 @@ export const ReportContainer = () => {
           <PrintIcon />
         </IconButton>
       </Box>
-      {(isLoading || filteredFormsData === undefined) && (
+      {isLoading && (
         <Skeleton
           variant="rounded"
           sx={{ minWidth: 800, minHeight: 400, mt: 5 }}
         />
       )}
-      {filteredFormsData !== undefined && (
+      {!isLoading && (
         <>
           <PrintWrapper printRef={printRef}>
             <PrintHeader searchReportData={searchReportData} />

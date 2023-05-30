@@ -36,7 +36,7 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
             onChange({ ...value, startDate: newStartValue as Dayjs });
           }
         }}
-        sx={{ mr: 5 }}
+        sx={{ mr: 3 }}
       />
 
       <DatePicker
@@ -56,7 +56,6 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
             onChange({ ...value, endDate: newEndValue as Dayjs });
           }
         }}
-        sx={{ ml: 5 }}
       />
     </Box>
   );

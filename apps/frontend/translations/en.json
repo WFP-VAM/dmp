@@ -64,6 +64,7 @@
     "cancel": "Cancel"
   },
   "disasters": {
+    "INCIDENT": "Other Incidents",
     "1": "Flood",
     "2": "Drought",
     "3": "Storm",
