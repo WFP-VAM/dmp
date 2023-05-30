@@ -42,7 +42,8 @@ export class KoboController {
   ): Promise<DisasterDtoType[]> {
     const province = provinceToEnforce === undefined ? filters.province : provinceToEnforce;
 
-    if (filters.disTyps.length === 0) return [];
+    // axios set an empty list as no query params
+    if (filters.disTyps === undefined) return [];
 
     const response = await this.koboService.getForms({
       disTyps: filters.disTyps,
