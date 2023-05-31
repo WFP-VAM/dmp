@@ -45,6 +45,9 @@ export const DisasterTable = ({
             minWidth: '180px',
           }),
         },
+        '& .MuiDataGrid-columnHeader': {
+          backgroundColor: '#f5f8ff',
+        },
         mt: 1,
         breakInside: 'avoid',
       }}
