@@ -1,19 +1,20 @@
 import { Grid, Switch } from '@mui/material';
-import { ChangeEvent } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { ChangeEvent, ReactNode } from 'react';
 
 export const LabelSwitch = ({
   value,
   onChange,
+  labelUncheck,
+  labelCheck,
 }: {
   value: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+  labelUncheck: ReactNode;
+  labelCheck: ReactNode;
 }): JSX.Element => {
   return (
     <Grid container alignItems="center" spacing={1} maxWidth={200}>
-      <Grid item>
-        <FormattedMessage id="report_page.brief" />
-      </Grid>
+      <Grid item>{labelUncheck}</Grid>
       <Grid item>
         <Switch
           checked={value}
@@ -29,9 +30,7 @@ export const LabelSwitch = ({
           }}
         />
       </Grid>
-      <Grid item>
-        <FormattedMessage id="report_page.detailed" />
-      </Grid>
+      <Grid item>{labelCheck}</Grid>
     </Grid>
   );
 };

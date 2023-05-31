@@ -66,6 +66,8 @@ export const ReportContainer = () => {
           onChange={(event, checked) => {
             setIsDetailedReport(checked);
           }}
+          labelUncheck={<FormattedMessage id="report_page.brief" />}
+          labelCheck={<FormattedMessage id="report_page.detailed" />}
         />
         <IconButton onClick={handlePrint} color="primary">
           <PrintIcon />
