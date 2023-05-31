@@ -2,7 +2,7 @@ import { FloodDto } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
 import { BriefReportTable } from 'components/DisasterTable/BriefReportTable';
-import { DetailedReportDisasterTable } from 'components/DisasterTable/DetailedReportDisasterTable';
+import { DetailedReportTable } from 'components/DisasterTable/DetailedReportTable';
 import {
   generateFloodBriefReport,
   generateFloodDetailedReport,
@@ -45,7 +45,7 @@ export const FloodReport = ({
   return (
     <>
       {isDetailedReport ? (
-        <DetailedReportDisasterTable
+        <DetailedReportTable
           columns={SummaryFloodReportColumnSettings.columns}
           columnGroup={SummaryFloodReportColumnSettings.columnGroup}
           data={report}

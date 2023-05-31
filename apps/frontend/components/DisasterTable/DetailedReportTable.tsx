@@ -11,7 +11,7 @@ interface IProps {
   rotateHeader?: boolean;
 }
 
-export const DetailedReportDisasterTable = ({
+export const DetailedReportTable = ({
   columns,
   columnGroup,
   data,

@@ -1,4 +1,4 @@
-import { DetailedReportDisasterTable } from 'components/DisasterTable/DetailedReportDisasterTable';
+import { DetailedReportTable } from 'components/DisasterTable/DetailedReportTable';
 
 import { floodReportTablesMapping } from './floodReportTablesMapping';
 
@@ -10,7 +10,7 @@ export const DetailedFloodReport = ({
   return (
     <>
       {floodReportTablesMapping.map((tableSetting, index) => (
-        <DetailedReportDisasterTable
+        <DetailedReportTable
           columns={tableSetting.columns}
           columnGroup={tableSetting.columnGroup}
           data={report}
