@@ -1,4 +1,4 @@
-import { BriefReportDisasterTable } from 'components/DisasterTable/BriefReportDisasterTable';
+import { BriefReportTable } from 'components/DisasterTable/BriefReportTable';
 
 import { droughtReportTablesMapping } from './droughtReportTablesMapping';
 
@@ -10,7 +10,7 @@ export const BriefDroughtReport = ({
   return (
     <>
       {droughtReportTablesMapping.map((tableSetting, index) => (
-        <BriefReportDisasterTable
+        <BriefReportTable
           columns={tableSetting.columns}
           columnGroup={tableSetting.columnGroup}
           data={report}

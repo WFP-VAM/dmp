@@ -1,7 +1,7 @@
 import { FloodDto } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
-import { BriefReportDisasterTable } from 'components/DisasterTable/BriefReportDisasterTable';
+import { BriefReportTable } from 'components/DisasterTable/BriefReportTable';
 import { DetailedReportDisasterTable } from 'components/DisasterTable/DetailedReportDisasterTable';
 import {
   generateFloodBriefReport,
@@ -52,7 +52,7 @@ export const FloodReport = ({
           rotateHeader={true}
         />
       ) : (
-        <BriefReportDisasterTable
+        <BriefReportTable
           columns={SummaryFloodReportColumnSettings.columns}
           columnGroup={SummaryFloodReportColumnSettings.columnGroup}
           data={report}

@@ -1,4 +1,4 @@
-import { BriefReportDisasterTable } from 'components/DisasterTable/BriefReportDisasterTable';
+import { BriefReportTable } from 'components/DisasterTable/BriefReportTable';
 import { incidenTablesMapping } from 'components/FormValidation/IncidentFormValidation/incidentTablesMapping';
 
 export const BriefIncidentReport = ({
@@ -9,7 +9,7 @@ export const BriefIncidentReport = ({
   return (
     <>
       {incidenTablesMapping.map((tableSetting, index) => (
-        <BriefReportDisasterTable
+        <BriefReportTable
           columns={tableSetting.columns}
           columnGroup={tableSetting.columnGroup}
           data={report}
