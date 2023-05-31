@@ -13,7 +13,7 @@ export const LabelSwitch = ({
   labelCheck: ReactNode;
 }): JSX.Element => {
   return (
-    <Grid container alignItems="center" spacing={1} maxWidth={200}>
+    <Grid container alignItems="center" maxWidth={250}>
       <Grid item>{labelUncheck}</Grid>
       <Grid item>
         <Switch

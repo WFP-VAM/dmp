@@ -1,4 +1,8 @@
 {
+  "common": {
+    "province": "Province",
+    "commune": "Commune"
+  },
   "login": {
     "title": "Welcome!",
     "error": "An error has occurred. Please try again.",
@@ -99,8 +103,10 @@
   "report_page": {
     "showReport": "Show Report",
     "noData": "No Data",
-    "brief": "Brief",
-    "detailed": "Detailed"
+    "data": "Data",
+    "summary": "Summary",
+    "all_columns": "All Columns",
+    "level": "Level"
   },
   "table": {
     "FLOOD": {

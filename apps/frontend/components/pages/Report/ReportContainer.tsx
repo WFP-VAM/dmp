@@ -1,5 +1,5 @@
 import PrintIcon from '@mui/icons-material/Print';
-import { Box, IconButton, Skeleton } from '@mui/material';
+import { Box, IconButton, Skeleton, Typography } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { useMemo, useRef, useState } from 'react';
@@ -36,6 +36,7 @@ export const ReportContainer = () => {
   );
 
   const [isDetailedReport, setIsDetailedReport] = useState(false);
+  const [isAllColumnReport, setIsAllColumnReport] = useState(false);
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 
@@ -60,14 +61,28 @@ export const ReportContainer = () => {
           />
         }
       />
-      <Box display="flex">
+      <Box display="flex" alignItems="center">
+        <Typography fontWeight="bold" sx={{ mr: 1 }}>
+          <FormattedMessage id="report_page.data" />:
+        </Typography>
+        <LabelSwitch
+          value={isAllColumnReport}
+          onChange={(event, checked) => {
+            setIsAllColumnReport(checked);
+          }}
+          labelUncheck={<FormattedMessage id="report_page.summary" />}
+          labelCheck={<FormattedMessage id="report_page.all_columns" />}
+        />
+        <Typography fontWeight="bold" sx={{ mr: 1 }}>
+          <FormattedMessage id="report_page.level" />:
+        </Typography>
         <LabelSwitch
           value={isDetailedReport}
           onChange={(event, checked) => {
             setIsDetailedReport(checked);
           }}
-          labelUncheck={<FormattedMessage id="report_page.brief" />}
-          labelCheck={<FormattedMessage id="report_page.detailed" />}
+          labelUncheck={<FormattedMessage id="common.province" />}
+          labelCheck={<FormattedMessage id="common.commune" />}
         />
         <IconButton onClick={handlePrint} color="primary">
           <PrintIcon />
