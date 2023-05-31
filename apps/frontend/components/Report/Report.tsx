@@ -40,7 +40,13 @@ export const Report = ({
     );
 
   if (isDroughtArray(forms))
-    return <DroughtReport forms={forms} isDetailedReport={isDetailedReport} />;
+    return (
+      <DroughtReport
+        forms={forms}
+        isDetailedReport={isDetailedReport}
+        isAllColumnReport={isAllColumnReport}
+      />
+    );
 
   return <IncidentReport forms={forms} isDetailedReport={isDetailedReport} />;
 };

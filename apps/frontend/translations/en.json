@@ -494,6 +494,22 @@
         "bigIncrease": "Increased numbers",
         "waterDispute": "Water Dispute",
         "sexualAbuse": "Sexual abuse occurs during water collection"
+      },
+      "summary_column": {
+        "NumFamAff": "Number of Families Missing Water",
+        "NumPeoAff": "Number of People Missing Water",
+        "NumFe": "Number of Women Missing Water",
+        "TNumDeath": "Total Death Toll",
+        "FamAgriAff": "Number of families with Affected Plantations",
+        "FarmAff": "Number of Crop/Subsidiary plants Affected (ha)",
+        "FarmDam": "Number of Crop/Subsidiary plants Damaged (ha)",
+        "SamNabAff": "Seedlings Affected (ha)",
+        "SamNabDam": "Seedlings Damaged (ha)",
+        "PaddyAff": "Paddies Affected (ha)",
+        "PaddyDam": "Paddies Damaged (ha)",
+        "CowDeath": "Number of Dead Cows",
+        "LandSize": "Number of irrigated area needing water(ha)",
+        "NumFam": "Number of families needing water for their lands"
       }
     },
     "INCIDENT": {
