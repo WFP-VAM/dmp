@@ -609,6 +609,29 @@
         "paddy": "Paddy (ha)",
         "livestock": "Dead Livestock (head)",
         "forestFarm": "Damaged forest or plantation"
+      },
+      "summary_column": {
+        "NumFamAff": "Number of Families Affected",
+        "NumPeoAff": "Number of People Affected",
+        "NumFeAff": "Number of Women Affected",
+        "NumDeathTo": "Total Death Toll",
+        "ToNumMising": "Total Missing",
+        "ToNumInjure": "Total Injured",
+        "SchAff": "Number of Schools Affected",
+        "SchDam": "Number of Schools Damaged",
+        "HealthAff": "Number of Hospitals Affected",
+        "HealthDam": "Number of Hospitals Damaged",
+        "RivBreakLo": "River Bank Length Affected by Lanslides (m)",
+        "RivBreakWid": "River Bank Width Affected by Lanslides (m)",
+        "NationalRod": "Concrete Road Affected by Lanslides (m)",
+        "RuralRoad": "Gravel Road Affected by Lanslides (m)",
+        "Bridge": "Bridges Affected by Lanslides (number)",
+        "PagoAff": "Number of Pagoda Affected",
+        "PagoDam": "Number of Pagoda Damaged",
+        "BuildingAff": "Number of Administration Building Affected",
+        "BuildingDam": "Number of Administration Building Damaged",
+        "MarketAff": "Number of Markets Affected",
+        "MarketDam": "Number of Markets Damaged"
       }
     },
     "COMMON": {

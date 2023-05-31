@@ -48,5 +48,11 @@ export const Report = ({
       />
     );
 
-  return <IncidentReport forms={forms} isDetailedReport={isDetailedReport} />;
+  return (
+    <IncidentReport
+      forms={forms}
+      isDetailedReport={isDetailedReport}
+      isAllColumnReport={isAllColumnReport}
+    />
+  );
 };
