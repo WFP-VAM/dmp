@@ -101,6 +101,7 @@ export const ReportContainer = () => {
             <Report
               forms={filteredFormsData}
               isDetailedReport={isDetailedReport}
+              isAllColumnReport={isAllColumnReport}
             />
           </PrintWrapper>
           <Box display="flex" justifyContent="left">

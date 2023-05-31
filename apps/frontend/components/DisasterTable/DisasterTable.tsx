@@ -14,6 +14,7 @@ interface IProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getRowId?: (row: any) => string;
   isEditable: boolean;
+  rotateHeader?: boolean;
 }
 
 export const DisasterTable = ({
@@ -23,6 +24,7 @@ export const DisasterTable = ({
   onChange,
   getRowId,
   isEditable,
+  rotateHeader = false,
 }: IProps): JSX.Element => {
   return (
     <DataGrid
@@ -38,6 +40,10 @@ export const DisasterTable = ({
           whiteSpace: 'normal !important',
           wordWrap: 'break-word !important',
           lineHeight: 'normal',
+          ...(rotateHeader && {
+            transform: 'rotate(-90deg)',
+            minWidth: '180px',
+          }),
         },
         mt: 1,
         breakInside: 'avoid',
@@ -58,7 +64,7 @@ export const DisasterTable = ({
       }}
       getRowId={getRowId}
       autoHeight
-      columnHeaderHeight={75}
+      columnHeaderHeight={rotateHeader ? 200 : 75}
       disableVirtualization
     />
   );

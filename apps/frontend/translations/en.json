@@ -329,6 +329,25 @@
         "12": "Children / women temporarily staying in the open / without proper shelter",
         "13": "Temporary shelters do not have proper security arrangements",
         "14": "Other"
+      },
+      "summary_column": {
+        "NumFamAff": "Number of Families Affected",
+        "NumPeoAff": "Number of People Affected",
+        "NumFeAff": "Number of Women Affected",
+        "NumTDeath": "Total Death Toll",
+        "NumFamEva": "Number of Families Evacuated",
+        "NumPeoEva": "Number of People Evacuated",
+        "NumFeEva": "Number of Women Evacuated",
+        "NumHouAff": "Number of Houses Affected",
+        "NumSchoAff": "Number of Schools Affected",
+        "SamNabAff": "Seedlings Affected (ha)",
+        "SamNabDam": "Seedlings Damaged (ha)",
+        "PaddyAff": "Paddies Affected (ha)",
+        "PaddyDam": "Paddies Damaged (ha)",
+        "RubberRoAff": "Rubber Road affected (m)",
+        "ConcretAff": "Contret Road affected (m)",
+        "RuralRoAff": "Gravel Road affected (m)",
+        "BridgeAff": "Number of Concret Bridges Affected"
       }
     },
     "DROUGHT": {

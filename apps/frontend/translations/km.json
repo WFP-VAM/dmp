@@ -332,6 +332,25 @@
         "12": "មានកុមារ/ស្រ្តីស្នាក់នៅបណ្តោះអាសន្ននៅទីបើកចំហរ/មិនមានជម្រកសមរម្យ",
         "13": "ទីស្នាក់បណ្តោះអាសន្នមិនមានការរៀបចំការពារសុវត្ថិភាពត្រឹមត្រូវ",
         "14": "ផ្សេងៗ"
+      },
+      "summary_column": {
+        "NumFamAff": "Number of Families Affected",
+        "NumPeoAff": "Number of People Affected",
+        "NumFeAff": "Number of Women Affected",
+        "NumTDeath": "Total Death Toll",
+        "NumFamEva": "Number of Families Evacuated",
+        "NumPeoEva": "Number of People Evacuated",
+        "NumFeEva": "Number of Women Evacuated",
+        "NumHouAff": "Number of Houses Affected",
+        "NumSchoAff": "Number of Schools Affected",
+        "SamNabAff": "Seedlings Affected (ha)",
+        "SamNabDam": "Seedlings Damaged (ha)",
+        "PaddyAff": "Paddies Affected (ha)",
+        "PaddyDam": "Paddies Damaged (ha)",
+        "RubberRoAff": "Rubber Road affected (m)",
+        "ConcretAff": "Contret Road affected (m)",
+        "RuralRoAff": "Gravel Road affected (m)",
+        "BridgeAff": "Number of Concret Bridges Affected"
       }
     },
     "DROUGHT": {

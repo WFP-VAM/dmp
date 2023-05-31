@@ -14,17 +14,23 @@ export const getColumnSetup = (
     type: 'singleSelect' | 'number';
     valueOptions?: { value: '1' | '2' | ''; label: string }[];
   } = { type: 'number' },
+  isSummary = false,
+  // eslint-disable-next-line max-params
 ): GridColDef => {
   const fields = {
     field,
     minWidth,
     flex: 1,
     editable: true,
-
+    headerAlign: 'center',
     renderHeader: (params: GridColumnHeaderParams) => (
-      <FormattedMessage id={`table.${disaster}.column.${params.field}`} />
+      <FormattedMessage
+        id={`table.${disaster}.${isSummary ? 'summary_' : ''}column.${
+          params.field
+        }`}
+      />
     ),
-  };
+  } as const;
 
   return { ...fields, ...opts };
 };
@@ -40,6 +46,7 @@ const getLocationColumnSetup = (
     field,
     width,
     editable: true,
+    headerAlign: 'center',
     renderHeader: (params: GridColumnHeaderParams) => (
       <FormattedMessage id={`forms_table.headers.${params.field}`} />
     ),
@@ -56,6 +63,7 @@ const getLocationCountColumnSetup = (
 ): GridColDef => ({
   field,
   width,
+  headerAlign: 'center',
   renderHeader: (params: GridColumnHeaderParams) => (
     <FormattedMessage id={`table.${disaster}.column.${params.field}`} />
   ),

@@ -8,12 +8,14 @@ interface IProps {
   columns: GridColDef[];
   columnGroup: GridColumnGroupingModel;
   data: Record<string, string | number | undefined>[];
+  rotateHeader?: boolean;
 }
 
 export const BriefReportDisasterTable = ({
   columns,
   columnGroup,
   data,
+  rotateHeader = false,
 }: IProps): JSX.Element => {
   return (
     <DisasterTable
@@ -22,6 +24,7 @@ export const BriefReportDisasterTable = ({
       data={data}
       isEditable={false}
       getRowId={(row: { province: string }) => row.province}
+      rotateHeader={rotateHeader}
     />
   );
 };
