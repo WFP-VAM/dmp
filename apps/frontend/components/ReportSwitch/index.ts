@@ -1,1 +1,0 @@
-export { ReportSwitch } from './ReportSwitch';

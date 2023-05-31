@@ -2,7 +2,7 @@ import { Grid, Switch } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-export const ReportSwitch = ({
+export const LabelSwitch = ({
   value,
   onChange,
 }: {

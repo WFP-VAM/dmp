@@ -10,10 +10,10 @@ import {
   SearchFilters,
   SearchFormData,
 } from 'components/Filters/SearchFilters';
+import { LabelSwitch } from 'components/LabelSwitch';
 import { PrintHeader } from 'components/PrintHeader';
 import { PrintWrapper } from 'components/PrintWrapper';
 import { Report } from 'components/Report/Report';
-import { ReportSwitch } from 'components/ReportSwitch';
 import { useGetForms } from 'services/api/kobo/useGetForms';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
@@ -61,7 +61,7 @@ export const ReportContainer = () => {
         }
       />
       <Box display="flex">
-        <ReportSwitch
+        <LabelSwitch
           value={isDetailedReport}
           onChange={(event, checked) => {
             setIsDetailedReport(checked);
