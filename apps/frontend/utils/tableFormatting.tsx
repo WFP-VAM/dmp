@@ -83,8 +83,8 @@ export const getGroupSetup = (groupId: string, disaster: DisasterType) => ({
 export const addDetailedReportLocationColumns = (
   columns: GridColDef[],
 ): GridColDef[] => [
-  getLocationColumnSetup(KoboCommonKeys.province, 75),
-  getLocationColumnSetup(KoboCommonKeys.district, 60),
+  getLocationColumnSetup(KoboCommonKeys.province, 85),
+  getLocationColumnSetup(KoboCommonKeys.district, 74),
   getLocationColumnSetup(KoboCommonKeys.commune, 76),
   ...columns,
 ];
@@ -92,8 +92,8 @@ export const addDetailedReportLocationColumns = (
 export const addBriefReportLocationColumns = (
   columns: GridColDef[],
 ): GridColDef[] => [
-  getLocationColumnSetup(KoboCommonKeys.province, 75),
-  getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 55),
-  getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 76),
+  getLocationColumnSetup(KoboCommonKeys.province, 88),
+  getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 57),
+  getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 77),
   ...columns,
 ];
