@@ -30,6 +30,10 @@ export const getColumnSetup = (
         }`}
       />
     ),
+    // cast the modified value from number to string to stay consistent with Kobo
+    valueParser: (value: string | number | undefined) => {
+      return value === undefined ? undefined : String(value);
+    },
   } as const;
 
   return { ...fields, ...opts };
