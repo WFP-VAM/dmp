@@ -24,7 +24,7 @@ export const getColumnSetup = (
     renderHeader: (params: GridColumnHeaderParams) => (
       <FormattedMessage id={`table.${disaster}.column.${params.field}`} />
     ),
-    // cast the modified value from number to string
+    // cast the modified value from number to string to stay consistent with Kobo
     valueParser: (value: string | number | undefined) => {
       return value === undefined ? undefined : String(value);
     },
