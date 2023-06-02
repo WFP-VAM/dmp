@@ -11,7 +11,7 @@ const printStyles = (
       },
       '@page': {
         size: 'A4 landscape',
-        margin: '20px !important',
+        margin: '50px !important',
       },
     }}
   />
