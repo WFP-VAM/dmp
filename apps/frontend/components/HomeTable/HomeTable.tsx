@@ -65,7 +65,17 @@ export const HomeTable = ({
 
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ minHeight: 80, backgroundColor: '#dddddd' }}
+      >
+        <Typography variant="h4">
+          <FormattedMessage id="home.table_title" />
+        </Typography>
+      </Box>
+      <Table aria-labelledby="tableTitle">
         {isLoading ? (
           <TableBody>
             {range(NUMBER_LAST_DAYS).map(id => {
