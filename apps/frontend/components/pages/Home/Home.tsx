@@ -3,7 +3,7 @@ import { DisasterDtoType } from '@wfp-dmp/interfaces';
 import { FormattedMessage } from 'react-intl';
 import useSWR from 'swr';
 
-import { TableDisplay } from 'components/TableDisplay';
+import { HomeTable } from 'components/HomeTable';
 import { ApiRoutes } from 'services/api/apiRoutes';
 
 export const Home = (): JSX.Element => {
@@ -16,7 +16,7 @@ export const Home = (): JSX.Element => {
       <Typography variant="h3" mb={5}>
         <FormattedMessage id="navigation.banner" />
       </Typography>
-      <TableDisplay isLoading={isLoading} forms={lastForms} />
+      <HomeTable isLoading={isLoading} forms={lastForms} />
     </Box>
   );
 };
