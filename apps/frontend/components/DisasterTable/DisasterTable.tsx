@@ -35,7 +35,7 @@ export const DisasterTable = ({
       {/* TODO - make the province column not hideable */}
       <Button onClick={() => apiRef.current.toggleColumnMenu('province')}>
         Manage Columns
-      </Button>    
+      </Button>
       <DataGrid
         apiRef={apiRef}
         sx={{
