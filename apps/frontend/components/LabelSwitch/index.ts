@@ -1,0 +1,1 @@
+export { LabelSwitch } from './LabelSwitch';

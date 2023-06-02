@@ -1,5 +1,5 @@
 import PrintIcon from '@mui/icons-material/Print';
-import { Box, IconButton, Skeleton } from '@mui/material';
+import { Box, IconButton, Skeleton, Typography } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { useMemo, useRef, useState } from 'react';
@@ -10,10 +10,10 @@ import {
   SearchFilters,
   SearchFormData,
 } from 'components/Filters/SearchFilters';
+import { LabelSwitch } from 'components/LabelSwitch';
 import { PrintHeader } from 'components/PrintHeader';
 import { PrintWrapper } from 'components/PrintWrapper';
 import { Report } from 'components/Report/Report';
-import { ReportSwitch } from 'components/ReportSwitch';
 import { useGetForms } from 'services/api/kobo/useGetForms';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
@@ -36,6 +36,7 @@ export const ReportContainer = () => {
   );
 
   const [isDetailedReport, setIsDetailedReport] = useState(false);
+  const [isAllColumnReport, setIsAllColumnReport] = useState(false);
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 
@@ -60,12 +61,28 @@ export const ReportContainer = () => {
           />
         }
       />
-      <Box display="flex">
-        <ReportSwitch
+      <Box display="flex" alignItems="center">
+        <Typography fontWeight="bold" sx={{ mr: 1 }}>
+          <FormattedMessage id="report_page.data" />:
+        </Typography>
+        <LabelSwitch
+          value={isAllColumnReport}
+          onChange={(event, checked) => {
+            setIsAllColumnReport(checked);
+          }}
+          labelUncheck={<FormattedMessage id="report_page.summary" />}
+          labelCheck={<FormattedMessage id="report_page.all_columns" />}
+        />
+        <Typography fontWeight="bold" sx={{ mr: 1 }}>
+          <FormattedMessage id="report_page.level" />:
+        </Typography>
+        <LabelSwitch
           value={isDetailedReport}
           onChange={(event, checked) => {
             setIsDetailedReport(checked);
           }}
+          labelUncheck={<FormattedMessage id="common.province" />}
+          labelCheck={<FormattedMessage id="common.commune" />}
         />
         <IconButton onClick={handlePrint} color="primary">
           <PrintIcon />
@@ -84,6 +101,7 @@ export const ReportContainer = () => {
             <Report
               forms={filteredFormsData}
               isDetailedReport={isDetailedReport}
+              isAllColumnReport={isAllColumnReport}
             />
           </PrintWrapper>
           <Box display="flex" justifyContent="left">

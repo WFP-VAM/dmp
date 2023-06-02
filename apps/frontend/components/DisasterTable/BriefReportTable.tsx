@@ -1,6 +1,6 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 
-import { addDetailedReportLocationColumns } from 'utils/tableFormatting';
+import { addBriefReportLocationColumns } from 'utils/tableFormatting';
 
 import { DisasterTable } from './DisasterTable';
 
@@ -8,20 +8,23 @@ interface IProps {
   columns: GridColDef[];
   columnGroup: GridColumnGroupingModel;
   data: Record<string, string | number | undefined>[];
+  rotateHeader?: boolean;
 }
 
-export const DetailedReportDisasterTable = ({
+export const BriefReportTable = ({
   columns,
   columnGroup,
   data,
+  rotateHeader = false,
 }: IProps): JSX.Element => {
   return (
     <DisasterTable
-      columns={addDetailedReportLocationColumns(columns)}
+      columns={addBriefReportLocationColumns(columns)}
       columnGroup={columnGroup}
       data={data}
       isEditable={false}
-      getRowId={(row: { commune: string }) => row.commune}
+      getRowId={(row: { province: string }) => row.province}
+      rotateHeader={rotateHeader}
     />
   );
 };

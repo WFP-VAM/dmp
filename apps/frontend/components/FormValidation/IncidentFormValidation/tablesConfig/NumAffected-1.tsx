@@ -5,10 +5,10 @@ import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 const NumAffected1Columns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.NumVillAff, INCIDENT, 60),
-  getColumnSetup(IncidentSpecific.NumPeoAff, INCIDENT, 60),
+  getColumnSetup(IncidentSpecific.NumPeoAff, INCIDENT, 55),
   getColumnSetup(IncidentSpecific.NumFamAff, INCIDENT, 65),
   getColumnSetup(IncidentSpecific.NumFeAff, INCIDENT, 60),
-  getColumnSetup(IncidentSpecific.NumDeathTo, INCIDENT, 60),
+  getColumnSetup(IncidentSpecific.NumDeathTo, INCIDENT, 50),
   getColumnSetup(IncidentSpecific.NumMeDeath, INCIDENT, 40),
   getColumnSetup(IncidentSpecific.NumFeDeath, INCIDENT, 60),
   getColumnSetup(IncidentSpecific.NumKidDeath, INCIDENT, 65),

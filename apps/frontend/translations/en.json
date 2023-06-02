@@ -1,4 +1,8 @@
 {
+  "common": {
+    "province": "Province",
+    "commune": "Commune"
+  },
   "login": {
     "title": "Welcome!",
     "error": "An error has occurred. Please try again.",
@@ -99,8 +103,10 @@
   "report_page": {
     "showReport": "Show Report",
     "noData": "No Data",
-    "brief": "Brief",
-    "detailed": "Detailed"
+    "data": "Data",
+    "summary": "Summary",
+    "all_columns": "All Columns",
+    "level": "Level"
   },
   "table": {
     "FLOOD": {
@@ -323,6 +329,25 @@
         "12": "Children / women temporarily staying in the open / without proper shelter",
         "13": "Temporary shelters do not have proper security arrangements",
         "14": "Other"
+      },
+      "summary_column": {
+        "NumFamAff": "Number of Families Affected",
+        "NumPeoAff": "Number of People Affected",
+        "NumFeAff": "Number of Women Affected",
+        "NumTDeath": "Total Death Toll",
+        "NumFamEva": "Number of Families Evacuated",
+        "NumPeoEva": "Number of People Evacuated",
+        "NumFeEva": "Number of Women Evacuated",
+        "NumHouAff": "Number of Houses Affected",
+        "NumSchoAff": "Number of Schools Affected",
+        "SamNabAff": "Seedlings Affected (ha)",
+        "SamNabDam": "Seedlings Damaged (ha)",
+        "PaddyAff": "Paddies Affected (ha)",
+        "PaddyDam": "Paddies Damaged (ha)",
+        "RubberRoAff": "Rubber Road affected (m)",
+        "ConcretAff": "Contret Road affected (m)",
+        "RuralRoAff": "Gravel Road affected (m)",
+        "BridgeAff": "Number of Concret Bridges Affected"
       }
     },
     "DROUGHT": {
@@ -469,6 +494,22 @@
         "bigIncrease": "Increased numbers",
         "waterDispute": "Water Dispute",
         "sexualAbuse": "Sexual abuse occurs during water collection"
+      },
+      "summary_column": {
+        "NumFamAff": "Number of Families Missing Water",
+        "NumPeoAff": "Number of People Missing Water",
+        "NumFe": "Number of Women Missing Water",
+        "TNumDeath": "Total Death Toll",
+        "FamAgriAff": "Number of families with Affected Plantations",
+        "FarmAff": "Number of Crop/Subsidiary plants Affected (ha)",
+        "FarmDam": "Number of Crop/Subsidiary plants Damaged (ha)",
+        "SamNabAff": "Seedlings Affected (ha)",
+        "SamNabDam": "Seedlings Damaged (ha)",
+        "PaddyAff": "Paddies Affected (ha)",
+        "PaddyDam": "Paddies Damaged (ha)",
+        "CowDeath": "Number of Dead Cows",
+        "LandSize": "Number of irrigated area needing water(ha)",
+        "NumFam": "Number of families needing water for their lands"
       }
     },
     "INCIDENT": {
@@ -568,6 +609,29 @@
         "paddy": "Paddy (ha)",
         "livestock": "Dead Livestock (head)",
         "forestFarm": "Damaged forest or plantation"
+      },
+      "summary_column": {
+        "NumFamAff": "Number of Families Affected",
+        "NumPeoAff": "Number of People Affected",
+        "NumFeAff": "Number of Women Affected",
+        "NumDeathTo": "Total Death Toll",
+        "ToNumMising": "Total Missing",
+        "ToNumInjure": "Total Injured",
+        "SchAff": "Number of Schools Affected",
+        "SchDam": "Number of Schools Damaged",
+        "HealthAff": "Number of Hospitals Affected",
+        "HealthDam": "Number of Hospitals Damaged",
+        "RivBreakLo": "River Bank Length Affected by Lanslides (m)",
+        "RivBreakWid": "River Bank Width Affected by Lanslides (m)",
+        "NationalRod": "Concrete Road Affected by Lanslides (m)",
+        "RuralRoad": "Gravel Road Affected by Lanslides (m)",
+        "Bridge": "Bridges Affected by Lanslides (number)",
+        "PagoAff": "Number of Pagoda Affected",
+        "PagoDam": "Number of Pagoda Damaged",
+        "BuildingAff": "Number of Administration Building Affected",
+        "BuildingDam": "Number of Administration Building Damaged",
+        "MarketAff": "Number of Markets Affected",
+        "MarketDam": "Number of Markets Damaged"
       }
     },
     "COMMON": {

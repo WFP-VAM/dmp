@@ -1,5 +1,8 @@
-import { IncidentDto } from '@wfp-dmp/interfaces';
+import { Typography } from '@mui/material';
+import { IncidentDto, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { chain } from 'lodash';
 import { useMemo } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import {
   generateIncidentBriefReport,
@@ -7,31 +10,51 @@ import {
 } from 'utils/aggregate/generateIncidentReport';
 import { formatIncidentFields } from 'utils/formatRawToForm';
 
-import { BriefIncidentReport } from './BriefIncidentReport';
-import { DetailedIncidentReport } from './DetailedIncidentReport';
+import { IncidentSpecificReport } from './IncidentSpecificReport';
 
 export const IncidentReport = ({
   forms,
   isDetailedReport,
+  isAllColumnReport,
 }: {
   forms: IncidentDto[];
   isDetailedReport: boolean;
+  isAllColumnReport: boolean;
 }) => {
-  const report = useMemo(() => {
+  const reports = useMemo(() => {
     const formattedForms = forms.map(form => formatIncidentFields(form));
 
-    return isDetailedReport
-      ? generateIncidentDetailedReport(formattedForms)
-      : generateIncidentBriefReport(formattedForms);
+    return chain(formattedForms)
+      .groupBy(KoboCommonKeys.disTyp)
+      .map((incidentSpecificForms, incidentKey) => {
+        return {
+          incidentKey,
+          report: isDetailedReport
+            ? generateIncidentDetailedReport(incidentSpecificForms)
+            : generateIncidentBriefReport(incidentSpecificForms),
+        };
+      })
+      .value();
   }, [forms, isDetailedReport]);
 
   return (
     <>
-      {isDetailedReport ? (
-        <DetailedIncidentReport report={report} />
-      ) : (
-        <BriefIncidentReport report={report} />
-      )}
+      {reports.map(incidentSpecific => {
+        return (
+          <>
+            <Typography fontWeight="bold">
+              <FormattedMessage
+                id={`disasters.${incidentSpecific.incidentKey}`}
+              />
+            </Typography>
+            <IncidentSpecificReport
+              report={incidentSpecific.report}
+              isDetailedReport={isDetailedReport}
+              isAllColumnReport={isAllColumnReport}
+            />
+          </>
+        );
+      })}
     </>
   );
 };

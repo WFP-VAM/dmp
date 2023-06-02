@@ -1,6 +1,8 @@
 import { DroughtDto } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
+import { BriefReportTable } from 'components/DisasterTable/BriefReportTable';
+import { DetailedReportTable } from 'components/DisasterTable/DetailedReportTable';
 import {
   generateDroughtBriefReport,
   generateDroughtDetailedReport,
@@ -9,13 +11,16 @@ import { formatDroughtFields } from 'utils/formatRawToForm';
 
 import { BriefDroughtReport } from './BriefDroughtReport';
 import { DetailedDroughtReport } from './DetailedDroughtReport';
+import { SummaryDroughtReportColumnSettings } from './tablesConfig/SummaryReport';
 
 export const DroughtReport = ({
   forms,
   isDetailedReport,
+  isAllColumnReport,
 }: {
   forms: DroughtDto[];
   isDetailedReport: boolean;
+  isAllColumnReport: boolean;
 }) => {
   const report = useMemo(() => {
     const formattedForms = forms.map(form => formatDroughtFields(form));
@@ -25,12 +30,34 @@ export const DroughtReport = ({
       : generateDroughtBriefReport(formattedForms);
   }, [forms, isDetailedReport]);
 
+  if (isAllColumnReport) {
+    return (
+      <>
+        {isDetailedReport ? (
+          <DetailedDroughtReport report={report} />
+        ) : (
+          <BriefDroughtReport report={report} />
+        )}
+      </>
+    );
+  }
+
   return (
     <>
       {isDetailedReport ? (
-        <DetailedDroughtReport report={report} />
+        <DetailedReportTable
+          columns={SummaryDroughtReportColumnSettings.columns}
+          columnGroup={SummaryDroughtReportColumnSettings.columnGroup}
+          data={report}
+          rotateHeader={true}
+        />
       ) : (
-        <BriefDroughtReport report={report} />
+        <BriefReportTable
+          columns={SummaryDroughtReportColumnSettings.columns}
+          columnGroup={SummaryDroughtReportColumnSettings.columnGroup}
+          data={report}
+          rotateHeader={true}
+        />
       )}
     </>
   );
