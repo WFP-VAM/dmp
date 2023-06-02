@@ -112,7 +112,7 @@ export const HomeTable = ({
                           mr={3}
                           sx={{
                             'a:hover': {
-                              color: '#52545c',
+                              color: '#494949',
                             },
                           }}
                         >
