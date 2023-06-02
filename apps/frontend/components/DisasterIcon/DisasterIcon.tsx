@@ -15,6 +15,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DisasterMapping, IncidentMapping } from '@wfp-dmp/interfaces';
+import { useMemo } from 'react';
 import { useIntl } from 'react-intl';
 
 // eslint-disable-next-line complexity
@@ -51,14 +52,15 @@ const getIconDefinition = (disTyp: string) => {
 
 export const DisasterIcon = ({ disTyp }: { disTyp: string }): JSX.Element => {
   const intl = useIntl();
+  const iconDefinition = useMemo(() => getIconDefinition(disTyp), [disTyp]);
 
   return (
     <FontAwesomeIcon
-      icon={getIconDefinition(disTyp)}
-      size="2x"
+      icon={iconDefinition}
       title={intl.formatMessage({
         id: `disasters.${disTyp}`,
       })}
+      style={{ height: '20px' }}
     />
   );
 };
