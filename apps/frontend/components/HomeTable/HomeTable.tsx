@@ -1,4 +1,14 @@
 import {
+  Paper,
+  Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import {
   DisasterDtoType,
   formatCommonFields,
   KoboCommonKeys,
@@ -6,6 +16,7 @@ import {
 import dayjs from 'dayjs';
 import { chain, compact, pick, range, uniq } from 'lodash';
 import { useMemo } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { NUMBER_LAST_DAYS } from 'constant';
 import { dropNotApproved } from 'utils/dropNotApproved';
@@ -49,7 +60,42 @@ export const HomeTable = ({
 }): JSX.Element => {
   const disastersPerDate = useMemo(() => getDisastersPerDate(forms), [forms]);
 
-  if (isLoading) return <div>LOADING</div>;
-
-  return <div>{JSON.stringify(disastersPerDate)}</div>;
+  return (
+    <TableContainer component={Paper}>
+      <Table>
+        {isLoading ? (
+          <TableBody>
+            {range(NUMBER_LAST_DAYS).map(id => {
+              return (
+                <TableRow key={id}>
+                  <TableCell colSpan={9}>
+                    <Skeleton />
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        ) : (
+          <TableBody>
+            {disastersPerDate.map(disasters => (
+              <TableRow key={disasters.entryDate}>
+                <TableCell sx={{ backgroundColor: '#f5f8ff', width: 150 }}>
+                  <Typography>{disasters.entryDate}</Typography>
+                </TableCell>
+                <TableCell>
+                  {disasters.disTyps.length === 0 ? (
+                    <Typography>
+                      <FormattedMessage id="report_page.noData" />
+                    </Typography>
+                  ) : (
+                    JSON.stringify(disasters.disTyps)
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        )}
+      </Table>
+    </TableContainer>
+  );
 };

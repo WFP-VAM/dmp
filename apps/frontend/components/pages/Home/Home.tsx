@@ -16,7 +16,11 @@ export const Home = (): JSX.Element => {
       <Typography variant="h3" mb={5}>
         <FormattedMessage id="navigation.banner" />
       </Typography>
-      <HomeTable isLoading={isLoading} forms={lastForms} />
+      <Box display="flex" justifyContent="center">
+        <Box sx={{ maxWidth: 700, flexGrow: 1 }}>
+          <HomeTable isLoading={isLoading} forms={lastForms} />
+        </Box>
+      </Box>
     </Box>
   );
 };
