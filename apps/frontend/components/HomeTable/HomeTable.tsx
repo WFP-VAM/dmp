@@ -1,4 +1,5 @@
 import {
+  Box,
   Paper,
   Skeleton,
   Table,
@@ -15,9 +16,11 @@ import {
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { chain, compact, pick, range, uniq } from 'lodash';
+import Link from 'next/link';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
+import { DisasterIcon } from 'components/DisasterIcon';
 import { NUMBER_LAST_DAYS } from 'constant';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
@@ -83,13 +86,30 @@ export const HomeTable = ({
                   <Typography>{disasters.entryDate}</Typography>
                 </TableCell>
                 <TableCell>
-                  {disasters.disTyps.length === 0 ? (
-                    <Typography>
-                      <FormattedMessage id="report_page.noData" />
-                    </Typography>
-                  ) : (
-                    JSON.stringify(disasters.disTyps)
-                  )}
+                  <Box display="flex" flexDirection="row">
+                    {disasters.disTyps.length === 0 ? (
+                      <Typography>
+                        <FormattedMessage id="report_page.noData" />
+                      </Typography>
+                    ) : (
+                      disasters.disTyps.map(disTyp => (
+                        <Box key={disTyp} mr={3}>
+                          <Link
+                            href={{
+                              pathname: '/forms/search',
+                              query: {
+                                disTyp,
+                                startDate: disasters.entryDate,
+                                endDate: disasters.entryDate,
+                              },
+                            }}
+                          >
+                            <DisasterIcon disTyp={disTyp} />
+                          </Link>
+                        </Box>
+                      ))
+                    )}
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}

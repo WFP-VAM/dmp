@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -11,20 +12,29 @@ import {
 import { TableDisplay } from 'components/TableDisplay';
 import { useGetForms } from 'services/api/kobo/useGetForms';
 
-const defaultSearchFormData: SearchFormData = {
-  disTyps: [DisasterMapping['flood']],
-  region: {
-    province: '',
-    district: '',
-    commune: '',
-  },
-  dateRange: {
-    startDate: dayjs().subtract(1, 'month'),
-    endDate: dayjs(),
-  },
-};
-
 export const FormSearch = () => {
+  const router = useRouter();
+  const { disTyp, startDate, endDate } = router.query;
+
+  // TODO add security for the query params
+  const defaultSearchFormData: SearchFormData = {
+    disTyps: [
+      disTyp === undefined ? DisasterMapping['flood'] : (disTyp as string),
+    ],
+    region: {
+      province: '',
+      district: '',
+      commune: '',
+    },
+    dateRange: {
+      startDate:
+        startDate === undefined
+          ? dayjs().subtract(1, 'month')
+          : dayjs(startDate as string),
+      endDate: endDate === undefined ? dayjs() : dayjs(endDate as string),
+    },
+  };
+
   const [searchFormData, setSearchFormData] = useState(defaultSearchFormData);
 
   const { data: formData, isLoading } = useGetForms(searchFormData);
