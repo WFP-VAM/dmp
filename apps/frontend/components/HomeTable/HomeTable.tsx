@@ -71,11 +71,11 @@ export const HomeTable = ({
         alignItems="center"
         sx={{ minHeight: 80, backgroundColor: '#dddddd' }}
       >
-        <Typography variant="h4">
+        <Typography fontWeight="bold">
           <FormattedMessage id="home.table_title" />
         </Typography>
       </Box>
-      <Table aria-labelledby="tableTitle">
+      <Table>
         {isLoading ? (
           <TableBody>
             {range(NUMBER_LAST_DAYS).map(id => {
