@@ -52,7 +52,8 @@
     "logout": "Logout"
   },
   "home": {
-    "table_title": "Summary by Day"
+    "table_title": "Summary by Day",
+    "no_report": "No disaster report"
   },
   "validation_search_params": {
     "disaster_type": "Disaster Type",

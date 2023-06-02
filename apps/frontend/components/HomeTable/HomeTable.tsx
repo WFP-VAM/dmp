@@ -99,7 +99,7 @@ export const HomeTable = ({
                   <Box display="flex" flexDirection="row">
                     {disasters.disTyps.length === 0 ? (
                       <Typography>
-                        <FormattedMessage id="report_page.noData" />
+                        <FormattedMessage id="home.no_report" />
                       </Typography>
                     ) : (
                       disasters.disTyps.map(disTyp => (
