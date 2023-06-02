@@ -93,7 +93,11 @@ export const HomeTable = ({
             {disastersPerDate.map(disasters => (
               <TableRow key={disasters.entryDate}>
                 <TableCell sx={{ backgroundColor: '#f5f8ff', width: 150 }}>
-                  <Typography>{disasters.entryDate}</Typography>
+                  <Typography>
+                    {dayjs(disasters.entryDate, 'YYYY-MM-DD').format(
+                      'DD-MM-YYYY',
+                    )}
+                  </Typography>
                 </TableCell>
                 <TableCell>
                   <Box display="flex" flexDirection="row">
