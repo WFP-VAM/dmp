@@ -103,7 +103,15 @@ export const HomeTable = ({
                       </Typography>
                     ) : (
                       disasters.disTyps.map(disTyp => (
-                        <Box key={disTyp} mr={3}>
+                        <Box
+                          key={disTyp}
+                          mr={3}
+                          sx={{
+                            'a:hover': {
+                              color: '#52545c',
+                            },
+                          }}
+                        >
                           <Link
                             href={{
                               pathname: '/forms/search',
