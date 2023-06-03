@@ -112,11 +112,6 @@ export const HomeTable = ({
                         <Box
                           key={disTyp}
                           mr={3}
-                          sx={{
-                            'a:hover': {
-                              color: '#494949',
-                            },
-                          }}
                         >
                           <Tooltip
                             title={
