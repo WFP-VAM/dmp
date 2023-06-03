@@ -1,5 +1,6 @@
 import {
   Box,
+  IconButton,
   Paper,
   Skeleton,
   Table,
@@ -7,6 +8,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import {
@@ -116,18 +118,30 @@ export const HomeTable = ({
                             },
                           }}
                         >
-                          <Link
-                            href={{
-                              pathname: '/forms/search',
-                              query: {
-                                disTyp,
-                                startDate: disasters.entryDate,
-                                endDate: disasters.entryDate,
-                              },
-                            }}
+                          <Tooltip
+                            title={
+                              <FormattedMessage id={`disasters.${disTyp}`} />
+                            }
                           >
-                            <DisasterIcon disTyp={disTyp} />
-                          </Link>
+                            <IconButton
+                              component={Link}
+                              sx={{
+                                '&:hover': {
+                                  color: '#494949',
+                                },
+                              }}
+                              href={{
+                                pathname: '/forms/search',
+                                query: {
+                                  disTyp,
+                                  startDate: disasters.entryDate,
+                                  endDate: disasters.entryDate,
+                                },
+                              }}
+                            >
+                              <DisasterIcon disTyp={disTyp} />
+                            </IconButton>
+                          </Tooltip>
                         </Box>
                       ))
                     )}
