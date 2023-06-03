@@ -109,10 +109,7 @@ export const HomeTable = ({
                       </Typography>
                     ) : (
                       disasters.disTyps.map(disTyp => (
-                        <Box
-                          key={disTyp}
-                          mr={3}
-                        >
+                        <Box key={disTyp} mr={3}>
                           <Tooltip
                             title={
                               <FormattedMessage id={`disasters.${disTyp}`} />
