@@ -51,6 +51,10 @@
     "banner": "Disaster Information and Monitoring System",
     "logout": "Logout"
   },
+  "home": {
+    "table_title": "Summary by Day",
+    "no_report": "No disaster report"
+  },
   "validation_search_params": {
     "disaster_type": "Disaster Type",
     "incident_type": "Incident Type",
