@@ -27,7 +27,7 @@ export const Login: NextPage = () => {
     try {
       await login(data);
       if (![undefined, ''].includes(redirect)) {
-        return await router.push(redirect);
+        return await router.push(redirect as string);
       }
 
       return await router.push(Pages.Home);
