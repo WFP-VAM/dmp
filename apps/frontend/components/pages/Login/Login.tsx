@@ -14,6 +14,7 @@ import style from './Login.module.css';
 export const Login: NextPage = () => {
   const intl = useIntl();
   const router = useRouter();
+  const redirect = router.query.redirect as string | undefined;
 
   const {
     register,
@@ -25,6 +26,9 @@ export const Login: NextPage = () => {
   const onSubmit = async (data: LoginData) => {
     try {
       await login(data);
+      if (![undefined, ''].includes(redirect)) {
+        return await router.push(redirect);
+      }
 
       return await router.push(Pages.Home);
     } catch {

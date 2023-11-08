@@ -9,15 +9,28 @@ type AuthGuardProps = {
   children: JSX.Element;
 };
 
+const buildRedirect = (pathName: string, queryString: string): string => {
+  if (queryString !== '') {
+    return `${pathName}?${queryString}`;
+  }
+
+  return pathName;
+};
+
 export const AuthGuard = ({ children }: AuthGuardProps) => {
   const { user, isLoading } = useAuth();
-  const Router = useRouter();
+  const router = useRouter();
+  const pathName = router.pathname;
+  const queryString = new URLSearchParams(
+    router.query as unknown as URLSearchParams,
+  ).toString();
+  const redirectUrl = buildRedirect(pathName, queryString);
 
   useEffect(() => {
     if (!isLoading && !user) {
-      void Router.push(Pages.Login);
+      void router.push(`${Pages.Login}?redirect=${redirectUrl}`);
     }
-  }, [isLoading, Router, user]);
+  }, [isLoading, router, user, redirectUrl]);
 
   if (isLoading) {
     return <FullPageLoader />;
