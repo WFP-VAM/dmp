@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import SelectLanguage from 'components/SelectLanguage';
 import { Input, PasswordInput } from 'components/atoms';
 import { useAuth } from 'context/auth';
 import { login, LoginData } from 'services/api/auth/login';
@@ -105,6 +106,7 @@ export const Login: NextPage = () => {
             <FormattedMessage id="login.submit" />
           </button>
         </form>
+        <SelectLanguage />
       </div>
     </main>
   );
