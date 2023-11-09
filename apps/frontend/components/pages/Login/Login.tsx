@@ -21,7 +21,7 @@ export const Login: NextPage = () => {
   const { user } = useAuth();
   useEffect(() => {
     if (user) {
-      void router.push(redirect as string);
+      void router.push(redirect ?? '/');
     }
   }, [user, redirect, router]);
 

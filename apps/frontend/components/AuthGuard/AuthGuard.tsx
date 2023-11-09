@@ -18,7 +18,11 @@ export const AuthGuard = ({ children }: AuthGuardProps) => {
 
   useEffect(() => {
     if (!isLoading && !user) {
-      void router.push(`${Pages.Login}?redirect=${redirectUrl}`);
+      // remove empty redirects
+      const redirectParam = !['', '/'].includes(redirectUrl)
+        ? `?redirect=${redirectUrl}`
+        : '';
+      void router.push(`${Pages.Login}${redirectParam}`);
     }
   }, [isLoading, router, user, redirectUrl]);
 
