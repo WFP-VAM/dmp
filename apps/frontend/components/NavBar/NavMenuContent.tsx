@@ -19,8 +19,8 @@ import Link from 'next/link';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import SelectLanguage from 'components/SelectLanguage';
+import { apiBaseUrl } from 'services/api/client';
 import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
-import { env } from 'services/env';
 import { logout } from 'utils/logout';
 
 export const NavMenuContent = (): JSX.Element => {
@@ -28,9 +28,7 @@ export const NavMenuContent = (): JSX.Element => {
   const isAdmin = useIsSignedInUserAdmin();
 
   const handleAdminClick = () => {
-    // TODO - Use apiClient.baseUrl?
-    const baseURL = env('NEXT_PUBLIC_API_BASE_URL');
-    const path = new URL('/admin/login', baseURL).toString();
+    const path = new URL('/admin/login', apiBaseUrl).toString();
     window.location.href = path;
   };
 

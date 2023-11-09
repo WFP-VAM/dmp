@@ -16,8 +16,10 @@ import {
   setAccessToken,
 } from './auth/utils';
 
+export const apiBaseUrl = env('NEXT_PUBLIC_API_BASE_URL');
+
 export const apiClient = axios.create({
-  baseURL: env('NEXT_PUBLIC_API_BASE_URL'),
+  baseURL: apiBaseUrl,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
