@@ -4,7 +4,7 @@ import { Login } from 'components';
 import { Layout } from 'components/Layout';
 
 const LoginPage: NextPage = () => (
-  <Layout>
+  <Layout alignItems="center">
     <Login />
   </Layout>
 );

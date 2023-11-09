@@ -1,31 +1,26 @@
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import HomeIcon from '@mui/icons-material/Home';
-import LanguageIcon from '@mui/icons-material/Language';
 import LogoutIcon from '@mui/icons-material/Logout';
 import StarIcon from '@mui/icons-material/Star';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import {
   Box,
   Button,
-  FormControl,
   IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
   Typography,
 } from '@mui/material';
 import Logo from 'next/image';
 import Link from 'next/link';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useLanguageContext } from 'context';
+import SelectLanguage from 'components/SelectLanguage';
+import { apiBaseUrl } from 'services/api/client';
 import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
-import { env } from 'services/env';
 import { logout } from 'utils/logout';
 
 export const NavMenuContent = (): JSX.Element => {
@@ -33,16 +28,8 @@ export const NavMenuContent = (): JSX.Element => {
   const isAdmin = useIsSignedInUserAdmin();
 
   const handleAdminClick = () => {
-    // TODO - Use apiClient.baseUrl?
-    const baseURL = env('NEXT_PUBLIC_API_BASE_URL');
-    const path = new URL('/admin/login', baseURL).toString();
+    const path = new URL('/admin/login', apiBaseUrl).toString();
     window.location.href = path;
-  };
-
-  const { language, setLanguage } = useLanguageContext();
-  const handleLanguageChange = (e: SelectChangeEvent) => {
-    const newLanguage = e.target.value;
-    setLanguage(newLanguage);
   };
 
   const handleLogoutClick = () => {
@@ -148,26 +135,7 @@ export const NavMenuContent = (): JSX.Element => {
           </ListItem>
         )}
       </List>
-      <FormControl sx={{ padding: 4 }}>
-        <Select
-          value={language}
-          onChange={handleLanguageChange}
-          startAdornment={<LanguageIcon sx={{ marginRight: 1 }} />}
-        >
-          <MenuItem value="en">
-            <FormattedMessage
-              id="navigation.language.english"
-              defaultMessage="English"
-            />
-          </MenuItem>
-          <MenuItem value="km">
-            <FormattedMessage
-              id="navigation.language.khmer"
-              defaultMessage="ភាសាខ្មែរ"
-            />
-          </MenuItem>
-        </Select>
-      </FormControl>
+      <SelectLanguage />
       <Button
         className="logout"
         onClick={handleLogoutClick}
