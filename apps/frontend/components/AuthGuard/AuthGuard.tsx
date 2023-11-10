@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { FullPageLoader } from 'components/FullPageLoader';
 import { Pages } from 'constant';
 import { useAuth } from 'context/auth';
-import { buildRedirectUrl } from 'services/url-builder';
 
 type AuthGuardProps = {
   children: JSX.Element;
@@ -14,15 +13,13 @@ export const AuthGuard = ({ children }: AuthGuardProps) => {
   const { user, isLoading } = useAuth();
   const router = useRouter();
 
-  const redirectUrl = buildRedirectUrl(router);
+  const redirectUrl = ![',', '/'].includes(router.asPath)
+    ? `?redirect=${router.asPath}`
+    : '';
 
   useEffect(() => {
     if (!isLoading && !user) {
-      // remove empty redirects
-      const redirectParam = !['', '/'].includes(redirectUrl)
-        ? `?redirect=${redirectUrl}`
-        : '';
-      void router.push(`${Pages.Login}${redirectParam}`);
+      void router.push(`${Pages.Login}${redirectUrl}`);
     }
   }, [isLoading, router, user, redirectUrl]);
 

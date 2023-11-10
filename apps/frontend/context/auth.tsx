@@ -5,7 +5,6 @@ import useSWR from 'swr';
 
 import { ApiRoutes } from 'services/api/apiRoutes';
 import { CustomError } from 'services/errors/custom-error';
-import { buildRedirectUrl } from 'services/url-builder';
 
 type AuthContext = {
   isLoading: boolean;
@@ -31,7 +30,6 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   const router = useRouter();
-  const redirectUrl = buildRedirectUrl(router);
 
   const { data, isLoading, error } = useSWR<GetUserDto, unknown>(ApiRoutes.me);
 
@@ -43,9 +41,9 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     if (error instanceof CustomError && error.name === 'authentication') {
-      void router.push(redirectUrl);
+      void router.push(router.asPath);
     }
-  }, [error, redirectUrl, router]);
+  }, [error, router]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
