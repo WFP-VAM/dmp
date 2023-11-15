@@ -8,6 +8,5 @@ const clearCache = () => mutate(() => true, undefined, { revalidate: false });
 export const logout = async () => {
   void clearCache();
   removeAccessToken();
-  ApiRoutes.logout;
   await apiClient.post<unknown>(ApiRoutes.logout);
 };

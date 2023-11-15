@@ -1,8 +1,10 @@
 import { GetUserDto } from '@wfp-dmp/interfaces';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import useSWR from 'swr';
 
 import { ApiRoutes } from 'services/api/apiRoutes';
+import { CustomError } from 'services/errors/custom-error';
 
 type AuthContext = {
   isLoading: boolean;
@@ -27,6 +29,8 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
+  const router = useRouter();
+
   const { data, isLoading, error } = useSWR<GetUserDto, unknown>(ApiRoutes.me);
 
   const value = {
@@ -34,6 +38,12 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     error,
     isLoading,
   };
+
+  useEffect(() => {
+    if (error instanceof CustomError && error.name === 'authentication') {
+      void router.push(router.asPath);
+    }
+  }, [error, router]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

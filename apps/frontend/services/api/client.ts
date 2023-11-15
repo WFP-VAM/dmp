@@ -3,10 +3,9 @@ import createAuthRefreshInterceptor, {
   AxiosAuthRefreshRequestConfig,
 } from 'axios-auth-refresh';
 import jwtDecode from 'jwt-decode';
-import Router from 'next/router';
 
-import { Pages } from 'constant';
 import { env } from 'services/env';
+import { CustomError } from 'services/errors/custom-error';
 
 import { ApiRoutes } from './apiRoutes';
 import {
@@ -30,9 +29,7 @@ apiClient.interceptors.request.use(
   async config => {
     const access = getAccessToken();
     if (access === null) {
-      await Router.push(Pages.Login);
-
-      return config;
+      return new CustomError('authentication', 'no-token');
     }
     if (isTokenExpired(jwtDecode(access))) {
       await refreshToken();
@@ -48,7 +45,9 @@ apiClient.interceptors.request.use(
   undefined,
   {
     runWhen: config =>
-      config.url !== ApiRoutes.refresh && config.url !== ApiRoutes.login,
+      config.url !== ApiRoutes.refresh &&
+      config.url !== ApiRoutes.login &&
+      config.url !== ApiRoutes.logout,
   },
 );
 
@@ -62,9 +61,7 @@ const refreshToken = async (): Promise<void> => {
       ),
     );
   } catch (error) {
-    await Router.push(Pages.Login);
-
-    return Promise.reject(error);
+    return Promise.reject(new CustomError('authentication', 'invalid-token'));
   }
 };
 
