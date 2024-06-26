@@ -11,13 +11,17 @@ type AuthGuardProps = {
 
 export const AuthGuard = ({ children }: AuthGuardProps) => {
   const { user, isLoading } = useAuth();
-  const Router = useRouter();
+  const router = useRouter();
+
+  const redirectUrl = ![',', '/'].includes(router.asPath)
+    ? `?redirect=${router.asPath}`
+    : '';
 
   useEffect(() => {
     if (!isLoading && !user) {
-      void Router.push(Pages.Login);
+      void router.push(`${Pages.Login}${redirectUrl}`);
     }
-  }, [isLoading, Router, user]);
+  }, [isLoading, router, user, redirectUrl]);
 
   if (isLoading) {
     return <FullPageLoader />;

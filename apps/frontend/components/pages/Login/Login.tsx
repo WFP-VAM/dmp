@@ -2,11 +2,13 @@ import { Typography } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next/types';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import SelectLanguage from 'components/SelectLanguage';
 import { Input, PasswordInput } from 'components/atoms';
-import { Pages } from 'constant';
+import { useAuth } from 'context/auth';
 import { login, LoginData } from 'services/api/auth/login';
 
 import style from './Login.module.css';
@@ -14,6 +16,14 @@ import style from './Login.module.css';
 export const Login: NextPage = () => {
   const intl = useIntl();
   const router = useRouter();
+  const redirect = router.query.redirect as string | undefined;
+
+  const { user } = useAuth();
+  useEffect(() => {
+    if (user) {
+      void router.push(redirect ?? '/');
+    }
+  }, [user, redirect, router]);
 
   const {
     register,
@@ -25,8 +35,6 @@ export const Login: NextPage = () => {
   const onSubmit = async (data: LoginData) => {
     try {
       await login(data);
-
-      return await router.push(Pages.Home);
     } catch {
       setError('email', {
         type: 'server',
@@ -98,6 +106,7 @@ export const Login: NextPage = () => {
             <FormattedMessage id="login.submit" />
           </button>
         </form>
+        <SelectLanguage />
       </div>
     </main>
   );
