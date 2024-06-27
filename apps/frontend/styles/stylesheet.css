@@ -1,6 +1,7 @@
 :root {
   --spacing_very-small: 0.25rem;
   --color_primary_1: black;
-  --color_primary_2: grey;
+  --color_primary_2: #666;
   --color_primary_3: white;
+  --background-color-main: #f5f5f5;
 }
