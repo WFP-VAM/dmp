@@ -60,10 +60,10 @@ export const Login: NextPage = () => {
             height={100}
           />
         </div>
-        <h1 className={style.subtitle}>
+        <h1 className={style.khSubtitle}>
           ប្រព័ន្ធព័ត៌មានទាន់ហេតុការណ៍ និងអង្កេតតាមដានស្ថានការណ៍គ្រោះមហន្តរាយ
         </h1>
-        <Typography variant="h6" className={style.subtitle}>
+        <Typography variant="h6" className={style.enSubtitle}>
           Disaster Information and Monitoring System
         </Typography>
         <h1 className={style.title}>
