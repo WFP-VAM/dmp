@@ -67,7 +67,6 @@ jobs:
         run: |
           cd apps/frontend
           ./gen_env.sh staging
-          pnpm next export
       - name: Deploy on surge
         uses: dswistowski/surge-sh-action@v1
         with:

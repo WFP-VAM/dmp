@@ -47,6 +47,9 @@ const nextConfig = {
       headers: securityHeaders,
     },
   ],
+
+  // Add the output configuration
+  output: 'export',
 };
 
 const withBundleAnalyzer = nextBundleAnalyzer({

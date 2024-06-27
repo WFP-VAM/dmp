@@ -14,7 +14,6 @@ applications:
             - cd apps/frontend
             - env | grep -e NEXT_PUBLIC_ > .env.production
             - ./gen_env.sh production
-            - pnpm next export # export static files
             - cd out
             - cp index.html 200.html
             - cd ..
