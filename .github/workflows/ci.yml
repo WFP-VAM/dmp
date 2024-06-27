@@ -89,15 +89,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
-      - name: Log pnpm version
-        run: pnpm --version
-      - name: Check lockfile version
-        run: |
-          if grep -q '"lockfileVersion":' pnpm-lock.yaml; then
-            echo "Lockfile version: $(grep '"lockfileVersion":' pnpm-lock.yaml)";
-          else
-            echo "Lockfile version not found";
-          fi
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
       - name: Build Interfaces & Frontend
