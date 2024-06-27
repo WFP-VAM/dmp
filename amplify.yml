@@ -5,7 +5,7 @@ applications:
         preBuild:
           commands:
             - nvm use 18
-            - npm install -g pnpm@^7
+            - npm install -g pnpm@^9
             - cd ../..
             - pnpm install --virtual-store-dir apps/frontend/node_modules/.pnpm
         build:
