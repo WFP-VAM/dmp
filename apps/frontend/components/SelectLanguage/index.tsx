@@ -18,11 +18,12 @@ const SelectLanguage = (): JSX.Element => {
   };
 
   return (
-    <FormControl sx={{ padding: 4 }}>
+    <FormControl sx={{ padding: 0 }}>
       <Select
         value={language}
         onChange={handleLanguageChange}
         startAdornment={<LanguageIcon sx={{ marginRight: 1 }} />}
+        style={{ height: '2.5rem' }}
       >
         <MenuItem value="en">
           <FormattedMessage

@@ -125,7 +125,16 @@ export const Login: NextPage = () => {
             <FormattedMessage id="login.submit" />
           </button>
         </form>
-        <SelectLanguage />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'start',
+            alignItems: 'start',
+            paddingTop: '1rem',
+          }}
+        >
+          <SelectLanguage />
+        </div>
       </div>
     </main>
   );

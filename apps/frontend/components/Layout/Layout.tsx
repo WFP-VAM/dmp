@@ -9,7 +9,7 @@ interface Props {
 export const Layout = ({
   alignItems,
   children,
-  backgroundColor,
+  backgroundColor = '#f5f5f5',
 }: Props): JSX.Element => {
   // Warning: the maxWidth will influence the way the PDF are generated
   // TODO investigate how to reduce this value without changing th PDF display
