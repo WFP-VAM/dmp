@@ -93,8 +93,8 @@ jobs:
         run: pnpm --version
       - name: Check lockfile version
         run: |
-          if grep -q '"lockfileVersion":' pnpm-lock.yaml; then
-            echo "Lockfile version: $(grep '"lockfileVersion":' pnpm-lock.yaml)";
+          if grep -q '"lockfileVersion":' ../../pnpm-lock.yaml; then
+            echo "Lockfile version: $(grep '"lockfileVersion":' ../../pnpm-lock.yaml)";
           else
             echo "Lockfile version not found";
           fi
