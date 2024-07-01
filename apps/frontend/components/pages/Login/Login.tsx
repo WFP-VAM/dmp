@@ -134,7 +134,7 @@ export const Login: NextPage = () => {
             display: 'flex',
             justifyContent: 'start',
             alignItems: 'start',
-            paddingTop: '1rem',
+            paddingTop: '1.5rem',
           }}
         >
           <SelectLanguage />
