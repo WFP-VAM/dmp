@@ -31,26 +31,28 @@ export const SearchFilters = ({
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
-      <Controller
-        name="region"
-        control={control}
-        render={({ field: { value, onChange } }) => (
-          <RegionFilters value={value} onChange={onChange} />
-        )}
-      />
-      <Controller
-        name={'disTyps'}
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <DisasterFilter value={value} onChange={onChange} />
-        )}
-      />
-      <Box display="flex" justifyContent="left" alignItems="center" m={2}>
+      <Box display="flex" justifyContent="left" alignItems="center" m={1}>
+        <Controller
+          name="region"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <RegionFilters value={value} onChange={onChange} />
+          )}
+        />
         <Controller
           name="dateRange"
           control={control}
           render={({ field: { onChange, value } }) => (
             <DateRangeFilter value={value} onChange={onChange} />
+          )}
+        />
+      </Box>
+      <Box display="flex" justifyContent="left" alignItems="center" m={2}>
+        <Controller
+          name={'disTyps'}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <DisasterFilter value={value} onChange={onChange} />
           )}
         />
         <Button sx={{ color: 'white', maxHeight: 50, ml: 2 }} type="submit">
