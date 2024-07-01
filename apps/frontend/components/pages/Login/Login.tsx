@@ -1,3 +1,5 @@
+import EmailIcon from '@mui/icons-material/EmailOutlined';
+import LockIcon from '@mui/icons-material/LockOutlined';
 import { Typography } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -77,6 +79,7 @@ export const Login: NextPage = () => {
           <div className={style.inputContainer}>
             <Input
               id="login.email"
+              startIcon={<EmailIcon />}
               type="email"
               autoComplete="email"
               label={intl.formatMessage({
@@ -100,6 +103,7 @@ export const Login: NextPage = () => {
           </div>
           <div className={style.inputContainer}>
             <PasswordInput
+              startIcon={<LockIcon />}
               id="login.password"
               autoComplete="current-password"
               label={intl.formatMessage({

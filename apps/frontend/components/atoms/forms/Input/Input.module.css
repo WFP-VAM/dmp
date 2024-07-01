@@ -9,17 +9,26 @@
   width: 100%;
 }
 
-.iconContainer {
+.endIconContainer {
   position: absolute;
   top: 0.75rem;
-  left: calc(100% - 2rem);
+  left: calc(100% - 2.5rem);
 }
+
+.startIconContainer {
+  color: var(--color_primary_3);
+  position: absolute;
+  top: 0.75rem;
+  right: calc(100% - 2rem);
+}
+
 
 .input {
   margin-top: var(--spacing_very-small);
   border-radius: 0.3rem;
-  border: 0.0625rem solid var(--color_primary_2);
+  border: 0.0625rem solid #BFBFBF;
   padding: 0.5rem 1rem;
+  padding-left: 2.5rem;
   box-shadow: none;
   color: var(--color_primary_1);
   outline: none;
