@@ -1,4 +1,11 @@
-import { Box, FormControl, MenuItem, Select } from '@mui/material';
+import LocationOnIcon from '@mui/icons-material/FmdGoodOutlined';
+import {
+  Box,
+  FormControl,
+  InputAdornment,
+  MenuItem,
+  Select,
+} from '@mui/material';
 import { communes, districts, provinces } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -60,7 +67,16 @@ export const RegionFilters = ({
     [value.district],
   );
 
-  const selectInputStyles = { mr: 3, minWidth: 200 };
+  const selectInputStyles = {
+    mr: 2,
+    minWidth: 200,
+    backgroundColor: 'white',
+    borderRadius: '4px',
+    padding: '0px 5px',
+    fontSize: 14,
+    color: 'black',
+    fontWeight: 600,
+  };
 
   return (
     <Box display="flex" flexDirection="row" justifyContent="left" margin={2}>
@@ -73,6 +89,11 @@ export const RegionFilters = ({
           }}
           sx={selectInputStyles}
           displayEmpty
+          startAdornment={
+            <InputAdornment position="start">
+              <LocationOnIcon sx={{ color: 'black' }} />
+            </InputAdornment>
+          }
         >
           <MenuItem value="" key={'validation_search_params.all-province'}>
             <FormattedMessage id="validation_search_params.all-province" />
@@ -96,6 +117,11 @@ export const RegionFilters = ({
           }}
           sx={selectInputStyles}
           displayEmpty
+          startAdornment={
+            <InputAdornment position="start">
+              <LocationOnIcon sx={{ color: 'black' }} />
+            </InputAdornment>
+          }
         >
           <MenuItem value="">
             <FormattedMessage id="validation_search_params.all-district" />
@@ -119,6 +145,11 @@ export const RegionFilters = ({
           }}
           sx={selectInputStyles}
           displayEmpty
+          startAdornment={
+            <InputAdornment position="start">
+              <LocationOnIcon sx={{ color: 'black' }} />
+            </InputAdornment>
+          }
         >
           <MenuItem value="">
             <FormattedMessage id="validation_search_params.all-commune" />

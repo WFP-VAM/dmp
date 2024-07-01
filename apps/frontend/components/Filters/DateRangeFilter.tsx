@@ -1,12 +1,13 @@
-import { Box } from '@mui/material';
+import { CalendarMonth } from '@mui/icons-material';
+import { Box, InputAdornment } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import React from 'react';
 import { useIntl } from 'react-intl';
 
 export interface DateRange {
-  startDate: Dayjs;
-  endDate: Dayjs;
+  startDate?: Dayjs;
+  endDate?: Dayjs;
 }
 
 interface IProps {
@@ -20,9 +21,14 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
   return (
     <Box display="flex" justifyContent="left">
       <DatePicker
-        label={intl.formatMessage({
-          id: 'validation_search_params.start_date',
-        })}
+        sx={{ mr: 2, width: 140, backgroundColor: 'white' }}
+        label={
+          value.startDate
+            ? undefined
+            : intl.formatMessage({
+                id: 'validation_search_params.start_date',
+              })
+        }
         maxDate={dayjs(new Date())}
         value={value.startDate}
         onChange={newStartValue => {
@@ -36,13 +42,33 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
             onChange({ ...value, startDate: newStartValue as Dayjs });
           }
         }}
-        sx={{ mr: 3 }}
+        slotProps={{
+          inputAdornment: {
+            sx: {
+              display: 'none',
+            },
+          },
+          textField: {
+            InputProps: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CalendarMonth />
+                </InputAdornment>
+              ),
+            },
+          },
+        }}
       />
 
       <DatePicker
-        label={intl.formatMessage({
-          id: 'validation_search_params.end_date',
-        })}
+        sx={{ mr: 2, width: 140, backgroundColor: 'white' }}
+        label={
+          value.endDate
+            ? undefined
+            : intl.formatMessage({
+                id: 'validation_search_params.end_date',
+              })
+        }
         maxDate={dayjs(new Date())}
         value={value.endDate}
         onChange={newEndValue => {
@@ -55,6 +81,22 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
           } else {
             onChange({ ...value, endDate: newEndValue as Dayjs });
           }
+        }}
+        slotProps={{
+          inputAdornment: {
+            sx: {
+              display: 'none',
+            },
+          },
+          textField: {
+            InputProps: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CalendarMonth />
+                </InputAdornment>
+              ),
+            },
+          },
         }}
       />
     </Box>
