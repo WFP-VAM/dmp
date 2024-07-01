@@ -5,7 +5,7 @@
   "scripts": {
     "build": "next build",
     "build:analyze": "DEV_ANALYZE_BUNDLE=true next build",
-    "dev": "./gen_env.sh local && next dev -p 3000",
+    "dev": "./gen_env.sh local public && next dev -p 3000",
     "lint": "eslint --cache --cache-location .next/cache/eslint/ './!(out)/**/*.{js,ts,tsx}'",
     "lint:fix": "pnpm lint --fix",
     "lint:style": "stylelint './**/*.module.css'",
