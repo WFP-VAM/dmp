@@ -62,7 +62,10 @@
     "end_date": "To",
     "province": "Province",
     "district": "District",
-    "commune": "Commune"
+    "commune": "Commune",
+    "all-province": "All provinces",
+    "all-district": "All districts",
+    "all-commune": "All communes"
   },
   "form_page": {
     "approve": "Approve",

@@ -70,7 +70,10 @@
     "end_date": "រហូតដល់",
     "province": "ខេត្ត",
     "district": "ស្រុក",
-    "commune": "ឃុំ"
+    "commune": "ឃុំ",
+    "all-province": "ខេត្តទាំងអស់",
+    "all-district": "ស្រុកទាំងអស់",
+    "all-commune": "ឃុំទាំងអស់"
   },
   "form_page": {
     "approve": "ឯកភាព",
