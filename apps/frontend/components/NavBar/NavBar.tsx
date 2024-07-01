@@ -17,7 +17,11 @@ export const NavBar = ({ children }: Props): JSX.Element => {
 
   return (
     <>
-      <MenuIcon fontSize="medium" onClick={handleDrawerToggle} />
+      <MenuIcon
+        fontSize="medium"
+        onClick={handleDrawerToggle}
+        style={{ position: 'absolute' }}
+      />
       <Box display="flex">
         <Box component="nav" sx={{ width: { sm: 260 }, flexShrink: { sm: 0 } }}>
           <Drawer

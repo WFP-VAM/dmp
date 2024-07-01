@@ -17,6 +17,7 @@ export const Layout = ({
     <Box
       flexGrow={1}
       display="flex"
+      height="100vh"
       flexDirection="column"
       alignItems={alignItems ?? 'left'}
       sx={{ p: 1 }}

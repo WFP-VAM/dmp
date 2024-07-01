@@ -17,7 +17,7 @@ import {
   KoboCommonKeys,
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
-import { chain, compact, pick, range, uniq } from 'lodash';
+import { compact, groupBy, map, orderBy, pick, range, uniq } from 'lodash';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -42,18 +42,15 @@ const getDisastersPerDate = (forms: DisasterDtoType[] | undefined) => {
     [KoboCommonKeys.disTyp]: undefined,
   }));
 
-  const disastersPerDate = chain([...formattedForms, ...lastNDates])
-    .groupBy(dateKey)
-    .map((array, keyValue) => {
-      return {
-        [dateKey]: keyValue,
-        disTyps: uniq(compact(array.map(disaster => disaster.disTyp))).sort(),
-      };
-    })
-    .orderBy(dateKey, 'desc')
-    .value();
+  const groupedData = groupBy([...formattedForms, ...lastNDates], dateKey);
+  const disastersPerDate = map(groupedData, (array, keyValue) => {
+    return {
+      [dateKey]: keyValue,
+      disTyps: uniq(compact(array.map(disaster => disaster.disTyp))).sort(),
+    };
+  });
 
-  return disastersPerDate;
+  return orderBy(disastersPerDate, dateKey, 'desc');
 };
 
 export const HomeTable = ({
