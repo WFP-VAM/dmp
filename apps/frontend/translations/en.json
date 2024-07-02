@@ -56,16 +56,18 @@
     "no_report": "No disaster report"
   },
   "validation_search_params": {
-    "disaster_type": "Disaster Type",
-    "incident_type": "Incident Type",
-    "start_date": "From",
-    "end_date": "To",
+    "location": "Location",
+    "disaster_type": "Disaster type",
+    "incident_type": "Incident type",
     "province": "Province",
     "district": "District",
     "commune": "Commune",
     "all-province": "All provinces",
     "all-district": "All districts",
-    "all-commune": "All communes"
+    "all-commune": "All communes",
+    "date_range": "Date range",
+    "start_date": "From",
+    "end_date": "To"
   },
   "form_page": {
     "approve": "Approve",

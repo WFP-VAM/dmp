@@ -105,3 +105,10 @@ h6 {
   isolation: isolate;
   height: 100%;
 }
+
+/* Override styles for Mui Inputs */
+.MuiInputBase-input {
+  padding: 0.75rem 0.5rem;
+  font-size: 14px !important;
+  /* font-weight: 600; */
+}

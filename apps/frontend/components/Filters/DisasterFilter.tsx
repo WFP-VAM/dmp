@@ -1,7 +1,6 @@
 import {
   Box,
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -14,7 +13,7 @@ import {
   INCIDENT,
 } from '@wfp-dmp/interfaces';
 import { useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { IncidentSelect } from './IncidentSelect';
 
@@ -26,7 +25,6 @@ interface Props {
 }
 
 export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
-  const intl = useIntl();
   // value can contain more than one element only for incident
   // value can be empty if it is an INCIDENT
   const disTyp =
@@ -64,16 +62,10 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
       margin={2}
     >
       <FormControl>
-        <InputLabel>
-          <FormattedMessage id="validation_search_params.disaster_type" />
-        </InputLabel>
         <Select
           value={disasterType}
           onChange={onDisasterTypeChange}
-          label={intl.formatMessage({
-            id: 'validation_search_params.disaster_type',
-          })}
-          sx={{ minWidth: 150, mr: 2 }}
+          sx={{ minWidth: 150, mr: 2, backgroundColor: 'white' }}
         >
           {disasters.map(disaster => {
             return (
