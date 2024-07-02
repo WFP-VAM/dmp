@@ -32,7 +32,7 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
         maxDate={dayjs(new Date())}
         value={value.startDate}
         onChange={newStartValue => {
-          if ((newStartValue as Dayjs) > value.endDate) {
+          if (value.endDate && (newStartValue as Dayjs) > value.endDate) {
             onChange({
               ...value,
               startDate: newStartValue as Dayjs,
@@ -72,7 +72,7 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
         maxDate={dayjs(new Date())}
         value={value.endDate}
         onChange={newEndValue => {
-          if ((newEndValue as Dayjs) < value.startDate) {
+          if (value.startDate && (newEndValue as Dayjs) < value.startDate) {
             onChange({
               ...value,
               startDate: newEndValue as Dayjs,

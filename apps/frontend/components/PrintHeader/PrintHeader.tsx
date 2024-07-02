@@ -56,11 +56,13 @@ export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
       ) : null}
       <Typography ml={3}>
         <FormattedMessage id="validation_search_params.start_date" />
-        {` : ${searchReportData.dateRange.startDate.format('YYYY-MM-DD')}`}
+        {` : ${
+          searchReportData.dateRange.startDate?.format('YYYY-MM-DD') ?? ''
+        }`}
       </Typography>
       <Typography ml={3}>
         <FormattedMessage id="validation_search_params.end_date" />
-        {` : ${searchReportData.dateRange.endDate.format('YYYY-MM-DD')}`}
+        {` : ${searchReportData.dateRange.endDate?.format('YYYY-MM-DD') ?? ''}`}
       </Typography>
     </Box>
   );
