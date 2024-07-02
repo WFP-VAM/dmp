@@ -41,7 +41,7 @@
   },
   "navigation": {
     "home": "Home",
-    "forms": { "header": "Forms", "search": "Search" },
+    "forms": { "header": "Forms", "search": "Search forms" },
     "reports": "Reports",
     "admin": "Admin",
     "language": {

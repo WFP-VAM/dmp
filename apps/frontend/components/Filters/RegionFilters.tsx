@@ -71,15 +71,12 @@ export const RegionFilters = ({
     mr: 2,
     minWidth: 200,
     backgroundColor: 'white',
-    borderRadius: '4px',
-    padding: '0px 5px',
-    fontSize: 14,
     color: 'black',
     fontWeight: 600,
   };
 
   return (
-    <Box display="flex" flexDirection="row" justifyContent="left" margin={2}>
+    <Box display="flex" flexDirection="row" justifyContent="left" margin={1}>
       <FormControl>
         <Select
           disabled={disableAll === true || user === undefined ? true : false}

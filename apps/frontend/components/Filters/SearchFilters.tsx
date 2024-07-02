@@ -1,3 +1,4 @@
+import EastIcon from '@mui/icons-material/East';
 import { Box, Button, Typography } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -73,8 +74,18 @@ export const SearchFilters = ({
               <DisasterFilter value={value} onChange={onChange} />
             )}
           />
-          <Button sx={{ color: 'white', maxHeight: 50, ml: 2 }} type="submit">
+          <Button
+            sx={{
+              color: 'black',
+              padding: 1,
+              height: '2rem',
+              ml: 2,
+              backgroundColor: 'var(--color_buttons_1)',
+            }}
+            type="submit"
+          >
             {submitButtonContent}
+            {<EastIcon style={{ marginLeft: 6, marginBottom: 2 }} />}
           </Button>
         </Box>
       </Box>
