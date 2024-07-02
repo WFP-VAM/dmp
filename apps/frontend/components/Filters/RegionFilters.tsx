@@ -7,10 +7,9 @@ import {
   Select,
 } from '@mui/material';
 import { communes, districts, provinces } from '@wfp-dmp/interfaces';
+import { useAuth } from 'context/auth';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import { useAuth } from 'context/auth';
 
 const getDistrictsFilteredByProvince = (provinceValue: string) => {
   return districts.filter((district: string) => {
@@ -24,9 +23,9 @@ const getCommunesFilteredByDistrict = (districtValue: string) => {
 };
 
 export interface Region {
-  province: string;
-  district: string;
-  commune: string;
+  province: string[];
+  district: string[];
+  commune: string[];
   disabled?: boolean;
 }
 
@@ -58,12 +57,17 @@ export const RegionFilters = ({
   }, [user]);
 
   const districtsFiltered = useMemo(
-    () => getDistrictsFilteredByProvince(value.province),
+    () =>
+      value.province
+        ? Array.prototype.concat(
+            ...value.province.map(pro => getDistrictsFilteredByProvince(pro)),
+          )
+        : [],
     [value.province],
   );
 
   const communesFiltered = useMemo(
-    () => getCommunesFilteredByDistrict(value.district),
+    () => getCommunesFilteredByDistrict(value.district[0]),
     [value.district],
   );
 
@@ -75,14 +79,22 @@ export const RegionFilters = ({
     fontWeight: 600,
   };
 
+  console.log({ value });
+
   return (
     <Box display="flex" flexDirection="row" justifyContent="left" margin={1}>
       <FormControl>
         <Select
+          multiple
           disabled={disableAll === true || user === undefined ? true : false}
-          value={value.province}
+          value={value.province || []} // Ensure value is an array
           onChange={e => {
-            onChange({ province: e.target.value, district: '', commune: '' });
+            onChange({
+              ...value,
+              province: e.target.value as string[],
+              district: [],
+              commune: [],
+            });
           }}
           sx={selectInputStyles}
           displayEmpty
@@ -92,7 +104,7 @@ export const RegionFilters = ({
             </InputAdornment>
           }
         >
-          <MenuItem value="" key={'validation_search_params.all-province'}>
+          <MenuItem value={[]} key={'validation_search_params.all-province'}>
             <FormattedMessage id="validation_search_params.all-province" />
           </MenuItem>
           {allowedProvinces.map(provinceNumber => {
@@ -107,10 +119,15 @@ export const RegionFilters = ({
 
       <FormControl>
         <Select
-          disabled={disableAll === true || value.province === ''}
-          value={value.district}
+          multiple
+          disabled={disableAll === true || value.province.length === 0}
+          value={value.district || []} // Ensure value is an array
           onChange={e => {
-            onChange({ ...value, district: e.target.value, commune: '' });
+            onChange({
+              ...value,
+              district: e.target.value as string[],
+              commune: [],
+            });
           }}
           sx={selectInputStyles}
           displayEmpty
@@ -120,7 +137,7 @@ export const RegionFilters = ({
             </InputAdornment>
           }
         >
-          <MenuItem value="">
+          <MenuItem value={[]}>
             <FormattedMessage id="validation_search_params.all-district" />
           </MenuItem>
           {districtsFiltered.map(districtNumber => {
@@ -135,10 +152,11 @@ export const RegionFilters = ({
 
       <FormControl>
         <Select
-          disabled={disableAll === true || value.district === ''}
-          value={value.commune}
+          multiple
+          disabled={disableAll === true || value.district.length === 0}
+          value={value.commune || []} // Ensure value is an array
           onChange={e => {
-            onChange({ ...value, commune: e.target.value });
+            onChange({ ...value, commune: e.target.value as string[] });
           }}
           sx={selectInputStyles}
           displayEmpty
@@ -148,7 +166,7 @@ export const RegionFilters = ({
             </InputAdornment>
           }
         >
-          <MenuItem value="">
+          <MenuItem value={[]}>
             <FormattedMessage id="validation_search_params.all-commune" />
           </MenuItem>
           {communesFiltered.map(communeNumber => {
