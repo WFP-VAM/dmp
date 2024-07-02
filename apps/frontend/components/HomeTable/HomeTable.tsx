@@ -179,7 +179,7 @@ export const HomeTable = ({
                 <TableCell sx={{ backgroundColor: '#f5f8ff', width: 150 }}>
                   <Typography>
                     {dayjs(disasters.entryDate, 'YYYY-MM-DD').format(
-                      'DD-MM-YYYY',
+                      'DD/MM/YYYY',
                     )}
                   </Typography>
                 </TableCell>

@@ -22,6 +22,8 @@ import { FormattedMessage } from 'react-intl';
 import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
+import { formatDate } from '../../utils/date';
+
 const formatForms = (forms: DisasterDtoType[] | undefined) => {
   if (forms === undefined || forms.length === 0) {
     return [];
@@ -118,8 +120,8 @@ export const TableDisplay = ({
                 <TableCell>
                   <FormattedMessage id={`commune.${formattedForm.commune}`} />
                 </TableCell>
-                <TableCell>{formattedForm.disasterDate}</TableCell>
-                <TableCell>{formattedForm.entryDate}</TableCell>
+                <TableCell>{formatDate(formattedForm.disasterDate)}</TableCell>
+                <TableCell>{formatDate(formattedForm.entryDate)}</TableCell>
                 <TableCell>
                   <FormattedMessage id={`disasters.${formattedForm.disTyp}`} />
                 </TableCell>
