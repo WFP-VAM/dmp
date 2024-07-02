@@ -60,7 +60,7 @@
     "disaster_type": "Disaster type",
     "incident_type": "Incident type",
     "province": "Province",
-    "district": "District",
+    "district": "District / Krong",
     "commune": "Commune",
     "all-province": "All provinces",
     "all-district": "All districts",
@@ -99,7 +99,7 @@
     "no_forms": "No forms match your search parameters.",
     "headers": {
       "province": "Province",
-      "district": "District",
+      "district": "District / Krong",
       "commune": "Commune",
       "dis_date": "Disaster Date",
       "dis_type": "Disaster Type",
@@ -114,7 +114,7 @@
     "noData": "No Data",
     "data": "Data",
     "summary": "Summary",
-    "all_columns": "All Columns",
+    "all_columns": "Detailed",
     "level": "Level"
   },
   "table": {
@@ -645,7 +645,7 @@
     },
     "COMMON": {
       "column": {
-        "district": "District",
+        "district": "District / Krong",
         "commune": "Commune"
       }
     }
