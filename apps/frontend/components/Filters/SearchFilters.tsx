@@ -64,9 +64,7 @@ export const SearchFilters = ({
             )}
           />
         </Box>
-        <Box display="flex" justifyContent="left" alignItems="center">
-          <FormattedMessage id="validation_search_params.disaster_type" />
-
+        <Box mt={1} display="flex" justifyContent="left" alignItems="center">
           <Controller
             name={'disTyps'}
             control={control}

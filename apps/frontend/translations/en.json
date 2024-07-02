@@ -35,9 +35,9 @@
     "submit": "Update"
   },
   "valStatus": {
-    "approved": "Report approved",
-    "notApproved": "Report approval rejected",
-    "onHold": "Report not yet approved"
+    "approved": "Approved",
+    "notApproved": "Rejected",
+    "onHold": "Not yet approved"
   },
   "navigation": {
     "home": "Home",

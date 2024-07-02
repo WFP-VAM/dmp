@@ -2,7 +2,7 @@ import { CalendarMonth } from '@mui/icons-material';
 import { Box, InputAdornment } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
-import React from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 
 export interface DateRange {
@@ -17,6 +17,8 @@ interface IProps {
 
 export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
   const intl = useIntl();
+  const [startOpen, setStartOpen] = useState(false);
+  const [endOpen, setEndOpen] = useState(false);
 
   return (
     <Box display="flex" justifyContent="left">
@@ -42,10 +44,14 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
             onChange({ ...value, startDate: newStartValue as Dayjs });
           }
         }}
+        open={startOpen}
+        onOpen={() => setStartOpen(true)}
+        onClose={() => setStartOpen(false)}
         slotProps={{
           inputAdornment: {
             sx: {
               display: 'none',
+              cursor: 'pointer',
             },
           },
           textField: {
@@ -55,6 +61,10 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
                   <CalendarMonth />
                 </InputAdornment>
               ),
+              onClick: () => setStartOpen(true), // Open calendar on click
+              sx: {
+                cursor: 'pointer',
+              },
             },
           },
         }}
@@ -82,6 +92,9 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
             onChange({ ...value, endDate: newEndValue as Dayjs });
           }
         }}
+        open={endOpen}
+        onOpen={() => setEndOpen(true)}
+        onClose={() => setEndOpen(false)}
         slotProps={{
           inputAdornment: {
             sx: {
@@ -95,6 +108,10 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
                   <CalendarMonth />
                 </InputAdornment>
               ),
+              onClick: () => setEndOpen(true), // Open calendar on click
+              sx: {
+                cursor: 'pointer',
+              },
             },
           },
         }}

@@ -58,10 +58,12 @@ export const TableDisplay = ({
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
+    <TableContainer component={Paper} sx={{ m: 2 }}>
+      <Table sx={{ '& .MuiTableCell-root': { border: '1px solid #ccc' } }}>
         <TableHead>
-          <TableRow sx={{ backgroundColor: '#013399', color: 'white' }}>
+          <TableRow
+            sx={{ backgroundColor: 'var(--color_table_1)', color: 'black' }}
+          >
             <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.province" />
             </TableCell>
@@ -74,17 +76,17 @@ export const TableDisplay = ({
             <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.dis_date" />
             </TableCell>
+            <TableCell sx={{ color: 'inherit', width: '110px' }}>
+              <FormattedMessage id="forms_table.headers.entry_date" />
+            </TableCell>
             <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.dis_type" />
             </TableCell>
             <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.entry_name" />
             </TableCell>
-            <TableCell sx={{ color: 'inherit' }}>
+            <TableCell sx={{ color: 'inherit', width: '120px' }}>
               <FormattedMessage id="forms_table.headers.phone" />
-            </TableCell>
-            <TableCell sx={{ color: 'inherit' }}>
-              <FormattedMessage id="forms_table.headers.entry_date" />
             </TableCell>
             <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.review_link" />
@@ -117,16 +119,18 @@ export const TableDisplay = ({
                   <FormattedMessage id={`commune.${formattedForm.commune}`} />
                 </TableCell>
                 <TableCell>{formattedForm.disasterDate}</TableCell>
+                <TableCell>{formattedForm.entryDate}</TableCell>
                 <TableCell>
                   <FormattedMessage id={`disasters.${formattedForm.disTyp}`} />
                 </TableCell>
                 <TableCell>{formattedForm.entryName}</TableCell>
                 <TableCell>{formattedForm.phone}</TableCell>
-                <TableCell>{formattedForm.entryDate}</TableCell>
                 <TableCell>
                   <Link
                     href={formattedForm.approvalLink}
                     style={{ textDecoration: 'none' }}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <ValidationIndicator
                       valStatus={

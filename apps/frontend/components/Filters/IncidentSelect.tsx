@@ -52,7 +52,7 @@ export const IncidentSelect = ({
   };
 
   return (
-    <FormControl sx={{ m: 1, width: 300, backgroundColor: 'white' }}>
+    <FormControl sx={{ m: 0, width: 300, backgroundColor: 'white' }}>
       <Select
         multiple
         value={value}
