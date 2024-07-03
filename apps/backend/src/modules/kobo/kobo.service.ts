@@ -72,9 +72,9 @@ export class KoboService {
     endDate,
   }: {
     disTyps: string[];
-    province: string | undefined;
-    district?: string;
-    commune?: string;
+    province: string | undefined | string[];
+    district?: string | string[];
+    commune?: string | string[];
     startDate?: string;
     endDate?: string;
   }): Promise<QueryResponse<T>> {
@@ -85,9 +85,9 @@ export class KoboService {
       {
         params: {
           query: {
-            [koboKeys[disasterType].province]: province,
-            [koboKeys[disasterType].district]: district,
-            [koboKeys[disasterType].commune]: commune,
+            [koboKeys[disasterType].province]: Array.isArray(province) ? { $in: province } : province,
+            [koboKeys[disasterType].district]: Array.isArray(district) ? { $in: district } : district,
+            [koboKeys[disasterType].commune]: Array.isArray(commune) ? { $in: commune } : commune,
             [koboKeys[disasterType].entryDate]: { $gte: startDate, $lte: endDate },
             [koboKeys[disasterType].disTyp]: { $in: disTyps },
           },
