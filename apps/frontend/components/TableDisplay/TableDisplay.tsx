@@ -56,8 +56,11 @@ export const TableDisplay = ({
   isLoading: boolean;
 }): JSX.Element => {
   const { user } = useAuth();
-  const isUserAdmin = user && ['admin'].includes(user.roles[0]);
-  const formattedForms = useMemo(() => formatForms(forms), [forms]);
+  const isUserAdmin = Boolean(user && ['admin'].includes(user.roles[0]));
+  const formattedForms = useMemo(
+    () => formatForms(forms, isUserAdmin),
+    [forms, isUserAdmin],
+  );
 
   if (!isLoading && formattedForms.length === 0) {
     return (
