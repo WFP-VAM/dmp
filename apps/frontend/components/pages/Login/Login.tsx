@@ -1,5 +1,8 @@
+import EmailIcon from '@mui/icons-material/EmailOutlined';
+import LockIcon from '@mui/icons-material/LockOutlined';
 import { Typography } from '@mui/material';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next/types';
 import { useEffect } from 'react';
@@ -44,13 +47,28 @@ export const Login: NextPage = () => {
   };
 
   return (
-    <main>
+    <main className={style.main}>
       <Head>
         <meta name="description" content="login" />
         <title>Login | NCDM - DMP</title>
       </Head>
       <div className={style.container}>
-        <h1>
+        <div className={style.logoContainer}>
+          <Image
+            src="/logo.svg"
+            alt="Logo"
+            className={style.logo}
+            width={100}
+            height={100}
+          />
+        </div>
+        <h1 className={style.khSubtitle}>
+          ប្រព័ន្ធព័ត៌មានទាន់ហេតុការណ៍ និងអង្កេតតាមដានស្ថានការណ៍គ្រោះមហន្តរាយ
+        </h1>
+        <Typography variant="h6" className={style.enSubtitle}>
+          Disaster Information and Monitoring System
+        </Typography>
+        <h1 className={style.title}>
           <FormattedMessage id="login.title" />
         </h1>
         <form
@@ -58,9 +76,10 @@ export const Login: NextPage = () => {
           method="post"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div>
+          <div className={style.inputContainer}>
             <Input
               id="login.email"
+              startIcon={<EmailIcon />}
               type="email"
               autoComplete="email"
               label={intl.formatMessage({
@@ -82,8 +101,9 @@ export const Login: NextPage = () => {
               })}
             />
           </div>
-          <div>
+          <div className={style.inputContainer}>
             <PasswordInput
+              startIcon={<LockIcon />}
               id="login.password"
               autoComplete="current-password"
               label={intl.formatMessage({
@@ -98,6 +118,9 @@ export const Login: NextPage = () => {
                 }),
               })}
             />
+            {/* <a href="/forgot-password" className={style.forgotPassword}>
+              <FormattedMessage id="login.forgotPassword" />
+            </a> */}
           </div>
           {errors.email?.message != null && (
             <Typography color="red">{errors.email.message}</Typography>
@@ -106,7 +129,16 @@ export const Login: NextPage = () => {
             <FormattedMessage id="login.submit" />
           </button>
         </form>
-        <SelectLanguage />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'start',
+            alignItems: 'start',
+            paddingTop: '1.5rem',
+          }}
+        >
+          <SelectLanguage />
+        </div>
       </div>
     </main>
   );

@@ -13,7 +13,7 @@ export const Home = (): JSX.Element => {
 
   return (
     <Box>
-      <Typography variant="h3" mb={5}>
+      <Typography variant="h4" mb={5}>
         <FormattedMessage id="navigation.banner" />
       </Typography>
       <Box display="flex" justifyContent="center">

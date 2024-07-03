@@ -3,6 +3,11 @@
     "province": "ខេត្ត",
     "commune": "ឃុំ"
   },
+  "generic": {
+    "password_input": {
+      "show_password": "Show"
+    }
+  },
   "login": {
     "title": "សូមស្វាគមន៍!",
     "error": "មានកំហុសកើតឡើង សូមព្យាយាមម្តងទៀត",

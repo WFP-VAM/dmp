@@ -1,4 +1,5 @@
-import LanguageIcon from '@mui/icons-material/Language';
+import { faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   FormControl,
   MenuItem,
@@ -18,11 +19,17 @@ const SelectLanguage = (): JSX.Element => {
   };
 
   return (
-    <FormControl sx={{ padding: 4 }}>
+    <FormControl sx={{ padding: 0 }}>
       <Select
         value={language}
         onChange={handleLanguageChange}
-        startAdornment={<LanguageIcon sx={{ marginRight: 1 }} />}
+        startAdornment={
+          <FontAwesomeIcon
+            icon={faGlobe}
+            style={{ marginRight: '0.5rem', color: 'var(--color_primary_3)' }}
+          />
+        }
+        style={{ height: '2.5rem' }}
       >
         <MenuItem value="en">
           <FormattedMessage

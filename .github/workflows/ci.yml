@@ -100,10 +100,12 @@ jobs:
           fi
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
+      - name: Clean build folder
+        run: rm -rf apps/frontend/out
       - name: Build Interfaces & Frontend
         run: pnpm turbo build
         env:
-          NEXT_PUBLIC_API_BASE_URL: https://staging-api-dmp.ovio.org
+          NEXT_PUBLIC_API_BASE_URL: https://api-dmp.ovio.org
       - name: Export to static HTML
         run: |
           cd apps/frontend
