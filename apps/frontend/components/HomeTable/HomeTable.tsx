@@ -16,15 +16,14 @@ import {
   formatCommonFields,
   KoboCommonKeys,
 } from '@wfp-dmp/interfaces';
+import { DisasterIcon } from 'components/DisasterIcon';
+import { NUMBER_LAST_DAYS } from 'constant';
+import { useAuth } from 'context/auth';
 import dayjs from 'dayjs';
 import { compact, groupBy, map, orderBy, pick, range, uniq } from 'lodash';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import { DisasterIcon } from 'components/DisasterIcon';
-import { NUMBER_LAST_DAYS } from 'constant';
-import { useAuth } from 'context/auth';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
 interface DisasterLocation {
@@ -146,7 +145,6 @@ export const HomeTable = ({
 }: HomeTableProps): JSX.Element => {
   const { user } = useAuth();
   const showProvinces = ['admin', 'ncdm'].includes(user?.roles[0] ?? '');
-  console.log({ showProvinces });
   const disastersPerDate = useMemo(() => getDisastersPerDate(forms), [forms]);
 
   return (

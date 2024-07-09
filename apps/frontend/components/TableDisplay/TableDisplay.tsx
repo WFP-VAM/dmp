@@ -57,6 +57,7 @@ export const TableDisplay = ({
 }): JSX.Element => {
   const { user } = useAuth();
   const isUserAdmin = Boolean(user && ['admin'].includes(user.roles[0]));
+  // If user is admin, show all forms, otherwise hide rejected forms
   const formattedForms = useMemo(
     () => formatForms(forms, isUserAdmin),
     [forms, isUserAdmin],
