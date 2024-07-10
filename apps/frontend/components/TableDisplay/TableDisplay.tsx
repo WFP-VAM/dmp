@@ -20,18 +20,26 @@ import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
+import { useAuth } from 'context/auth';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
-const formatForms = (forms: DisasterDtoType[] | undefined) => {
+import { formatDate } from '../../utils/date';
+
+const formatForms = (
+  forms: DisasterDtoType[] | undefined,
+  dropRejected: boolean,
+) => {
   if (forms === undefined || forms.length === 0) {
     return [];
   }
 
   // Filter out rejected forms and order by date descending
   // using disasterDate then submissionTime.
-  const formattedForms = dropNotApproved(forms).map(form => {
-    return formatCommonFields(form);
-  });
+  const formattedForms = (dropRejected ? dropNotApproved(forms) : forms).map(
+    form => {
+      return formatCommonFields(form);
+    },
+  );
 
   return orderBy(
     formattedForms,
@@ -47,7 +55,13 @@ export const TableDisplay = ({
   forms?: DisasterDtoType[];
   isLoading: boolean;
 }): JSX.Element => {
-  const formattedForms = useMemo(() => formatForms(forms), [forms]);
+  const { user } = useAuth();
+  const isUserAdmin = Boolean(user && ['admin'].includes(user.roles[0]));
+  // If user is admin, show all forms, otherwise hide rejected forms
+  const formattedForms = useMemo(
+    () => formatForms(forms, isUserAdmin),
+    [forms, isUserAdmin],
+  );
 
   if (!isLoading && formattedForms.length === 0) {
     return (
@@ -58,10 +72,12 @@ export const TableDisplay = ({
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
+    <TableContainer component={Paper} sx={{ m: 2 }}>
+      <Table sx={{ '& .MuiTableCell-root': { border: '1px solid #ccc' } }}>
         <TableHead>
-          <TableRow sx={{ backgroundColor: '#013399', color: 'white' }}>
+          <TableRow
+            sx={{ backgroundColor: 'var(--color_table_1)', color: 'black' }}
+          >
             <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.province" />
             </TableCell>
@@ -74,17 +90,17 @@ export const TableDisplay = ({
             <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.dis_date" />
             </TableCell>
+            <TableCell sx={{ color: 'inherit', width: '110px' }}>
+              <FormattedMessage id="forms_table.headers.entry_date" />
+            </TableCell>
             <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.dis_type" />
             </TableCell>
             <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.entry_name" />
             </TableCell>
-            <TableCell sx={{ color: 'inherit' }}>
+            <TableCell sx={{ color: 'inherit', width: '120px' }}>
               <FormattedMessage id="forms_table.headers.phone" />
-            </TableCell>
-            <TableCell sx={{ color: 'inherit' }}>
-              <FormattedMessage id="forms_table.headers.entry_date" />
             </TableCell>
             <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.review_link" />
@@ -116,17 +132,19 @@ export const TableDisplay = ({
                 <TableCell>
                   <FormattedMessage id={`commune.${formattedForm.commune}`} />
                 </TableCell>
-                <TableCell>{formattedForm.disasterDate}</TableCell>
+                <TableCell>{formatDate(formattedForm.disasterDate)}</TableCell>
+                <TableCell>{formatDate(formattedForm.entryDate)}</TableCell>
                 <TableCell>
                   <FormattedMessage id={`disasters.${formattedForm.disTyp}`} />
                 </TableCell>
                 <TableCell>{formattedForm.entryName}</TableCell>
                 <TableCell>{formattedForm.phone}</TableCell>
-                <TableCell>{formattedForm.entryDate}</TableCell>
                 <TableCell>
                   <Link
                     href={formattedForm.approvalLink}
                     style={{ textDecoration: 'none' }}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <ValidationIndicator
                       valStatus={

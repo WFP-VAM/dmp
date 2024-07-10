@@ -1,7 +1,14 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import LocationOnIcon from '@mui/icons-material/FmdGoodOutlined';
+import {
+  Box,
+  FormControl,
+  InputAdornment,
+  MenuItem,
+  Select,
+} from '@mui/material';
 import { communes, districts, provinces } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { useAuth } from 'context/auth';
 
@@ -50,7 +57,6 @@ export const RegionFilters = ({
     }
   }, [user]);
 
-  const intl = useIntl();
   const districtsFiltered = useMemo(
     () => getDistrictsFilteredByProvince(value.province),
     [value.province],
@@ -61,14 +67,17 @@ export const RegionFilters = ({
     [value.district],
   );
 
-  const selectInputStyles = { mr: 3, minWidth: 200 };
+  const selectInputStyles = {
+    mr: 2,
+    minWidth: 200,
+    backgroundColor: 'white',
+    color: 'black',
+    fontWeight: 600,
+  };
 
   return (
-    <Box display="flex" flexDirection="row" justifyContent="left" margin={2}>
+    <Box display="flex" flexDirection="row" justifyContent="left" margin={1}>
       <FormControl>
-        <InputLabel>
-          <FormattedMessage id="validation_search_params.province" />
-        </InputLabel>
         <Select
           disabled={disableAll === true || user === undefined ? true : false}
           value={value.province}
@@ -76,10 +85,16 @@ export const RegionFilters = ({
             onChange({ province: e.target.value, district: '', commune: '' });
           }}
           sx={selectInputStyles}
-          label={intl.formatMessage({
-            id: 'validation_search_params.province',
-          })}
+          displayEmpty
+          startAdornment={
+            <InputAdornment position="start">
+              <LocationOnIcon sx={{ color: 'black' }} />
+            </InputAdornment>
+          }
         >
+          <MenuItem value="" key={'validation_search_params.all-province'}>
+            <FormattedMessage id="validation_search_params.all-province" />
+          </MenuItem>
           {allowedProvinces.map(provinceNumber => {
             return (
               <MenuItem value={provinceNumber} key={provinceNumber}>
@@ -91,20 +106,23 @@ export const RegionFilters = ({
       </FormControl>
 
       <FormControl>
-        <InputLabel>
-          <FormattedMessage id="validation_search_params.district" />
-        </InputLabel>
         <Select
-          disabled={disableAll === true || value.province === '' ? true : false}
+          disabled={disableAll === true || value.province === ''}
           value={value.district}
           onChange={e => {
             onChange({ ...value, district: e.target.value, commune: '' });
           }}
           sx={selectInputStyles}
-          label={intl.formatMessage({
-            id: 'validation_search_params.district',
-          })}
+          displayEmpty
+          startAdornment={
+            <InputAdornment position="start">
+              <LocationOnIcon sx={{ color: 'black' }} />
+            </InputAdornment>
+          }
         >
+          <MenuItem value="">
+            <FormattedMessage id="validation_search_params.all-district" />
+          </MenuItem>
           {districtsFiltered.map(districtNumber => {
             return (
               <MenuItem value={districtNumber} key={districtNumber}>
@@ -116,20 +134,23 @@ export const RegionFilters = ({
       </FormControl>
 
       <FormControl>
-        <InputLabel>
-          <FormattedMessage id="validation_search_params.commune" />
-        </InputLabel>
         <Select
-          disabled={disableAll === true || value.district === '' ? true : false}
+          disabled={disableAll === true || value.district === ''}
           value={value.commune}
           onChange={e => {
             onChange({ ...value, commune: e.target.value });
           }}
           sx={selectInputStyles}
-          label={intl.formatMessage({
-            id: 'validation_search_params.commune',
-          })}
+          displayEmpty
+          startAdornment={
+            <InputAdornment position="start">
+              <LocationOnIcon sx={{ color: 'black' }} />
+            </InputAdornment>
+          }
         >
+          <MenuItem value="">
+            <FormattedMessage id="validation_search_params.all-commune" />
+          </MenuItem>
           {communesFiltered.map(communeNumber => {
             return (
               <MenuItem value={communeNumber} key={communeNumber}>
