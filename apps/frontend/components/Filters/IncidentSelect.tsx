@@ -1,10 +1,8 @@
 import {
   Checkbox,
   FormControl,
-  InputLabel,
   ListItemText,
   MenuItem,
-  OutlinedInput,
   Select,
   SelectChangeEvent,
   Typography,
@@ -54,33 +52,30 @@ export const IncidentSelect = ({
   };
 
   return (
-    <FormControl sx={{ m: 1, width: 300 }}>
-      <InputLabel>
-        <FormattedMessage
-          id="validation_search_params.incident_type"
-          defaultMessage="Incident Type"
-        />
-      </InputLabel>
+    <FormControl sx={{ m: 0, width: 300, backgroundColor: 'white' }}>
       <Select
         multiple
         value={value}
         onChange={handleChange}
-        input={
-          <OutlinedInput
-            label={intl.formatMessage({
-              id: 'validation_search_params.incident_type',
-            })}
-          />
-        }
-        renderValue={selectedIncidentKeys =>
-          selectedIncidentKeys
+        displayEmpty
+        renderValue={selectedIncidentKeys => {
+          if (selectedIncidentKeys.length === 0) {
+            return (
+              <FormattedMessage id="validation_search_params.incident_type" />
+            );
+          }
+          if (isAllSelected) {
+            return <FormattedMessage id="disasters.ALL_INCIDENTS" />;
+          }
+
+          return selectedIncidentKeys
             .map(incidentKey =>
               intl.formatMessage({
                 id: `disasters.${incidentKey}`,
               }),
             )
-            .join(', ')
-        }
+            .join(', ');
+        }}
         MenuProps={MenuProps}
       >
         <MenuItem key="allSelected" value="all">

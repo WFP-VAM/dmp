@@ -10,6 +10,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { useLanguageContext } from 'context';
+import { colors } from 'theme/muiTheme';
 
 const SelectLanguage = (): JSX.Element => {
   const { language, setLanguage } = useLanguageContext();
@@ -21,26 +22,31 @@ const SelectLanguage = (): JSX.Element => {
   return (
     <FormControl sx={{ padding: 0 }}>
       <Select
+        disableUnderline
+        variant="standard"
         value={language}
         onChange={handleLanguageChange}
         startAdornment={
           <FontAwesomeIcon
             icon={faGlobe}
-            style={{ marginRight: '0.5rem', color: 'var(--color_primary_3)' }}
+            style={{ marginRight: '0.5rem', color: colors.color3 }}
           />
         }
+        renderValue={v => v.toUpperCase()}
+        IconComponent={() => null}
+        inputProps={{ sx: { padding: '0 !important' } }}
         style={{ height: '2.5rem' }}
       >
         <MenuItem value="en">
           <FormattedMessage
             id="navigation.language.english"
-            defaultMessage="English"
+            defaultMessage="EN"
           />
         </MenuItem>
         <MenuItem value="km">
           <FormattedMessage
             id="navigation.language.khmer"
-            defaultMessage="ភាសាខ្មែរ"
+            defaultMessage="KM"
           />
         </MenuItem>
       </Select>

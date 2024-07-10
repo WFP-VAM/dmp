@@ -24,42 +24,128 @@ import { FormattedMessage } from 'react-intl';
 
 import { DisasterIcon } from 'components/DisasterIcon';
 import { NUMBER_LAST_DAYS } from 'constant';
+import { useAuth } from 'context/auth';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
-const getDisastersPerDate = (forms: DisasterDtoType[] | undefined) => {
+interface DisasterLocation {
+  province: string;
+  district: string;
+}
+
+interface DisasterPerDate {
+  entryDate: string;
+  disTyps: string[];
+  disTypLocations: Record<string, DisasterLocation[]>;
+}
+
+// Filter locations to show only unique provinces or districts
+// Show provinces if user is admin or ncdm
+const filterLocations = (
+  locations: DisasterLocation[],
+  showProvinces: boolean,
+): DisasterLocation[] => {
+  return locations.filter((location, index, self) =>
+    showProvinces
+      ? self.findIndex(l => l.province === location.province) === index
+      : self.findIndex(l => l.district === location.district) === index,
+  );
+};
+
+const renderLocation = (
+  location: DisasterLocation,
+  showProvinces: boolean,
+  index: number,
+): JSX.Element => {
+  return (
+    <span key={index}>
+      {showProvinces ? (
+        <FormattedMessage id={`province.${location.province}`} />
+      ) : (
+        <>
+          <FormattedMessage id={`province.${location.province}`} />,{' '}
+          <FormattedMessage id={`district.${location.district}`} />
+        </>
+      )}
+      <br />
+    </span>
+  );
+};
+
+const getDisastersPerDate = (
+  forms: DisasterDtoType[] | undefined,
+): DisasterPerDate[] => {
   if (forms === undefined || forms.length === 0) {
     return [];
   }
 
   const dateKey = KoboCommonKeys.entryDate;
-  const formattedForms = dropNotApproved(forms).map(form => {
-    return pick(formatCommonFields(form), [dateKey, KoboCommonKeys.disTyp]);
+  const formattedForms: Array<{
+    [KoboCommonKeys.entryDate]: string;
+    [KoboCommonKeys.disTyp]?: string;
+    [KoboCommonKeys.province]?: string;
+    [KoboCommonKeys.district]?: string;
+  }> = dropNotApproved(forms).map(form => {
+    return pick(formatCommonFields(form), [
+      dateKey,
+      KoboCommonKeys.disTyp,
+      KoboCommonKeys.province,
+      KoboCommonKeys.district,
+    ]) as {
+      [KoboCommonKeys.entryDate]: string;
+      [KoboCommonKeys.disTyp]?: string;
+      [KoboCommonKeys.province]?: string;
+      [KoboCommonKeys.district]?: string;
+    };
   });
 
-  // create an array of fake data points so the days without any entries are still displayed
   const lastNDates = range(NUMBER_LAST_DAYS).map(dayDiff => ({
     [dateKey]: dayjs().subtract(dayDiff, 'day').format('YYYY-MM-DD'),
     [KoboCommonKeys.disTyp]: undefined,
   }));
 
   const groupedData = groupBy([...formattedForms, ...lastNDates], dateKey);
-  const disastersPerDate = map(groupedData, (array, keyValue) => {
-    return {
-      [dateKey]: keyValue,
-      disTyps: uniq(compact(array.map(disaster => disaster.disTyp))).sort(),
-    };
-  });
+  const disastersPerDate = map(
+    groupedData,
+    (array: typeof formattedForms[0][], keyValue): DisasterPerDate => {
+      const disTypLocations = array.reduce<Record<string, DisasterLocation[]>>(
+        (acc, disaster) => {
+          const disTyp = disaster[KoboCommonKeys.disTyp];
+          if (disTyp != null && disTyp.trim() !== '') {
+            acc[disTyp] = disTyp in acc ? acc[disTyp] : [];
+            acc[disTyp].push({
+              province: disaster[KoboCommonKeys.province] ?? '',
+              district: disaster[KoboCommonKeys.district] ?? '',
+            });
+          }
 
-  return orderBy(disastersPerDate, dateKey, 'desc');
+          return acc;
+        },
+        {},
+      );
+
+      return {
+        entryDate: keyValue,
+        disTyps: uniq(compact(array.map(disaster => disaster.disTyp))).sort(),
+        disTypLocations,
+      } as unknown as DisasterPerDate;
+    },
+    // TODO - explore why this is necessary
+  ) as unknown as DisasterPerDate[];
+
+  return orderBy(disastersPerDate, [dateKey], ['desc']);
 };
+
+interface HomeTableProps {
+  forms?: DisasterDtoType[];
+  isLoading: boolean;
+}
 
 export const HomeTable = ({
   forms,
   isLoading,
-}: {
-  forms?: DisasterDtoType[];
-  isLoading: boolean;
-}): JSX.Element => {
+}: HomeTableProps): JSX.Element => {
+  const { user } = useAuth();
+  const showProvinces = ['admin', 'ncdm'].includes(user?.roles[0] ?? '');
   const disastersPerDate = useMemo(() => getDisastersPerDate(forms), [forms]);
 
   return (
@@ -77,15 +163,13 @@ export const HomeTable = ({
       <Table>
         {isLoading ? (
           <TableBody>
-            {range(NUMBER_LAST_DAYS).map(id => {
-              return (
-                <TableRow key={id}>
-                  <TableCell colSpan={9}>
-                    <Skeleton />
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+            {range(NUMBER_LAST_DAYS).map(id => (
+              <TableRow key={id}>
+                <TableCell colSpan={9}>
+                  <Skeleton />
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         ) : (
           <TableBody>
@@ -94,7 +178,7 @@ export const HomeTable = ({
                 <TableCell sx={{ backgroundColor: '#f5f8ff', width: 150 }}>
                   <Typography>
                     {dayjs(disasters.entryDate, 'YYYY-MM-DD').format(
-                      'DD-MM-YYYY',
+                      'DD/MM/YYYY',
                     )}
                   </Typography>
                 </TableCell>
@@ -109,7 +193,20 @@ export const HomeTable = ({
                         <Box key={disTyp} mr={3}>
                           <Tooltip
                             title={
-                              <FormattedMessage id={`disasters.${disTyp}`} />
+                              <>
+                                <FormattedMessage id={`disasters.${disTyp}`} />
+                                <br />
+                                {filterLocations(
+                                  disasters.disTypLocations[disTyp],
+                                  showProvinces,
+                                ).map((location, index) =>
+                                  renderLocation(
+                                    location,
+                                    showProvinces,
+                                    index,
+                                  ),
+                                )}
+                              </>
                             }
                           >
                             <IconButton

@@ -1,6 +1,6 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import PendingIcon from '@mui/icons-material/Pending';
+import Error from '@mui/icons-material/Error';
 import { Stack, Tooltip, Typography } from '@mui/material';
 import { ValidationStatusValue } from '@wfp-dmp/interfaces';
 import { FormattedMessage } from 'react-intl';
@@ -19,7 +19,7 @@ export const ValidationIndicator = ({
     case ValidationStatusValue.approved:
       id = 'valStatus.approved';
       Icon = CheckCircleIcon;
-      color = 'green';
+      color = '#63B2BD';
       break;
     case ValidationStatusValue.notApproved:
       id = 'valStatus.notApproved';
@@ -28,8 +28,8 @@ export const ValidationIndicator = ({
       break;
     default:
       id = 'valStatus.onHold';
-      Icon = PendingIcon;
-      color = 'yellow';
+      Icon = Error;
+      color = '#FCAE65';
   }
 
   if (textVersion) {
