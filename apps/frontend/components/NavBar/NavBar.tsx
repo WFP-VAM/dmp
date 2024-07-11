@@ -37,7 +37,7 @@ export const NavBar = ({ children }: NavBarProps): JSX.Element => {
           <Stack
             style={{
               transition: '0.4s',
-              padding: shrink ? 0 : theme.spacing(2),
+              padding: shrink ? theme.spacing(1) : theme.spacing(2),
             }}
             direction="row"
             justifyContent="space-between"
