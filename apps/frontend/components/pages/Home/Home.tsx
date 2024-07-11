@@ -1,8 +1,9 @@
 import { Box } from '@mui/material';
 import { DisasterDtoType } from '@wfp-dmp/interfaces';
+import useSWR from 'swr';
+
 import { HomeTable } from 'components/HomeTable';
 import { ApiRoutes } from 'services/api/apiRoutes';
-import useSWR from 'swr';
 
 export const Home = (): JSX.Element => {
   const { data: lastForms, isLoading } = useSWR<DisasterDtoType[]>(

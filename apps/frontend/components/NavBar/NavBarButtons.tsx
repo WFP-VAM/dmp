@@ -2,11 +2,12 @@ import { ContentPaste, Home, Logout, Person, Star } from '@mui/icons-material';
 import { Stack, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import SelectLanguage from 'components/SelectLanguage';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+
+import SelectLanguage from 'components/SelectLanguage';
 import { apiBaseUrl } from 'services/api/client';
 import { colors } from 'theme/muiTheme';
 import { logout } from 'utils/logout';
