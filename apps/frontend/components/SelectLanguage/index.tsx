@@ -5,6 +5,7 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  Typography,
 } from '@mui/material';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -32,12 +33,16 @@ const SelectLanguage = (): JSX.Element => {
             style={{ marginRight: '-1rem', color: colors.color3 }}
           />
         }
-        renderValue={v => v.toUpperCase()}
+        renderValue={v => <Typography>{v.toUpperCase()}</Typography>}
         IconComponent={() => null}
         inputProps={{
           sx: { padding: '0 !important' },
         }}
-        style={{ height: '2.5rem', width: '3rem', textAlign: 'right' }}
+        style={{
+          height: '4rem',
+          width: '3rem',
+          textAlign: 'right',
+        }}
       >
         <MenuItem value="en">
           <FormattedMessage
