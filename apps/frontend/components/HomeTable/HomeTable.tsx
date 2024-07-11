@@ -146,7 +146,6 @@ export const HomeTable = ({
 }: HomeTableProps): JSX.Element => {
   const { user } = useAuth();
   const showProvinces = ['admin', 'ncdm'].includes(user?.roles[0] ?? '');
-  console.log({ showProvinces });
   const disastersPerDate = useMemo(() => getDisastersPerDate(forms), [forms]);
 
   return (

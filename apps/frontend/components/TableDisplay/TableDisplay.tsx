@@ -20,20 +20,26 @@ import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
+import { useAuth } from 'context/auth';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
 import { formatDate } from '../../utils/date';
 
-const formatForms = (forms: DisasterDtoType[] | undefined) => {
+const formatForms = (
+  forms: DisasterDtoType[] | undefined,
+  dropRejected: boolean,
+) => {
   if (forms === undefined || forms.length === 0) {
     return [];
   }
 
   // Filter out rejected forms and order by date descending
   // using disasterDate then submissionTime.
-  const formattedForms = dropNotApproved(forms).map(form => {
-    return formatCommonFields(form);
-  });
+  const formattedForms = (dropRejected ? dropNotApproved(forms) : forms).map(
+    form => {
+      return formatCommonFields(form);
+    },
+  );
 
   return orderBy(
     formattedForms,
@@ -49,7 +55,13 @@ export const TableDisplay = ({
   forms?: DisasterDtoType[];
   isLoading: boolean;
 }): JSX.Element => {
-  const formattedForms = useMemo(() => formatForms(forms), [forms]);
+  const { user } = useAuth();
+  const isUserAdmin = Boolean(user && ['admin'].includes(user.roles[0]));
+  // If user is admin, show all forms, otherwise hide rejected forms
+  const formattedForms = useMemo(
+    () => formatForms(forms, isUserAdmin),
+    [forms, isUserAdmin],
+  );
 
   if (!isLoading && formattedForms.length === 0) {
     return (

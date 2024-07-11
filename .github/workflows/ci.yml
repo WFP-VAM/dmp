@@ -82,7 +82,7 @@ jobs:
       surge_url: wfp-dmp-${{ github.event.pull_request.number }}.surge.sh
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.3
+      - uses: pnpm/action-setup@v4.0.0
       - name: Setup Node.js
         id: setup-node
         uses: actions/setup-node@v3
