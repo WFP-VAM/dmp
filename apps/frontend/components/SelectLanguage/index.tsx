@@ -6,10 +6,9 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
+import { useLanguageContext } from 'context';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import { useLanguageContext } from 'context';
 import { colors } from 'theme/muiTheme';
 
 const SelectLanguage = (): JSX.Element => {
@@ -29,13 +28,15 @@ const SelectLanguage = (): JSX.Element => {
         startAdornment={
           <FontAwesomeIcon
             icon={faGlobe}
-            style={{ marginRight: '0.5rem', color: colors.color3 }}
+            style={{ marginRight: '-1rem', color: colors.color3 }}
           />
         }
         renderValue={v => v.toUpperCase()}
         IconComponent={() => null}
-        inputProps={{ sx: { padding: '0 !important' } }}
-        style={{ height: '2.5rem' }}
+        inputProps={{
+          sx: { padding: '0 !important' },
+        }}
+        style={{ height: '2.5rem', width: '3rem', textAlign: 'right' }}
       >
         <MenuItem value="en">
           <FormattedMessage
