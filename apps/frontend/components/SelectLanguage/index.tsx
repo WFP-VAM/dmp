@@ -39,7 +39,6 @@ const SelectLanguage = (): JSX.Element => {
           sx: { padding: '0 !important' },
         }}
         style={{
-          height: '4rem',
           width: '3rem',
           textAlign: 'right',
         }}
