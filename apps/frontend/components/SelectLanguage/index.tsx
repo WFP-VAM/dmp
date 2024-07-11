@@ -6,9 +6,10 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
-import { useLanguageContext } from 'context';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
+import { useLanguageContext } from 'context';
 import { colors } from 'theme/muiTheme';
 
 const SelectLanguage = (): JSX.Element => {
