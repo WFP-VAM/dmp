@@ -45,6 +45,7 @@
   "devDependencies": {
     "@axe-core/react": "4.4.4",
     "@next/bundle-analyzer": "13.1.6",
+    "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@types/jest": "29.0.3",
