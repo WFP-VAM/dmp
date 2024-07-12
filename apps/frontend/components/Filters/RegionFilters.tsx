@@ -11,8 +11,6 @@ import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { useAuth } from 'context/auth';
-import { useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
 
 const getDistrictsFilteredByProvince = (provinceValue: string) => {
   return districts.filter((district: string) => {
@@ -26,9 +24,9 @@ const getCommunesFilteredByDistrict = (districtValue: string) => {
 };
 
 export interface Region {
-  province: string[];
-  district: string[];
-  commune: string[];
+  province: string;
+  district: string;
+  commune: string;
   disabled?: boolean;
 }
 
@@ -60,17 +58,12 @@ export const RegionFilters = ({
   }, [user]);
 
   const districtsFiltered = useMemo(
-    () =>
-      value.province
-        ? Array.prototype.concat(
-            ...value.province.map(pro => getDistrictsFilteredByProvince(pro)),
-          )
-        : [],
+    () => getDistrictsFilteredByProvince(value.province),
     [value.province],
   );
 
   const communesFiltered = useMemo(
-    () => getCommunesFilteredByDistrict(value.district[0]),
+    () => getCommunesFilteredByDistrict(value.district),
     [value.district],
   );
 
@@ -86,16 +79,10 @@ export const RegionFilters = ({
     <Box display="flex" flexDirection="row" justifyContent="left" margin={1}>
       <FormControl>
         <Select
-          multiple
           disabled={disableAll === true || user === undefined ? true : false}
-          value={value.province || []} // Ensure value is an array
+          value={value.province}
           onChange={e => {
-            onChange({
-              ...value,
-              province: e.target.value as string[],
-              district: [],
-              commune: [],
-            });
+            onChange({ province: e.target.value, district: '', commune: '' });
           }}
           sx={selectInputStyles}
           displayEmpty
@@ -123,11 +110,7 @@ export const RegionFilters = ({
           disabled={disableAll === true || value.province === ''}
           value={value.district}
           onChange={e => {
-            onChange({
-              ...value,
-              district: e.target.value as string[],
-              commune: [],
-            });
+            onChange({ ...value, district: e.target.value, commune: '' });
           }}
           sx={selectInputStyles}
           displayEmpty
@@ -155,7 +138,7 @@ export const RegionFilters = ({
           disabled={disableAll === true || value.district === ''}
           value={value.commune}
           onChange={e => {
-            onChange({ ...value, commune: e.target.value as string[] });
+            onChange({ ...value, commune: e.target.value });
           }}
           sx={selectInputStyles}
           displayEmpty
