@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Logo from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+
 import { colors } from 'theme/muiTheme';
 
 interface NavBarInfoProps {
