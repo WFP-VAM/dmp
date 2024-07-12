@@ -1,10 +1,9 @@
-import { Stack, useTheme } from '@mui/material';
+import { Stack, useMediaQuery, useTheme } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Logo from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-
 import { colors } from 'theme/muiTheme';
 
 interface NavBarInfoProps {
@@ -13,6 +12,7 @@ interface NavBarInfoProps {
 
 const NavBarInfo = ({ shrink }: NavBarInfoProps) => {
   const theme = useTheme();
+  const isSmallScreen = useMediaQuery('(max-width:1000px)');
 
   const imageTransition = shrink ? '40px' : '60px';
   const textTransition = shrink ? 0 : 'inherit';
@@ -71,30 +71,32 @@ const NavBarInfo = ({ shrink }: NavBarInfoProps) => {
         </Link>
       </Stack>
 
-      <Stack justifyContent="center">
-        <Typography
-          variant="subtitle1"
-          style={{
-            color: 'black',
-            transition: 'all 0.4s',
-            opacity: textTransition,
-            fontSize: textTransition,
-          }}
-        >
-          ប្រព័ន្ធព័ត៌មានទាន់ហេតុការណ៍ និងអង្កេតតាមដានស្ថានការណ៍គ្រោះមហន្តរាយ
-        </Typography>
-        <Typography
-          variant="h6"
-          style={{
-            color: colors.color3,
-            transition: 'all 0.4s',
-            opacity: textTransition,
-            fontSize: textTransition,
-          }}
-        >
-          Disaster Information and Monitoring System
-        </Typography>
-      </Stack>
+      {!isSmallScreen && (
+        <Stack justifyContent="center">
+          <Typography
+            variant="subtitle1"
+            style={{
+              color: 'black',
+              transition: 'all 0.4s',
+              opacity: textTransition,
+              fontSize: textTransition,
+            }}
+          >
+            ប្រព័ន្ធព័ត៌មានទាន់ហេតុការណ៍ និងអង្កេតតាមដានស្ថានការណ៍គ្រោះមហន្តរាយ
+          </Typography>
+          <Typography
+            variant="h6"
+            style={{
+              color: colors.color3,
+              transition: 'all 0.4s',
+              opacity: textTransition,
+              fontSize: textTransition,
+            }}
+          >
+            Disaster Information and Monitoring System
+          </Typography>
+        </Stack>
+      )}
     </Stack>
   );
 };
