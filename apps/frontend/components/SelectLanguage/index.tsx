@@ -5,11 +5,13 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  Typography,
 } from '@mui/material';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { useLanguageContext } from 'context';
+import { colors } from 'theme/muiTheme';
 
 const SelectLanguage = (): JSX.Element => {
   const { language, setLanguage } = useLanguageContext();
@@ -21,26 +23,37 @@ const SelectLanguage = (): JSX.Element => {
   return (
     <FormControl sx={{ padding: 0 }}>
       <Select
+        disableUnderline
+        variant="standard"
         value={language}
         onChange={handleLanguageChange}
         startAdornment={
           <FontAwesomeIcon
             icon={faGlobe}
-            style={{ marginRight: '0.5rem', color: 'var(--color_primary_3)' }}
+            style={{ marginRight: '-1rem', color: colors.color3 }}
           />
         }
-        style={{ height: '2.5rem' }}
+        renderValue={v => <Typography>{v.toUpperCase()}</Typography>}
+        IconComponent={() => null}
+        inputProps={{
+          sx: { padding: '0 !important' },
+        }}
+        style={{
+          height: '4rem',
+          width: '3rem',
+          textAlign: 'right',
+        }}
       >
         <MenuItem value="en">
           <FormattedMessage
             id="navigation.language.english"
-            defaultMessage="English"
+            defaultMessage="EN"
           />
         </MenuItem>
         <MenuItem value="km">
           <FormattedMessage
             id="navigation.language.khmer"
-            defaultMessage="ភាសាខ្មែរ"
+            defaultMessage="KM"
           />
         </MenuItem>
       </Select>

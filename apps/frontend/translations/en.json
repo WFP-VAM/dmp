@@ -35,13 +35,13 @@
     "submit": "Update"
   },
   "valStatus": {
-    "approved": "Report approved",
-    "notApproved": "Report approval rejected",
-    "onHold": "Report not yet approved"
+    "approved": "Approved",
+    "notApproved": "Rejected",
+    "onHold": "Not yet approved"
   },
   "navigation": {
     "home": "Home",
-    "forms": { "header": "Forms", "search": "Search" },
+    "forms": { "header": "Forms", "search": "Search forms" },
     "reports": "Reports",
     "admin": "Admin",
     "language": {
@@ -49,20 +49,25 @@
       "khmer": "ភាសាខ្មែរ"
     },
     "banner": "Disaster Information and Monitoring System",
-    "logout": "Logout"
+    "logout": "Log out"
   },
   "home": {
     "table_title": "Summary by Day",
     "no_report": "No disaster report"
   },
   "validation_search_params": {
-    "disaster_type": "Disaster Type",
-    "incident_type": "Incident Type",
-    "start_date": "From",
-    "end_date": "To",
+    "location": "Location",
+    "disaster_type": "Disaster type",
+    "incident_type": "Incident type",
     "province": "Province",
-    "district": "District",
-    "commune": "Commune"
+    "district": "District / Krong",
+    "commune": "Commune",
+    "all-province": "All provinces",
+    "all-district": "All districts",
+    "all-commune": "All communes",
+    "date_range": "Date range",
+    "start_date": "From",
+    "end_date": "To"
   },
   "form_page": {
     "approve": "Approve",
@@ -94,7 +99,7 @@
     "no_forms": "No forms match your search parameters.",
     "headers": {
       "province": "Province",
-      "district": "District",
+      "district": "District / Krong",
       "commune": "Commune",
       "dis_date": "Disaster Date",
       "dis_type": "Disaster Type",
@@ -109,7 +114,7 @@
     "noData": "No Data",
     "data": "Data",
     "summary": "Summary",
-    "all_columns": "All Columns",
+    "all_columns": "Detailed",
     "level": "Level"
   },
   "table": {
@@ -640,7 +645,7 @@
     },
     "COMMON": {
       "column": {
-        "district": "District",
+        "district": "District / Krong",
         "commune": "Commune"
       }
     }
