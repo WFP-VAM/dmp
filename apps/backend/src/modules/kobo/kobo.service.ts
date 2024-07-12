@@ -85,8 +85,12 @@ export class KoboService {
       {
         params: {
           query: {
-            [koboKeys[disasterType].province]: Array.isArray(province) ? { $in: province } : province,
-            [koboKeys[disasterType].district]: Array.isArray(district) ? { $in: district } : district,
+            [koboKeys[disasterType].province]: Array.isArray(province)
+              ? { $in: province }
+              : province,
+            [koboKeys[disasterType].district]: Array.isArray(district)
+              ? { $in: district }
+              : district,
             [koboKeys[disasterType].commune]: Array.isArray(commune) ? { $in: commune } : commune,
             [koboKeys[disasterType].entryDate]: { $gte: startDate, $lte: endDate },
             [koboKeys[disasterType].disTyp]: { $in: disTyps },
