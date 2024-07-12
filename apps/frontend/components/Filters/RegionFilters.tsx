@@ -1,10 +1,11 @@
 import LocationOnIcon from '@mui/icons-material/FmdGoodOutlined';
 import {
-  Box,
   FormControl,
   InputAdornment,
   MenuItem,
   Select,
+  Stack,
+  useTheme,
 } from '@mui/material';
 import { communes, districts, provinces } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
@@ -42,6 +43,7 @@ export const RegionFilters = ({
   disableAll,
 }: Props): JSX.Element => {
   const { user } = useAuth();
+  const theme = useTheme();
   const allowedProvinces = useMemo(() => {
     if (user === undefined) {
       return [];
@@ -68,7 +70,6 @@ export const RegionFilters = ({
   );
 
   const selectInputStyles = {
-    mr: 2,
     minWidth: 200,
     backgroundColor: 'white',
     color: 'black',
@@ -76,7 +77,7 @@ export const RegionFilters = ({
   };
 
   return (
-    <Box display="flex" flexDirection="row" justifyContent="left" margin={1}>
+    <Stack direction="row" gap={theme.spacing(1)}>
       <FormControl>
         <Select
           disabled={disableAll === true || user === undefined ? true : false}
@@ -160,6 +161,6 @@ export const RegionFilters = ({
           })}
         </Select>
       </FormControl>
-    </Box>
+    </Stack>
   );
 };

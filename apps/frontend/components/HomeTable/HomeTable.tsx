@@ -1,16 +1,4 @@
-import {
-  Box,
-  IconButton,
-  Paper,
-  Skeleton,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Card, Stack, Typography, useTheme } from '@mui/material';
 import {
   DisasterDtoType,
   formatCommonFields,
@@ -18,58 +6,16 @@ import {
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { compact, groupBy, map, orderBy, pick, range, uniq } from 'lodash';
-import Link from 'next/link';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { DisasterIcon } from 'components/DisasterIcon';
 import { NUMBER_LAST_DAYS } from 'constant';
-import { useAuth } from 'context/auth';
+import { useLanguageContext } from 'context';
+import { formatDate, getDateWeek } from 'utils/date';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
-interface DisasterLocation {
-  province: string;
-  district: string;
-}
-
-interface DisasterPerDate {
-  entryDate: string;
-  disTyps: string[];
-  disTypLocations: Record<string, DisasterLocation[]>;
-}
-
-// Filter locations to show only unique provinces or districts
-// Show provinces if user is admin or ncdm
-const filterLocations = (
-  locations: DisasterLocation[],
-  showProvinces: boolean,
-): DisasterLocation[] => {
-  return locations.filter((location, index, self) =>
-    showProvinces
-      ? self.findIndex(l => l.province === location.province) === index
-      : self.findIndex(l => l.district === location.district) === index,
-  );
-};
-
-const renderLocation = (
-  location: DisasterLocation,
-  showProvinces: boolean,
-  index: number,
-): JSX.Element => {
-  return (
-    <span key={index}>
-      {showProvinces ? (
-        <FormattedMessage id={`province.${location.province}`} />
-      ) : (
-        <>
-          <FormattedMessage id={`province.${location.province}`} />,{' '}
-          <FormattedMessage id={`district.${location.district}`} />
-        </>
-      )}
-      <br />
-    </span>
-  );
-};
+import HomeTableRow from './HomeTableRow';
+import { DisasterLocation, DisasterPerDate } from './utils';
 
 const getDisastersPerDate = (
   forms: DisasterDtoType[] | undefined,
@@ -144,100 +90,40 @@ export const HomeTable = ({
   forms,
   isLoading,
 }: HomeTableProps): JSX.Element => {
-  const { user } = useAuth();
-  const showProvinces = ['admin', 'ncdm'].includes(user?.roles[0] ?? '');
+  const theme = useTheme();
   const disastersPerDate = useMemo(() => getDisastersPerDate(forms), [forms]);
+  const { language } = useLanguageContext();
+
+  const firstItemDateString = disastersPerDate[0]?.entryDate as
+    | string
+    | undefined;
+  const firstItemDate =
+    firstItemDateString !== undefined
+      ? new Date(firstItemDateString)
+      : new Date();
+  const monthTranslated = firstItemDate.toLocaleString(language, {
+    month: 'long',
+  });
+  const week = getDateWeek(firstItemDate);
+  const formattedStartDate = formatDate(firstItemDate, 'MM/DD');
+
+  const lastItemDateString = disastersPerDate[NUMBER_LAST_DAYS - 1]
+    ?.entryDate as string | undefined;
+  const formattedEndDate =
+    lastItemDateString !== undefined && formatDate(lastItemDateString, 'MM/DD');
 
   return (
-    <TableContainer component={Paper}>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ minHeight: 80, backgroundColor: '#dddddd' }}
-      >
-        <Typography fontWeight="bold">
-          <FormattedMessage id="home.table_title" />
+    <Card style={{ padding: theme.spacing(3) }}>
+      <Stack gap={theme.spacing(1)}>
+        <Typography fontWeight={600} variant="subtitle2">
+          {monthTranslated} — <FormattedMessage id="week" /> {week} —{' '}
+          {formattedStartDate} - {formattedEndDate}
         </Typography>
-      </Box>
-      <Table>
-        {isLoading ? (
-          <TableBody>
-            {range(NUMBER_LAST_DAYS).map(id => (
-              <TableRow key={id}>
-                <TableCell colSpan={9}>
-                  <Skeleton />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        ) : (
-          <TableBody>
-            {disastersPerDate.map(disasters => (
-              <TableRow key={disasters.entryDate}>
-                <TableCell sx={{ backgroundColor: '#f5f8ff', width: 150 }}>
-                  <Typography>
-                    {dayjs(disasters.entryDate, 'YYYY-MM-DD').format(
-                      'DD/MM/YYYY',
-                    )}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Box display="flex" flexDirection="row">
-                    {disasters.disTyps.length === 0 ? (
-                      <Typography>
-                        <FormattedMessage id="home.no_report" />
-                      </Typography>
-                    ) : (
-                      disasters.disTyps.map(disTyp => (
-                        <Box key={disTyp} mr={3}>
-                          <Tooltip
-                            title={
-                              <>
-                                <FormattedMessage id={`disasters.${disTyp}`} />
-                                <br />
-                                {filterLocations(
-                                  disasters.disTypLocations[disTyp],
-                                  showProvinces,
-                                ).map((location, index) =>
-                                  renderLocation(
-                                    location,
-                                    showProvinces,
-                                    index,
-                                  ),
-                                )}
-                              </>
-                            }
-                          >
-                            <IconButton
-                              component={Link}
-                              sx={{
-                                '&:hover': {
-                                  color: '#494949',
-                                },
-                              }}
-                              href={{
-                                pathname: '/forms/search',
-                                query: {
-                                  disTyp,
-                                  startDate: disasters.entryDate,
-                                  endDate: disasters.entryDate,
-                                },
-                              }}
-                            >
-                              <DisasterIcon disTyp={disTyp} />
-                            </IconButton>
-                          </Tooltip>
-                        </Box>
-                      ))
-                    )}
-                  </Box>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        )}
-      </Table>
-    </TableContainer>
+        <HomeTableRow
+          isLoading={isLoading}
+          disastersPerDate={disastersPerDate}
+        />
+      </Stack>
+    </Card>
   );
 };

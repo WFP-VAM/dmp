@@ -49,6 +49,7 @@ const NavBarButtons = () => {
       justifyContent="center"
       alignItems="center"
       gap={theme.spacing(4)}
+      marginRight={1}
     >
       {links.map(x => {
         const { key, linkTo, textId, icon } = x;
