@@ -35,7 +35,12 @@ export const SearchFilters = ({
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
-      <Stack direction="column" gap={theme.spacing(2)} width="fit-content">
+      <Stack
+        direction="column"
+        gap={theme.spacing(2)}
+        width="fit-content"
+        paddingLeft={2}
+      >
         <Stack direction="row" gap={theme.spacing(4)}>
           <Stack direction="row" gap={theme.spacing(2)} alignItems="center">
             <Typography>
