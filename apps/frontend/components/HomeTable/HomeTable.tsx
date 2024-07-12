@@ -96,19 +96,30 @@ export const HomeTable = ({
 
   console.log({ language });
 
-  const currentDate = new Date();
-  const monthTranslated = currentDate.toLocaleString(language, {
+  const firstItemDateString = disastersPerDate[0]?.entryDate as
+    | string
+    | undefined;
+  const firstItemDate =
+    firstItemDateString !== undefined
+      ? new Date(firstItemDateString)
+      : new Date();
+  const monthTranslated = firstItemDate.toLocaleString(language, {
     month: 'long',
   });
-  const week = getDateWeek(currentDate);
-  const formattedDate = formatDate(currentDate, 'MM/DD');
+  const week = getDateWeek(firstItemDate);
+  const formattedStartDate = formatDate(firstItemDate, 'MM/DD');
+
+  const lastItemDateString = disastersPerDate[NUMBER_LAST_DAYS - 1]
+    ?.entryDate as string | undefined;
+  const formattedEndDate =
+    lastItemDateString !== undefined && formatDate(lastItemDateString, 'MM/DD');
 
   return (
     <Card style={{ padding: theme.spacing(3) }}>
       <Stack gap={theme.spacing(1)}>
         <Typography fontWeight={600} variant="subtitle2">
-          {monthTranslated} - <FormattedMessage id="week" /> {week} -{' '}
-          {formattedDate}
+          {monthTranslated} — <FormattedMessage id="week" /> {week} —{' '}
+          {formattedStartDate} - {formattedEndDate}
         </Typography>
         <HomeTableRow
           isLoading={isLoading}

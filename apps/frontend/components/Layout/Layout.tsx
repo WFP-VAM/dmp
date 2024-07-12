@@ -1,16 +1,16 @@
 import { Box, useTheme } from '@mui/material';
-import { ReactNode } from 'react';
+import React from 'react';
 
-interface Props {
-  alignItems?: string;
-  children: ReactNode;
+export interface LayoutProps {
+  alignItems?: React.CSSProperties['alignItems'];
   backgroundColor?: string;
 }
+
 export const Layout = ({
   alignItems,
   children,
   backgroundColor = '#f5f5f5',
-}: Props): JSX.Element => {
+}: React.PropsWithChildren<LayoutProps>): JSX.Element => {
   const theme = useTheme();
 
   // Warning: the maxWidth will influence the way the PDF are generated
