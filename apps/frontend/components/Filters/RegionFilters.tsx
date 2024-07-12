@@ -1,32 +1,27 @@
 import LocationOnIcon from '@mui/icons-material/FmdGoodOutlined';
-import {
-  Box,
-  FormControl,
-  InputAdornment,
-  MenuItem,
-  Select,
-} from '@mui/material';
+import { FormControl, InputAdornment, Stack, useTheme } from '@mui/material';
 import { communes, districts, provinces } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { useAuth } from 'context/auth';
 
-const getDistrictsFilteredByProvince = (provinceValue: string) => {
+import MultiSelect from './MultiSelect';
+
+const getDistrictsFilteredByProvince = (provinceValue: string[]) => {
   return districts.filter((district: string) => {
-    return district.startsWith(provinceValue);
+    return provinceValue.find(x => district.startsWith(x));
   });
 };
-const getCommunesFilteredByDistrict = (districtValue: string) => {
+const getCommunesFilteredByDistrict = (districtValue: string[]) => {
   return communes.filter((commune: string) => {
-    return commune.startsWith(districtValue);
+    return districtValue.find(x => commune.startsWith(x));
   });
 };
 
 export interface Region {
-  province: string;
-  district: string;
-  commune: string;
+  province: string[];
+  district: string[];
+  commune: string[];
   disabled?: boolean;
 }
 
@@ -42,6 +37,7 @@ export const RegionFilters = ({
   disableAll,
 }: Props): JSX.Element => {
   const { user } = useAuth();
+  const theme = useTheme();
   const allowedProvinces = useMemo(() => {
     if (user === undefined) {
       return [];
@@ -67,99 +63,67 @@ export const RegionFilters = ({
     [value.district],
   );
 
-  const selectInputStyles = {
-    mr: 2,
-    minWidth: 200,
-    backgroundColor: 'white',
-    color: 'black',
-    fontWeight: 600,
-  };
-
   return (
-    <Box display="flex" flexDirection="row" justifyContent="left" margin={1}>
+    <Stack direction="row" gap={theme.spacing(1)}>
       <FormControl>
-        <Select
-          disabled={disableAll === true || user === undefined ? true : false}
-          value={value.province}
-          onChange={e => {
-            onChange({ province: e.target.value, district: '', commune: '' });
+        <MultiSelect
+          options={allowedProvinces}
+          onChange={v => {
+            onChange({ province: v, district: [], commune: [] });
           }}
-          sx={selectInputStyles}
-          displayEmpty
-          startAdornment={
-            <InputAdornment position="start">
-              <LocationOnIcon sx={{ color: 'black' }} />
-            </InputAdornment>
-          }
-        >
-          <MenuItem value="" key={'validation_search_params.all-province'}>
-            <FormattedMessage id="validation_search_params.all-province" />
-          </MenuItem>
-          {allowedProvinces.map(provinceNumber => {
-            return (
-              <MenuItem value={provinceNumber} key={provinceNumber}>
-                <FormattedMessage id={`province.${provinceNumber}`} />
-              </MenuItem>
-            );
-          })}
-        </Select>
+          placeholder="common.province"
+          allSelectedText="All Provinces"
+          formatPrefix="province"
+          selectProps={{
+            disabled: disableAll === true || user === undefined ? true : false,
+            startAdornment: (
+              <InputAdornment position="start">
+                <LocationOnIcon sx={{ color: 'black' }} />
+              </InputAdornment>
+            ),
+          }}
+        />
       </FormControl>
 
       <FormControl>
-        <Select
-          disabled={disableAll === true || value.province === ''}
-          value={value.district}
-          onChange={e => {
-            onChange({ ...value, district: e.target.value, commune: '' });
+        <MultiSelect
+          options={districtsFiltered}
+          onChange={v => {
+            onChange({ ...value, district: v, commune: [] });
           }}
-          sx={selectInputStyles}
-          displayEmpty
-          startAdornment={
-            <InputAdornment position="start">
-              <LocationOnIcon sx={{ color: 'black' }} />
-            </InputAdornment>
-          }
-        >
-          <MenuItem value="">
-            <FormattedMessage id="validation_search_params.all-district" />
-          </MenuItem>
-          {districtsFiltered.map(districtNumber => {
-            return (
-              <MenuItem value={districtNumber} key={districtNumber}>
-                <FormattedMessage id={`district.${districtNumber}`} />
-              </MenuItem>
-            );
-          })}
-        </Select>
+          placeholder="common.district"
+          allSelectedText="validation_search_params.all-district"
+          formatPrefix="district"
+          selectProps={{
+            disabled: disableAll === true || value.province.length === 0,
+            startAdornment: (
+              <InputAdornment position="start">
+                <LocationOnIcon sx={{ color: 'black' }} />
+              </InputAdornment>
+            ),
+          }}
+        />
       </FormControl>
 
       <FormControl>
-        <Select
-          disabled={disableAll === true || value.district === ''}
-          value={value.commune}
-          onChange={e => {
-            onChange({ ...value, commune: e.target.value });
+        <MultiSelect
+          options={communesFiltered}
+          onChange={v => {
+            onChange({ ...value, commune: v });
           }}
-          sx={selectInputStyles}
-          displayEmpty
-          startAdornment={
-            <InputAdornment position="start">
-              <LocationOnIcon sx={{ color: 'black' }} />
-            </InputAdornment>
-          }
-        >
-          <MenuItem value="">
-            <FormattedMessage id="validation_search_params.all-commune" />
-          </MenuItem>
-          {communesFiltered.map(communeNumber => {
-            return (
-              <MenuItem value={communeNumber} key={communeNumber}>
-                <FormattedMessage id={`commune.${communeNumber}`} />
-              </MenuItem>
-            );
-          })}
-        </Select>
+          placeholder="common.commune"
+          allSelectedText="validation_search_params.all-commune"
+          formatPrefix="commune"
+          selectProps={{
+            disabled: disableAll === true || value.district.length === 0,
+            startAdornment: (
+              <InputAdornment position="start">
+                <LocationOnIcon sx={{ color: 'black' }} />
+              </InputAdornment>
+            ),
+          }}
+        />
       </FormControl>
-    </Box>
+    </Stack>
   );
 };

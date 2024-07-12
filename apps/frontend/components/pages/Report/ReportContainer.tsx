@@ -20,9 +20,9 @@ import { dropNotApproved } from 'utils/dropNotApproved';
 const defaultSearchReportData: SearchFormData = {
   disTyps: [DisasterMapping['flood']],
   region: {
-    province: '',
-    district: '',
-    commune: '',
+    province: [],
+    district: [],
+    commune: [],
   },
   dateRange: {
     startDate: dayjs().subtract(1, 'month'),
@@ -104,11 +104,14 @@ export const ReportContainer = () => {
               isAllColumnReport={isAllColumnReport}
             />
           </PrintWrapper>
-          <Box display="flex" justifyContent="left">
-            <IconButton onClick={handlePrint} color="primary">
-              <PrintIcon />
-            </IconButton>
-          </Box>
+          {/* Show a print button at the bottom of the page when there is data */}
+          {formsData && formsData.length > 0 && (
+            <Box display="flex" justifyContent="left">
+              <IconButton onClick={handlePrint} color="primary">
+                <PrintIcon />
+              </IconButton>
+            </Box>
+          )}
         </>
       )}
     </Box>

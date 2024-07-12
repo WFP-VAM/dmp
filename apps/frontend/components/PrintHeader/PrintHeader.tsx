@@ -28,30 +28,33 @@ export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
           </>
         ))}
       </Typography>
-      {searchReportData.region.province !== '' ? (
+      {searchReportData.region.province.length !== 0 ? (
         <Typography ml={3}>
           <FormattedMessage id="validation_search_params.province" />
           {' : '}
+          {/* TODO: How should we display things here? */}
           <FormattedMessage
-            id={`province.${searchReportData.region.province}`}
+            id={`province.${searchReportData.region.province[0]}`}
           />
         </Typography>
       ) : null}
-      {searchReportData.region.district !== '' ? (
+      {searchReportData.region.district.length !== 0 ? (
         <Typography ml={3}>
           <FormattedMessage id="validation_search_params.district" />
           {' : '}
           <FormattedMessage
-            id={`district.${searchReportData.region.district}`}
+            id={`district.${searchReportData.region.district[0]}`}
           />
         </Typography>
       ) : null}
 
-      {searchReportData.region.commune !== '' ? (
+      {searchReportData.region.length !== 0 ? (
         <Typography ml={3}>
           <FormattedMessage id="validation_search_params.commune" />
           {' : '}
-          <FormattedMessage id={`commune.${searchReportData.region.commune}`} />
+          <FormattedMessage
+            id={`commune.${searchReportData.region.commune[0]}`}
+          />
         </Typography>
       ) : null}
       <Typography ml={3}>

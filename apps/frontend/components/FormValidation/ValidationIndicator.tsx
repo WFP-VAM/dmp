@@ -24,7 +24,7 @@ export const ValidationIndicator = ({
     case ValidationStatusValue.notApproved:
       id = 'valStatus.notApproved';
       Icon = CancelIcon;
-      color = 'red';
+      color = '#D32C38';
       break;
     default:
       id = 'valStatus.onHold';

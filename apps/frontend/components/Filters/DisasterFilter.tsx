@@ -11,13 +11,18 @@ import {
   DROUGHT,
   FLOOD,
   INCIDENT,
+  IncidentMapping,
 } from '@wfp-dmp/interfaces';
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { IncidentSelect } from './IncidentSelect';
+import MultiSelect from './MultiSelect';
 
 const disasters = [FLOOD, DROUGHT, INCIDENT];
+
+const incidentsKeys = Object.keys(IncidentMapping).map(
+  incident => IncidentMapping[incident],
+);
 
 interface Props {
   value: string[];
@@ -76,7 +81,17 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
         </Select>
       </FormControl>
       {disasterType === INCIDENT && (
-        <IncidentSelect value={incidents} onChange={onIncidentsChange} />
+        <FormControl>
+          <MultiSelect
+            options={incidentsKeys}
+            onChange={v => {
+              onIncidentsChange(v);
+            }}
+            placeholder="validation_search_params.incident_type"
+            allSelectedText="disasters.ALL_INCIDENTS"
+            formatPrefix="disasters"
+          />
+        </FormControl>
       )}
     </Box>
   );

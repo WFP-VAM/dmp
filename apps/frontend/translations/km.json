@@ -1,6 +1,7 @@
 {
   "common": {
     "province": "ខេត្ត",
+    "district": "ស្រុក",
     "commune": "ឃុំ"
   },
   "generic": {
@@ -60,7 +61,6 @@
     "logout": "ចាកចេញ"
   },
   "home": {
-    "table_title": "ព័ត៌មានសង្ខេប",
     "no_report": "គ្មានរបាយការណ៍គ្រោះមហន្តរាយ"
   },
   "validation_search_params": {

@@ -1,6 +1,7 @@
 {
   "common": {
     "province": "Province",
+    "district": "District / Krong",
     "commune": "Commune"
   },
   "login": {
@@ -52,7 +53,6 @@
     "logout": "Log out"
   },
   "home": {
-    "table_title": "Summary by Day",
     "no_report": "No disaster report"
   },
   "validation_search_params": {
