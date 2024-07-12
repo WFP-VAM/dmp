@@ -20,9 +20,9 @@ import { dropNotApproved } from 'utils/dropNotApproved';
 const defaultSearchReportData: SearchFormData = {
   disTyps: [DisasterMapping['flood']],
   region: {
-    province: '',
-    district: '',
-    commune: '',
+    province: [],
+    district: [],
+    commune: [],
   },
   dateRange: {
     startDate: dayjs().subtract(1, 'month'),
