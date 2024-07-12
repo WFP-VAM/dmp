@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 // Path to the JSON file
-const filePath = path.join(__dirname, './geodata/districts.json');
+// const filePath = path.join(__dirname, './geodata/districts.json');
+const filePath = path.join(__dirname, './geodata/communes.json');
 
 // Read the JSON file
 fs.readFile(filePath, 'utf8', (err, data) => {
@@ -13,24 +14,23 @@ fs.readFile(filePath, 'utf8', (err, data) => {
 
   try {
     // Parse the JSON data
-    const communes = JSON.parse(data);
-    communes.sort((a, b) => parseInt(a.id, 10) > parseInt(b.id, 10));
+    const adminAreas = JSON.parse(data);
 
-    // Create an object to store the communes
-    const communeList = {};
+    // Create an object to store the adminAreas
+    const adminAreaList = {};
 
-    // Iterate over the communes and add them to the object
-    communes.forEach(commune => {
-      communeList[commune.id] = commune.name_en;
+    // Iterate over the adminAreas and add them to the object
+    adminAreas.forEach(adminArea => {
+      adminAreaList[adminArea.id] = adminArea.name_km;
     });
 
     // Convert the object to an array of [id, name_en] pairs and sort by ID numerically
-    const sortedCommuneList = Object.entries(communeList).sort(
+    const sortedAdminAreaList = Object.entries(adminAreaList).sort(
       (a, b) => parseInt(a[0], 10) - parseInt(b[0], 10),
     );
 
-    // Output the sorted commune list
-    sortedCommuneList.forEach(([id, name]) => {
+    // Output the sorted adminArea list
+    sortedAdminAreaList.forEach(([id, name]) => {
       console.log(`"${id}": "${name}",`);
     });
   } catch (err) {
