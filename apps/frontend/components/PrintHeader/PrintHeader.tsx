@@ -48,7 +48,7 @@ export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
         </Typography>
       ) : null}
 
-      {searchReportData.region.length !== 0 ? (
+      {searchReportData.region.commune.length !== 0 ? (
         <Typography ml={3}>
           <FormattedMessage id="validation_search_params.commune" />
           {' : '}
