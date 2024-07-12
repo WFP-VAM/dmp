@@ -72,7 +72,7 @@ export class KoboService {
     endDate,
   }: {
     disTyps: string[];
-    province: string | undefined | string[];
+    province?: string | string[];
     district?: string | string[];
     commune?: string | string[];
     startDate?: string;
