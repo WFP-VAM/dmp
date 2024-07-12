@@ -9,6 +9,7 @@ const filePath = path.join(__dirname, './geodata/communes.json');
 fs.readFile(filePath, 'utf8', (err, data) => {
   if (err) {
     console.error('Error reading file:', err);
+
     return;
   }
 
@@ -33,7 +34,7 @@ fs.readFile(filePath, 'utf8', (err, data) => {
     sortedAdminAreaList.forEach(([id, name]) => {
       console.log(`"${id}": "${name}",`);
     });
-  } catch (err) {
-    console.error('Error parsing JSON:', err);
+  } catch (parsErr) {
+    console.error('Error parsing JSON:', parsErr);
   }
 });
