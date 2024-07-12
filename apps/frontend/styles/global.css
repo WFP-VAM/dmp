@@ -8,6 +8,18 @@
   -- This global css transgress basic stylelint rules about selectivity and hardcoded values
 */
 
+@font-face {
+  font-family: 'Khmer OS Muol light';
+  src: url('/fonts/Khmer\ OS\ Muol\ Light\ Regular.ttf') format('truetype');
+  unicode-range: U+1780-17FF; /* Khmer Unicode range */
+}
+
+@font-face {
+  font-family: 'Khmer OS Siemreap';
+  src: url('/fonts/Khmer\ OS\ Siemreap\ Regular.ttf') format('truetype');
+  unicode-range: U+1780-17FF; /* Khmer Unicode range */
+}
+
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -39,7 +51,15 @@ body {
 */
 body {
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+  font-family: 'Khmer OS Muol light', sans-serif;
+}
+
+h1 {
+  font-family: 'Khmer OS Muol light', sans-serif;
+}
+
+p, span, div {
+  font-family: 'Khmer OS Siemreap', sans-serif;
 }
 
 /*
@@ -84,4 +104,12 @@ h6 {
 #__next {
   isolation: isolate;
   height: 100%;
+}
+
+/* Override styles for Mui Inputs */
+
+/* Override styles for Mui Inputs */
+.MuiInputBase-input {
+  padding: 0.5rem 0.5rem; /* Adjust padding as needed */
+  font-size: 14px !important;
 }

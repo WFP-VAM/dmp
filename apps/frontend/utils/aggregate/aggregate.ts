@@ -1,4 +1,4 @@
-import { assign, chain } from 'lodash';
+import { assign, groupBy, map, sortBy } from 'lodash';
 
 import { countAgg } from './countAgg';
 import { countCategoriesAgg } from './countCategoriesAgg';
@@ -25,28 +25,27 @@ export const aggregate = ({
   countCategoriesKeys = [],
   countMultipleChoicesKeys = [],
 }: IProps) => {
-  return chain(data)
-    .groupBy(groupKey)
-    .map((array, keyValue) => {
-      const firstValues = firstKeys.map(key => firstAgg(key, array));
-      const sumValues = sumKeys.map(key => sumAgg(key, array));
-      const countValues = countKeys.map(key => countAgg(key, array));
-      const countCategoriesValues = countCategoriesKeys.map(key =>
-        countCategoriesAgg(key, array),
-      );
-      const countMultipleChoicesValues = countMultipleChoicesKeys.map(key =>
-        countMultipleChoicesAgg(key, array),
-      );
+  const groupedData = groupBy(data, groupKey);
+  const aggregatedData = map(groupedData, (array, keyValue) => {
+    const firstValues = firstKeys.map(key => firstAgg(key, array));
+    const sumValues = sumKeys.map(key => sumAgg(key, array));
+    const countValues = countKeys.map(key => countAgg(key, array));
+    const countCategoriesValues = countCategoriesKeys.map(key =>
+      countCategoriesAgg(key, array),
+    );
+    const countMultipleChoicesValues = countMultipleChoicesKeys.map(key =>
+      countMultipleChoicesAgg(key, array),
+    );
 
-      return assign(
-        { [groupKey]: keyValue },
-        ...firstValues,
-        ...sumValues,
-        ...countValues,
-        ...countCategoriesValues,
-        ...countMultipleChoicesValues,
-      ) as Record<string, string | number | undefined>;
-    })
-    .sortBy(groupKey)
-    .value();
+    return assign(
+      { [groupKey]: keyValue },
+      ...firstValues,
+      ...sumValues,
+      ...countValues,
+      ...countCategoriesValues,
+      ...countMultipleChoicesValues,
+    ) as Record<string, string | number | undefined>;
+  });
+
+  return sortBy(aggregatedData, groupKey);
 };

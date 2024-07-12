@@ -10,8 +10,8 @@ export const useGetForms = ({
   region: inputRegion,
   dateRange: inputDateRange,
 }: SearchFormData) => {
-  const inputStartDate = inputDateRange.startDate.format('YYYY-MM-DD');
-  const inputEndDate = inputDateRange.endDate.format('YYYY-MM-DD');
+  const inputStartDate = inputDateRange.startDate?.format('YYYY-MM-DD');
+  const inputEndDate = inputDateRange.endDate?.format('YYYY-MM-DD');
   const inputProvince =
     inputRegion.province === '' ? undefined : inputRegion.province;
   const inputDistrict =

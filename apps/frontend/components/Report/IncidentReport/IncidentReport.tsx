@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { IncidentDto, KoboCommonKeys } from '@wfp-dmp/interfaces';
-import { chain } from 'lodash';
+import { groupBy, map } from 'lodash';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -23,18 +23,16 @@ export const IncidentReport = ({
 }) => {
   const reports = useMemo(() => {
     const formattedForms = forms.map(form => formatIncidentFields(form));
+    const groupedData = groupBy(formattedForms, KoboCommonKeys.disTyp);
 
-    return chain(formattedForms)
-      .groupBy(KoboCommonKeys.disTyp)
-      .map((incidentSpecificForms, incidentKey) => {
-        return {
-          incidentKey,
-          report: isDetailedReport
-            ? generateIncidentDetailedReport(incidentSpecificForms)
-            : generateIncidentBriefReport(incidentSpecificForms),
-        };
-      })
-      .value();
+    return map(groupedData, (incidentSpecificForms, incidentKey) => {
+      return {
+        incidentKey,
+        report: isDetailedReport
+          ? generateIncidentDetailedReport(incidentSpecificForms)
+          : generateIncidentBriefReport(incidentSpecificForms),
+      };
+    });
   }, [forms, isDetailedReport]);
 
   return (

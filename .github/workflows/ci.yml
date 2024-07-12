@@ -36,9 +36,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
+        uses: pnpm/action-setup@v4
         with:
-          version: 7.14.1
+          version: 9.4.0
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -61,9 +61,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
+        uses: pnpm/action-setup@v4
         with:
-          version: 7.14.1
+          version: 9.4.0
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -82,24 +82,34 @@ jobs:
       surge_url: wfp-dmp-${{ github.event.pull_request.number }}.surge.sh
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.3
+      - uses: pnpm/action-setup@v4.0.0
       - name: Setup Node.js
         id: setup-node
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
+      - name: Log pnpm version
+        run: pnpm --version
+      - name: Check lockfile version
+        run: |
+          if grep -q '"lockfileVersion":' ../../pnpm-lock.yaml; then
+            echo "Lockfile version: $(grep '"lockfileVersion":' ../../pnpm-lock.yaml)";
+          else
+            echo "Lockfile version not found";
+          fi
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
+      - name: Clean build folder
+        run: rm -rf apps/frontend/out
       - name: Build Interfaces & Frontend
         run: pnpm turbo build
         env:
-          NEXT_PUBLIC_API_BASE_URL: https://staging-api-dmp.ovio.org
+          NEXT_PUBLIC_API_BASE_URL: https://api-dmp.ovio.org
       - name: Export to static HTML
         run: |
           cd apps/frontend
           ./gen_env.sh staging
-          pnpm next export
           cd out
           cp index.html 200.html
       - name: Deploy on surge

@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 type LanguageContext = {
   language: string;
@@ -16,7 +22,21 @@ interface Props {
 }
 
 const LanguageWrapper = ({ children }: Props): JSX.Element => {
-  const [language, setLanguage] = useState('km');
+  const [language, setLanguage] = useState(() => {
+    // Retrieve the language from localStorage or default to 'km'
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('language') ?? 'km';
+    }
+
+    return 'km';
+  });
+
+  useEffect(() => {
+    // Save the language to localStorage whenever it changes
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', language);
+    }
+  }, [language]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
