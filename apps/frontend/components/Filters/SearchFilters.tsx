@@ -1,5 +1,5 @@
 import EastIcon from '@mui/icons-material/East';
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Stack, Typography, useTheme } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -23,6 +23,7 @@ export const SearchFilters = ({
   setSearchFormData: Dispatch<SetStateAction<SearchFormData>>;
   submitButtonContent: JSX.Element;
 }): JSX.Element => {
+  const theme = useTheme();
   const { control, handleSubmit } = useForm<SearchFormData>({
     defaultValues: initSearchFormData,
   });
@@ -34,37 +35,47 @@ export const SearchFilters = ({
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="left"
-        alignItems="left"
-        margin={2}
+      <Stack
+        direction="column"
+        gap={theme.spacing(2)}
+        width="fit-content"
+        paddingLeft={2}
       >
-        <Box display="flex" justifyContent="left" alignItems="center">
-          <FormattedMessage id="validation_search_params.location" />
-          <Controller
-            name="region"
-            control={control}
-            render={({ field: { value, onChange } }) => (
-              <RegionFilters value={value} onChange={onChange} />
-            )}
-          />
+        <Stack direction="row" gap={theme.spacing(4)}>
+          <Stack direction="row" gap={theme.spacing(2)} alignItems="center">
+            <Typography>
+              <FormattedMessage id="validation_search_params.location" />
+            </Typography>
 
-          <Typography marginRight={2}>
-            {intl.formatMessage({
-              id: 'validation_search_params.date_range',
-            })}
-          </Typography>
-          <Controller
-            name="dateRange"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <DateRangeFilter value={value} onChange={onChange} />
-            )}
-          />
-        </Box>
-        <Box mt={1} display="flex" justifyContent="left" alignItems="center">
+            <Controller
+              name="region"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <RegionFilters value={value} onChange={onChange} />
+              )}
+            />
+          </Stack>
+
+          <Stack direction="row" gap={theme.spacing(2)} alignItems="center">
+            <Typography marginRight={2}>
+              {intl.formatMessage({
+                id: 'validation_search_params.date_range',
+              })}
+            </Typography>
+            <Controller
+              name="dateRange"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <DateRangeFilter value={value} onChange={onChange} />
+              )}
+            />
+          </Stack>
+        </Stack>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <Controller
             name={'disTyps'}
             control={control}
@@ -85,8 +96,8 @@ export const SearchFilters = ({
             {submitButtonContent}
             {<EastIcon style={{ marginLeft: 6, marginBottom: 2 }} />}
           </Button>
-        </Box>
-      </Box>
+        </Stack>
+      </Stack>
     </form>
   );
 };

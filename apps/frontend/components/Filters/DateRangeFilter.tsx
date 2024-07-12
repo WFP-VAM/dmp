@@ -1,5 +1,5 @@
 import { CalendarMonth } from '@mui/icons-material';
-import { Box, InputAdornment } from '@mui/material';
+import { InputAdornment, Stack, useTheme } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useState } from 'react';
@@ -17,13 +17,14 @@ interface IProps {
 
 export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
   const intl = useIntl();
+  const theme = useTheme();
   const [startOpen, setStartOpen] = useState(false);
   const [endOpen, setEndOpen] = useState(false);
 
   return (
-    <Box display="flex" justifyContent="left">
+    <Stack direction="row" gap={theme.spacing(1)}>
       <DatePicker
-        sx={{ mr: 2, width: 140, backgroundColor: 'white' }}
+        sx={{ width: 140, backgroundColor: 'white' }}
         label={
           value.startDate
             ? undefined
@@ -71,7 +72,7 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
       />
 
       <DatePicker
-        sx={{ mr: 2, width: 140, backgroundColor: 'white' }}
+        sx={{ width: 140, backgroundColor: 'white' }}
         label={
           value.endDate
             ? undefined
@@ -116,6 +117,6 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
           },
         }}
       />
-    </Box>
+    </Stack>
   );
 };
