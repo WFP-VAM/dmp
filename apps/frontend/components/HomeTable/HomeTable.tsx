@@ -94,8 +94,6 @@ export const HomeTable = ({
   const disastersPerDate = useMemo(() => getDisastersPerDate(forms), [forms]);
   const { language } = useLanguageContext();
 
-  console.log({ language });
-
   const firstItemDateString = disastersPerDate[0]?.entryDate as
     | string
     | undefined;

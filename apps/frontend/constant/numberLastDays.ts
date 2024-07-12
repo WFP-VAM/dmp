@@ -1,1 +1,1 @@
-export const NUMBER_LAST_DAYS = 700;
+export const NUMBER_LAST_DAYS = 7;
