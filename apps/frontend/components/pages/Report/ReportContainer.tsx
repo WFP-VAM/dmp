@@ -104,11 +104,14 @@ export const ReportContainer = () => {
               isAllColumnReport={isAllColumnReport}
             />
           </PrintWrapper>
-          <Box display="flex" justifyContent="left">
-            <IconButton onClick={handlePrint} color="primary">
-              <PrintIcon />
-            </IconButton>
-          </Box>
+          {/* Show a print button at the bottom of the page when there is data */}
+          {formsData && formsData.length > 0 && (
+            <Box display="flex" justifyContent="left">
+              <IconButton onClick={handlePrint} color="primary">
+                <PrintIcon />
+              </IconButton>
+            </Box>
+          )}
         </>
       )}
     </Box>

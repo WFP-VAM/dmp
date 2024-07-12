@@ -13,7 +13,7 @@ export const Home = (): JSX.Element => {
   return (
     <Box>
       <Box display="flex" justifyContent="center">
-        <Box sx={{ maxWidth: 700, flexGrow: 1 }}>
+        <Box sx={{ width: 700, flexGrow: 1 }}>
           <HomeTable isLoading={isLoading} forms={lastForms} />
         </Box>
       </Box>
