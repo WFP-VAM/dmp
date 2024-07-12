@@ -7,6 +7,9 @@ import {
   Select,
 } from '@mui/material';
 import { communes, districts, provinces } from '@wfp-dmp/interfaces';
+import { useMemo } from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import { useAuth } from 'context/auth';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -79,8 +82,6 @@ export const RegionFilters = ({
     fontWeight: 600,
   };
 
-  console.log({ value });
-
   return (
     <Box display="flex" flexDirection="row" justifyContent="left" margin={1}>
       <FormControl>
@@ -104,7 +105,7 @@ export const RegionFilters = ({
             </InputAdornment>
           }
         >
-          <MenuItem value={[]} key={'validation_search_params.all-province'}>
+          <MenuItem value="" key={'validation_search_params.all-province'}>
             <FormattedMessage id="validation_search_params.all-province" />
           </MenuItem>
           {allowedProvinces.map(provinceNumber => {
@@ -119,9 +120,8 @@ export const RegionFilters = ({
 
       <FormControl>
         <Select
-          multiple
-          disabled={disableAll === true || value.province.length === 0}
-          value={value.district || []} // Ensure value is an array
+          disabled={disableAll === true || value.province === ''}
+          value={value.district}
           onChange={e => {
             onChange({
               ...value,
@@ -137,7 +137,7 @@ export const RegionFilters = ({
             </InputAdornment>
           }
         >
-          <MenuItem value={[]}>
+          <MenuItem value="">
             <FormattedMessage id="validation_search_params.all-district" />
           </MenuItem>
           {districtsFiltered.map(districtNumber => {
@@ -152,9 +152,8 @@ export const RegionFilters = ({
 
       <FormControl>
         <Select
-          multiple
-          disabled={disableAll === true || value.district.length === 0}
-          value={value.commune || []} // Ensure value is an array
+          disabled={disableAll === true || value.district === ''}
+          value={value.commune}
           onChange={e => {
             onChange({ ...value, commune: e.target.value as string[] });
           }}
@@ -166,7 +165,7 @@ export const RegionFilters = ({
             </InputAdornment>
           }
         >
-          <MenuItem value={[]}>
+          <MenuItem value="">
             <FormattedMessage id="validation_search_params.all-commune" />
           </MenuItem>
           {communesFiltered.map(communeNumber => {
