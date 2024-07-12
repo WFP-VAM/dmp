@@ -92,7 +92,7 @@ const HomeTableRow = ({ isLoading, disastersPerDate }: HomeTableRowProps) => {
           </Typography>
           <Stack direction="row" gap={theme.spacing(1.25)}>
             {disasters.disTyps.length === 0 && (
-              <Typography>
+              <Typography display="flex" alignItems="center">
                 <FormattedMessage id="home.no_report" />
               </Typography>
             )}
