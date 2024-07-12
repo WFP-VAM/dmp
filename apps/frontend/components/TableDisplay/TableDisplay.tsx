@@ -59,7 +59,7 @@ export const TableDisplay = ({
   const isUserAdmin = Boolean(user && ['admin'].includes(user.roles[0]));
   // If user is admin, show all forms, otherwise hide rejected forms
   const formattedForms = useMemo(
-    () => formatForms(forms, isUserAdmin),
+    () => formatForms(forms, !isUserAdmin),
     [forms, isUserAdmin],
   );
 
