@@ -14,7 +14,7 @@
     "warning": "គណនេយ្យ ឬលេខសម្ងាត់មិនត្រឹមត្រូវ សូមព្យាយាមម្តងទៀត",
     "email": {
       "label": "អ៊ីមែល",
-      "placeholder": "max@ncdm.gov.kh",
+      "placeholder": "name@example.kh",
       "error": {
         "required": "សូមបំពេញអ៊ីម៉ែល",
         "invalid": "សូមបំពេញអាស័យដ្ឋានអ៊ីម៉ែលដែលត្រឹមត្រូវ"

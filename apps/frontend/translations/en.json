@@ -9,7 +9,7 @@
     "warning": "Your username or password is invalid. Try again.",
     "email": {
       "label": "Email",
-      "placeholder": "max@ncdm.gov.kh",
+      "placeholder": "name@example.kh",
       "error": {
         "required": "Please enter your email address",
         "invalid": "Please enter a valid email address"
