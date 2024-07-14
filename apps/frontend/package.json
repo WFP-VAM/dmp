@@ -5,7 +5,7 @@
   "scripts": {
     "build": "next build",
     "build:analyze": "DEV_ANALYZE_BUNDLE=true next build",
-    "dev": "./gen_env.sh local && next dev -p 3000",
+    "dev": "./gen_env.sh local public && next dev -p 3000",
     "lint": "eslint --cache --cache-location .next/cache/eslint/ './!(out)/**/*.{js,ts,tsx}'",
     "lint:fix": "pnpm lint --fix",
     "lint:style": "stylelint './**/*.module.css'",
@@ -34,7 +34,7 @@
     "dayjs": "^1.11.7",
     "jwt-decode": "3.1.2",
     "lodash": "4.17.21",
-    "next": "13.4.2",
+    "next": "14.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.35.0",
@@ -45,6 +45,7 @@
   "devDependencies": {
     "@axe-core/react": "4.4.4",
     "@next/bundle-analyzer": "13.1.6",
+    "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@types/jest": "29.0.3",
