@@ -51,9 +51,11 @@ const formatForms = (
 export const TableDisplay = ({
   forms,
   isLoading,
+  isFlood,
 }: {
   forms?: DisasterDtoType[];
   isLoading: boolean;
+  isFlood: boolean;
 }): JSX.Element => {
   const { user } = useAuth();
   const isUserAdmin = Boolean(user && ['admin'].includes(user.roles[0]));
@@ -96,6 +98,11 @@ export const TableDisplay = ({
             <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.dis_type" />
             </TableCell>
+            {isFlood && (
+              <TableCell sx={{ color: 'inherit' }}>
+                <FormattedMessage id="forms_table.headers.flood_number" />
+              </TableCell>
+            )}
             <TableCell sx={{ color: 'inherit' }}>
               <FormattedMessage id="forms_table.headers.entry_name" />
             </TableCell>
@@ -137,6 +144,7 @@ export const TableDisplay = ({
                 <TableCell>
                   <FormattedMessage id={`disasters.${formattedForm.disTyp}`} />
                 </TableCell>
+                {isFlood && <TableCell>{formattedForm.floodN}</TableCell>}
                 <TableCell>{formattedForm.entryName}</TableCell>
                 <TableCell>{formattedForm.phone}</TableCell>
                 <TableCell>

@@ -102,6 +102,7 @@
       "commune": "Commune",
       "dis_date": "Disaster Date",
       "dis_type": "Disaster Type",
+      "flood_number": "Flood #",
       "entry_name": "Reporter Name",
       "phone": "Phone",
       "entry_date": "Entry Date",

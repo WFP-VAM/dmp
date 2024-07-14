@@ -51,7 +51,11 @@ export const FormSearch = () => {
           />
         }
       />
-      <TableDisplay isLoading={isLoading} forms={formData} />
+      <TableDisplay
+        isLoading={isLoading}
+        forms={formData}
+        isFlood={searchFormData.disTyps[0] === DisasterMapping['flood']}
+      />
     </Box>
   );
 };

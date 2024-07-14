@@ -5,7 +5,7 @@ import { FloodDto } from './FloodDto';
 import { IncidentDto } from './IncidentDto';
 import { ValidationStatusValue } from './ValidationStatusDto';
 import { DisasterDtoType, DROUGHT, FLOOD, INCIDENT } from './constants';
-import { KoboCommonKeys, koboKeys } from './mapping';
+import { FloodSpecific, KoboCommonKeys, koboKeys } from './mapping';
 
 export const computeDisasterTypeFromDistTyp = (distTyp: string) => {
   if (isNaN(parseInt(distTyp))) throw Error('distTyp must be convertable to integer');
@@ -61,6 +61,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
         form[keys.validationStatus].uid ?? ValidationStatusValue.onHold
       ).toString(),
       [KoboCommonKeys.submissionTime]: form[keys.submissionTime],
+      floodN: form[keys.floodN],
       approvalLink: path.join('/form', FLOOD, form[keys.id].toString()),
     };
   } else if (isDrought(form)) {
