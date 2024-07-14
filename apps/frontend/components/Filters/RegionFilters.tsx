@@ -1,8 +1,9 @@
 import LocationOnIcon from '@mui/icons-material/FmdGoodOutlined';
 import { FormControl, InputAdornment, Stack, useTheme } from '@mui/material';
 import { communes, districts, provinces } from '@wfp-dmp/interfaces';
-import { useAuth } from 'context/auth';
 import { useMemo } from 'react';
+
+import { useAuth } from 'context/auth';
 
 import MultiSelect from './MultiSelect';
 
