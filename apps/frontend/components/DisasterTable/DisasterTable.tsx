@@ -32,43 +32,57 @@ export const DisasterTable = ({
 }: IProps): JSX.Element => {
   const apiRef = useGridApiRef();
 
-  // Ensure the first column is not hideable and add the menu button to its header
-  const updatedColumns = columns.map((column, index) =>
-    index === 0
-      ? {
-          ...column,
-          hideable: false,
-          width: 150,
-          renderHeader: () => {
-            return (
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Button
-                  onClick={() => {
-                    apiRef.current.showColumnMenu('province');
-                  }}
-                  style={{
-                    minWidth: '24px',
-                    minHeight: '24px',
-                    padding: '0',
-                    borderRadius: '4px',
-                    border: '1px solid #d3d3d3',
-                    backgroundColor: '#f5f5f5',
-                    marginRight: '4px',
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faEllipsisVertical}
-                    style={{ color: '#000', fontSize: '16px' }}
-                  />
-                </Button>
-                {/* eslint-disable-next-line */}
-                {column.renderHeader?.(column as any)}
-              </div>
-            );
-          },
-        }
-      : column,
-  );
+  // Generate column visibility model and hide empty columns by default.
+  const generateColumnVisibilityModel = (
+    inputColumns: GridColDef[],
+    inputData: Record<string, string | number | undefined>[],
+  ) => {
+    return inputColumns.reduce((acc, column) => {
+      const columnId = column.field;
+      const isColumnVisible = inputData.some(
+        row => row[columnId] !== undefined,
+      );
+      acc[columnId] = isColumnVisible;
+
+      return acc;
+    }, {} as Record<string, boolean>);
+  };
+
+  const columnVisibilityModel = generateColumnVisibilityModel(columns, data);
+  const updatedColumns = columns.map((column, index) => ({
+    ...column,
+    ...(index === 0 && {
+      hideable: false,
+      width: 150,
+      renderHeader: () => {
+        return (
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Button
+              onClick={() => {
+                apiRef.current.showColumnMenu('province');
+              }}
+              style={{
+                minWidth: '24px',
+                minHeight: '24px',
+                padding: '0',
+                borderRadius: '4px',
+                border: '1px solid #d3d3d3',
+                backgroundColor: '#f5f5f5',
+                marginRight: '4px',
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faEllipsisVertical}
+                style={{ color: '#000', fontSize: '16px' }}
+              />
+            </Button>
+            {/* eslint-disable-next-line */}
+            {column.renderHeader?.(column as any)}
+          </div>
+        );
+      },
+    }),
+  }));
 
   return (
     <>
@@ -117,6 +131,11 @@ export const DisasterTable = ({
         autoHeight
         columnHeaderHeight={rotateHeader ? 200 : 75}
         disableVirtualization
+        initialState={{
+          columns: {
+            columnVisibilityModel,
+          },
+        }}
       />
     </>
   );
