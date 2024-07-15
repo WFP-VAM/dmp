@@ -14,9 +14,10 @@ import { colors } from 'theme/muiTheme';
 const IOSSwitch = styled((props: SwitchProps) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
-  width: 42,
+  width: 36,
   height: 26,
   padding: 0,
+  alignItems: 'center',
   '& .MuiSwitch-switchBase': {
     padding: 0,
     margin: 2,
@@ -50,11 +51,13 @@ const IOSSwitch = styled((props: SwitchProps) => (
   },
   '& .MuiSwitch-thumb': {
     boxSizing: 'border-box',
-    width: 22,
-    height: 22,
+    marginTop: 3,
+    width: 16,
+    height: 16,
   },
   '& .MuiSwitch-track': {
     borderRadius: 26 / 2,
+    height: 20,
     backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
     opacity: 1,
     transition: theme.transitions.create(['background-color'], {
@@ -88,7 +91,7 @@ export const LabelSwitch = ({
       borderRadius="4px"
       padding={`${theme.spacing(0.7)} ${theme.spacing(1)}`}
       style={{ background: 'white' }}
-      alignItems="end"
+      alignItems="center"
     >
       <Typography fontWeight="bold" fontSize="14px">
         <FormattedMessage id={label} />:
