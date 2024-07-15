@@ -13,7 +13,6 @@ export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
   return (
     <Box
       sx={{
-        // This renders only when printing form the browser, not the when pressing the print icon
         '@media print': {
           display: 'flex',
         },
