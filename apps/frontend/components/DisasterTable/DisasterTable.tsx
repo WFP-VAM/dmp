@@ -1,3 +1,5 @@
+import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@mui/material';
 import {
   DataGrid,
@@ -30,12 +32,46 @@ export const DisasterTable = ({
 }: IProps): JSX.Element => {
   const apiRef = useGridApiRef();
 
+  // Ensure the first column is not hideable and add the menu button to its header
+  const updatedColumns = columns.map((column, index) =>
+    index === 0
+      ? {
+          ...column,
+          hideable: false,
+          width: 150,
+          renderHeader: () => {
+            return (
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Button
+                  onClick={() => {
+                    apiRef.current.showColumnMenu('province');
+                  }}
+                  style={{
+                    minWidth: '24px',
+                    minHeight: '24px',
+                    padding: '0',
+                    borderRadius: '4px',
+                    border: '1px solid #d3d3d3',
+                    backgroundColor: '#f5f5f5',
+                    marginRight: '4px',
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faEllipsisVertical}
+                    style={{ color: '#000', fontSize: '16px' }}
+                  />
+                </Button>
+                {/* eslint-disable-next-line */}
+                {column.renderHeader?.(column as any)}
+              </div>
+            );
+          },
+        }
+      : column,
+  );
+
   return (
     <>
-      {/* TODO - make the province column not hideable */}
-      <Button onClick={() => apiRef.current.toggleColumnMenu('province')}>
-        Manage Columns
-      </Button>
       <DataGrid
         apiRef={apiRef}
         sx={{
@@ -58,6 +94,9 @@ export const DisasterTable = ({
           '& .MuiDataGrid-columnHeader': {
             backgroundColor: '#f5f8ff',
           },
+          '& .MuiDataGrid-menuIcon': {
+            display: 'none',
+          },
           mt: 1,
           breakInside: 'avoid',
         }}
@@ -65,7 +104,7 @@ export const DisasterTable = ({
         showCellVerticalBorder
         showColumnVerticalBorder
         rows={data}
-        columns={columns}
+        columns={updatedColumns}
         hideFooter
         experimentalFeatures={{ columnGrouping: true }}
         columnGroupingModel={columnGroup}
