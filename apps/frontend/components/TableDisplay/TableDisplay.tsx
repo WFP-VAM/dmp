@@ -1,3 +1,5 @@
+/* eslint-disable complexity, max-lines */
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Button,
   Checkbox,
@@ -5,8 +7,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   Paper,
   Skeleton,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -22,12 +26,13 @@ import {
   formatCommonFields,
   ValidationStatusValue,
 } from '@wfp-dmp/interfaces';
-import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
-import { useAuth } from 'context/auth';
 import { orderBy } from 'lodash';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+
+import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
+import { useAuth } from 'context/auth';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
 import { formatDate } from '../../utils/date';
@@ -95,10 +100,6 @@ export const TableDisplay = ({
     setBatchEditMode(false);
   };
 
-  const isSameProvince = selectedForms.every(
-    form => form.province === selectedForms[0]?.province,
-  );
-
   if (!isLoading && formattedForms.length === 0) {
     return (
       <Typography>
@@ -109,18 +110,25 @@ export const TableDisplay = ({
 
   return (
     <>
-      {isUserAdmin && isFlood && (
-        <Tooltip title="Batch edit flood numbers">
-          <Button onClick={handleBatchEditClick}>
-            {batchEditMode ? 'Cancel Batch Edit' : 'Edit Flood #'}
+      <Stack direction="row" spacing={2}>
+        {batchEditMode && selectedForms.length > 0 && (
+          <Button onClick={() => setDialogOpen(true)}>
+            Edit {selectedForms.length} rows
           </Button>
-        </Tooltip>
-      )}
-      {batchEditMode && (
-        <Typography>
-          You can only batch edit forms from the same province
-        </Typography>
-      )}
+        )}
+        {isFlood && (
+          <Tooltip title="Batch edit flood numbers">
+            <Button onClick={handleBatchEditClick}>
+              {batchEditMode ? 'Cancel Batch Edit' : 'Edit Flood #'}
+            </Button>
+          </Tooltip>
+        )}
+        {batchEditMode && (
+          <Typography>
+            You can only batch edit forms from the same province
+          </Typography>
+        )}
+      </Stack>
       <TableContainer component={Paper} sx={{ m: 2 }}>
         <Table sx={{ '& .MuiTableCell-root': { border: '1px solid #ccc' } }}>
           <TableHead>
@@ -148,6 +156,16 @@ export const TableDisplay = ({
               {isFlood && (
                 <TableCell sx={{ color: 'inherit' }}>
                   <FormattedMessage id="forms_table.headers.flood_number" />
+                  {isUserAdmin && (
+                    <Tooltip title="Batch edit flood numbers">
+                      <IconButton
+                        onClick={handleBatchEditClick}
+                        sx={{ pr: 0, maxWidth: '30px', marginRight: -2 }}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
                 </TableCell>
               )}
               {batchEditMode && (
@@ -212,8 +230,9 @@ export const TableDisplay = ({
                         onChange={() => handleCheckboxChange(formattedForm)}
                         disabled={
                           selectedForms.length > 0 &&
-                          !isSameProvince &&
-                          !selectedForms.includes(formattedForm)
+                          selectedForms.some(
+                            f => f.province !== formattedForm.province,
+                          )
                         }
                       />
                     </TableCell>
@@ -260,7 +279,10 @@ export const TableDisplay = ({
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
-            <Button onClick={handleEditFloodNumber} disabled={!newFloodNumber}>
+            <Button
+              onClick={handleEditFloodNumber}
+              disabled={newFloodNumber === null}
+            >
               Save
             </Button>
           </DialogActions>
