@@ -14,15 +14,19 @@ export interface SearchFormData {
   region: Region;
 }
 
+interface SearchFiltersProps {
+  initSearchFormData: SearchFormData;
+  setSearchFormData: Dispatch<SetStateAction<SearchFormData>>;
+  submitButtonContent: JSX.Element;
+  extraFilters?: JSX.Element;
+}
+
 export const SearchFilters = ({
   initSearchFormData,
   setSearchFormData,
   submitButtonContent,
-}: {
-  initSearchFormData: SearchFormData;
-  setSearchFormData: Dispatch<SetStateAction<SearchFormData>>;
-  submitButtonContent: JSX.Element;
-}): JSX.Element => {
+  extraFilters,
+}: SearchFiltersProps): JSX.Element => {
   const theme = useTheme();
   const { control, handleSubmit } = useForm<SearchFormData>({
     defaultValues: initSearchFormData,
@@ -34,14 +38,12 @@ export const SearchFilters = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(submitHandler)}>
-      <Stack
-        direction="column"
-        gap={theme.spacing(2)}
-        width="fit-content"
-        paddingLeft={2}
-      >
-        <Stack direction="row" gap={theme.spacing(4)}>
+    <form
+      onSubmit={handleSubmit(submitHandler)}
+      style={{ width: 'fit-content' }}
+    >
+      <Stack direction="column" gap={theme.spacing(2)} paddingLeft={2}>
+        <Stack direction="row" gap={theme.spacing(5)}>
           <Stack direction="row" gap={theme.spacing(2)} alignItems="center">
             <Typography>
               <FormattedMessage id="validation_search_params.location" />
@@ -76,13 +78,17 @@ export const SearchFilters = ({
           justifyContent="space-between"
           alignItems="center"
         >
-          <Controller
-            name={'disTyps'}
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <DisasterFilter value={value} onChange={onChange} />
-            )}
-          />
+          <Stack direction="row" alignItems="center" gap={theme.spacing(3)}>
+            <Controller
+              name={'disTyps'}
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <DisasterFilter value={value} onChange={onChange} />
+              )}
+            />
+            {extraFilters}
+          </Stack>
+
           <Button
             sx={{
               color: 'black',
