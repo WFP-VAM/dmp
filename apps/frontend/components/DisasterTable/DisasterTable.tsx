@@ -106,7 +106,6 @@ export const DisasterTable = ({
         rows={data}
         columns={updatedColumns}
         hideFooter
-        experimentalFeatures={{ columnGrouping: true }}
         columnGroupingModel={columnGroup}
         isCellEditable={() => isEditable}
         processRowUpdate={(newRow: GridRowModel) => {
