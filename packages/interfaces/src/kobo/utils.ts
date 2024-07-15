@@ -5,7 +5,7 @@ import { FloodDto } from './FloodDto';
 import { IncidentDto } from './IncidentDto';
 import { ValidationStatusValue } from './ValidationStatusDto';
 import { DisasterDtoType, DROUGHT, FLOOD, INCIDENT } from './constants';
-import { FloodSpecific, KoboCommonKeys, koboKeys } from './mapping';
+import { KoboCommonKeys, koboKeys } from './mapping';
 
 export const computeDisasterTypeFromDistTyp = (distTyp: string) => {
   if (isNaN(parseInt(distTyp))) throw Error('distTyp must be convertable to integer');
