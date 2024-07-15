@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { SearchFormData } from 'components/Filters/SearchFilters';
 
@@ -8,6 +8,8 @@ interface IProps {
 }
 
 export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
+  const intl = useIntl();
+
   return (
     <Box
       sx={{
@@ -28,30 +30,31 @@ export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
           </>
         ))}
       </Typography>
-      {searchReportData.region.province !== '' ? (
+      {searchReportData.region.province.length !== 0 ? (
         <Typography ml={3}>
           <FormattedMessage id="validation_search_params.province" />
           {' : '}
-          <FormattedMessage
-            id={`province.${searchReportData.region.province}`}
-          />
+          {searchReportData.region.province
+            .map(x => intl.formatMessage({ id: `province.${x}` }))
+            .join(', ')}
         </Typography>
       ) : null}
-      {searchReportData.region.district !== '' ? (
+      {searchReportData.region.district.length !== 0 ? (
         <Typography ml={3}>
           <FormattedMessage id="validation_search_params.district" />
           {' : '}
-          <FormattedMessage
-            id={`district.${searchReportData.region.district}`}
-          />
+          {searchReportData.region.district
+            .map(x => intl.formatMessage({ id: `district.${x}` }))
+            .join(', ')}
         </Typography>
       ) : null}
-
-      {searchReportData.region.commune !== '' ? (
+      {searchReportData.region.commune.length !== 0 ? (
         <Typography ml={3}>
           <FormattedMessage id="validation_search_params.commune" />
           {' : '}
-          <FormattedMessage id={`commune.${searchReportData.region.commune}`} />
+          {searchReportData.region.commune
+            .map(x => intl.formatMessage({ id: `commune.${x}` }))
+            .join(', ')}
         </Typography>
       ) : null}
       <Typography ml={3}>

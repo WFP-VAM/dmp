@@ -116,7 +116,11 @@ export const DroughtFormValidation = ({
             control={control}
             render={({ field: { value, onChange } }) => (
               <RegionFilters
-                value={value}
+                value={{
+                  province: [value.province],
+                  district: [value.district],
+                  commune: [value.commune],
+                }}
                 onChange={onChange}
                 disableAll={!isEditMode}
               />

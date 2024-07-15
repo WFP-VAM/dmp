@@ -1,6 +1,7 @@
 {
   "common": {
     "province": "Province",
+    "district": "District / Krong",
     "commune": "Commune"
   },
   "login": {
