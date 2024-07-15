@@ -113,3 +113,9 @@ h6 {
   padding: 0.5rem 0.5rem; /* Adjust padding as needed */
   font-size: 14px !important;
 }
+
+/* Make sure the DataGrid menu appears around the middle of the page */
+.MuiDataGrid-menu {
+  margin-top: 400px !important;
+  /* position: fixed !important; */
+}
