@@ -110,25 +110,27 @@ export const TableDisplay = ({
 
   return (
     <>
-      <Stack direction="row" spacing={2}>
-        {batchEditMode && selectedForms.length > 0 && (
-          <Button onClick={() => setDialogOpen(true)}>
-            Edit {selectedForms.length} rows
-          </Button>
-        )}
-        {isFlood && (
-          <Tooltip title="Batch edit flood numbers">
-            <Button onClick={handleBatchEditClick}>
-              {batchEditMode ? 'Cancel Batch Edit' : 'Edit Flood #'}
-            </Button>
-          </Tooltip>
-        )}
-        {batchEditMode && (
-          <Typography>
-            You can only batch edit forms from the same province
-          </Typography>
-        )}
-      </Stack>
+      {isFlood && (
+        <Stack direction="row" spacing={2}>
+          <>
+            {batchEditMode && selectedForms.length > 0 && (
+              <Button onClick={() => setDialogOpen(true)}>
+                Edit {selectedForms.length} rows
+              </Button>
+            )}
+            <Tooltip title="Batch edit flood numbers">
+              <Button onClick={handleBatchEditClick}>
+                {batchEditMode ? 'Cancel Batch Edit' : 'Edit Flood #'}
+              </Button>
+            </Tooltip>
+            {batchEditMode && (
+              <Typography>
+                You can only batch edit forms from the same province
+              </Typography>
+            )}
+          </>
+        </Stack>
+      )}
       <TableContainer component={Paper} sx={{ m: 2 }}>
         <Table sx={{ '& .MuiTableCell-root': { border: '1px solid #ccc' } }}>
           <TableHead>
