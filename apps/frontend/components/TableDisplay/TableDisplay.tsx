@@ -60,6 +60,11 @@ const formatForms = (
   );
 };
 
+type FloodForm = {
+  id: string;
+  province: string;
+};
+
 export const TableDisplay = ({
   forms,
   isLoading,
@@ -72,7 +77,7 @@ export const TableDisplay = ({
   const { user } = useAuth();
   const isUserAdmin = Boolean(user && ['admin'].includes(user.roles[0]));
   const [batchEditMode, setBatchEditMode] = useState(false);
-  const [selectedForms, setSelectedForms] = useState<DisasterDtoType[]>([]);
+  const [selectedForms, setSelectedForms] = useState<FloodForm[]>([]);
   const [newFloodNumber, setNewFloodNumber] = useState<number | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -81,7 +86,7 @@ export const TableDisplay = ({
     [forms, isUserAdmin],
   );
 
-  const handleCheckboxChange = (form: DisasterDtoType) => {
+  const handleCheckboxChange = (form: FloodForm) => {
     setSelectedForms(prev =>
       prev.includes(form)
         ? prev.filter(f => f.id !== form.id)
