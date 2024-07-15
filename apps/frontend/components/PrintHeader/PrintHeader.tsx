@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { SearchFormData } from 'components/Filters/SearchFilters';
 
@@ -8,9 +8,12 @@ interface IProps {
 }
 
 export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
+  const intl = useIntl();
+
   return (
     <Box
       sx={{
+        // This renders only when printing form the browser, not the when pressing the print icon
         '@media print': {
           display: 'flex',
         },
@@ -32,29 +35,27 @@ export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
         <Typography ml={3}>
           <FormattedMessage id="validation_search_params.province" />
           {' : '}
-          {/* TODO: How should we display things here? */}
-          <FormattedMessage
-            id={`province.${searchReportData.region.province[0]}`}
-          />
+          {searchReportData.region.province
+            .map(x => intl.formatMessage({ id: `province.${x}` }))
+            .join(', ')}
         </Typography>
       ) : null}
       {searchReportData.region.district.length !== 0 ? (
         <Typography ml={3}>
           <FormattedMessage id="validation_search_params.district" />
           {' : '}
-          <FormattedMessage
-            id={`district.${searchReportData.region.district[0]}`}
-          />
+          {searchReportData.region.district
+            .map(x => intl.formatMessage({ id: `district.${x}` }))
+            .join(', ')}
         </Typography>
       ) : null}
-
       {searchReportData.region.commune.length !== 0 ? (
         <Typography ml={3}>
           <FormattedMessage id="validation_search_params.commune" />
           {' : '}
-          <FormattedMessage
-            id={`commune.${searchReportData.region.commune[0]}`}
-          />
+          {searchReportData.region.commune
+            .map(x => intl.formatMessage({ id: `commune.${x}` }))
+            .join(', ')}
         </Typography>
       ) : null}
       <Typography ml={3}>
