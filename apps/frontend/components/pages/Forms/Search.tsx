@@ -22,9 +22,9 @@ export const FormSearch = () => {
       disTyp === undefined ? DisasterMapping['flood'] : (disTyp as string),
     ],
     region: {
-      province: '',
-      district: '',
-      commune: '',
+      province: [],
+      district: [],
+      commune: [],
     },
     dateRange: {
       startDate:

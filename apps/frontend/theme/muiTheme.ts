@@ -6,6 +6,8 @@ export const colors = {
   color2: '#4BA0B5',
   color3: '#3A84AD',
   color4: '#275D7B',
+  color5: '#63B2BD',
+  gray: '#bdbdbd',
 };
 
 export const muiThemeObject: ThemeOptions = {
