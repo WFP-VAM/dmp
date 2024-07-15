@@ -69,7 +69,7 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
         <Select
           value={disasterType}
           onChange={onDisasterTypeChange}
-          sx={{ minWidth: 150, mr: 2, backgroundColor: 'white' }}
+          sx={{ minWidth: 150, backgroundColor: 'white' }}
         >
           {disasters.map(disaster => {
             return (
@@ -81,7 +81,7 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
         </Select>
       </FormControl>
       {disasterType === INCIDENT && (
-        <FormControl>
+        <FormControl sx={{ ml: 2 }}>
           <MultiSelect
             options={incidentsKeys}
             onChange={v => {

@@ -90,14 +90,14 @@ export const LabelSwitch = ({
       style={{ background: 'white' }}
       alignItems="end"
     >
-      <Typography fontWeight="bold">
+      <Typography fontWeight="bold" fontSize="14px">
         <FormattedMessage id={label} />:
       </Typography>
-      <Typography>
+      <Typography fontSize="14px">
         <FormattedMessage id={labelUncheck} />
       </Typography>
       <IOSSwitch checked={value} onChange={onChange} />
-      <Typography>
+      <Typography fontSize="14px">
         <FormattedMessage id={labelCheck} />
       </Typography>
     </Stack>
