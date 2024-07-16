@@ -82,13 +82,21 @@ export const TableDisplay = ({
   const [selectedForms, setSelectedForms] = useState<FloodForm[]>([]);
   const [newFloodNumber, setNewFloodNumber] = useState<number | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [lastCheckboxPosition, setLastCheckboxPosition] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
 
   const formattedForms = useMemo(
     () => formatForms(forms, !isUserAdmin),
     [forms, isUserAdmin],
   );
 
-  const handleCheckboxChange = (form: FloodForm) => {
+  const handleCheckboxChange = (form: FloodForm, event: React.MouseEvent) => {
+    const checkbox = event.target as HTMLElement;
+    const rect = checkbox.getBoundingClientRect();
+    setLastCheckboxPosition({ top: rect.top, left: rect.right });
+
     setSelectedForms(prev =>
       prev.includes(form)
         ? prev.filter(f => f.id !== form.id)
@@ -246,7 +254,7 @@ export const TableDisplay = ({
                     <TableCell>
                       <Checkbox
                         checked={selectedForms.includes(formattedForm)}
-                        onChange={() => handleCheckboxChange(formattedForm)}
+                        onChange={e => handleCheckboxChange(formattedForm, e)}
                         disabled={
                           selectedForms.length > 0 &&
                           selectedForms.some(
@@ -278,9 +286,23 @@ export const TableDisplay = ({
             </TableBody>
           )}
         </Table>
-        {batchEditMode && selectedForms.length > 0 && (
-          <Button onClick={() => setDialogOpen(true)}>
-            Edit {selectedForms.length} rows
+        {batchEditMode && selectedForms.length > 0 && lastCheckboxPosition && (
+          <Button
+            onClick={() => setDialogOpen(true)}
+            sx={{
+              backgroundColor: 'var(--color_table_1)',
+              opacity: 1,
+              position: 'fixed',
+              top: lastCheckboxPosition.top,
+              left: lastCheckboxPosition.left,
+              transform: 'translateX(10px)',
+              '&:hover': {
+                backgroundColor: 'var(--color_table_1)',
+              },
+            }}
+          >
+            <CheckIcon style={{ marginRight: 10 }} /> Edit{' '}
+            {selectedForms.length} forms
           </Button>
         )}
         <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
