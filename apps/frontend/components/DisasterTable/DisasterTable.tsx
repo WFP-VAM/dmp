@@ -32,6 +32,7 @@ export const DisasterTable = ({
   const theme = useTheme();
 
   // Generate column visibility model and hide empty columns by default.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const generateColumnVisibilityModel = (
     inputColumns: GridColDef[],
     inputData: Record<string, string | number | undefined>[],
@@ -47,7 +48,8 @@ export const DisasterTable = ({
     }, {} as Record<string, boolean>);
   };
 
-  const columnVisibilityModel = generateColumnVisibilityModel(columns, data);
+  // TODO - activate column visibility model when PR is stable
+  const columnVisibilityModel = {}; // generateColumnVisibilityModel(columns, data);
 
   return (
     <DataGrid
