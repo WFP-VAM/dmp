@@ -129,7 +129,7 @@ export const TableDisplay = ({
   return (
     <>
       {isFlood && batchEditMode && (
-        <Stack direction="row" spacing={2} m={2}>
+        <Stack direction="row" spacing={2} m={2} mb={0}>
           <>
             {/* {batchEditMode && selectedForms.length > 0 && (
               <Button onClick={() => setDialogOpen(true)}>
@@ -293,7 +293,6 @@ export const TableDisplay = ({
           <Button
             onClick={() => setDialogOpen(true)}
             sx={{
-              backgroundColor: 'var(--color_table_1)',
               opacity: 1,
               position: 'fixed',
               top: lastCheckboxPosition.top,
@@ -302,6 +301,8 @@ export const TableDisplay = ({
               '&:hover': {
                 backgroundColor: 'var(--color_table_1)',
               },
+              color: 'black',
+              backgroundColor: 'var(--color_buttons_1)',
             }}
           >
             <CheckIcon style={{ marginRight: 10 }} /> Edit{' '}
