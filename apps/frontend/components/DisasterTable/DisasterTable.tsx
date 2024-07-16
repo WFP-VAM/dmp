@@ -53,7 +53,6 @@ export const DisasterTable = ({
 
   // Make province, district, commune columns not hideable
   const updatedColumns = columns.map(column => {
-    console.log({ column });
     if (['province', 'district', 'commune'].includes(column.field)) {
       return {
         ...column,
