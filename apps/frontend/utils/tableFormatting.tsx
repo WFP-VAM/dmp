@@ -1,10 +1,22 @@
+import { Typography } from '@mui/material';
 import {
+  GridCellParams,
   GridColDef,
   GridColumnHeaderParams,
   GridRenderCellParams,
 } from '@mui/x-data-grid';
-import { DisasterType, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import {
+  DisasterType,
+  FloodSpecific,
+  KoboCommonKeys,
+} from '@wfp-dmp/interfaces';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
+import CustomToolMenu from './CustomToolMenu';
+
+const sortIconWidth = 27;
+const highlightFields = [FloodSpecific.NumPeoAff, FloodSpecific.NumTDeath];
 
 export const getColumnSetup = (
   field: string,
@@ -15,21 +27,35 @@ export const getColumnSetup = (
     valueOptions?: { value: '1' | '2' | ''; label: string }[];
   } = { type: 'number' },
   isSummary = false,
+  fontWeight: React.CSSProperties['fontWeight'] = undefined,
   // eslint-disable-next-line max-params
 ): GridColDef => {
   const fields = {
     field,
-    minWidth,
+    minWidth: minWidth + sortIconWidth,
     flex: 1,
     editable: true,
     headerAlign: 'center',
+    disableColumnMenu: true,
     renderHeader: (params: GridColumnHeaderParams) => (
-      <FormattedMessage
-        id={`table.${disaster}.${isSummary ? 'summary_' : ''}column.${
-          params.field
-        }`}
-      />
+      <Typography variant="body2" textAlign="center" fontWeight={fontWeight}>
+        <FormattedMessage
+          id={`table.${disaster}.${isSummary ? 'summary_' : ''}column.${
+            params.field
+          }`}
+        />
+      </Typography>
     ),
+    // TODO: provide type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    cellClassName: (params: GridCellParams<any, number>) => {
+      // TODO: what should be the highlight logic?
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
+      if (highlightFields.includes(params.field as any))
+        return 'highlighted-cell';
+
+      return '';
+    },
     // cast the modified value from number to string to stay consistent with Kobo
     valueParser: (value: string | number | undefined) => {
       return value === undefined ? undefined : String(value);
@@ -48,11 +74,14 @@ const getLocationColumnSetup = (
 ): GridColDef => {
   return {
     field,
-    width,
+    width: width + sortIconWidth,
     editable: true,
-    headerAlign: 'center',
+    headerAlign: 'left',
+    disableColumnMenu: true,
     renderHeader: (params: GridColumnHeaderParams) => (
-      <FormattedMessage id={`forms_table.headers.${params.field}`} />
+      <Typography variant="body2">
+        <FormattedMessage id={`forms_table.headers.${params.field}`} />
+      </Typography>
     ),
     renderCell: (params: GridRenderCellParams) => (
       <FormattedMessage id={`${field}.${params.value as string}`} />
@@ -66,17 +95,27 @@ const getLocationCountColumnSetup = (
   width = 80,
 ): GridColDef => ({
   field,
-  width,
+  width: width + sortIconWidth,
   headerAlign: 'center',
+  disableColumnMenu: true,
   renderHeader: (params: GridColumnHeaderParams) => (
-    <FormattedMessage id={`table.${disaster}.column.${params.field}`} />
+    <Typography variant="body2">
+      <FormattedMessage id={`table.${disaster}.column.${params.field}`} />
+    </Typography>
   ),
 });
 
-export const getGroupSetup = (groupId: string, disaster: DisasterType) => ({
+export const getGroupSetup = (
+  groupId: string,
+  disaster: DisasterType,
+  showMenu = false,
+) => ({
   groupId: groupId,
   renderHeaderGroup: () => (
-    <FormattedMessage id={`table.${disaster}.groupId.${groupId}`} />
+    <>
+      {showMenu && <CustomToolMenu />}
+      <FormattedMessage id={`table.${disaster}.groupId.${groupId}`} />
+    </>
   ),
 });
 
@@ -92,8 +131,8 @@ export const addDetailedReportLocationColumns = (
 export const addBriefReportLocationColumns = (
   columns: GridColDef[],
 ): GridColDef[] => [
-  getLocationColumnSetup(KoboCommonKeys.province, 88),
-  getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 57),
-  getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 77),
+  getLocationColumnSetup(KoboCommonKeys.province, 200),
+  getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 65),
+  getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 85),
   ...columns,
 ];

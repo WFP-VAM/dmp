@@ -645,7 +645,7 @@
     },
     "COMMON": {
       "column": {
-        "district": "District / Krong",
+        "district": "District",
         "commune": "Commune"
       }
     }

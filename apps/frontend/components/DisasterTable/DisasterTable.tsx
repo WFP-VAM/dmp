@@ -1,9 +1,12 @@
+import { useTheme } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
   GridColumnGroupingModel,
   GridRowModel,
 } from '@mui/x-data-grid';
+
+import { colors } from 'theme/muiTheme';
 
 interface IProps {
   columns: GridColDef[];
@@ -26,15 +29,33 @@ export const DisasterTable = ({
   isEditable,
   rotateHeader = false,
 }: IProps): JSX.Element => {
+  const theme = useTheme();
+
   return (
     <DataGrid
       sx={{
+        '& .highlighted-cell': {
+          background: '#D0EBF9 !important',
+        },
+        // TODO: figure out why this does not work
+        '& .header-top-cell': {
+          borderTopWidth: '1px !important',
+          borderRightStyle: 'solid !important',
+        },
+        '& .header-setting-cell': {
+          backgroundColor: 'transparent !important',
+        },
         '& .MuiDataGrid-cell:focus': {
           outline: isEditable ? '' : 'none',
         },
         '& .MuiDataGrid-cell': {
+          background: 'white',
+          borderColor: colors.gray,
           whiteSpace: 'normal !important',
           wordWrap: 'break-word !important',
+        },
+        '& .MuiDataGrid-columnHeaderTitleContainer': {
+          justifyContent: 'space-between !important',
         },
         '& .MuiDataGrid-columnHeaderTitleContainerContent': {
           whiteSpace: 'normal !important',
@@ -46,11 +67,19 @@ export const DisasterTable = ({
           }),
         },
         '& .MuiDataGrid-columnHeader': {
-          backgroundColor: '#f5f8ff',
+          padding: '6px 8px',
+          borderColor: colors.gray,
+          backgroundColor: '#f1f1f1',
+        },
+        '& .MuiDataGrid-iconButtonContainer': {
+          width: '28px !important',
         },
         mt: 1,
         breakInside: 'avoid',
+        paddingTop: theme.spacing(4),
+        border: 'none',
       }}
+      density="compact"
       disableRowSelectionOnClick={!isEditable}
       showCellVerticalBorder
       showColumnVerticalBorder

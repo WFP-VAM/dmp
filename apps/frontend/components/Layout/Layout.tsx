@@ -9,7 +9,7 @@ export interface LayoutProps {
 export const Layout = ({
   alignItems,
   children,
-  backgroundColor = '#f5f5f5',
+  backgroundColor = '#f9f7f7',
 }: React.PropsWithChildren<LayoutProps>): JSX.Element => {
   const theme = useTheme();
 
@@ -25,7 +25,7 @@ export const Layout = ({
       sx={{ p: 1 }}
       style={{ backgroundColor, paddingTop: theme.spacing(5) }}
     >
-      <Box maxWidth={1500}>{children}</Box>
+      <Box>{children}</Box>
     </Box>
   );
 };
