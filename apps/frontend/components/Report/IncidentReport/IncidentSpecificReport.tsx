@@ -33,14 +33,14 @@ export const IncidentSpecificReport = ({
           columns={SummaryIncidentReportColumnSettings.columns}
           columnGroup={SummaryIncidentReportColumnSettings.columnGroup}
           data={report}
-          rotateHeader={true}
+          rotateHeader={false}
         />
       ) : (
         <BriefReportTable
           columns={SummaryIncidentReportColumnSettings.columns}
           columnGroup={SummaryIncidentReportColumnSettings.columnGroup}
           data={report}
-          rotateHeader={true}
+          rotateHeader={false}
         />
       )}
     </>

@@ -49,14 +49,14 @@ export const DroughtReport = ({
           columns={SummaryDroughtReportColumnSettings.columns}
           columnGroup={SummaryDroughtReportColumnSettings.columnGroup}
           data={report}
-          rotateHeader={true}
+          rotateHeader={false}
         />
       ) : (
         <BriefReportTable
           columns={SummaryDroughtReportColumnSettings.columns}
           columnGroup={SummaryDroughtReportColumnSettings.columnGroup}
           data={report}
-          rotateHeader={true}
+          rotateHeader={false}
         />
       )}
     </>

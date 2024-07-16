@@ -107,6 +107,7 @@ export const DisasterTable = ({
         },
         '& .MuiDataGrid-iconButtonContainer': {
           width: '28px !important',
+          display: 'none',
         },
         mt: 1,
         breakInside: 'avoid',
@@ -129,7 +130,7 @@ export const DisasterTable = ({
       }}
       getRowId={getRowId}
       autoHeight
-      columnHeaderHeight={rotateHeader ? 200 : 75}
+      columnHeaderHeight={rotateHeader ? 200 : 100}
       disableVirtualization
       initialState={{
         columns: {

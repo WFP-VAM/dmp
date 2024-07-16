@@ -49,14 +49,14 @@ export const FloodReport = ({
           columns={SummaryFloodReportColumnSettings.columns}
           columnGroup={SummaryFloodReportColumnSettings.columnGroup}
           data={report}
-          rotateHeader={true}
+          rotateHeader={false}
         />
       ) : (
         <BriefReportTable
           columns={SummaryFloodReportColumnSettings.columns}
           columnGroup={SummaryFloodReportColumnSettings.columnGroup}
           data={report}
-          rotateHeader={true}
+          rotateHeader={false}
         />
       )}
     </>
