@@ -51,6 +51,19 @@ export const DisasterTable = ({
   // TODO - activate column visibility model when PR is stable
   const columnVisibilityModel = {}; // generateColumnVisibilityModel(columns, data);
 
+  // Make province, district, commune columns not hideable
+  const updatedColumns = columns.map(column => {
+    console.log({ column });
+    if (['province', 'district', 'commune'].includes(column.field)) {
+      return {
+        ...column,
+        hideable: false,
+      };
+    }
+
+    return column;
+  });
+
   return (
     <DataGrid
       sx={{
@@ -105,7 +118,7 @@ export const DisasterTable = ({
       showCellVerticalBorder
       showColumnVerticalBorder
       rows={data}
-      columns={columns}
+      columns={updatedColumns}
       hideFooter
       columnGroupingModel={columnGroup}
       isCellEditable={() => isEditable}
