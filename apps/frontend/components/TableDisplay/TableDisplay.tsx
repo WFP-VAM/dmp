@@ -1,4 +1,6 @@
 /* eslint-disable complexity, max-lines */
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
 import {
   Button,
@@ -116,9 +118,9 @@ export const TableDisplay = ({
   return (
     <>
       {isFlood && (
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={2} m={2}>
           <>
-            {batchEditMode && selectedForms.length > 0 && (
+            {/* {batchEditMode && selectedForms.length > 0 && (
               <Button onClick={() => setDialogOpen(true)}>
                 Edit {selectedForms.length} rows
               </Button>
@@ -127,9 +129,9 @@ export const TableDisplay = ({
               <Button onClick={handleBatchEditClick}>
                 {batchEditMode ? 'Cancel Batch Edit' : 'Edit Flood #'}
               </Button>
-            </Tooltip>
+            </Tooltip> */}
             {batchEditMode && (
-              <Typography>
+              <Typography color="red">
                 You can only batch edit forms from the same province
               </Typography>
             )}
@@ -163,21 +165,31 @@ export const TableDisplay = ({
               {isFlood && (
                 <TableCell sx={{ color: 'inherit' }}>
                   <FormattedMessage id="forms_table.headers.flood_number" />
-                  {isUserAdmin && (
-                    <Tooltip title="Batch edit flood numbers">
-                      <IconButton
-                        onClick={handleBatchEditClick}
-                        sx={{ pr: 0, maxWidth: '30px', marginRight: -2 }}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
-                  )}
+                  <Tooltip
+                    title={batchEditMode ? 'Cancel' : 'Batch edit flood #'}
+                  >
+                    <IconButton
+                      onClick={handleBatchEditClick}
+                      sx={{ pr: 0, maxWidth: '30px', marginRight: -2 }}
+                    >
+                      {batchEditMode ? <CancelIcon /> : <EditIcon />}
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
               )}
               {batchEditMode && (
                 <TableCell sx={{ color: 'inherit' }}>
                   <FormattedMessage id="forms_table.headers.select" />
+                  {selectedForms.length > 0 && (
+                    <Tooltip title="Open edit dialog">
+                      <IconButton
+                        onClick={() => setDialogOpen(true)}
+                        sx={{ pr: 0, maxWidth: '30px', marginRight: -2 }}
+                      >
+                        <CheckIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
                 </TableCell>
               )}
               <TableCell sx={{ color: 'inherit' }}>
