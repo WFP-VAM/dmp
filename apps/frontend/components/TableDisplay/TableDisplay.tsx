@@ -1,26 +1,14 @@
-/* eslint-disable complexity, max-lines */
-import CancelIcon from '@mui/icons-material/Cancel';
-import CheckIcon from '@mui/icons-material/Check';
-import EditIcon from '@mui/icons-material/Edit';
+/* eslint-disable max-lines */
 import {
-  Button,
   Checkbox,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
   Paper,
   Skeleton,
-  Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import {
@@ -38,6 +26,11 @@ import { useAuth } from 'context/auth';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
 import { formatDate } from '../../utils/date';
+import {
+  BatchEditControl,
+  BatchEditDialog,
+  BatchEditWarning,
+} from './BatchEditControls';
 
 const formatForms = (
   forms: DisasterDtoType[] | undefined,
@@ -67,6 +60,75 @@ type FloodForm = {
   province: string;
 };
 
+const TableHeader = ({
+  isFlood,
+  batchEditMode,
+  handleBatchEditClick,
+  selectedForms,
+  handleEditFloodNumber,
+  lastCheckboxPosition,
+}: {
+  isFlood: boolean;
+  batchEditMode: boolean;
+  handleBatchEditClick: () => void;
+  selectedForms: FloodForm[];
+  handleEditFloodNumber: (newFloodNumber: number) => void;
+  lastCheckboxPosition: { top: number; left: number } | null;
+  setSelectedForms: (forms: FloodForm[]) => void;
+}) => (
+  <TableHead>
+    <TableRow sx={{ backgroundColor: 'var(--color_table_1)', color: 'black' }}>
+      <TableCell sx={{ color: 'inherit' }}>
+        <FormattedMessage id="forms_table.headers.province" />
+      </TableCell>
+      <TableCell sx={{ color: 'inherit' }}>
+        <FormattedMessage id="forms_table.headers.district" />
+      </TableCell>
+      <TableCell sx={{ color: 'inherit' }}>
+        <FormattedMessage id="forms_table.headers.commune" />
+      </TableCell>
+      <TableCell sx={{ color: 'inherit' }}>
+        <FormattedMessage id="forms_table.headers.dis_date" />
+      </TableCell>
+      <TableCell sx={{ color: 'inherit', width: '110px' }}>
+        <FormattedMessage id="forms_table.headers.entry_date" />
+      </TableCell>
+      <TableCell sx={{ color: 'inherit' }}>
+        <FormattedMessage id="forms_table.headers.dis_type" />
+      </TableCell>
+      {isFlood && (
+        <TableCell sx={{ color: 'inherit' }}>
+          <FormattedMessage id="forms_table.headers.flood_number" />
+          <BatchEditControl
+            batchEditMode={batchEditMode}
+            handleBatchEditClick={handleBatchEditClick}
+          />
+        </TableCell>
+      )}
+      {batchEditMode && (
+        <TableCell sx={{ color: 'inherit' }}>
+          <FormattedMessage id="forms_table.headers.select" />
+          <BatchEditDialog
+            batchEditMode={batchEditMode}
+            selectedForms={selectedForms}
+            handleEditFloodNumber={handleEditFloodNumber}
+            lastCheckboxPosition={lastCheckboxPosition}
+          />
+        </TableCell>
+      )}
+      <TableCell sx={{ color: 'inherit' }}>
+        <FormattedMessage id="forms_table.headers.entry_name" />
+      </TableCell>
+      <TableCell sx={{ color: 'inherit', width: '120px' }}>
+        <FormattedMessage id="forms_table.headers.phone" />
+      </TableCell>
+      <TableCell sx={{ color: 'inherit' }}>
+        <FormattedMessage id="forms_table.headers.review_link" />
+      </TableCell>
+    </TableRow>
+  </TableHead>
+);
+
 export const TableDisplay = ({
   forms,
   isLoading,
@@ -80,8 +142,6 @@ export const TableDisplay = ({
   const isUserAdmin = Boolean(user && ['admin'].includes(user.roles[0]));
   const [batchEditMode, setBatchEditMode] = useState(false);
   const [selectedForms, setSelectedForms] = useState<FloodForm[]>([]);
-  const [newFloodNumber, setNewFloodNumber] = useState<number | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [lastCheckboxPosition, setLastCheckboxPosition] = useState<{
     top: number;
     left: number;
@@ -112,9 +172,9 @@ export const TableDisplay = ({
     setSelectedForms([]);
   };
 
-  const handleEditFloodNumber = () => {
+  const handleEditFloodNumber = (newFloodNumber: number) => {
     // Logic to update flood numbers for selected forms
-    setDialogOpen(false);
+    console.warn({ newFloodNumber });
     setBatchEditMode(false);
   };
 
@@ -128,105 +188,27 @@ export const TableDisplay = ({
 
   return (
     <>
-      {isFlood && batchEditMode && (
-        <Stack direction="row" spacing={2} m={2} mb={0}>
-          <Typography color="red">
-            You can only batch edit forms from the same province
-          </Typography>
-        </Stack>
-      )}
+      {batchEditMode && <BatchEditWarning />}
       <TableContainer component={Paper} sx={{ m: 2 }}>
         <Table sx={{ '& .MuiTableCell-root': { border: '1px solid #ccc' } }}>
-          <TableHead>
-            <TableRow
-              sx={{ backgroundColor: 'var(--color_table_1)', color: 'black' }}
-            >
-              <TableCell sx={{ color: 'inherit' }}>
-                <FormattedMessage id="forms_table.headers.province" />
-              </TableCell>
-              <TableCell sx={{ color: 'inherit' }}>
-                <FormattedMessage id="forms_table.headers.district" />
-              </TableCell>
-              <TableCell sx={{ color: 'inherit' }}>
-                <FormattedMessage id="forms_table.headers.commune" />
-              </TableCell>
-              <TableCell sx={{ color: 'inherit' }}>
-                <FormattedMessage id="forms_table.headers.dis_date" />
-              </TableCell>
-              <TableCell sx={{ color: 'inherit', width: '110px' }}>
-                <FormattedMessage id="forms_table.headers.entry_date" />
-              </TableCell>
-              <TableCell sx={{ color: 'inherit' }}>
-                <FormattedMessage id="forms_table.headers.dis_type" />
-              </TableCell>
-              {isFlood && (
-                <TableCell sx={{ color: 'inherit' }}>
-                  <FormattedMessage id="forms_table.headers.flood_number" />
-                  <Tooltip
-                    title={batchEditMode ? 'Cancel' : 'Batch edit flood #'}
-                  >
-                    <IconButton
-                      onClick={handleBatchEditClick}
-                      sx={{
-                        marginRight: -3,
-                        marginLeft: -0.5,
-                        color: batchEditMode
-                          ? '#D32C38'
-                          : 'var(--color_buttons_1)',
-                        '&:hover': {
-                          backgroundColor: 'transparent',
-                        },
-                      }}
-                    >
-                      {batchEditMode ? <CancelIcon /> : <EditIcon />}
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              )}
-              {batchEditMode && (
-                <TableCell sx={{ color: 'inherit' }}>
-                  <FormattedMessage id="forms_table.headers.select" />
-                  {selectedForms.length > 0 && (
-                    <Tooltip title="Open edit dialog">
-                      <IconButton
-                        onClick={() => setDialogOpen(true)}
-                        sx={{
-                          marginRight: -3,
-                          marginLeft: -0.5,
-                          color: 'green',
-                          '&:hover': {
-                            backgroundColor: 'transparent',
-                          },
-                        }}
-                      >
-                        <CheckIcon />
-                      </IconButton>
-                    </Tooltip>
-                  )}
-                </TableCell>
-              )}
-              <TableCell sx={{ color: 'inherit' }}>
-                <FormattedMessage id="forms_table.headers.entry_name" />
-              </TableCell>
-              <TableCell sx={{ color: 'inherit', width: '120px' }}>
-                <FormattedMessage id="forms_table.headers.phone" />
-              </TableCell>
-              <TableCell sx={{ color: 'inherit' }}>
-                <FormattedMessage id="forms_table.headers.review_link" />
-              </TableCell>
-            </TableRow>
-          </TableHead>
+          <TableHeader
+            isFlood={isFlood}
+            batchEditMode={batchEditMode}
+            handleBatchEditClick={handleBatchEditClick}
+            selectedForms={selectedForms}
+            handleEditFloodNumber={handleEditFloodNumber}
+            lastCheckboxPosition={lastCheckboxPosition}
+            setSelectedForms={setSelectedForms}
+          />
           {isLoading ? (
             <TableBody>
-              {[1, 2, 3].map(id => {
-                return (
-                  <TableRow key={id}>
-                    <TableCell colSpan={9}>
-                      <Skeleton />
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              {[1, 2, 3].map(id => (
+                <TableRow key={id}>
+                  <TableCell colSpan={9}>
+                    <Skeleton />
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           ) : (
             <TableBody>
@@ -291,49 +273,6 @@ export const TableDisplay = ({
             </TableBody>
           )}
         </Table>
-        {batchEditMode && selectedForms.length > 0 && lastCheckboxPosition && (
-          <Button
-            onClick={() => setDialogOpen(true)}
-            sx={{
-              opacity: 1,
-              position: 'fixed',
-              top: lastCheckboxPosition.top,
-              left: lastCheckboxPosition.left,
-              transform: 'translateX(10px)',
-              '&:hover': {
-                backgroundColor: 'var(--color_table_1)',
-              },
-              color: 'black',
-              backgroundColor: 'var(--color_buttons_1)',
-            }}
-          >
-            <CheckIcon style={{ marginRight: 10 }} /> Edit{' '}
-            {selectedForms.length} forms
-          </Button>
-        )}
-        <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-          <DialogTitle>
-            Edit flood number for {selectedForms.length} selected forms
-          </DialogTitle>
-          <DialogContent>
-            <TextField
-              type="number"
-              label="New Flood Number"
-              value={newFloodNumber}
-              onChange={e => setNewFloodNumber(Number(e.target.value))}
-              fullWidth
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
-            <Button
-              onClick={handleEditFloodNumber}
-              disabled={newFloodNumber === null}
-            >
-              Save
-            </Button>
-          </DialogActions>
-        </Dialog>
       </TableContainer>
     </>
   );
