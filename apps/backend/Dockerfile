@@ -29,7 +29,9 @@ COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=builder /app/out/full/ .
 
 RUN HUSKY=0 pnpm install && \
-  pnpm build --scope='@wfp-dmp/backend' && \
+  cd packages/interfaces && pnpm build && \
+  cd ../../apps/backend && pnpm build && \
+  cd ../.. && \
   rm -rf **/src **/.turbo node_modules **/node_modules && \
   pnpm install --production
 
