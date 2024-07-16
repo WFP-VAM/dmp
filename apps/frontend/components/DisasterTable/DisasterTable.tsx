@@ -43,6 +43,7 @@ export const DisasterTable = ({
           borderRightStyle: 'solid !important',
         },
         '& .header-setting-cell': {
+          fontWeight: 'bold',
           backgroundColor: 'transparent !important',
         },
         '& .MuiDataGrid-cell:focus': {
