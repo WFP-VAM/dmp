@@ -31,6 +31,24 @@ export const DisasterTable = ({
 }: IProps): JSX.Element => {
   const theme = useTheme();
 
+  // Generate column visibility model and hide empty columns by default.
+  const generateColumnVisibilityModel = (
+    inputColumns: GridColDef[],
+    inputData: Record<string, string | number | undefined>[],
+  ) => {
+    return inputColumns.reduce((acc, column) => {
+      const columnId = column.field;
+      const isColumnVisible = inputData.some(
+        row => row[columnId] !== undefined,
+      );
+      acc[columnId] = isColumnVisible;
+
+      return acc;
+    }, {} as Record<string, boolean>);
+  };
+
+  const columnVisibilityModel = generateColumnVisibilityModel(columns, data);
+
   return (
     <DataGrid
       sx={{
@@ -99,6 +117,11 @@ export const DisasterTable = ({
       autoHeight
       columnHeaderHeight={rotateHeader ? 200 : 75}
       disableVirtualization
+      initialState={{
+        columns: {
+          columnVisibilityModel,
+        },
+      }}
     />
   );
 };
