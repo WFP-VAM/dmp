@@ -173,8 +173,13 @@ export const TableDisplay = ({
   };
 
   const handleEditFloodNumber = (newFloodNumber: number) => {
-    // Logic to update flood numbers for selected forms
-    console.warn({ newFloodNumber });
+    // Update flood numbers for selected forms after batch edit
+    formattedForms.forEach(form => {
+      if (selectedForms.some(f => f.id === form.id)) {
+        form.floodN = `${newFloodNumber}`;
+      }
+    });
+    setSelectedForms([]);
     setBatchEditMode(false);
   };
 
