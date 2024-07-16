@@ -204,7 +204,7 @@ export const TableDisplay = ({
             <TableBody>
               {[1, 2, 3].map(id => (
                 <TableRow key={id}>
-                  <TableCell colSpan={9}>
+                  <TableCell colSpan={isFlood ? 10 : 9}>
                     <Skeleton />
                   </TableCell>
                 </TableRow>

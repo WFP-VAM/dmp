@@ -16,6 +16,8 @@ import {
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
+import { usePatchFloodNumber } from 'services/api/kobo/usePatchForm';
+
 type FloodForm = {
   id: string;
   province: string;
@@ -74,6 +76,20 @@ export const BatchEditDialog = ({
 }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newFloodNumber, setNewFloodNumber] = useState<number | null>(null);
+
+  const formIds = selectedForms.map(form => form.id);
+  const { trigger: triggerPatch, isMutating } = usePatchFloodNumber(
+    formIds,
+    newFloodNumber ?? 0,
+  );
+
+  const handleSave = async () => {
+    if (newFloodNumber !== null && !isMutating) {
+      await triggerPatch(); // Updated call
+      handleEditFloodNumber(newFloodNumber);
+      setDialogOpen(false);
+    }
+  };
 
   const renderSelectButton = () => (
     <>
@@ -144,13 +160,8 @@ export const BatchEditDialog = ({
           <FormattedMessage id="forms_table.batch_edit.cancel" />
         </Button>
         <Button
-          onClick={() => {
-            if (newFloodNumber !== null) {
-              handleEditFloodNumber(newFloodNumber);
-              setDialogOpen(false);
-            }
-          }}
-          disabled={newFloodNumber === null}
+          onClick={handleSave}
+          disabled={newFloodNumber === null || isMutating}
         >
           <FormattedMessage id="forms_table.batch_edit.save" />
         </Button>
