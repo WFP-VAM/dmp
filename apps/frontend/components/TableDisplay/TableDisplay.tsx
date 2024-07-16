@@ -92,7 +92,10 @@ export const TableDisplay = ({
     [forms, isUserAdmin],
   );
 
-  const handleCheckboxChange = (form: FloodForm, event: React.MouseEvent) => {
+  const handleCheckboxChange = (
+    form: FloodForm,
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const checkbox = event.target as HTMLElement;
     const rect = checkbox.getBoundingClientRect();
     setLastCheckboxPosition({ top: rect.top, left: rect.right });
