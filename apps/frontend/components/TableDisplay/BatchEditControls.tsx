@@ -14,6 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 type FloodForm = {
   id: string;
@@ -22,8 +23,8 @@ type FloodForm = {
 
 export const BatchEditWarning = () => (
   <Stack direction="row" spacing={2} m={2} mb={0}>
-    <Typography color="red">
-      You can only batch edit forms from the same province
+    <Typography color="#D32C38">
+      <FormattedMessage id="forms_table.batch_edit.warning" />
     </Typography>
   </Stack>
 );
@@ -35,7 +36,15 @@ export const BatchEditControl = ({
   batchEditMode: boolean;
   handleBatchEditClick: () => void;
 }) => (
-  <Tooltip title={batchEditMode ? 'Cancel' : 'Batch edit flood #'}>
+  <Tooltip
+    title={
+      batchEditMode ? (
+        <FormattedMessage id="forms_table.batch_edit.cancel" />
+      ) : (
+        <FormattedMessage id="forms_table.batch_edit.start" />
+      )
+    }
+  >
     <IconButton
       onClick={handleBatchEditClick}
       sx={{
@@ -69,7 +78,9 @@ export const BatchEditDialog = ({
   const renderSelectButton = () => (
     <>
       {selectedForms.length > 0 && (
-        <Tooltip title="Open edit dialog">
+        <Tooltip
+          title={<FormattedMessage id="forms_table.batch_edit.open_dialog" />}
+        >
           <IconButton
             onClick={() => setDialogOpen(true)}
             sx={{
@@ -102,26 +113,36 @@ export const BatchEditDialog = ({
         backgroundColor: 'var(--color_buttons_1)',
       }}
     >
-      Edit {selectedForms.length} forms
+      <FormattedMessage
+        id="forms_table.batch_edit.edit_forms"
+        values={{ count: selectedForms.length }}
+      />
     </Button>
   );
 
   const renderDialog = () => (
     <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
       <DialogTitle>
-        Edit flood number for {selectedForms.length} selected forms
+        <FormattedMessage
+          id="forms_table.batch_edit.dialog_title"
+          values={{ count: selectedForms.length }}
+        />
       </DialogTitle>
       <DialogContent>
         <TextField
           type="number"
-          label="New Flood Number"
+          label={
+            <FormattedMessage id="forms_table.batch_edit.new_flood_number" />
+          }
           value={newFloodNumber}
           onChange={e => setNewFloodNumber(Number(e.target.value))}
           fullWidth
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
+        <Button onClick={() => setDialogOpen(false)}>
+          <FormattedMessage id="forms_table.batch_edit.cancel" />
+        </Button>
         <Button
           onClick={() => {
             if (newFloodNumber !== null) {
@@ -131,7 +152,7 @@ export const BatchEditDialog = ({
           }}
           disabled={newFloodNumber === null}
         >
-          Save
+          <FormattedMessage id="forms_table.batch_edit.save" />
         </Button>
       </DialogActions>
     </Dialog>

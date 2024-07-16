@@ -109,6 +109,16 @@
       "phone": "Phone",
       "entry_date": "Entry Date",
       "review_link": "Review and Approval"
+    },
+    "batch_edit": {
+      "start": "Batch edit flood #",
+      "cancel": "Cancel",
+      "save": "Save",
+      "warning": "You can only batch edit forms from the same province",
+      "dialog_title": "Edit flood number for {count} selected form(s)",
+      "edit_forms": "Edit {count} form(s)",
+      "open_dialog": "Open edit dialog",
+      "new_flood_number": "New flood number"
     }
   },
   "report_page": {
