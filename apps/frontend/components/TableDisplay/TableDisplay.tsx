@@ -130,23 +130,9 @@ export const TableDisplay = ({
     <>
       {isFlood && batchEditMode && (
         <Stack direction="row" spacing={2} m={2} mb={0}>
-          <>
-            {/* {batchEditMode && selectedForms.length > 0 && (
-              <Button onClick={() => setDialogOpen(true)}>
-                Edit {selectedForms.length} rows
-              </Button>
-            )}
-            <Tooltip title="Batch edit flood numbers">
-              <Button onClick={handleBatchEditClick}>
-                {batchEditMode ? 'Cancel Batch Edit' : 'Edit Flood #'}
-              </Button>
-            </Tooltip> */}
-            {
-              <Typography color="red">
-                You can only batch edit forms from the same province
-              </Typography>
-            }
-          </>
+          <Typography color="red">
+            You can only batch edit forms from the same province
+          </Typography>
         </Stack>
       )}
       <TableContainer component={Paper} sx={{ m: 2 }}>
@@ -181,7 +167,16 @@ export const TableDisplay = ({
                   >
                     <IconButton
                       onClick={handleBatchEditClick}
-                      sx={{ pr: 0, maxWidth: '30px', marginRight: -2 }}
+                      sx={{
+                        marginRight: -3,
+                        marginLeft: -0.5,
+                        color: batchEditMode
+                          ? '#D32C38'
+                          : 'var(--color_buttons_1)',
+                        '&:hover': {
+                          backgroundColor: 'transparent',
+                        },
+                      }}
                     >
                       {batchEditMode ? <CancelIcon /> : <EditIcon />}
                     </IconButton>
@@ -195,7 +190,14 @@ export const TableDisplay = ({
                     <Tooltip title="Open edit dialog">
                       <IconButton
                         onClick={() => setDialogOpen(true)}
-                        sx={{ pr: 0, maxWidth: '30px', marginRight: -2 }}
+                        sx={{
+                          marginRight: -3,
+                          marginLeft: -0.5,
+                          color: 'green',
+                          '&:hover': {
+                            backgroundColor: 'transparent',
+                          },
+                        }}
                       >
                         <CheckIcon />
                       </IconButton>
