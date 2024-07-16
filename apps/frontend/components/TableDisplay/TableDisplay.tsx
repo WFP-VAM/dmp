@@ -125,7 +125,7 @@ export const TableDisplay = ({
 
   return (
     <>
-      {isFlood && (
+      {isFlood && batchEditMode && (
         <Stack direction="row" spacing={2} m={2}>
           <>
             {/* {batchEditMode && selectedForms.length > 0 && (
@@ -138,11 +138,11 @@ export const TableDisplay = ({
                 {batchEditMode ? 'Cancel Batch Edit' : 'Edit Flood #'}
               </Button>
             </Tooltip> */}
-            {batchEditMode && (
+            {
               <Typography color="red">
                 You can only batch edit forms from the same province
               </Typography>
-            )}
+            }
           </>
         </Stack>
       )}
