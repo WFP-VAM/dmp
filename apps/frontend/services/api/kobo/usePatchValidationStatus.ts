@@ -27,6 +27,9 @@ export const usePatchValidationStatus = (
           validationStatusValue: arg,
         });
 
+      // Notify other tabs that the form data has been updated.
+      localStorage.setItem('formDataTrigger', JSON.stringify(new Date()));
+
       return updatedValidationStatus;
     },
   );

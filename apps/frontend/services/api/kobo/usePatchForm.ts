@@ -36,6 +36,8 @@ export const usePatchForm = (
       // If the edit was successful, update the validation status to "onHold".
       if (status === 201) {
         await validationTrigger(ValidationStatusValue.onHold);
+        // Notify other tabs that the form data has been updated.
+        localStorage.setItem('formDataTrigger', JSON.stringify(new Date()));
       }
 
       return status;

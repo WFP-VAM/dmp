@@ -1,4 +1,5 @@
 import { DroughtDto, FloodDto, IncidentDto } from '@wfp-dmp/interfaces';
+import { useEffect } from 'react';
 import useSWR from 'swr';
 
 import { SearchFormData } from 'components/Filters/SearchFilters';
@@ -19,7 +20,7 @@ export const useGetForms = ({
   const inputCommune =
     inputRegion.commune.length === 0 ? undefined : inputRegion.commune;
 
-  const { data, isLoading } = useSWR(
+  const { data, isLoading, mutate } = useSWR(
     [
       ApiRoutes.forms,
       inputDisTyps,
@@ -47,6 +48,22 @@ export const useGetForms = ({
       return formsData;
     },
   );
+
+  // Trigger a revalidation when the localStorage changes,
+  // suggesting form data has been updated.
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'formDataTrigger') {
+        void mutate(); // Trigger a revalidation
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [mutate]);
 
   return { data, isLoading };
 };
