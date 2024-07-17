@@ -1,8 +1,7 @@
 import { FloodDto } from '@wfp-dmp/interfaces';
-import { useMemo } from 'react';
-
 import { BriefReportTable } from 'components/DisasterTable/BriefReportTable';
 import { DetailedReportTable } from 'components/DisasterTable/DetailedReportTable';
+import { useMemo } from 'react';
 import {
   generateFloodBriefReport,
   generateFloodDetailedReport,

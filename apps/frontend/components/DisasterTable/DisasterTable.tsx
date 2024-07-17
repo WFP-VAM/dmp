@@ -1,11 +1,11 @@
-import { useTheme } from '@mui/material';
+import { Stack, useTheme } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
   GridColumnGroupingModel,
   GridRowModel,
 } from '@mui/x-data-grid';
-
+import React from 'react';
 import { colors } from 'theme/muiTheme';
 
 interface IProps {
@@ -27,7 +27,6 @@ export const DisasterTable = ({
   onChange,
   getRowId,
   isEditable,
-  rotateHeader = false,
 }: IProps): JSX.Element => {
   const theme = useTheme();
 
@@ -64,78 +63,81 @@ export const DisasterTable = ({
   });
 
   return (
-    <DataGrid
-      sx={{
-        '& .highlighted-cell': {
-          background: '#D0EBF9 !important',
-        },
-        // TODO: figure out why this does not work
-        '& .header-top-cell': {
-          borderTopWidth: '1px !important',
-          borderRightStyle: 'solid !important',
-        },
-        '& .header-setting-cell': {
-          fontWeight: 'bold',
-          backgroundColor: 'transparent !important',
-        },
-        '& .MuiDataGrid-cell:focus': {
-          outline: isEditable ? '' : 'none',
-        },
-        '& .MuiDataGrid-cell': {
-          background: 'white',
+    <Stack gap={theme.spacing(4)}>
+      <DataGrid
+        sx={{
+          '& .highlighted-cell': {
+            background: '#D0EBF9 !important',
+          },
+          '& .header-top-cell': {
+            borderTop: `1px solid ${colors.gray}`,
+            borderBottom: `1px solid ${colors.gray}`,
+            // borderLeft: `1px solid ${colors.gray}`,
+            // borderRight: 'none',
+          },
+          '& .header-setting-cell': {
+            fontWeight: 'bold',
+            borderBottom: `1px solid ${colors.gray}`,
+            backgroundColor: '#f9f7f7 !important',
+          },
+          '& .MuiDataGrid-cell:focus': {
+            outline: isEditable ? '' : 'none',
+          },
+          '& .MuiDataGrid-cell': {
+            background: 'white',
+            borderColor: colors.gray,
+            whiteSpace: 'normal !important',
+            wordWrap: 'break-word !important',
+          },
+          '& .MuiDataGrid-columnHeaderTitleContainerContent': {
+            whiteSpace: 'normal !important',
+            wordWrap: 'break-word !important',
+            lineHeight: 'normal',
+          },
+          '& .MuiDataGrid-columnHeader': {
+            padding: '6px 8px',
+            borderColor: colors.gray,
+            backgroundColor: '#f1f1f1',
+          },
+          '& .MuiDataGrid-iconButtonContainer': {
+            display: 'none',
+          },
+          '& .MuiDataGrid-columnHeaderTitleContainer': {
+            border: 'none !important',
+          },
+          // mt: 1,
+          breakInside: 'avoid',
+          borderTop: 'none',
+          borderLeft: 'none',
+          borderRight: 'none',
           borderColor: colors.gray,
-          whiteSpace: 'normal !important',
-          wordWrap: 'break-word !important',
-        },
-        '& .MuiDataGrid-columnHeaderTitleContainer': {
-          justifyContent: 'space-between !important',
-        },
-        '& .MuiDataGrid-columnHeaderTitleContainerContent': {
-          whiteSpace: 'normal !important',
-          wordWrap: 'break-word !important',
-          lineHeight: 'normal',
-          ...(rotateHeader && {
-            transform: 'rotate(-90deg)',
-            minWidth: '180px',
-          }),
-        },
-        '& .MuiDataGrid-columnHeader': {
-          padding: '6px 8px',
-          borderColor: colors.gray,
-          backgroundColor: '#f1f1f1',
-        },
-        '& .MuiDataGrid-iconButtonContainer': {
-          width: '28px !important',
-          display: 'none',
-        },
-        mt: 1,
-        breakInside: 'avoid',
-        paddingTop: theme.spacing(4),
-        border: 'none',
-      }}
-      density="compact"
-      disableRowSelectionOnClick={!isEditable}
-      showCellVerticalBorder
-      showColumnVerticalBorder
-      rows={data}
-      columns={updatedColumns}
-      hideFooter
-      columnGroupingModel={columnGroup}
-      isCellEditable={() => isEditable}
-      processRowUpdate={(newRow: GridRowModel) => {
-        if (onChange) onChange(newRow);
+          // paddingTop: theme.spacing(4),
+        }}
+        disableColumnResize
+        density="compact"
+        disableRowSelectionOnClick={!isEditable}
+        showCellVerticalBorder
+        showColumnVerticalBorder
+        rows={data}
+        columns={updatedColumns}
+        hideFooter
+        columnGroupingModel={columnGroup}
+        isCellEditable={() => isEditable}
+        processRowUpdate={(newRow: GridRowModel) => {
+          if (onChange) onChange(newRow);
 
-        return newRow;
-      }}
-      getRowId={getRowId}
-      autoHeight
-      columnHeaderHeight={rotateHeader ? 200 : 100}
-      disableVirtualization
-      initialState={{
-        columns: {
-          columnVisibilityModel,
-        },
-      }}
-    />
+          return newRow;
+        }}
+        getRowId={getRowId}
+        autoHeight
+        columnHeaderHeight={72}
+        disableVirtualization
+        initialState={{
+          columns: {
+            columnVisibilityModel,
+          },
+        }}
+      />
+    </Stack>
   );
 };

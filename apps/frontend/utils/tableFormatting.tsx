@@ -16,7 +16,12 @@ import { FormattedMessage } from 'react-intl';
 import CustomToolMenu from './CustomToolMenu';
 
 const sortIconWidth = 27;
-const highlightFields = [FloodSpecific.NumPeoAff, FloodSpecific.NumTDeath];
+const highlightFields = [
+  FloodSpecific.NumPeoAff,
+  FloodSpecific.NumTDeath,
+  FloodSpecific.NumTMissing,
+  FloodSpecific.NumTInjure,
+];
 
 export const getColumnSetup = (
   field: string,
@@ -132,7 +137,7 @@ export const addBriefReportLocationColumns = (
   columns: GridColDef[],
 ): GridColDef[] => [
   getLocationColumnSetup(KoboCommonKeys.province, 200),
-  getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 65),
-  getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 85),
+  getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 56),
+  getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 56),
   ...columns,
 ];

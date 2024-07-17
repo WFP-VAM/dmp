@@ -1,11 +1,6 @@
 import PrintIcon from '@mui/icons-material/Print';
-import { Box, IconButton, Skeleton, Stack } from '@mui/material';
+import { Box, IconButton, Skeleton, Stack, useTheme } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
-import dayjs from 'dayjs';
-import { useMemo, useRef, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { useReactToPrint } from 'react-to-print';
-
 import {
   SearchFilters,
   SearchFormData,
@@ -14,6 +9,10 @@ import { LabelSwitch } from 'components/LabelSwitch';
 import { PrintHeader } from 'components/PrintHeader';
 import { PrintWrapper } from 'components/PrintWrapper';
 import { Report } from 'components/Report/Report';
+import dayjs from 'dayjs';
+import { useMemo, useRef, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useReactToPrint } from 'react-to-print';
 import { useGetForms } from 'services/api/kobo/useGetForms';
 import { colors } from 'theme/muiTheme';
 import { dropNotApproved } from 'utils/dropNotApproved';
@@ -32,6 +31,7 @@ const defaultSearchReportData: SearchFormData = {
 };
 
 export const ReportContainer = () => {
+  const theme = useTheme();
   const [searchReportData, setSearchReportData] = useState(
     defaultSearchReportData,
   );
@@ -51,7 +51,7 @@ export const ReportContainer = () => {
   });
 
   return (
-    <Box display="flex" flexDirection="column">
+    <Stack flexDirection="column" gap={theme.spacing(4)}>
       <Stack justifyContent="space-between" direction="row">
         <SearchFilters
           initSearchFormData={searchReportData}
@@ -125,6 +125,6 @@ export const ReportContainer = () => {
           )}
         </>
       )}
-    </Box>
+    </Stack>
   );
 };

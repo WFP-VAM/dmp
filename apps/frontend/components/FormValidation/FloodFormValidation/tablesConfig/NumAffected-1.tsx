@@ -1,59 +1,60 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
-
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
+const colWidth = 56;
+
 const NumAffected1Columns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumVillAff, FLOOD, 70),
+  getColumnSetup(FloodSpecific.NumVillAff, FLOOD, colWidth),
   getColumnSetup(
     FloodSpecific.NumPeoAff,
     FLOOD,
-    70,
+    colWidth,
     undefined,
     undefined,
     'bold',
   ),
-  getColumnSetup(FloodSpecific.NumFamAff, FLOOD, 75),
-  getColumnSetup(FloodSpecific.NumFeAff, FLOOD, 65),
+  getColumnSetup(FloodSpecific.NumFamAff, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumFeAff, FLOOD, colWidth),
   getColumnSetup(
     FloodSpecific.NumTDeath,
     FLOOD,
-    70,
+    colWidth,
     undefined,
     undefined,
     'bold',
   ),
-  getColumnSetup(FloodSpecific.NumMeDeath, FLOOD, 45),
-  getColumnSetup(FloodSpecific.NumFeDeath, FLOOD, 65),
-  getColumnSetup(FloodSpecific.NumKidDeath, FLOOD, 70),
-  getColumnSetup(FloodSpecific.NumOldDeath, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumDisDeath, FLOOD, 75),
+  getColumnSetup(FloodSpecific.NumMeDeath, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumFeDeath, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumKidDeath, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumOldDeath, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumDisDeath, FLOOD, colWidth),
   getColumnSetup(
     FloodSpecific.NumTMissing,
     FLOOD,
-    85,
+    colWidth,
     undefined,
     undefined,
     'bold',
   ),
-  getColumnSetup(FloodSpecific.NumMeMissing, FLOOD, 45),
-  getColumnSetup(FloodSpecific.NumFeMissing, FLOOD, 65),
-  getColumnSetup(FloodSpecific.NumKidMissing, FLOOD, 70),
-  getColumnSetup(FloodSpecific.NumOldMissing, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumDisMissing, FLOOD, 75),
+  getColumnSetup(FloodSpecific.NumMeMissing, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumFeMissing, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumKidMissing, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumOldMissing, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumDisMissing, FLOOD, colWidth),
   getColumnSetup(
     FloodSpecific.NumTInjure,
     FLOOD,
-    85,
+    colWidth,
     undefined,
     undefined,
     'bold',
   ),
-  getColumnSetup(FloodSpecific.NumMeInjure, FLOOD, 45),
-  getColumnSetup(FloodSpecific.NumFeInjure, FLOOD, 66),
-  getColumnSetup(FloodSpecific.NumKidInjure, FLOOD, 70),
-  getColumnSetup(FloodSpecific.NumOldInjure, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumDisInjure, FLOOD, 75),
+  getColumnSetup(FloodSpecific.NumMeInjure, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumFeInjure, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumKidInjure, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumOldInjure, FLOOD, colWidth),
+  getColumnSetup(FloodSpecific.NumDisInjure, FLOOD, colWidth),
 ];
 
 const NumAffected1ColumnGroup: GridColumnGroupingModel = [
