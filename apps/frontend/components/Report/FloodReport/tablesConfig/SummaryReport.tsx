@@ -1,6 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
-
 import { getColumnSetup } from 'utils/tableFormatting';
 
 const defaultColumnWidth = 100;

@@ -18,6 +18,7 @@ export const BriefFloodReport = ({
           columnGroup={tableSetting.columnGroup}
           data={report}
           key={index}
+          border={false}
         />
       ))}
     </Stack>

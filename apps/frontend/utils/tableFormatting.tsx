@@ -1,27 +1,22 @@
 import { Typography } from '@mui/material';
 import {
-  GridCellParams,
   GridColDef,
   GridColumnHeaderParams,
   GridRenderCellParams,
 } from '@mui/x-data-grid';
-import {
-  DisasterType,
-  FloodSpecific,
-  KoboCommonKeys,
-} from '@wfp-dmp/interfaces';
+import { DisasterType, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import CustomToolMenu from './CustomToolMenu';
 
 const sortIconWidth = 27;
-const highlightFields = [
-  FloodSpecific.NumPeoAff,
-  FloodSpecific.NumTDeath,
-  FloodSpecific.NumTMissing,
-  FloodSpecific.NumTInjure,
-];
+// const highlightFields = [
+//   FloodSpecific.NumPeoAff,
+//   FloodSpecific.NumTDeath,
+//   FloodSpecific.NumTMissing,
+//   FloodSpecific.NumTInjure,
+// ];
 
 export const getColumnSetup = (
   field: string,
@@ -33,6 +28,7 @@ export const getColumnSetup = (
   } = { type: 'number' },
   isSummary = false,
   fontWeight: React.CSSProperties['fontWeight'] = undefined,
+  highlightColumn = false,
   // eslint-disable-next-line max-params
 ): GridColDef => {
   const fields = {
@@ -51,13 +47,9 @@ export const getColumnSetup = (
         />
       </Typography>
     ),
-    // TODO: provide type
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    cellClassName: (params: GridCellParams<any, number>) => {
+    cellClassName: () => {
       // TODO: what should be the highlight logic?
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
-      if (highlightFields.includes(params.field as any))
-        return 'highlighted-cell';
+      if (highlightColumn) return 'highlighted-cell';
 
       return '';
     },
@@ -85,6 +77,7 @@ const getLocationColumnSetup = (
     disableColumnMenu: true,
     renderHeader: (params: GridColumnHeaderParams) => (
       <Typography variant="body2">
+        {void console.log({ params })}
         <FormattedMessage id={`forms_table.headers.${params.field}`} />
       </Typography>
     ),
@@ -127,9 +120,45 @@ export const getGroupSetup = (
 export const addDetailedReportLocationColumns = (
   columns: GridColDef[],
 ): GridColDef[] => [
-  getLocationColumnSetup(KoboCommonKeys.province, 85),
-  getLocationColumnSetup(KoboCommonKeys.district, 74),
-  getLocationColumnSetup(KoboCommonKeys.commune, 76),
+  {
+    field: KoboCommonKeys.location,
+    editable: true,
+    width: 300,
+    headerAlign: 'left',
+    disableColumnMenu: true,
+    valueGetter: (_, row) => {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
+      return `${row.province}-${row.district}-${row.commune}`;
+    },
+    renderHeader: (params: GridColumnHeaderParams) => (
+      <Typography variant="body2">
+        {void console.log({ params })}
+        <FormattedMessage id={`forms_table.headers.${params.field}`} />
+      </Typography>
+    ),
+    renderCell: (params: GridRenderCellParams) => {
+      const [province, district, commune] = (params.value as string)
+        .split('-')
+        .map(x => (x === 'undefined' ? undefined : x));
+
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-nullish-coalescing
+      const location = commune || district || province;
+
+      const key =
+        commune !== undefined
+          ? KoboCommonKeys.commune
+          : district !== undefined
+          ? KoboCommonKeys.district
+          : KoboCommonKeys.province;
+
+      return (
+        <>
+          {commune !== undefined && <span>&nbsp;&nbsp;</span>}
+          <FormattedMessage id={`${key}.${location as string}`} />
+        </>
+      );
+    },
+  },
   ...columns,
 ];
 

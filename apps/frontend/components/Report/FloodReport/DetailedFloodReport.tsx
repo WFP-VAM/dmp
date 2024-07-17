@@ -15,6 +15,7 @@ export const DetailedFloodReport = ({
           columnGroup={tableSetting.columnGroup}
           data={report}
           key={index}
+          border={false}
         />
       ))}
     </>
