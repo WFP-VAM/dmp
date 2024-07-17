@@ -105,14 +105,19 @@ export const BatchEditDialog = ({
 
   const renderDialog = () => (
     <Dialog
+      maxWidth="xs"
       open={dialogOpen}
       onClose={() => setDialogOpen(false)}
       disableScrollLock
+      disableEnforceFocus
       slotProps={{ backdrop: { style: { display: 'none' } } }}
       sx={{
         position: 'fixed',
-        top: lastCheckboxPosition?.top,
+        top: (lastCheckboxPosition?.top ?? 0) - 500,
         left: lastCheckboxPosition?.left,
+      }}
+      PaperProps={{
+        sx: { borderRadius: '8px', border: '1px solid #ccc' },
       }}
     >
       <DialogTitle>
@@ -122,7 +127,7 @@ export const BatchEditDialog = ({
         />
       </DialogTitle>
       <DialogContent>
-        <Stack spacing={2} m={0} justifyContent="space-between">
+        <Stack spacing={2} justifyContent="space-between">
           <Stack
             direction="row"
             spacing={2}
@@ -130,7 +135,7 @@ export const BatchEditDialog = ({
             justifyContent="space-between"
           >
             <FormattedMessage id="forms_table.batch_edit.forms_selected" />
-            <Typography component="span" variant="h5" sx={{ ml: 1 }}>
+            <Typography component="span" variant="h5" sx={{ m: 1 }}>
               {selectedForms.length}
             </Typography>
           </Stack>
@@ -155,14 +160,28 @@ export const BatchEditDialog = ({
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setDialogOpen(false)}>
-          <FormattedMessage id="forms_table.batch_edit.cancel" />
-        </Button>
+        <IconButton
+          onClick={() => setDialogOpen(false)}
+          sx={{
+            position: 'absolute',
+            top: 8,
+            right: 8,
+            color: 'black',
+          }}
+        >
+          <CancelIcon />
+        </IconButton>
         <Button
           onClick={handleSave}
           disabled={newFloodNumber === null || isMutating}
           variant="contained"
-          sx={{ backgroundColor: 'var(--color_buttons_1)', color: 'black' }}
+          sx={{
+            mr: 1,
+            mb: 1,
+            backgroundColor: 'var(--color_buttons_1)',
+            color: 'black',
+            width: '100%',
+          }}
         >
           <FormattedMessage id="forms_table.batch_edit.save" />
         </Button>
