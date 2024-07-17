@@ -130,12 +130,14 @@ export const BatchEditDialog = ({
       disableEnforceFocus
       slotProps={{ backdrop: { style: { display: 'none' } } }}
       sx={{
+        width: '400px',
         position: 'fixed',
         top: (lastCheckboxPosition?.top ?? 0) - 500,
         left: lastCheckboxPosition?.left,
+        zIndex: 9999,
       }}
       PaperProps={{
-        sx: { borderRadius: '8px', border: '1px solid #ccc' },
+        sx: { width: '100%', borderRadius: '8px', border: '1px solid #ccc' },
       }}
     >
       <DialogTitle>
