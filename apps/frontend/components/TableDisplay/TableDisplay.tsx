@@ -26,11 +26,7 @@ import { useAuth } from 'context/auth';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
 import { formatDate } from '../../utils/date';
-import {
-  BatchEditControl,
-  BatchEditDialog,
-  BatchEditWarning,
-} from './BatchEditControls';
+import { BatchEditDialog, BatchEditWarning } from './BatchEditControls';
 
 const formatForms = (
   forms: DisasterDtoType[] | undefined,
@@ -99,18 +95,11 @@ const TableHeader = ({
       {isFlood && (
         <TableCell sx={{ color: 'inherit' }}>
           <FormattedMessage id="forms_table.headers.flood_number" />
-          <BatchEditControl
-            batchEditMode={batchEditMode}
-            handleBatchEditClick={handleBatchEditClick}
-          />
-        </TableCell>
-      )}
-      {batchEditMode && (
-        <TableCell sx={{ color: 'inherit' }}>
-          <FormattedMessage id="forms_table.headers.select" />
+
           <BatchEditDialog
             batchEditMode={batchEditMode}
             selectedForms={selectedForms}
+            handleBatchEditClick={handleBatchEditClick}
             handleEditFloodNumber={handleEditFloodNumber}
             lastCheckboxPosition={lastCheckboxPosition}
           />
@@ -241,19 +230,22 @@ export const TableDisplay = ({
                       id={`disasters.${formattedForm.disTyp}`}
                     />
                   </TableCell>
-                  {isFlood && <TableCell>{formattedForm.floodN}</TableCell>}
-                  {batchEditMode && (
+                  {isFlood && (
                     <TableCell>
-                      <Checkbox
-                        checked={selectedForms.includes(formattedForm)}
-                        onChange={e => handleCheckboxChange(formattedForm, e)}
-                        disabled={
-                          selectedForms.length > 0 &&
-                          selectedForms.some(
-                            f => f.province !== formattedForm.province,
-                          )
-                        }
-                      />
+                      {formattedForm.floodN}
+                      {batchEditMode && (
+                        <Checkbox
+                          sx={{ ml: '1rem' }}
+                          checked={selectedForms.includes(formattedForm)}
+                          onChange={e => handleCheckboxChange(formattedForm, e)}
+                          disabled={
+                            selectedForms.length > 0 &&
+                            selectedForms.some(
+                              f => f.province !== formattedForm.province,
+                            )
+                          }
+                        />
+                      )}
                     </TableCell>
                   )}
                   <TableCell>{formattedForm.entryName}</TableCell>

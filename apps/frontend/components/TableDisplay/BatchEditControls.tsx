@@ -24,53 +24,30 @@ type FloodForm = {
 };
 
 export const BatchEditWarning = () => (
-  <Stack direction="row" spacing={2} m={2} mb={0}>
+  <Stack
+    direction="row"
+    spacing={2}
+    m={2}
+    mb={0}
+    justifyContent="center"
+    alignItems="center"
+  >
     <Typography color="#D32C38">
       <FormattedMessage id="forms_table.batch_edit.warning" />
     </Typography>
   </Stack>
 );
 
-export const BatchEditControl = ({
-  batchEditMode,
-  handleBatchEditClick,
-}: {
-  batchEditMode: boolean;
-  handleBatchEditClick: () => void;
-}) => (
-  <Tooltip
-    title={
-      batchEditMode ? (
-        <FormattedMessage id="forms_table.batch_edit.cancel" />
-      ) : (
-        <FormattedMessage id="forms_table.batch_edit.start" />
-      )
-    }
-  >
-    <IconButton
-      onClick={handleBatchEditClick}
-      sx={{
-        marginRight: -3,
-        marginLeft: -0.5,
-        color: batchEditMode ? '#D32C38' : 'var(--color_buttons_1)',
-        '&:hover': {
-          backgroundColor: 'transparent',
-        },
-      }}
-    >
-      {batchEditMode ? <CancelIcon /> : <EditIcon />}
-    </IconButton>
-  </Tooltip>
-);
-
 export const BatchEditDialog = ({
   batchEditMode,
   selectedForms,
+  handleBatchEditClick,
   handleEditFloodNumber,
   lastCheckboxPosition,
 }: {
   batchEditMode: boolean;
   selectedForms: FloodForm[];
+  handleBatchEditClick: () => void;
   handleEditFloodNumber: (newFloodNumber: number) => void;
   lastCheckboxPosition: { top: number; left: number } | null;
 }) => {
@@ -91,15 +68,41 @@ export const BatchEditDialog = ({
     }
   };
 
-  const renderSelectButton = () => (
+  const renderButtons = () => (
     <>
-      {selectedForms.length > 0 && (
+      <Tooltip
+        title={
+          batchEditMode ? (
+            <FormattedMessage id="forms_table.batch_edit.cancel" />
+          ) : (
+            <FormattedMessage id="forms_table.batch_edit.start" />
+          )
+        }
+      >
+        <IconButton
+          onClick={handleBatchEditClick}
+          sx={{
+            marginRight: batchEditMode ? -1 : -3,
+            marginLeft: -0.5,
+            color: batchEditMode ? '#D32C38' : 'var(--color_buttons_1)',
+            '&:hover': {
+              backgroundColor: 'transparent',
+            },
+          }}
+        >
+          {batchEditMode ? <CancelIcon /> : <EditIcon />}
+        </IconButton>
+      </Tooltip>
+
+      {batchEditMode && (
         <Tooltip
           title={<FormattedMessage id="forms_table.batch_edit.open_dialog" />}
         >
           <IconButton
+            disabled={selectedForms.length === 0}
             onClick={() => setDialogOpen(true)}
             sx={{
+              marginRight: -3,
               color: 'green',
               '&:hover': {
                 backgroundColor: 'transparent',
@@ -178,7 +181,7 @@ export const BatchEditDialog = ({
 
   return (
     <>
-      {batchEditMode && renderSelectButton()}
+      {renderButtons()}
       {batchEditMode &&
         selectedForms.length > 0 &&
         lastCheckboxPosition &&
