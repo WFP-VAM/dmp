@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import {
   Checkbox,
   Paper,
@@ -11,50 +10,17 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import {
-  DisasterDtoType,
-  formatCommonFields,
-  ValidationStatusValue,
-} from '@wfp-dmp/interfaces';
-import { orderBy } from 'lodash';
+import { DisasterDtoType, ValidationStatusValue } from '@wfp-dmp/interfaces';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
 import { useAuth } from 'context/auth';
-import { dropNotApproved } from 'utils/dropNotApproved';
 
 import { formatDate } from '../../utils/date';
 import { BatchEditDialog, BatchEditWarning } from './BatchEditControls';
-
-const formatForms = (
-  forms: DisasterDtoType[] | undefined,
-  dropRejected: boolean,
-) => {
-  if (forms === undefined || forms.length === 0) {
-    return [];
-  }
-
-  // Filter out rejected forms and order by date descending
-  // using disasterDate then submissionTime.
-  const formattedForms = (dropRejected ? dropNotApproved(forms) : forms).map(
-    form => {
-      return formatCommonFields(form);
-    },
-  );
-
-  return orderBy(
-    formattedForms,
-    ['disasterDate', 'submissionTime'],
-    ['desc', 'desc'],
-  );
-};
-
-type FloodForm = {
-  id: string;
-  province: string;
-};
+import { BasicFloodForm, formatForms } from './utils';
 
 const TableHeader = ({
   isFlood,
@@ -67,10 +33,10 @@ const TableHeader = ({
   isFlood: boolean;
   batchEditMode: boolean;
   handleBatchEditClick: () => void;
-  selectedForms: FloodForm[];
+  selectedForms: BasicFloodForm[];
   handleEditFloodNumber: (newFloodNumber: number) => void;
   lastCheckboxPosition: { top: number; left: number } | null;
-  setSelectedForms: (forms: FloodForm[]) => void;
+  setSelectedForms: (forms: BasicFloodForm[]) => void;
 }) => (
   <TableHead>
     <TableRow sx={{ backgroundColor: 'var(--color_table_1)', color: 'black' }}>
@@ -95,7 +61,7 @@ const TableHeader = ({
       {isFlood && (
         <TableCell sx={{ color: 'inherit' }}>
           <FormattedMessage id="forms_table.headers.flood_number" />
-
+          <br />
           <BatchEditDialog
             batchEditMode={batchEditMode}
             selectedForms={selectedForms}
@@ -130,7 +96,7 @@ export const TableDisplay = ({
   const { user } = useAuth();
   const isUserAdmin = Boolean(user && ['admin'].includes(user.roles[0]));
   const [batchEditMode, setBatchEditMode] = useState(false);
-  const [selectedForms, setSelectedForms] = useState<FloodForm[]>([]);
+  const [selectedForms, setSelectedForms] = useState<BasicFloodForm[]>([]);
   const [lastCheckboxPosition, setLastCheckboxPosition] = useState<{
     top: number;
     left: number;
@@ -142,7 +108,7 @@ export const TableDisplay = ({
   );
 
   const handleCheckboxChange = (
-    form: FloodForm,
+    form: BasicFloodForm,
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const checkbox = event.target as HTMLElement;
@@ -231,11 +197,10 @@ export const TableDisplay = ({
                     />
                   </TableCell>
                   {isFlood && (
-                    <TableCell>
+                    <TableCell sx={{ textAlign: 'center' }}>
                       {formattedForm.floodN}
                       {batchEditMode && (
                         <Checkbox
-                          sx={{ ml: '1rem' }}
                           checked={selectedForms.includes(formattedForm)}
                           onChange={e => handleCheckboxChange(formattedForm, e)}
                           disabled={
@@ -244,6 +209,12 @@ export const TableDisplay = ({
                               f => f.province !== formattedForm.province,
                             )
                           }
+                          sx={{
+                            color: 'black',
+                            '&.Mui-checked': {
+                              color: 'black',
+                            },
+                          }}
                         />
                       )}
                     </TableCell>

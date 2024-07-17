@@ -111,7 +111,7 @@
       "review_link": "Review and Approval"
     },
     "batch_edit": {
-      "start": "Batch edit flood #",
+      "edit": "Edit",
       "cancel": "Cancel",
       "save": "Save",
       "warning": "You can only batch edit forms from the same province",

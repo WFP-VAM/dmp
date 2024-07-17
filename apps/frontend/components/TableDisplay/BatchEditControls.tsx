@@ -1,5 +1,4 @@
 import CancelIcon from '@mui/icons-material/Cancel';
-import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
 import {
   Button,
@@ -10,7 +9,6 @@ import {
   IconButton,
   Stack,
   TextField,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
@@ -69,51 +67,32 @@ export const BatchEditDialog = ({
   };
 
   const renderButtons = () => (
-    <>
-      <Tooltip
-        title={
-          batchEditMode ? (
-            <FormattedMessage id="forms_table.batch_edit.cancel" />
-          ) : (
-            <FormattedMessage id="forms_table.batch_edit.start" />
-          )
-        }
-      >
-        <IconButton
-          onClick={handleBatchEditClick}
-          sx={{
-            marginRight: batchEditMode ? -1 : -3,
-            marginLeft: -0.5,
-            color: batchEditMode ? '#D32C38' : 'var(--color_buttons_1)',
-            '&:hover': {
-              backgroundColor: 'transparent',
-            },
-          }}
-        >
-          {batchEditMode ? <CancelIcon /> : <EditIcon />}
-        </IconButton>
-      </Tooltip>
-
-      {batchEditMode && (
-        <Tooltip
-          title={<FormattedMessage id="forms_table.batch_edit.open_dialog" />}
-        >
-          <IconButton
-            disabled={selectedForms.length === 0}
-            onClick={() => setDialogOpen(true)}
-            sx={{
-              marginRight: -3,
-              color: 'green',
-              '&:hover': {
-                backgroundColor: 'transparent',
-              },
-            }}
-          >
-            <CheckIcon />
-          </IconButton>
-        </Tooltip>
+    <IconButton
+      onClick={handleBatchEditClick}
+      sx={{
+        fontSize: '14px',
+        marginRight: batchEditMode ? -1 : -3,
+        marginLeft: -1,
+        marginBottom: -2,
+        color: batchEditMode ? '#D32C38' : 'black',
+        '&:hover': {
+          backgroundColor: 'transparent',
+        },
+      }}
+    >
+      {batchEditMode ? (
+        <CancelIcon sx={{ pr: 1 }} fontSize="medium" />
+      ) : (
+        <EditIcon sx={{ pr: 1 }} fontSize="medium" />
       )}
-    </>
+      <FormattedMessage
+        id={
+          batchEditMode
+            ? 'forms_table.batch_edit.cancel'
+            : 'forms_table.batch_edit.edit'
+        }
+      />
+    </IconButton>
   );
 
   const renderEditButton = () => (
