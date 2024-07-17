@@ -1,5 +1,6 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 const colWidth = 56;

@@ -1,4 +1,5 @@
 import { Stack, useTheme } from '@mui/material';
+
 import { BriefReportTable } from 'components/DisasterTable/BriefReportTable';
 
 import { floodReportTablesMapping } from './floodReportTablesMapping';

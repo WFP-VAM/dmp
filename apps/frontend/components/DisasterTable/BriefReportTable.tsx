@@ -1,4 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
+
 import { addBriefReportLocationColumns } from 'utils/tableFormatting';
 
 import { DisasterTable } from './DisasterTable';

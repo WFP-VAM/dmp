@@ -121,6 +121,7 @@ export const addDetailedReportLocationColumns = (
   columns: GridColDef[],
 ): GridColDef[] => [
   {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     field: KoboCommonKeys.location,
     editable: true,
     width: 300,

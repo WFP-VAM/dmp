@@ -1,5 +1,6 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import React from 'react';
+
 import { addDetailedReportLocationColumns } from 'utils/tableFormatting';
 
 import { DisasterTable } from './DisasterTable';
