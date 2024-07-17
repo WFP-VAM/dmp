@@ -77,16 +77,12 @@ export const BatchEditDialog = ({
   );
 
   useEffect(() => {
-    if (batchEditMode && selectedForms.length > 0) {
-      setDialogOpen(true);
-    } else {
-      setDialogOpen(false);
-    }
+    setDialogOpen(batchEditMode && selectedForms.length > 0);
   }, [batchEditMode, selectedForms]);
 
   const handleSave = async () => {
     if (newFloodNumber !== null && !isMutating) {
-      await triggerPatch(); // Updated call
+      await triggerPatch();
       handleEditFloodNumber(newFloodNumber);
       setDialogOpen(false);
     }
@@ -134,7 +130,7 @@ export const BatchEditDialog = ({
         position: 'fixed',
         top: (lastCheckboxPosition?.top ?? 0) - 500,
         left: lastCheckboxPosition?.left,
-        zIndex: 9999,
+        zIndex: 1501,
       }}
       PaperProps={{
         sx: { width: '100%', borderRadius: '8px', border: '1px solid #ccc' },
@@ -168,10 +164,7 @@ export const BatchEditDialog = ({
             <FormattedMessage id="forms_table.batch_edit.new_flood_number" />
             <TextField
               type="number"
-              label=""
-              sx={{
-                width: '20%',
-              }}
+              sx={{ width: '20%' }}
               inputProps={{ style: { textAlign: 'center' } }}
               value={newFloodNumber}
               onChange={e => setNewFloodNumber(Number(e.target.value))}
