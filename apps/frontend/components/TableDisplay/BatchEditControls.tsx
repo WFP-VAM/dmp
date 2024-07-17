@@ -175,7 +175,10 @@ export const BatchEditDialog = ({
       </DialogContent>
       <DialogActions>
         <IconButton
-          onClick={() => setDialogOpen(false)}
+          onClick={() => {
+            setDialogOpen(false);
+            handleBatchEditClick();
+          }}
           sx={{
             position: 'absolute',
             top: 8,
