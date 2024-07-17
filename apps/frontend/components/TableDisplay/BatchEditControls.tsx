@@ -150,6 +150,13 @@ export const BatchEditDialog = ({
           label={
             <FormattedMessage id="forms_table.batch_edit.new_flood_number" />
           }
+          InputLabelProps={{
+            shrink: true,
+          }}
+          sx={{
+            margin: '1rem',
+            width: '80%',
+          }}
           value={newFloodNumber}
           onChange={e => setNewFloodNumber(Number(e.target.value))}
           fullWidth
