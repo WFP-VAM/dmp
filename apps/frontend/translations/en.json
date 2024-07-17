@@ -115,8 +115,8 @@
       "cancel": "Cancel",
       "save": "Save",
       "warning": "You can only batch edit forms from the same province",
-      "dialog_title": "Edit flood number for {count} selected form(s)",
-      "edit_forms": "Edit {count} form(s)",
+      "dialog_title": "Batch edit flood number",
+      "forms_selected": "Forms selected",
       "open_dialog": "Open edit dialog",
       "new_flood_number": "New flood number"
     }

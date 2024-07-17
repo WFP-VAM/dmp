@@ -11,7 +11,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { usePatchFloodNumber } from 'services/api/kobo/usePatchForm';
@@ -58,6 +58,14 @@ export const BatchEditDialog = ({
     newFloodNumber ?? 0,
   );
 
+  useEffect(() => {
+    if (batchEditMode && selectedForms.length > 0) {
+      setDialogOpen(true);
+    } else {
+      setDialogOpen(false);
+    }
+  }, [batchEditMode, selectedForms]);
+
   const handleSave = async () => {
     if (newFloodNumber !== null && !isMutating) {
       await triggerPatch(); // Updated call
@@ -95,31 +103,18 @@ export const BatchEditDialog = ({
     </IconButton>
   );
 
-  const renderEditButton = () => (
-    <Button
-      onClick={() => setDialogOpen(true)}
+  const renderDialog = () => (
+    <Dialog
+      open={dialogOpen}
+      onClose={() => setDialogOpen(false)}
+      disableScrollLock
+      slotProps={{ backdrop: { style: { display: 'none' } } }}
       sx={{
-        opacity: 1,
         position: 'fixed',
         top: lastCheckboxPosition?.top,
         left: lastCheckboxPosition?.left,
-        transform: 'translateX(10px)',
-        '&:hover': {
-          backgroundColor: 'var(--color_table_1)',
-        },
-        color: 'black',
-        backgroundColor: 'var(--color_buttons_1)',
       }}
     >
-      <FormattedMessage
-        id="forms_table.batch_edit.edit_forms"
-        values={{ count: selectedForms.length }}
-      />
-    </Button>
-  );
-
-  const renderDialog = () => (
-    <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
       <DialogTitle>
         <FormattedMessage
           id="forms_table.batch_edit.dialog_title"
@@ -127,22 +122,37 @@ export const BatchEditDialog = ({
         />
       </DialogTitle>
       <DialogContent>
-        <TextField
-          type="number"
-          label={
+        <Stack spacing={2} m={0} justifyContent="space-between">
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <FormattedMessage id="forms_table.batch_edit.forms_selected" />
+            <Typography component="span" variant="h5" sx={{ ml: 1 }}>
+              {selectedForms.length}
+            </Typography>
+          </Stack>
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <FormattedMessage id="forms_table.batch_edit.new_flood_number" />
-          }
-          InputLabelProps={{
-            shrink: true,
-          }}
-          sx={{
-            margin: '1rem',
-            width: '80%',
-          }}
-          value={newFloodNumber}
-          onChange={e => setNewFloodNumber(Number(e.target.value))}
-          fullWidth
-        />
+            <TextField
+              type="number"
+              label=""
+              sx={{
+                width: '30%',
+              }}
+              value={newFloodNumber}
+              onChange={e => setNewFloodNumber(Number(e.target.value))}
+              fullWidth
+            />
+          </Stack>
+        </Stack>
       </DialogContent>
       <DialogActions>
         <Button onClick={() => setDialogOpen(false)}>
@@ -151,6 +161,8 @@ export const BatchEditDialog = ({
         <Button
           onClick={handleSave}
           disabled={newFloodNumber === null || isMutating}
+          variant="contained"
+          sx={{ backgroundColor: 'var(--color_buttons_1)', color: 'black' }}
         >
           <FormattedMessage id="forms_table.batch_edit.save" />
         </Button>
@@ -161,10 +173,6 @@ export const BatchEditDialog = ({
   return (
     <>
       {renderButtons()}
-      {batchEditMode &&
-        selectedForms.length > 0 &&
-        lastCheckboxPosition &&
-        renderEditButton()}
       {renderDialog()}
     </>
   );
