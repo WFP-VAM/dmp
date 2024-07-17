@@ -140,13 +140,13 @@ export const BatchEditDialog = ({
         sx: { width: '100%', borderRadius: '8px', border: '1px solid #ccc' },
       }}
     >
-      <DialogTitle>
+      <DialogTitle sx={{ fontSize: '16px' }}>
         <FormattedMessage
           id="forms_table.batch_edit.dialog_title"
           values={{ count: selectedForms.length }}
         />
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ fontSize: '14px' }}>
         <Stack spacing={2} justifyContent="space-between">
           <Stack
             direction="row"
@@ -155,7 +155,7 @@ export const BatchEditDialog = ({
             justifyContent="space-between"
           >
             <FormattedMessage id="forms_table.batch_edit.forms_selected" />
-            <Typography component="span" variant="h5" sx={{ m: 1 }}>
+            <Typography component="span" sx={{ m: 1, fontWeight: '600' }}>
               {selectedForms.length}
             </Typography>
           </Stack>
@@ -170,8 +170,9 @@ export const BatchEditDialog = ({
               type="number"
               label=""
               sx={{
-                width: '30%',
+                width: '20%',
               }}
+              inputProps={{ style: { textAlign: 'center' } }}
               value={newFloodNumber}
               onChange={e => setNewFloodNumber(Number(e.target.value))}
               fullWidth
