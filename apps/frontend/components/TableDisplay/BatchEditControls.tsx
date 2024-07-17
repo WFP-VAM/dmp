@@ -9,6 +9,7 @@ import {
   IconButton,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -21,19 +22,36 @@ type FloodForm = {
   province: string;
 };
 
-export const BatchEditWarning = () => (
-  <Stack
-    direction="row"
-    spacing={2}
-    m={2}
-    mb={0}
-    justifyContent="center"
-    alignItems="center"
+export const BatchEditWarningTooltip = () => (
+  <Tooltip
+    title={
+      <Typography color="#D32C38">
+        <FormattedMessage id="forms_table.batch_edit.warning" />
+      </Typography>
+    }
+    open={true}
+    placement="top"
+    arrow
+    componentsProps={{
+      tooltip: {
+        sx: {
+          backgroundColor: 'white',
+          maxWidth: 'none',
+          border: '1px solid #D32C38',
+        },
+      },
+      arrow: {
+        sx: {
+          color: 'white',
+          '&:before': {
+            border: '1px solid #D32C38',
+          },
+        },
+      },
+    }}
   >
-    <Typography color="#D32C38">
-      <FormattedMessage id="forms_table.batch_edit.warning" />
-    </Typography>
-  </Stack>
+    <div style={{ width: '100%' }} />
+  </Tooltip>
 );
 
 export const BatchEditDialog = ({

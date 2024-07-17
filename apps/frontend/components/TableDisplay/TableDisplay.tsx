@@ -19,7 +19,7 @@ import { ValidationIndicator } from 'components/FormValidation/ValidationIndicat
 import { useAuth } from 'context/auth';
 
 import { formatDate } from '../../utils/date';
-import { BatchEditDialog, BatchEditWarning } from './BatchEditControls';
+import { BatchEditDialog, BatchEditWarningTooltip } from './BatchEditControls';
 import { BasicFloodForm, formatForms } from './utils';
 
 const TableHeader = ({
@@ -59,7 +59,8 @@ const TableHeader = ({
         <FormattedMessage id="forms_table.headers.dis_type" />
       </TableCell>
       {isFlood && (
-        <TableCell sx={{ color: 'inherit' }}>
+        <TableCell sx={{ color: 'inherit', width: '100px' }}>
+          {batchEditMode && <BatchEditWarningTooltip />}
           <FormattedMessage id="forms_table.headers.flood_number" />
           <br />
           <BatchEditDialog
@@ -148,7 +149,6 @@ export const TableDisplay = ({
 
   return (
     <>
-      {batchEditMode && <BatchEditWarning />}
       <TableContainer component={Paper} sx={{ m: 2 }}>
         <Table sx={{ '& .MuiTableCell-root': { border: '1px solid #ccc' } }}>
           <TableHeader
@@ -210,6 +210,7 @@ export const TableDisplay = ({
                             )
                           }
                           sx={{
+                            maxHeight: '20px',
                             color: 'black',
                             '&.Mui-checked': {
                               color: 'black',
