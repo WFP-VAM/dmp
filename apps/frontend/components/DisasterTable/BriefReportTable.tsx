@@ -10,6 +10,7 @@ interface IProps {
   data: Record<string, string | number | undefined>[];
   rotateHeader?: boolean;
   border?: boolean;
+  columnHeaderHeight?: number;
 }
 
 export const BriefReportTable = ({
@@ -18,16 +19,18 @@ export const BriefReportTable = ({
   data,
   rotateHeader = false,
   border,
+  columnHeaderHeight,
 }: IProps): JSX.Element => {
   return (
     <DisasterTable
-      columns={addBriefReportLocationColumns(columns)}
+      columns={addBriefReportLocationColumns(columns, border)}
       columnGroup={columnGroup}
       data={data}
       isEditable={false}
       getRowId={(row: { province: string }) => row.province}
       rotateHeader={rotateHeader}
       border={border}
+      columnHeaderHeight={columnHeaderHeight}
     />
   );
 };

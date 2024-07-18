@@ -68,6 +68,7 @@ const getLocationColumnSetup = (
     | KoboCommonKeys.district
     | KoboCommonKeys.commune,
   width = 90,
+  border = false,
 ): GridColDef => {
   return {
     field,
@@ -75,9 +76,9 @@ const getLocationColumnSetup = (
     editable: true,
     headerAlign: 'left',
     disableColumnMenu: true,
+    headerClassName: border ? undefined : 'left-border',
     renderHeader: (params: GridColumnHeaderParams) => (
       <Typography variant="body2">
-        {void console.log({ params })}
         <FormattedMessage id={`forms_table.headers.${params.field}`} />
       </Typography>
     ),
@@ -109,6 +110,7 @@ export const getGroupSetup = (
   showMenu = false,
 ) => ({
   groupId: groupId,
+  headerClassName: showMenu ? 'header-setting-cell' : 'header-top-cell',
   renderHeaderGroup: () => (
     <>
       {showMenu && <CustomToolMenu />}
@@ -133,7 +135,6 @@ export const addDetailedReportLocationColumns = (
     },
     renderHeader: (params: GridColumnHeaderParams) => (
       <Typography variant="body2">
-        {void console.log({ params })}
         <FormattedMessage id={`forms_table.headers.${params.field}`} />
       </Typography>
     ),
@@ -165,8 +166,9 @@ export const addDetailedReportLocationColumns = (
 
 export const addBriefReportLocationColumns = (
   columns: GridColDef[],
+  border?: boolean,
 ): GridColDef[] => [
-  getLocationColumnSetup(KoboCommonKeys.province, 200),
+  getLocationColumnSetup(KoboCommonKeys.province, 200, border),
   getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 56),
   getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 56),
   ...columns,

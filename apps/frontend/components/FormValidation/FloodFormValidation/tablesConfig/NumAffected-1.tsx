@@ -65,8 +65,6 @@ const NumAffected1Columns: GridColDef[] = [
 const NumAffected1ColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('victimsAffected', FLOOD, true),
-    headerName: 'some-name',
-    headerClassName: 'header-setting-cell',
     children: [
       { field: KoboCommonKeys.province },
       { field: KoboCommonKeys.district },
@@ -76,7 +74,6 @@ const NumAffected1ColumnGroup: GridColumnGroupingModel = [
   },
   {
     ...getGroupSetup('totalAffected', FLOOD),
-    headerClassName: 'header-top-cell',
     children: [
       { field: FloodSpecific.NumPeoAff },
       { field: FloodSpecific.NumFamAff },
@@ -85,7 +82,6 @@ const NumAffected1ColumnGroup: GridColumnGroupingModel = [
   },
   {
     ...getGroupSetup('deathToll', FLOOD),
-    headerClassName: 'header-top-cell',
     children: [
       { field: FloodSpecific.NumTDeath },
       { field: FloodSpecific.NumMeDeath },
@@ -97,7 +93,6 @@ const NumAffected1ColumnGroup: GridColumnGroupingModel = [
   },
   {
     ...getGroupSetup('missing', FLOOD),
-    headerClassName: 'header-top-cell',
     children: [
       { field: FloodSpecific.NumTMissing },
       { field: FloodSpecific.NumMeMissing },
@@ -109,7 +104,6 @@ const NumAffected1ColumnGroup: GridColumnGroupingModel = [
   },
   {
     ...getGroupSetup('injured', FLOOD),
-    headerClassName: 'header-top-cell',
     children: [
       { field: FloodSpecific.NumTInjure },
       { field: FloodSpecific.NumMeInjure },

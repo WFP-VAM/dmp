@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -13,8 +13,11 @@ const HealthNeedsColumns: GridColDef[] = [
 
 const HealthNeedsColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('healthNeeds', FLOOD),
+    ...getGroupSetup('healthNeeds', FLOOD, true),
     children: [
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
       { field: FloodSpecific.NonActingH },
       { field: FloodSpecific.PeoCanAceH },
       { field: FloodSpecific.NumDoctor },

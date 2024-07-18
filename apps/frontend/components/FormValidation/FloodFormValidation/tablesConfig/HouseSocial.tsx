@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -24,64 +24,67 @@ const HouseSocialColumns: GridColDef[] = [
 
 const HouseSocialColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('houseSocial', FLOOD),
+    ...getGroupSetup('houseSocial', FLOOD, true),
     children: [
-      {
-        ...getGroupSetup('house', FLOOD),
-        children: [
-          { field: FloodSpecific.NumHouAff },
-          { field: FloodSpecific.NumHouDam },
-        ],
-      },
-      {
-        ...getGroupSetup('school', FLOOD),
-        children: [
-          { field: FloodSpecific.NumSchoAff },
-          { field: FloodSpecific.NumSchoDam },
-        ],
-      },
-      {
-        ...getGroupSetup('hospital', FLOOD),
-        children: [
-          { field: FloodSpecific.NumAffHeal },
-          { field: FloodSpecific.NumDamHeal },
-        ],
-      },
-      {
-        ...getGroupSetup('pagoda', FLOOD),
-        children: [
-          { field: FloodSpecific.NumPagoAff },
-          { field: FloodSpecific.NumPagoDam },
-        ],
-      },
-      {
-        ...getGroupSetup('publicAdmin', FLOOD),
-        children: [
-          { field: FloodSpecific.NumBuilAff },
-          { field: FloodSpecific.NumBuilDam },
-        ],
-      },
-      {
-        ...getGroupSetup('shop', FLOOD),
-        children: [
-          { field: FloodSpecific.NumShopAff },
-          { field: FloodSpecific.NumShopDam },
-        ],
-      },
-      {
-        ...getGroupSetup('warehouse', FLOOD),
-        children: [
-          { field: FloodSpecific.NumWareHAff },
-          { field: FloodSpecific.NumWareHDam },
-        ],
-      },
-      {
-        ...getGroupSetup('workshop', FLOOD),
-        children: [
-          { field: FloodSpecific.NumCraftAff },
-          { field: FloodSpecific.NumCraftDam },
-        ],
-      },
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('house', FLOOD),
+    children: [
+      { field: FloodSpecific.NumHouAff },
+      { field: FloodSpecific.NumHouDam },
+    ],
+  },
+  {
+    ...getGroupSetup('school', FLOOD),
+    children: [
+      { field: FloodSpecific.NumSchoAff },
+      { field: FloodSpecific.NumSchoDam },
+    ],
+  },
+  {
+    ...getGroupSetup('hospital', FLOOD),
+    children: [
+      { field: FloodSpecific.NumAffHeal },
+      { field: FloodSpecific.NumDamHeal },
+    ],
+  },
+  {
+    ...getGroupSetup('pagoda', FLOOD),
+    children: [
+      { field: FloodSpecific.NumPagoAff },
+      { field: FloodSpecific.NumPagoDam },
+    ],
+  },
+  {
+    ...getGroupSetup('publicAdmin', FLOOD),
+    children: [
+      { field: FloodSpecific.NumBuilAff },
+      { field: FloodSpecific.NumBuilDam },
+    ],
+  },
+  {
+    ...getGroupSetup('shop', FLOOD),
+    children: [
+      { field: FloodSpecific.NumShopAff },
+      { field: FloodSpecific.NumShopDam },
+    ],
+  },
+  {
+    ...getGroupSetup('warehouse', FLOOD),
+    children: [
+      { field: FloodSpecific.NumWareHAff },
+      { field: FloodSpecific.NumWareHDam },
+    ],
+  },
+  {
+    ...getGroupSetup('workshop', FLOOD),
+    children: [
+      { field: FloodSpecific.NumCraftAff },
+      { field: FloodSpecific.NumCraftDam },
     ],
   },
 ];

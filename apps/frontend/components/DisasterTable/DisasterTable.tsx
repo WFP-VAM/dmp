@@ -70,34 +70,55 @@ export const DisasterTable = ({
     return column;
   });
 
+  const borderCSS = `1px solid ${colors.gray}`;
+  const transparentBorder = '1px solid transparent';
+
+  const showBorder = border ? undefined : borderCSS;
+  const showTransBorder = border ? undefined : transparentBorder;
+
   return (
     <Stack gap={theme.spacing(4)} ml={2}>
       <DataGrid
         sx={{
-          '& .highlight-1': { background: `${colors.color1} !important` },
-          '& .highlight-2': { background: `#D0EBF9 !important` },
-          '& .highlighted-cell': {
-            background: '#D0EBF9 !important',
+          '& .left-border': {
+            borderLeft: borderCSS,
           },
-          '& .header-top-cell': {
-            borderTop: `1px solid ${colors.gray}`,
-            borderBottom: `1px solid ${colors.gray}`,
+          '& .MuiDataGrid-row.highlight-1': {
+            background: `${colors.color1}`,
           },
-          '& .header-setting-cell': {
+          '& .MuiDataGrid-row.highlight-2': {
+            background: `#D0EBF9`,
+          },
+          '& .MuiDataGrid-cell.highlighted-cell': {
+            background: '#D0EBF9',
+          },
+          '& .MuiDataGrid-columnHeader.header-top-cell': {
+            borderTop: borderCSS,
+            borderBottom: borderCSS,
+            outline: 'none',
+          },
+          '& .MuiDataGrid-columnHeader.header-setting-cell': {
             fontWeight: 'bold',
-            borderBottom: `1px solid ${colors.gray}`,
-            backgroundColor: '#f9f7f7 !important',
+            borderBottom: borderCSS,
+            backgroundColor: '#f9f7f7',
+            outline: 'none',
           },
-          '& .MuiDataGrid-cell:focus': {
-            outline: isEditable ? '' : 'none',
+          '& .MuiDataGrid-columnHeaders': {
+            borderLeft: showTransBorder,
+            borderRight: showTransBorder,
           },
           '& .MuiDataGrid-row': {
             background: 'white',
+            borderLeft: showBorder,
+            borderRight: showBorder,
           },
           '& .MuiDataGrid-cell': {
             borderColor: colors.gray,
             whiteSpace: 'normal !important',
             wordWrap: 'break-word !important',
+          },
+          '& .MuiDataGrid-cell:focus': {
+            outline: isEditable ? '' : 'none',
           },
           '& .MuiDataGrid-columnHeaderTitleContainerContent': {
             whiteSpace: 'normal !important',
@@ -109,12 +130,21 @@ export const DisasterTable = ({
             borderColor: colors.gray,
             backgroundColor: '#f1f1f1',
           },
+          '& .MuiDataGrid-columnHeader--emptyGroup': {
+            backgroundColor: '#f9f7f7',
+            borderLeft: 'none !important',
+            borderBottom: borderCSS,
+          },
+          '& .MuiDataGrid-columnHeader--last': {
+            borderRight: `${showBorder ?? ''} !important`,
+          },
           '& .MuiDataGrid-iconButtonContainer': {
             display: 'none',
           },
           '& .MuiDataGrid-columnHeaderTitleContainer': {
             border: 'none !important',
           },
+
           breakInside: 'avoid',
           borderTop: border ? undefined : 'none',
           borderLeft: border ? undefined : 'none',

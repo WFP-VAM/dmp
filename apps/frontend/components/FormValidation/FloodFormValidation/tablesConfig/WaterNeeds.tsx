@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -13,18 +13,18 @@ const WaterNeedsColumns: GridColDef[] = [
 
 const WaterNeedsColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('waterNeeds', FLOOD),
+    ...getGroupSetup('waterNeeds', FLOOD, true),
     children: [
-      {
-        ...getGroupSetup('noWater', FLOOD),
-        children: [
-          { field: FloodSpecific.NumFamNoWa },
-          { field: FloodSpecific.NumPeoNoWa },
-        ],
-      },
-      { field: FloodSpecific.TimeAceWa },
-      { field: FloodSpecific.NuFamNoWaEq },
-      { field: FloodSpecific.NuFamNoLat },
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('noWater', FLOOD),
+    children: [
+      { field: FloodSpecific.NumFamNoWa },
+      { field: FloodSpecific.NumPeoNoWa },
     ],
   },
 ];

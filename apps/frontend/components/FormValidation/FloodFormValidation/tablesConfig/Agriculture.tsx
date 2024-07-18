@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -23,53 +23,56 @@ const AgricultureColumns: GridColDef[] = [
 
 const AgricultureColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('agriculture', FLOOD),
+    ...getGroupSetup('agriculture', FLOOD, true),
     children: [
-      {
-        ...getGroupSetup('plantation', FLOOD),
-        children: [
-          { field: FloodSpecific.FarmAff },
-          { field: FloodSpecific.FarmDam },
-        ],
-      },
-      {
-        ...getGroupSetup('seedling', FLOOD),
-        children: [
-          { field: FloodSpecific.SamNabAff },
-          { field: FloodSpecific.SamNabDam },
-        ],
-      },
-      {
-        ...getGroupSetup('transplanting', FLOOD),
-        children: [
-          { field: FloodSpecific.PaddyAff },
-          { field: FloodSpecific.PaddyDam },
-        ],
-      },
-      {
-        ...getGroupSetup('cow', FLOOD),
-        children: [
-          { field: FloodSpecific.CowEva },
-          { field: FloodSpecific.CowDeath },
-          { field: FloodSpecific.CowMissing },
-        ],
-      },
-      {
-        ...getGroupSetup('pig', FLOOD),
-        children: [
-          { field: FloodSpecific.PigEva },
-          { field: FloodSpecific.PigDeath },
-          { field: FloodSpecific.PigMissing },
-        ],
-      },
-      {
-        ...getGroupSetup('bird', FLOOD),
-        children: [
-          { field: FloodSpecific.BirdEva },
-          { field: FloodSpecific.BirdDeath },
-          { field: FloodSpecific.BirdMissing },
-        ],
-      },
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('plantation', FLOOD),
+    children: [
+      { field: FloodSpecific.FarmAff },
+      { field: FloodSpecific.FarmDam },
+    ],
+  },
+  {
+    ...getGroupSetup('seedling', FLOOD),
+    children: [
+      { field: FloodSpecific.SamNabAff },
+      { field: FloodSpecific.SamNabDam },
+    ],
+  },
+  {
+    ...getGroupSetup('transplanting', FLOOD),
+    children: [
+      { field: FloodSpecific.PaddyAff },
+      { field: FloodSpecific.PaddyDam },
+    ],
+  },
+  {
+    ...getGroupSetup('cow', FLOOD),
+    children: [
+      { field: FloodSpecific.CowEva },
+      { field: FloodSpecific.CowDeath },
+      { field: FloodSpecific.CowMissing },
+    ],
+  },
+  {
+    ...getGroupSetup('pig', FLOOD),
+    children: [
+      { field: FloodSpecific.PigEva },
+      { field: FloodSpecific.PigDeath },
+      { field: FloodSpecific.PigMissing },
+    ],
+  },
+  {
+    ...getGroupSetup('bird', FLOOD),
+    children: [
+      { field: FloodSpecific.BirdEva },
+      { field: FloodSpecific.BirdDeath },
+      { field: FloodSpecific.BirdMissing },
     ],
   },
 ];

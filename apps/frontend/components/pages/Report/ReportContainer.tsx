@@ -1,5 +1,5 @@
 import PrintIcon from '@mui/icons-material/Print';
-import { Box, IconButton, Skeleton, Stack, useTheme } from '@mui/material';
+import { IconButton, Skeleton, Stack, useTheme } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { useMemo, useRef, useState } from 'react';
@@ -26,7 +26,7 @@ const defaultSearchReportData: SearchFormData = {
     commune: [],
   },
   dateRange: {
-    startDate: dayjs().subtract(1, 'month'),
+    startDate: dayjs().subtract(10, 'years'),
     endDate: dayjs(),
   },
 };
@@ -116,14 +116,6 @@ export const ReportContainer = () => {
               isAllColumnReport={isAllColumnReport}
             />
           </PrintWrapper>
-          {/* Show a print button at the bottom of the page when there is data */}
-          {formsData && formsData.length > 0 && (
-            <Box display="flex" justifyContent="left">
-              <IconButton onClick={handlePrint} color="primary">
-                <PrintIcon />
-              </IconButton>
-            </Box>
-          )}
         </>
       )}
     </Stack>

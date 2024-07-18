@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -14,29 +14,32 @@ const ShelterNeedsColumns: GridColDef[] = [
 
 const ShelterNeedsColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('shelterNeeds', FLOOD),
+    ...getGroupSetup('shelterNeeds', FLOOD, true),
     children: [
-      {
-        ...getGroupSetup('shelterTent', FLOOD),
-        children: [
-          { field: FloodSpecific.NumFamTent },
-          { field: FloodSpecific.NumPeoTent },
-        ],
-      },
-      {
-        ...getGroupSetup('shelterBuilding', FLOOD),
-        children: [
-          { field: FloodSpecific.NumFamBuil },
-          { field: FloodSpecific.NumPeoBuil },
-        ],
-      },
-      {
-        ...getGroupSetup('shelterRelatives', FLOOD),
-        children: [
-          { field: FloodSpecific.NumFamRela },
-          { field: FloodSpecific.NumPeoRela },
-        ],
-      },
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('shelterTent', FLOOD),
+    children: [
+      { field: FloodSpecific.NumFamTent },
+      { field: FloodSpecific.NumPeoTent },
+    ],
+  },
+  {
+    ...getGroupSetup('shelterBuilding', FLOOD),
+    children: [
+      { field: FloodSpecific.NumFamBuil },
+      { field: FloodSpecific.NumPeoBuil },
+    ],
+  },
+  {
+    ...getGroupSetup('shelterRelatives', FLOOD),
+    children: [
+      { field: FloodSpecific.NumFamRela },
+      { field: FloodSpecific.NumPeoRela },
     ],
   },
 ];

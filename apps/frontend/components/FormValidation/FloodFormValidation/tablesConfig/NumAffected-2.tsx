@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -24,39 +24,42 @@ const NumAffected2Columns: GridColDef[] = [
 
 const NumAffected2ColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('victimsAffected', FLOOD),
+    ...getGroupSetup('victimsAffected', FLOOD, true),
     children: [
-      {
-        ...getGroupSetup('evacuated', FLOOD),
-        children: [
-          { field: FloodSpecific.NumFamEva },
-          { field: FloodSpecific.NumPeoEva },
-          { field: FloodSpecific.NumMeEva },
-          { field: FloodSpecific.NumFeEva },
-          { field: FloodSpecific.NumKidEva },
-          { field: FloodSpecific.NumOldEva },
-          { field: FloodSpecific.NumDisEva },
-        ],
-      },
-      {
-        ...getGroupSetup('relocated', FLOOD),
-        children: [
-          { field: FloodSpecific.NumFamRe },
-          { field: FloodSpecific.NumPeoRe },
-          { field: FloodSpecific.NumMeRe },
-          { field: FloodSpecific.NumFeRe },
-          { field: FloodSpecific.NumKidRe },
-          { field: FloodSpecific.NumOldRe },
-          { field: FloodSpecific.NumDisRe },
-        ],
-      },
-      {
-        ...getGroupSetup('safeLocation', FLOOD),
-        children: [
-          { field: FloodSpecific.NumSafePla },
-          { field: FloodSpecific.NumPeoSEC },
-        ],
-      },
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('evacuated', FLOOD),
+    children: [
+      { field: FloodSpecific.NumFamEva },
+      { field: FloodSpecific.NumPeoEva },
+      { field: FloodSpecific.NumMeEva },
+      { field: FloodSpecific.NumFeEva },
+      { field: FloodSpecific.NumKidEva },
+      { field: FloodSpecific.NumOldEva },
+      { field: FloodSpecific.NumDisEva },
+    ],
+  },
+  {
+    ...getGroupSetup('relocated', FLOOD),
+    children: [
+      { field: FloodSpecific.NumFamRe },
+      { field: FloodSpecific.NumPeoRe },
+      { field: FloodSpecific.NumMeRe },
+      { field: FloodSpecific.NumFeRe },
+      { field: FloodSpecific.NumKidRe },
+      { field: FloodSpecific.NumOldRe },
+      { field: FloodSpecific.NumDisRe },
+    ],
+  },
+  {
+    ...getGroupSetup('safeLocation', FLOOD),
+    children: [
+      { field: FloodSpecific.NumSafePla },
+      { field: FloodSpecific.NumPeoSEC },
     ],
   },
 ];

@@ -20,6 +20,7 @@ export const BriefFloodReport = ({
           data={report}
           key={index}
           border={false}
+          columnHeaderHeight={tableSetting.columnHeaderHeight}
         />
       ))}
     </Stack>
