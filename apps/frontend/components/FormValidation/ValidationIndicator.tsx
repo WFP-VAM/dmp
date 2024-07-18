@@ -74,10 +74,10 @@ export const ValidationLinkButton = ({
       variant="contained"
       disableElevation
       sx={{
-        m: '-5px',
         flex: 'display',
+        width: '100%',
         padding: 1,
-        paddingLeft: 0.5,
+        paddingLeft: 0.25,
         alignItems: 'center',
         fontSize: '14px',
         textTransform: 'none',
