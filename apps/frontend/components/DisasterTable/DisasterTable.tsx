@@ -77,7 +77,7 @@ export const DisasterTable = ({
   const showTransBorder = border ? undefined : transparentBorder;
 
   return (
-    <Stack gap={theme.spacing(4)} ml={2}>
+    <Stack gap={theme.spacing(4)} m={2} mt={0}>
       <DataGrid
         sx={{
           '& .left-border': {
