@@ -94,16 +94,16 @@ export const BatchEditDialog = ({
       sx={{
         fontSize: '14px',
         marginRight: batchEditMode ? -1 : -3,
+        color: 'black',
         marginLeft: -1,
         marginBottom: -2,
-        color: batchEditMode ? '#D32C38' : 'black',
         '&:hover': {
           backgroundColor: 'transparent',
         },
       }}
     >
       {batchEditMode ? (
-        <CancelIcon sx={{ pr: 1 }} fontSize="medium" />
+        <CancelIcon sx={{ pr: 1, color: '#D32C38' }} fontSize="medium" />
       ) : (
         <EditIcon sx={{ pr: 1 }} fontSize="medium" />
       )}
