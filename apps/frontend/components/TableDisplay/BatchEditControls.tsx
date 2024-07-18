@@ -25,7 +25,7 @@ type FloodForm = {
 export const BatchEditWarningTooltip = () => (
   <Tooltip
     title={
-      <Typography color="#D32C38">
+      <Typography color="black">
         <FormattedMessage id="forms_table.batch_edit.warning" />
       </Typography>
     }
