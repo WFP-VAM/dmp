@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -24,40 +24,43 @@ const ReportSocialSectorAffectedColumns: GridColDef[] = [
 
 const ReportSocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('socialSectorAffected', DROUGHT),
+    ...getGroupSetup('socialSectorAffected', DROUGHT, true),
     children: [
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('schoolsNoWater', DROUGHT),
+    children: [
+      { field: DroughtSpecific.NumSchNoHo2 },
+      { field: DroughtSpecific.BotSourTang },
+      { field: DroughtSpecific.HSourNoTang },
+      { field: DroughtSpecific.NoSourHtang },
+      { field: DroughtSpecific.NoBtSourTan },
       {
-        ...getGroupSetup('schoolsNoWater', DROUGHT),
+        ...getGroupSetup('reportSchoolsElectric', DROUGHT),
         children: [
-          { field: DroughtSpecific.NumSchNoHo2 },
-          { field: DroughtSpecific.BotSourTang },
-          { field: DroughtSpecific.HSourNoTang },
-          { field: DroughtSpecific.NoSourHtang },
-          { field: DroughtSpecific.NoBtSourTan },
-          {
-            ...getGroupSetup('reportSchoolsElectric', DROUGHT),
-            children: [
-              { field: DroughtSpecific.Electric + '_1' },
-              { field: DroughtSpecific.Electric + '_2' },
-            ],
-          },
+          { field: DroughtSpecific.Electric + '_1' },
+          { field: DroughtSpecific.Electric + '_2' },
         ],
       },
+    ],
+  },
+  {
+    ...getGroupSetup('healthCentersNoWater', DROUGHT),
+    children: [
+      { field: DroughtSpecific.HealCenNoHo2 },
+      { field: DroughtSpecific.HBotSourTang },
+      { field: DroughtSpecific.HaSouNoTang },
+      { field: DroughtSpecific.NoSourHatan },
+      { field: DroughtSpecific.NoBtSouTan },
       {
-        ...getGroupSetup('healthCentersNoWater', DROUGHT),
+        ...getGroupSetup('reportHealthElectric', DROUGHT),
         children: [
-          { field: DroughtSpecific.HealCenNoHo2 },
-          { field: DroughtSpecific.HBotSourTang },
-          { field: DroughtSpecific.HaSouNoTang },
-          { field: DroughtSpecific.NoSourHatan },
-          { field: DroughtSpecific.NoBtSouTan },
-          {
-            ...getGroupSetup('reportHealthElectric', DROUGHT),
-            children: [
-              { field: DroughtSpecific.ElecForHeal + '_1' },
-              { field: DroughtSpecific.ElecForHeal + '_2' },
-            ],
-          },
+          { field: DroughtSpecific.ElecForHeal + '_1' },
+          { field: DroughtSpecific.ElecForHeal + '_2' },
         ],
       },
     ],

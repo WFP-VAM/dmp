@@ -21,7 +21,7 @@ const sortIconWidth = 27;
 export const getColumnSetup = (
   field: string,
   disaster: DisasterType | 'COMMON',
-  minWidth = 80,
+  width = 80,
   opts: {
     type: 'singleSelect' | 'number';
     valueOptions?: { value: '1' | '2' | ''; label: string }[];
@@ -33,7 +33,7 @@ export const getColumnSetup = (
 ): GridColDef => {
   const fields = {
     field,
-    minWidth: minWidth + sortIconWidth,
+    width: width + sortIconWidth,
     flex: 1,
     editable: true,
     headerAlign: 'center',
@@ -94,7 +94,7 @@ const getLocationCountColumnSetup = (
   width = 80,
 ): GridColDef => ({
   field,
-  width: width + sortIconWidth,
+  width: width,
   headerAlign: 'center',
   disableColumnMenu: true,
   renderHeader: (params: GridColumnHeaderParams) => (

@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -12,22 +12,25 @@ const FoodWorkColumns: GridColDef[] = [
 
 const FoodWorkColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('foodWork', DROUGHT),
+    ...getGroupSetup('foodWork', DROUGHT, true),
     children: [
-      {
-        ...getGroupSetup('workLoss', DROUGHT),
-        children: [
-          { field: DroughtSpecific.FamNoIncom },
-          { field: DroughtSpecific.PeoNoIncom },
-        ],
-      },
-      {
-        ...getGroupSetup('foodNeed', DROUGHT),
-        children: [
-          { field: DroughtSpecific.FamNoFod },
-          { field: DroughtSpecific.PeoNoFod },
-        ],
-      },
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('workLoss', DROUGHT),
+    children: [
+      { field: DroughtSpecific.FamNoIncom },
+      { field: DroughtSpecific.PeoNoIncom },
+    ],
+  },
+  {
+    ...getGroupSetup('foodNeed', DROUGHT),
+    children: [
+      { field: DroughtSpecific.FamNoFod },
+      { field: DroughtSpecific.PeoNoFod },
     ],
   },
 ];

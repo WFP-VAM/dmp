@@ -52,7 +52,7 @@ export const ReportContainer = () => {
   });
 
   return (
-    <Stack flexDirection="column" gap={theme.spacing(4)}>
+    <Stack flexDirection="column" gap={theme.spacing(4)} width="100%">
       <Stack justifyContent="space-between" direction="row">
         <SearchFilters
           initSearchFormData={searchReportData}

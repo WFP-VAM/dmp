@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -21,31 +21,34 @@ const WaterHouseholdColumns: GridColDef[] = [
 
 const WaterHouseholdColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('waterHousehold', DROUGHT),
+    ...getGroupSetup('waterHousehold', DROUGHT, true),
     children: [
-      {
-        ...getGroupSetup('waterPeople', DROUGHT),
-        children: [
-          { field: DroughtSpecific.NuVilNedHep },
-          { field: DroughtSpecific.TNuFamNeHo2 },
-          { field: DroughtSpecific.NumPeople },
-          { field: DroughtSpecific.NumMen },
-          { field: DroughtSpecific.NumWomen },
-          { field: DroughtSpecific.NumKids },
-          { field: DroughtSpecific.NumElder },
-          { field: DroughtSpecific.NumDis },
-        ],
-      },
-      {
-        ...getGroupSetup('waterConsumable', DROUGHT),
-        children: [
-          { field: DroughtSpecific.NumWatTank },
-          { field: DroughtSpecific.NuStorageFam },
-          { field: DroughtSpecific.NumWateTank },
-          { field: DroughtSpecific.NumFilter },
-          { field: DroughtSpecific.NumWatePur },
-        ],
-      },
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('waterPeople', DROUGHT),
+    children: [
+      { field: DroughtSpecific.NuVilNedHep },
+      { field: DroughtSpecific.TNuFamNeHo2 },
+      { field: DroughtSpecific.NumPeople },
+      { field: DroughtSpecific.NumMen },
+      { field: DroughtSpecific.NumWomen },
+      { field: DroughtSpecific.NumKids },
+      { field: DroughtSpecific.NumElder },
+      { field: DroughtSpecific.NumDis },
+    ],
+  },
+  {
+    ...getGroupSetup('waterConsumable', DROUGHT),
+    children: [
+      { field: DroughtSpecific.NumWatTank },
+      { field: DroughtSpecific.NuStorageFam },
+      { field: DroughtSpecific.NumWateTank },
+      { field: DroughtSpecific.NumFilter },
+      { field: DroughtSpecific.NumWatePur },
     ],
   },
 ];

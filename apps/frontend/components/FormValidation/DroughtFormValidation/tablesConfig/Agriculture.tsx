@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -19,45 +19,47 @@ const AgricultureColumns: GridColDef[] = [
 
 const AgricultureColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('agriculture', DROUGHT),
+    ...getGroupSetup('agriculture', DROUGHT, true),
     children: [
-      { field: DroughtSpecific.NumVillAff },
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('plantation', DROUGHT),
+    children: [
+      { field: DroughtSpecific.FamAgriAff },
       {
-        ...getGroupSetup('plantation', DROUGHT),
+        ...getGroupSetup('crops', DROUGHT),
         children: [
-          { field: DroughtSpecific.FamAgriAff },
-          {
-            ...getGroupSetup('crops', DROUGHT),
-            children: [
-              { field: DroughtSpecific.FarmAff },
-              { field: DroughtSpecific.FarmDam },
-            ],
-          },
-          {
-            ...getGroupSetup('transplanted', DROUGHT),
-            children: [
-              { field: DroughtSpecific.SamNabAff },
-              { field: DroughtSpecific.SamNabDam },
-            ],
-          },
-          {
-            ...getGroupSetup('paddy', DROUGHT),
-            children: [
-              { field: DroughtSpecific.PaddyAff },
-              { field: DroughtSpecific.PaddyDam },
-            ],
-          },
+          { field: DroughtSpecific.FarmAff },
+          { field: DroughtSpecific.FarmDam },
         ],
       },
       {
-        ...getGroupSetup('livestock', DROUGHT),
+        ...getGroupSetup('transplanted', DROUGHT),
         children: [
-          { field: DroughtSpecific.CowDeath },
-          { field: DroughtSpecific.BaffoDeath },
-          { field: DroughtSpecific.PigDeath },
-          { field: DroughtSpecific.BirdDeath },
+          { field: DroughtSpecific.SamNabAff },
+          { field: DroughtSpecific.SamNabDam },
         ],
       },
+      {
+        ...getGroupSetup('paddy', DROUGHT),
+        children: [
+          { field: DroughtSpecific.PaddyAff },
+          { field: DroughtSpecific.PaddyDam },
+        ],
+      },
+    ],
+  },
+  {
+    ...getGroupSetup('livestock', DROUGHT),
+    children: [
+      { field: DroughtSpecific.CowDeath },
+      { field: DroughtSpecific.BaffoDeath },
+      { field: DroughtSpecific.PigDeath },
+      { field: DroughtSpecific.BirdDeath },
     ],
   },
 ];

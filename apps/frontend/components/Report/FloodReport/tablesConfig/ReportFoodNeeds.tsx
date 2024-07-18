@@ -32,7 +32,6 @@ const ReportFoodNeedsColumnGroup: GridColumnGroupingModel = [
   },
   {
     ...getGroupSetup('foodMarket', FLOOD),
-    headerClassName: 'header-top-cell left-border',
     children: [
       { field: FloodSpecific.NumActShop },
       { field: FloodSpecific.NumNoActShop },

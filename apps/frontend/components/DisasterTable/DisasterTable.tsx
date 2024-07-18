@@ -1,4 +1,4 @@
-import { Stack, useTheme } from '@mui/material';
+import { Box } from '@mui/material';
 import {
   DataGrid,
   DataGridProps,
@@ -6,6 +6,7 @@ import {
   GridColumnGroupingModel,
   GridRowModel,
 } from '@mui/x-data-grid';
+import { sum } from 'lodash';
 import React from 'react';
 
 import { colors } from 'theme/muiTheme';
@@ -36,8 +37,6 @@ export const DisasterTable = ({
   border = true,
   getRowClassName,
 }: IProps): JSX.Element => {
-  const theme = useTheme();
-
   // Generate column visibility model and hide empty columns by default.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const generateColumnVisibilityModel = (
@@ -77,7 +76,7 @@ export const DisasterTable = ({
   const showTransBorder = border ? undefined : transparentBorder;
 
   return (
-    <Stack gap={theme.spacing(4)} ml={2}>
+    <Box width={sum(updatedColumns.map(x => x.width ?? 0))}>
       <DataGrid
         sx={{
           '& .left-border': {
@@ -105,12 +104,12 @@ export const DisasterTable = ({
           },
           '& .MuiDataGrid-columnHeaders': {
             borderLeft: showTransBorder,
-            borderRight: showTransBorder,
+            // borderRight: showTransBorder,
           },
           '& .MuiDataGrid-row': {
             background: 'white',
             borderLeft: showBorder,
-            borderRight: showBorder,
+            // borderRight: showBorder,
           },
           '& .MuiDataGrid-cell': {
             borderColor: colors.gray,
@@ -132,23 +131,29 @@ export const DisasterTable = ({
           },
           '& .MuiDataGrid-columnHeader--emptyGroup': {
             backgroundColor: '#f9f7f7',
-            borderLeft: 'none !important',
+            // borderLeft: 'none',
+            // borderRight: 'none',
             borderBottom: borderCSS,
+            borderTop: borderCSS,
           },
-          '& .MuiDataGrid-columnHeader--last': {
-            borderRight: `${showBorder ?? ''} !important`,
-          },
+          // '& .MuiDataGrid-columnHeader--last': {
+          //   borderRight: `${showBorder ?? ''} !important`,
+          // },
           '& .MuiDataGrid-iconButtonContainer': {
             display: 'none',
           },
           '& .MuiDataGrid-columnHeaderTitleContainer': {
             border: 'none !important',
           },
-
+          '& .MuiDataGrid-filler': {
+            display: 'none',
+          },
+          ' & .MuiDataGrid-cellEmpty': {
+            display: 'none',
+          },
           breakInside: 'avoid',
           borderTop: border ? undefined : 'none',
           borderLeft: border ? undefined : 'none',
-          borderRight: border ? undefined : 'none',
           borderColor: colors.gray,
         }}
         disableColumnResize
@@ -177,6 +182,6 @@ export const DisasterTable = ({
           },
         }}
       />
-    </Stack>
+    </Box>
   );
 };

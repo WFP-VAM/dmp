@@ -18,13 +18,14 @@ export const Layout = ({
   return (
     <Box
       flexGrow={1}
+      width="100vw"
       display="flex"
       flexDirection="column"
       alignItems={alignItems ?? 'left'}
       sx={{ p: 1 }}
       style={{ backgroundColor, paddingTop: theme.spacing(5) }}
     >
-      <Box>{children}</Box>
+      {children}
     </Box>
   );
 };

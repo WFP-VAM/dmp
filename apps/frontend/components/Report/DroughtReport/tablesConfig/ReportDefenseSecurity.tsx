@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -19,43 +19,46 @@ const ReportDefenseSecurityColumns: GridColDef[] = [
 
 const ReportDefenseSecurityColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('defenseSecurity', DROUGHT),
+    ...getGroupSetup('defenseSecurity', DROUGHT, true),
     children: [
-      {
-        ...getGroupSetup('reportKidColWater', DROUGHT),
-        children: [
-          { field: DroughtSpecific.NuKidColWat + '_1' },
-          { field: DroughtSpecific.NuKidColWat + '_2' },
-        ],
-      },
-      {
-        ...getGroupSetup('reportKidColWaterIncrease', DROUGHT),
-        children: [
-          { field: DroughtSpecific.IfYes + '_1' },
-          { field: DroughtSpecific.IfYes + '_2' },
-        ],
-      },
-      {
-        ...getGroupSetup('reportWomenColWater', DROUGHT),
-        children: [
-          { field: DroughtSpecific.NuWoCollWat + '_1' },
-          { field: DroughtSpecific.NuWoCollWat + '_2' },
-        ],
-      },
-      {
-        ...getGroupSetup('reportWomenColWaterIncrease', DROUGHT),
-        children: [
-          { field: DroughtSpecific.Yes + '_1' },
-          { field: DroughtSpecific.Yes + '_2' },
-        ],
-      },
-      {
-        ...getGroupSetup('reportThreat', DROUGHT),
-        children: [
-          { field: DroughtSpecific.TreatOccur + '_1' },
-          { field: DroughtSpecific.TreatOccur + '_2' },
-        ],
-      },
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('reportKidColWater', DROUGHT),
+    children: [
+      { field: DroughtSpecific.NuKidColWat + '_1' },
+      { field: DroughtSpecific.NuKidColWat + '_2' },
+    ],
+  },
+  {
+    ...getGroupSetup('reportKidColWaterIncrease', DROUGHT),
+    children: [
+      { field: DroughtSpecific.IfYes + '_1' },
+      { field: DroughtSpecific.IfYes + '_2' },
+    ],
+  },
+  {
+    ...getGroupSetup('reportWomenColWater', DROUGHT),
+    children: [
+      { field: DroughtSpecific.NuWoCollWat + '_1' },
+      { field: DroughtSpecific.NuWoCollWat + '_2' },
+    ],
+  },
+  {
+    ...getGroupSetup('reportWomenColWaterIncrease', DROUGHT),
+    children: [
+      { field: DroughtSpecific.Yes + '_1' },
+      { field: DroughtSpecific.Yes + '_2' },
+    ],
+  },
+  {
+    ...getGroupSetup('reportThreat', DROUGHT),
+    children: [
+      { field: DroughtSpecific.TreatOccur + '_1' },
+      { field: DroughtSpecific.TreatOccur + '_2' },
     ],
   },
 ];

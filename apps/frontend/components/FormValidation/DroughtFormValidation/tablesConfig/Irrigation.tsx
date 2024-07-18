@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -16,36 +16,39 @@ const IrrigationColumns: GridColDef[] = [
 
 const IrrigationColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('irrigation', DROUGHT),
+    ...getGroupSetup('irrigation', DROUGHT, true),
     children: [
-      {
-        ...getGroupSetup('dam', DROUGHT),
-        children: [
-          { field: DroughtSpecific.DamHavWater },
-          { field: DroughtSpecific.DamNoWater },
-        ],
-      },
-      {
-        ...getGroupSetup('pond', DROUGHT),
-        children: [
-          { field: DroughtSpecific.PondHavWat },
-          { field: DroughtSpecific.PondNoWate },
-        ],
-      },
-      {
-        ...getGroupSetup('pumpWell', DROUGHT),
-        children: [
-          { field: DroughtSpecific.PlumWelHaWat },
-          { field: DroughtSpecific.PluWelNoWat },
-        ],
-      },
-      {
-        ...getGroupSetup('digWell', DROUGHT),
-        children: [
-          { field: DroughtSpecific.DigWelHaWat },
-          { field: DroughtSpecific.DigWelNoWat },
-        ],
-      },
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('dam', DROUGHT),
+    children: [
+      { field: DroughtSpecific.DamHavWater },
+      { field: DroughtSpecific.DamNoWater },
+    ],
+  },
+  {
+    ...getGroupSetup('pond', DROUGHT),
+    children: [
+      { field: DroughtSpecific.PondHavWat },
+      { field: DroughtSpecific.PondNoWate },
+    ],
+  },
+  {
+    ...getGroupSetup('pumpWell', DROUGHT),
+    children: [
+      { field: DroughtSpecific.PlumWelHaWat },
+      { field: DroughtSpecific.PluWelNoWat },
+    ],
+  },
+  {
+    ...getGroupSetup('digWell', DROUGHT),
+    children: [
+      { field: DroughtSpecific.DigWelHaWat },
+      { field: DroughtSpecific.DigWelNoWat },
     ],
   },
 ];

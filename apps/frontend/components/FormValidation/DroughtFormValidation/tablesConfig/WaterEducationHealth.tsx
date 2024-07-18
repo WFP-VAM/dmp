@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -18,28 +18,31 @@ const WaterEducationHealthColumns: GridColDef[] = [
 
 const WaterEducationHealthColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('waterEducationHealth', DROUGHT),
+    ...getGroupSetup('waterEducationHealth', DROUGHT, true),
     children: [
-      {
-        ...getGroupSetup('waterEducation', DROUGHT),
-        children: [
-          { field: DroughtSpecific.NumWatStor },
-          { field: DroughtSpecific.WatSorRepar },
-          { field: DroughtSpecific.WatStoRepar },
-          { field: DroughtSpecific.SolarNeed },
-          { field: DroughtSpecific.FanNeed },
-        ],
-      },
-      {
-        ...getGroupSetup('waterHealth', DROUGHT),
-        children: [
-          { field: DroughtSpecific.WatStorNed },
-          { field: DroughtSpecific.WatSorRep },
-          { field: DroughtSpecific.WatStoRep },
-          { field: DroughtSpecific.NuSolarNeed },
-          { field: DroughtSpecific.NumFanNeed },
-        ],
-      },
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('waterEducation', DROUGHT),
+    children: [
+      { field: DroughtSpecific.NumWatStor },
+      { field: DroughtSpecific.WatSorRepar },
+      { field: DroughtSpecific.WatStoRepar },
+      { field: DroughtSpecific.SolarNeed },
+      { field: DroughtSpecific.FanNeed },
+    ],
+  },
+  {
+    ...getGroupSetup('waterHealth', DROUGHT),
+    children: [
+      { field: DroughtSpecific.WatStorNed },
+      { field: DroughtSpecific.WatSorRep },
+      { field: DroughtSpecific.WatStoRep },
+      { field: DroughtSpecific.NuSolarNeed },
+      { field: DroughtSpecific.NumFanNeed },
     ],
   },
 ];
