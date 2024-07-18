@@ -1,7 +1,7 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Error from '@mui/icons-material/Error';
-import { Stack, Tooltip, Typography } from '@mui/material';
+import { Button, Stack, Tooltip, Typography } from '@mui/material';
 import { ValidationStatusValue } from '@wfp-dmp/interfaces';
 import { FormattedMessage } from 'react-intl';
 
@@ -54,5 +54,41 @@ export const ValidationIndicator = ({
       <Icon />
       <FormattedMessage id={id} />
     </Stack>
+  );
+};
+
+export const ValidationLinkButton = ({
+  valStatus,
+  valLink,
+  textVersion = true,
+}: {
+  valStatus: ValidationStatusValue | undefined;
+  valLink: string;
+  textVersion?: boolean;
+}) => {
+  return (
+    <Button
+      href={valLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      variant="contained"
+      disableElevation
+      sx={{
+        m: '-5px',
+        flex: 'display',
+        padding: 1,
+        paddingLeft: 0.5,
+        alignItems: 'center',
+        fontSize: '14px',
+        textTransform: 'none',
+        backgroundColor: 'var(--color_table_1)',
+        '&:hover': {
+          backgroundColor: '#ddd',
+        },
+        border: '1px solid #ccc',
+      }}
+    >
+      <ValidationIndicator valStatus={valStatus} textVersion={textVersion} />
+    </Button>
   );
 };
