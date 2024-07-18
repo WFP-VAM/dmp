@@ -98,6 +98,7 @@
   "forms_table": {
     "no_forms": "No forms match your search parameters.",
     "headers": {
+      "location": "Location",
       "province": "Province",
       "district": "District / Krong",
       "commune": "Commune",

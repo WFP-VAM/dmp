@@ -76,7 +76,7 @@ export const DisasterTable = ({
   const showTransBorder = border ? undefined : transparentBorder;
 
   return (
-    <Box width={sum(updatedColumns.map(x => x.width ?? 0))}>
+    <Box width={sum(updatedColumns.map(x => x.width ?? 0))} m={2} mt={0}>
       <DataGrid
         sx={{
           '& .left-border': {
