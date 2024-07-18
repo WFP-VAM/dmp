@@ -102,9 +102,10 @@ export const TableDisplay = ({
     left: number;
   } | null>(null);
 
+  const dropRejectedForms = !isUserAdmin;
   const formattedForms = useMemo(
-    () => formatForms(forms, !isUserAdmin),
-    [forms, isUserAdmin],
+    () => formatForms(forms, dropRejectedForms),
+    [forms, dropRejectedForms],
   );
 
   const handleCheckboxChange = (

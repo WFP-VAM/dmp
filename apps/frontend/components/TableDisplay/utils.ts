@@ -10,7 +10,7 @@ export type BasicFloodForm = {
 
 export const formatForms = (
   forms: DisasterDtoType[] | undefined,
-  dropRejected: boolean,
+  dropRejected = false,
 ) => {
   if (forms === undefined || forms.length === 0) {
     return [];
