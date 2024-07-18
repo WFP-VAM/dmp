@@ -11,11 +11,10 @@ import {
   Typography,
 } from '@mui/material';
 import { DisasterDtoType, ValidationStatusValue } from '@wfp-dmp/interfaces';
-import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { ValidationIndicator } from 'components/FormValidation/ValidationIndicator';
+import { ValidationLinkButton } from 'components/FormValidation/ValidationIndicator';
 import { useAuth } from 'context/auth';
 
 import { formatDate } from '../../utils/date';
@@ -103,9 +102,10 @@ export const TableDisplay = ({
     left: number;
   } | null>(null);
 
+  const dropRejectedForms = !isUserAdmin;
   const formattedForms = useMemo(
-    () => formatForms(forms, !isUserAdmin),
-    [forms, isUserAdmin],
+    () => formatForms(forms, dropRejectedForms),
+    [forms, dropRejectedForms],
   );
 
   const handleCheckboxChange = (
@@ -223,19 +223,12 @@ export const TableDisplay = ({
                   <TableCell>{formattedForm.entryName}</TableCell>
                   <TableCell>{formattedForm.phone}</TableCell>
                   <TableCell>
-                    <Link
-                      href={formattedForm.approvalLink}
-                      style={{ textDecoration: 'none' }}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <ValidationIndicator
-                        valStatus={
-                          formattedForm.validationStatus as ValidationStatusValue
-                        }
-                        textVersion
-                      />
-                    </Link>
+                    <ValidationLinkButton
+                      valStatus={
+                        formattedForm.validationStatus as ValidationStatusValue
+                      }
+                      valLink={formattedForm.approvalLink}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
