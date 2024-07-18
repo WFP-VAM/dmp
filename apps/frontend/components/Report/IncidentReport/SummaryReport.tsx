@@ -4,7 +4,7 @@ import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup } from 'utils/tableFormatting';
 
-const defaultColumnWidth = 100;
+const defaultColumnWidth = 90;
 
 const SummaryIncidentReportColumns: GridColDef[] = [
   getColumnSetup(

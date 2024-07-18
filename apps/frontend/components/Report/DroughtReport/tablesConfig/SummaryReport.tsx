@@ -4,7 +4,7 @@ import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup } from 'utils/tableFormatting';
 
-const defaultColumnWidth = 100;
+const defaultColumnWidth = 90;
 
 const SummaryDroughtReportColumns: GridColDef[] = [
   getColumnSetup(
@@ -38,21 +38,21 @@ const SummaryDroughtReportColumns: GridColDef[] = [
   getColumnSetup(
     DroughtSpecific.FamAgriAff,
     DROUGHT,
-    defaultColumnWidth,
+    defaultColumnWidth + 30,
     { type: 'number' },
     true,
   ),
   getColumnSetup(
     DroughtSpecific.FarmAff,
     DROUGHT,
-    defaultColumnWidth,
+    defaultColumnWidth + 30,
     { type: 'number' },
     true,
   ),
   getColumnSetup(
     DroughtSpecific.FarmDam,
     DROUGHT,
-    defaultColumnWidth,
+    defaultColumnWidth + 40,
     { type: 'number' },
     true,
   ),
@@ -94,11 +94,17 @@ const SummaryDroughtReportColumns: GridColDef[] = [
   getColumnSetup(
     DroughtSpecific.LandSize,
     DROUGHT,
-    defaultColumnWidth,
+    defaultColumnWidth + 20,
     { type: 'number' },
     true,
   ),
-  getColumnSetup(DroughtSpecific.NumFam, DROUGHT, 40, { type: 'number' }, true),
+  getColumnSetup(
+    DroughtSpecific.NumFam,
+    DROUGHT,
+    defaultColumnWidth + 30,
+    { type: 'number' },
+    true,
+  ),
 ];
 
 const SummaryDroughtReportColumnGroup: GridColumnGroupingModel = [];
