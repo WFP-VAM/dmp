@@ -71,7 +71,7 @@ export const DisasterTable = ({
   });
 
   return (
-    <Stack gap={theme.spacing(4)}>
+    <Stack gap={theme.spacing(4)} ml={2}>
       <DataGrid
         sx={{
           '& .highlight-1': { background: `${colors.color1} !important` },
