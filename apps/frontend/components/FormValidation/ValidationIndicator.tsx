@@ -83,7 +83,7 @@ export const ValidationLinkButton = ({
         textTransform: 'none',
         backgroundColor: 'var(--color_table_1)',
         '&:hover': {
-          backgroundColor: '#ccc',
+          backgroundColor: '#ddd',
         },
         border: '1px solid #ccc',
       }}
