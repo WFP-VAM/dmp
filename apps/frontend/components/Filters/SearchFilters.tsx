@@ -59,7 +59,7 @@ export const SearchFilters = ({
           </Stack>
 
           <Stack direction="row" gap={theme.spacing(2)} alignItems="center">
-            <Typography marginRight={2}>
+            <Typography>
               {intl.formatMessage({
                 id: 'validation_search_params.date_range',
               })}
