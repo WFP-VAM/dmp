@@ -16,7 +16,7 @@ export const BriefFloodReport = ({
       {floodReportTablesMapping.map(
         ({ columns, columnGroup, columnHeaderHeight }, index) => (
           <BriefReportTable
-            columns={typeof columns === 'function' ? columns(true) : columns}
+            columns={typeof columns === 'function' ? columns(false) : columns}
             columnGroup={columnGroup(false)}
             data={report}
             key={index}
