@@ -1,7 +1,7 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup } from 'utils/tableFormatting';
+import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 const defaultColumnWidth = 8 * 12;
 const SummaryFloodReportColumns: GridColDef[] = [
@@ -126,7 +126,12 @@ const SummaryFloodReportColumns: GridColDef[] = [
   ),
 ];
 
-const SummaryFloodReportColumnGroup: GridColumnGroupingModel = [];
+const SummaryFloodReportColumnGroup: GridColumnGroupingModel = [
+  {
+    ...getGroupSetup('EMPTY', FLOOD, true),
+    children: [{ field: KoboCommonKeys.province }],
+  },
+];
 
 export const SummaryFloodReportColumnSettings = {
   columns: SummaryFloodReportColumns,

@@ -196,7 +196,7 @@ export const DisasterTable = ({
               '& .MuiDataGrid-columnHeader--emptyGroup': {
                 backgroundColor: '#f9f7f7',
                 borderBottom: borderCSS,
-                borderTop: borderCSS,
+                borderTop: showBorder,
               },
               '& .MuiDataGrid-iconButtonContainer': {
                 display: 'none',

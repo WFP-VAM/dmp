@@ -284,6 +284,7 @@
         "threat_14": "ផ្សេងៗ"
       },
       "groupId": {
+        "EMPTY": " ",
         "victimsAffected": "ចំនួនមនុស្សប៉ះពាល់",
         "totalAffected": "ចំនួនមនុស្សប៉ះពាល់សរុប",
         "deathToll": "ចំនួសស្លាប់សរុប",

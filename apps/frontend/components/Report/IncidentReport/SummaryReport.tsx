@@ -1,8 +1,12 @@
 /* eslint-disable max-lines */
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
+import {
+  INCIDENT,
+  IncidentSpecific,
+  KoboCommonKeys,
+} from '@wfp-dmp/interfaces';
 
-import { getColumnSetup } from 'utils/tableFormatting';
+import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 const defaultColumnWidth = 8 * 12;
 
@@ -156,7 +160,12 @@ const SummaryIncidentReportColumns: GridColDef[] = [
   ),
 ];
 
-const SummaryIncidentReportColumnGroup: GridColumnGroupingModel = [];
+const SummaryIncidentReportColumnGroup: GridColumnGroupingModel = [
+  {
+    ...getGroupSetup('EMPTY', INCIDENT, true),
+    children: [{ field: KoboCommonKeys.province }],
+  },
+];
 
 export const SummaryIncidentReportColumnSettings = {
   columns: SummaryIncidentReportColumns,
