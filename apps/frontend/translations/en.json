@@ -471,6 +471,7 @@
         "TreatOccur_2": "Sexual Abuse"
       },
       "groupId": {
+        "EMPTY": " ",
         "victimsAffected": "Victims Affected",
         "noWater": "households lacking water",
         "deathToll": "Death Toll",

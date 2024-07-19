@@ -4,20 +4,20 @@ import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 const NumAffectedColumns: GridColDef[] = [
-  getColumnSetup(DroughtSpecific.NumVillAff, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumFamAff, DROUGHT, 70),
+  getColumnSetup(DroughtSpecific.NumVillAff, DROUGHT),
+  getColumnSetup(DroughtSpecific.NumFamAff, DROUGHT),
   getColumnSetup(DroughtSpecific.NumPeoAff, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumMe, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumFe, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumKid, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumOld, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumDisMising, DROUGHT, 70),
+  getColumnSetup(DroughtSpecific.NumMe, DROUGHT),
+  getColumnSetup(DroughtSpecific.NumFe, DROUGHT),
+  getColumnSetup(DroughtSpecific.NumKid, DROUGHT),
+  getColumnSetup(DroughtSpecific.NumOld, DROUGHT),
+  getColumnSetup(DroughtSpecific.NumDisMising, DROUGHT),
   getColumnSetup(DroughtSpecific.TNumDeath, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumMeDeath, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumFeDeath, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumKidDeath, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumOldDeath, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumDisDeath, DROUGHT, 70),
+  getColumnSetup(DroughtSpecific.NumMeDeath, DROUGHT),
+  getColumnSetup(DroughtSpecific.NumFeDeath, DROUGHT),
+  getColumnSetup(DroughtSpecific.NumKidDeath, DROUGHT),
+  getColumnSetup(DroughtSpecific.NumOldDeath, DROUGHT),
+  getColumnSetup(DroughtSpecific.NumDisDeath, DROUGHT),
 ];
 
 const NumAffectedColumnGroup: GridColumnGroupingModel = [

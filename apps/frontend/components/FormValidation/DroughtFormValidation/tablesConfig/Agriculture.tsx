@@ -19,15 +19,22 @@ const AgricultureColumns: GridColDef[] = [
 
 const AgricultureColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('agriculture', DROUGHT, true),
+    ...getGroupSetup('EMPTY', DROUGHT),
+    headerClassName: 'empty-group-header',
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      {
+        ...getGroupSetup('agriculture', DROUGHT, true),
+        children: [
+          { field: KoboCommonKeys.province },
+          { field: KoboCommonKeys.district },
+          { field: KoboCommonKeys.commune },
+        ],
+      },
     ],
   },
   {
     ...getGroupSetup('plantation', DROUGHT),
+    headerClassName: 'header-top-cell no-border-bottom',
     children: [
       { field: DroughtSpecific.FamAgriAff },
       {
@@ -55,6 +62,7 @@ const AgricultureColumnGroup: GridColumnGroupingModel = [
   },
   {
     ...getGroupSetup('livestock', DROUGHT),
+    headerClassName: 'header-top-cell no-border-bottom',
     children: [
       { field: DroughtSpecific.CowDeath },
       { field: DroughtSpecific.BaffoDeath },

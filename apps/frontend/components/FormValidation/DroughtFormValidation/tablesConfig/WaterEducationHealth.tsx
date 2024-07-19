@@ -4,15 +4,15 @@ import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 const WaterEducationHealthColumns: GridColDef[] = [
-  getColumnSetup(DroughtSpecific.NumWatStor, DROUGHT),
-  getColumnSetup(DroughtSpecific.WatSorRepar, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.WatStoRepar, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.SolarNeed, DROUGHT, 100),
+  getColumnSetup(DroughtSpecific.NumWatStor, DROUGHT, 8 * 12),
+  getColumnSetup(DroughtSpecific.WatSorRepar, DROUGHT, 8 * 20),
+  getColumnSetup(DroughtSpecific.WatStoRepar, DROUGHT, 8 * 20),
+  getColumnSetup(DroughtSpecific.SolarNeed, DROUGHT, 8 * 14),
   getColumnSetup(DroughtSpecific.FanNeed, DROUGHT, 100),
-  getColumnSetup(DroughtSpecific.WatStorNed, DROUGHT),
-  getColumnSetup(DroughtSpecific.WatSorRep, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.WatStoRep, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.NuSolarNeed, DROUGHT, 100),
+  getColumnSetup(DroughtSpecific.WatStorNed, DROUGHT, 8 * 16),
+  getColumnSetup(DroughtSpecific.WatSorRep, DROUGHT, 8 * 20),
+  getColumnSetup(DroughtSpecific.WatStoRep, DROUGHT, 8 * 20),
+  getColumnSetup(DroughtSpecific.NuSolarNeed, DROUGHT, 8 * 16),
   getColumnSetup(DroughtSpecific.NumFanNeed, DROUGHT, 100),
 ];
 

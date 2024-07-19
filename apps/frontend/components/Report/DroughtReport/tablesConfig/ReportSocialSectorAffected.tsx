@@ -7,7 +7,7 @@ const ReportSocialSectorAffectedColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NumSchNoHo2, DROUGHT, 98),
   getColumnSetup(DroughtSpecific.BotSourTang, DROUGHT, 98),
   getColumnSetup(DroughtSpecific.HSourNoTang, DROUGHT, 80),
-  getColumnSetup(DroughtSpecific.NoSourHtang, DROUGHT, 80),
+  getColumnSetup(DroughtSpecific.NoSourHtang, DROUGHT, 8 * 16),
   getColumnSetup(DroughtSpecific.NoBtSourTan, DROUGHT, 80),
   // This field is categorical, the number 1 and 2 are the possible values in Kobo. They are counted separately in the report
   getColumnSetup(DroughtSpecific.Electric + '_1', DROUGHT, 65),
@@ -24,15 +24,22 @@ const ReportSocialSectorAffectedColumns: GridColDef[] = [
 
 const ReportSocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('socialSectorAffected', DROUGHT, true),
+    ...getGroupSetup('EMPTY', DROUGHT),
+    headerClassName: 'empty-group-header',
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      {
+        ...getGroupSetup('socialSectorAffected', DROUGHT, true),
+        children: [
+          { field: KoboCommonKeys.province },
+          { field: KoboCommonKeys.district },
+          { field: KoboCommonKeys.commune },
+        ],
+      },
     ],
   },
   {
     ...getGroupSetup('schoolsNoWater', DROUGHT),
+    headerClassName: 'header-top-cell no-border-bottom',
     children: [
       { field: DroughtSpecific.NumSchNoHo2 },
       { field: DroughtSpecific.BotSourTang },
@@ -50,6 +57,7 @@ const ReportSocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
   },
   {
     ...getGroupSetup('healthCentersNoWater', DROUGHT),
+    headerClassName: 'header-top-cell no-border-bottom',
     children: [
       { field: DroughtSpecific.HealCenNoHo2 },
       { field: DroughtSpecific.HBotSourTang },

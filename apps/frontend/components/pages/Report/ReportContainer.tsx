@@ -19,7 +19,7 @@ import { colors } from 'theme/muiTheme';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
 const defaultSearchReportData: SearchFormData = {
-  disTyps: [DisasterMapping['flood']],
+  disTyps: [DisasterMapping['drought']],
   region: {
     province: [],
     district: [],
@@ -38,7 +38,7 @@ export const ReportContainer = () => {
   );
 
   const [isDetailedReport, setIsDetailedReport] = useState(false);
-  const [isAllColumnReport, setIsAllColumnReport] = useState(false);
+  const [isAllColumnReport, setIsAllColumnReport] = useState(true);
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 

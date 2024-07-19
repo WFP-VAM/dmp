@@ -7,14 +7,14 @@ const ReportDefenseSecurityColumns: GridColDef[] = [
   // Those fields are categorical, the number 1 and 2 are the possible values in Kobo.  They are counted separately in the report
   getColumnSetup(DroughtSpecific.NuKidColWat + '_1', DROUGHT),
   getColumnSetup(DroughtSpecific.NuKidColWat + '_2', DROUGHT),
-  getColumnSetup(DroughtSpecific.IfYes + '_1', DROUGHT, 60),
-  getColumnSetup(DroughtSpecific.IfYes + '_2', DROUGHT, 60),
+  getColumnSetup(DroughtSpecific.IfYes + '_1', DROUGHT, 8 * 10),
+  getColumnSetup(DroughtSpecific.IfYes + '_2', DROUGHT, 8 * 10),
   getColumnSetup(DroughtSpecific.NuWoCollWat + '_1', DROUGHT),
   getColumnSetup(DroughtSpecific.NuWoCollWat + '_2', DROUGHT),
-  getColumnSetup(DroughtSpecific.Yes + '_1', DROUGHT, 60),
-  getColumnSetup(DroughtSpecific.Yes + '_2', DROUGHT, 60),
-  getColumnSetup(DroughtSpecific.TreatOccur + '_1', DROUGHT),
-  getColumnSetup(DroughtSpecific.TreatOccur + '_2', DROUGHT),
+  getColumnSetup(DroughtSpecific.Yes + '_1', DROUGHT, 8 * 10),
+  getColumnSetup(DroughtSpecific.Yes + '_2', DROUGHT, 8 * 10),
+  getColumnSetup(DroughtSpecific.TreatOccur + '_1', DROUGHT, 8 * 12),
+  getColumnSetup(DroughtSpecific.TreatOccur + '_2', DROUGHT, 8 * 12),
 ];
 
 const ReportDefenseSecurityColumnGroup: GridColumnGroupingModel = [

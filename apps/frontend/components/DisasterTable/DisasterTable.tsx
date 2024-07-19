@@ -80,6 +80,9 @@ export const DisasterTable = ({
       <Box width={sum(updatedColumns.map(x => x.width ?? 0))} m={2} mt={0}>
         <DataGrid
           sx={{
+            '& .MuiDataGrid-columnHeader.empty-group-header': {
+              backgroundColor: '#f9f7f7',
+            },
             '& .left-border': {
               borderLeft: borderCSS,
             },
@@ -96,6 +99,9 @@ export const DisasterTable = ({
               borderTop: borderCSS,
               borderBottom: borderCSS,
               outline: 'none',
+            },
+            '& .MuiDataGrid-columnHeader.header-top-cell.no-border-bottom': {
+              borderBottom: 'none',
             },
             '& .MuiDataGrid-columnHeader.header-setting-cell': {
               fontWeight: 'bold',

@@ -12,11 +12,11 @@ const WaterHouseholdColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NumKids, DROUGHT, 70),
   getColumnSetup(DroughtSpecific.NumElder, DROUGHT, 70),
   getColumnSetup(DroughtSpecific.NumDis, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumWatTank, DROUGHT, 110),
-  getColumnSetup(DroughtSpecific.NuStorageFam, DROUGHT, 110),
-  getColumnSetup(DroughtSpecific.NumWateTank, DROUGHT, 110),
-  getColumnSetup(DroughtSpecific.NumFilter, DROUGHT, 90),
-  getColumnSetup(DroughtSpecific.NumWatePur, DROUGHT, 100),
+  getColumnSetup(DroughtSpecific.NumWatTank, DROUGHT, 8 * 16),
+  getColumnSetup(DroughtSpecific.NuStorageFam, DROUGHT, 8 * 19),
+  getColumnSetup(DroughtSpecific.NumWateTank, DROUGHT, 8 * 10),
+  getColumnSetup(DroughtSpecific.NumFilter, DROUGHT, 8 * 12),
+  getColumnSetup(DroughtSpecific.NumWatePur, DROUGHT, 8 * 14),
 ];
 
 const WaterHouseholdColumnGroup: GridColumnGroupingModel = [
