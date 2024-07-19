@@ -3,12 +3,14 @@ import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
+const width = 200;
+
 const HealthNeedsColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NonActingH, FLOOD, 200),
-  getColumnSetup(FloodSpecific.PeoCanAceH, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumDoctor, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumNurse, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumStaff, FLOOD, 200),
+  getColumnSetup(FloodSpecific.NonActingH, FLOOD, width),
+  getColumnSetup(FloodSpecific.PeoCanAceH, FLOOD, width),
+  getColumnSetup(FloodSpecific.NumDoctor, FLOOD, width),
+  getColumnSetup(FloodSpecific.NumNurse, FLOOD, width),
+  getColumnSetup(FloodSpecific.NumStaff, FLOOD, width),
 ];
 
 const HealthNeedsColumnGroup: GridColumnGroupingModel = [

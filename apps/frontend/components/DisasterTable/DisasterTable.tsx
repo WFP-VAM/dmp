@@ -143,6 +143,9 @@ export const DisasterTable = ({
               overflow: 'unset',
               overflowY: 'unset !important',
             },
+            '& .MuiDataGrid-scrollbar': {
+              overflow: 'hidden',
+            },
             breakInside: 'avoid',
             borderTop: border ? undefined : 'none',
             borderLeft: border ? undefined : 'none',

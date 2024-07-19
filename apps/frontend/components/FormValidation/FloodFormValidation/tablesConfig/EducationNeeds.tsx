@@ -3,13 +3,15 @@ import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
+const width = 150;
+
 const EducationNeedsColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumTemSch, FLOOD, 150),
-  getColumnSetup(FloodSpecific.StuAcTemSch, FLOOD, 150),
-  getColumnSetup(FloodSpecific.SchUseSafe, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumStu, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumSchStop, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumStuNoCla, FLOOD, 150),
+  getColumnSetup(FloodSpecific.NumTemSch, FLOOD, width),
+  getColumnSetup(FloodSpecific.StuAcTemSch, FLOOD, width),
+  getColumnSetup(FloodSpecific.SchUseSafe, FLOOD, width),
+  getColumnSetup(FloodSpecific.NumStu, FLOOD, width),
+  getColumnSetup(FloodSpecific.NumSchStop, FLOOD, width),
+  getColumnSetup(FloodSpecific.NumStuNoCla, FLOOD, width),
 ];
 
 const EducationNeedsColumnGroup: GridColumnGroupingModel = [

@@ -10,18 +10,10 @@ import { FormattedMessage } from 'react-intl';
 
 import CustomToolMenu from './CustomToolMenu';
 
-const sortIconWidth = 27;
-// const highlightFields = [
-//   FloodSpecific.NumPeoAff,
-//   FloodSpecific.NumTDeath,
-//   FloodSpecific.NumTMissing,
-//   FloodSpecific.NumTInjure,
-// ];
-
 export const getColumnSetup = (
   field: string,
   disaster: DisasterType | 'COMMON',
-  width = 80,
+  width = 72,
   opts: {
     type: 'singleSelect' | 'number';
     valueOptions?: { value: '1' | '2' | ''; label: string }[];
@@ -33,8 +25,7 @@ export const getColumnSetup = (
 ): GridColDef => {
   const fields = {
     field,
-    width: width + sortIconWidth,
-    flex: 1,
+    width,
     editable: true,
     headerAlign: 'center',
     disableColumnMenu: true,
@@ -72,7 +63,7 @@ const getLocationColumnSetup = (
 ): GridColDef => {
   return {
     field,
-    width: width + sortIconWidth,
+    width,
     editable: true,
     headerAlign: 'left',
     disableColumnMenu: true,
@@ -169,7 +160,7 @@ export const addBriefReportLocationColumns = (
   border?: boolean,
 ): GridColDef[] => [
   getLocationColumnSetup(KoboCommonKeys.province, 200, border),
-  getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 56),
-  getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 56),
+  getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 72),
+  getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 84),
   ...columns,
 ];

@@ -3,6 +3,8 @@ import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
+const colWidth = 8 * 9;
+
 const IrrigationColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.DamAff, FLOOD),
   getColumnSetup(FloodSpecific.DamDamaged, FLOOD),
@@ -10,8 +12,8 @@ const IrrigationColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.WatGateDam, FLOOD),
   getColumnSetup(FloodSpecific.PlumWelAff, FLOOD),
   getColumnSetup(FloodSpecific.PlumWelDam, FLOOD),
-  getColumnSetup(FloodSpecific.DigWellAff, FLOOD),
-  getColumnSetup(FloodSpecific.DigWellDam, FLOOD),
+  getColumnSetup(FloodSpecific.DigWellAff, FLOOD, colWidth + 8 * 2),
+  getColumnSetup(FloodSpecific.DigWellDam, FLOOD, colWidth + 8 * 2),
   getColumnSetup(FloodSpecific.PondAff, FLOOD),
   getColumnSetup(FloodSpecific.PondDam, FLOOD),
   getColumnSetup(FloodSpecific.LatrineAff, FLOOD),

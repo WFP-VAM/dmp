@@ -4,18 +4,18 @@ import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 const InfrastructureColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.RubberRoAff, FLOOD, 90),
-  getColumnSetup(FloodSpecific.RubberRoDam, FLOOD, 90),
-  getColumnSetup(FloodSpecific.ConcretAff, FLOOD, 90),
-  getColumnSetup(FloodSpecific.ConcretDam, FLOOD, 90),
-  getColumnSetup(FloodSpecific.RuralRoAff, FLOOD, 90),
-  getColumnSetup(FloodSpecific.RuralRoDam, FLOOD, 90),
-  getColumnSetup(FloodSpecific.BridgeAff, FLOOD, 90),
-  getColumnSetup(FloodSpecific.BridgeDam, FLOOD, 90),
-  getColumnSetup(FloodSpecific.BeleBridAff, FLOOD, 90),
-  getColumnSetup(FloodSpecific.BeleBridDam, FLOOD, 90),
-  getColumnSetup(FloodSpecific.DrainageAff, FLOOD, 90),
-  getColumnSetup(FloodSpecific.DrainageDam, FLOOD, 90),
+  getColumnSetup(FloodSpecific.RubberRoAff, FLOOD),
+  getColumnSetup(FloodSpecific.RubberRoDam, FLOOD),
+  getColumnSetup(FloodSpecific.ConcretAff, FLOOD),
+  getColumnSetup(FloodSpecific.ConcretDam, FLOOD),
+  getColumnSetup(FloodSpecific.RuralRoAff, FLOOD),
+  getColumnSetup(FloodSpecific.RuralRoDam, FLOOD),
+  getColumnSetup(FloodSpecific.BridgeAff, FLOOD),
+  getColumnSetup(FloodSpecific.BridgeDam, FLOOD),
+  getColumnSetup(FloodSpecific.BeleBridAff, FLOOD),
+  getColumnSetup(FloodSpecific.BeleBridDam, FLOOD),
+  getColumnSetup(FloodSpecific.DrainageAff, FLOOD),
+  getColumnSetup(FloodSpecific.DrainageDam, FLOOD),
 ];
 
 const InfrastructureColumnGroup: GridColumnGroupingModel = [
