@@ -184,7 +184,10 @@ export const DetailedReportTable = ({
 
   return (
     <DisasterTable
-      columns={addDetailedReportLocationColumns(columnsWithComparator, border)}
+      columns={addDetailedReportLocationColumns(
+        columnsWithComparator as GridColDef[],
+        border,
+      )}
       columnGroup={columnGroup}
       data={summedData}
       isEditable={false}
