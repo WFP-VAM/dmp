@@ -3,7 +3,7 @@ import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup } from 'utils/tableFormatting';
 
-const defaultColumnWidth = 90;
+const defaultColumnWidth = 8 * 12;
 const SummaryFloodReportColumns: GridColDef[] = [
   getColumnSetup(
     FloodSpecific.NumFamAff,

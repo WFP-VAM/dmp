@@ -4,7 +4,7 @@ import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup } from 'utils/tableFormatting';
 
-const defaultColumnWidth = 90;
+const defaultColumnWidth = 8 * 12;
 
 const SummaryIncidentReportColumns: GridColDef[] = [
   getColumnSetup(
@@ -108,7 +108,7 @@ const SummaryIncidentReportColumns: GridColDef[] = [
   getColumnSetup(
     IncidentSpecific.Bridge,
     INCIDENT,
-    defaultColumnWidth,
+    defaultColumnWidth + 8 * 4,
     { type: 'number' },
     true,
   ),
@@ -129,14 +129,14 @@ const SummaryIncidentReportColumns: GridColDef[] = [
   getColumnSetup(
     IncidentSpecific.BuildingAff,
     INCIDENT,
-    defaultColumnWidth,
+    defaultColumnWidth + 8 * 2,
     { type: 'number' },
     true,
   ),
   getColumnSetup(
     IncidentSpecific.BuildingDam,
     INCIDENT,
-    defaultColumnWidth,
+    defaultColumnWidth + 8 * 2,
     { type: 'number' },
     true,
   ),
