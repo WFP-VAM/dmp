@@ -24,13 +24,19 @@ const NumAffected2Columns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumPeoSEC, FLOOD, colWidth + 8 * 6),
 ];
 
-const NumAffected2ColumnGroup: GridColumnGroupingModel = [
+const NumAffected2ColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('victimsAffected', FLOOD, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

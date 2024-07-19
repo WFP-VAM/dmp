@@ -85,7 +85,7 @@ export const DetailedReportTable = ({
 
   return (
     <DisasterTable
-      columns={addDetailedReportLocationColumns(columns)}
+      columns={addDetailedReportLocationColumns(columns, border)}
       columnGroup={columnGroup}
       data={summedData}
       isEditable={false}

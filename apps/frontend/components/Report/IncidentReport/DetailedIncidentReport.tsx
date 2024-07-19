@@ -1,3 +1,5 @@
+import { Stack, useTheme } from '@mui/material';
+
 import { DetailedReportTable } from 'components/DisasterTable/DetailedReportTable';
 import { incidenTablesMapping } from 'components/FormValidation/IncidentFormValidation/incidentTablesMapping';
 
@@ -6,16 +8,19 @@ export const DetailedIncidentReport = ({
 }: {
   report: Record<string, string | number | undefined>[];
 }) => {
+  const theme = useTheme();
+
   return (
-    <>
-      {incidenTablesMapping.map((tableSetting, index) => (
+    <Stack gap={theme.spacing(4)}>
+      {incidenTablesMapping.map(({ columns, columnGroup }, index) => (
         <DetailedReportTable
-          columns={tableSetting.columns}
-          columnGroup={tableSetting.columnGroup}
+          columns={columns}
+          columnGroup={columnGroup(true)}
           data={report}
           key={index}
+          border={false}
         />
       ))}
-    </>
+    </Stack>
   );
 };

@@ -17,7 +17,7 @@ const AgricultureColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.BirdDeath, DROUGHT, 70),
 ];
 
-const AgricultureColumnGroup: GridColumnGroupingModel = [
+const AgricultureColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   {
     ...getGroupSetup('EMPTY', DROUGHT),
     headerClassName: 'empty-group-header',
@@ -25,9 +25,13 @@ const AgricultureColumnGroup: GridColumnGroupingModel = [
       {
         ...getGroupSetup('agriculture', DROUGHT, true),
         children: [
-          { field: KoboCommonKeys.province },
-          { field: KoboCommonKeys.district },
-          { field: KoboCommonKeys.commune },
+          ...(detailed
+            ? [{ field: KoboCommonKeys.location }]
+            : [
+                { field: KoboCommonKeys.province },
+                { field: KoboCommonKeys.district },
+                { field: KoboCommonKeys.commune },
+              ]),
         ],
       },
     ],

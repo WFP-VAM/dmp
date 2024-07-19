@@ -50,6 +50,7 @@ export const FloodReport = ({
           columnGroup={SummaryFloodReportColumnSettings.columnGroup}
           data={report}
           rotateHeader={false}
+          border
         />
       ) : (
         <BriefReportTable

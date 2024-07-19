@@ -21,13 +21,19 @@ const BuildingInfrastructureColumns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.Bridge, INCIDENT, 8 * 12),
 ];
 
-const BuildingInfrastructureColumnGroup: GridColumnGroupingModel = [
+const BuildingInfrastructureColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('buildingInfrastructure', INCIDENT, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

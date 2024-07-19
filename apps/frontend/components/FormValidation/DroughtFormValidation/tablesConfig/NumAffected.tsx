@@ -20,13 +20,17 @@ const NumAffectedColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NumDisDeath, DROUGHT),
 ];
 
-const NumAffectedColumnGroup: GridColumnGroupingModel = [
+const NumAffectedColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   {
     ...getGroupSetup('victimsAffected', DROUGHT, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
       { field: DroughtSpecific.NumVillAff },
     ],
   },

@@ -17,13 +17,19 @@ const ReportDefenseSecurityColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.TreatOccur + '_2', DROUGHT, 8 * 12),
 ];
 
-const ReportDefenseSecurityColumnGroup: GridColumnGroupingModel = [
+const ReportDefenseSecurityColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('defenseSecurity', DROUGHT, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

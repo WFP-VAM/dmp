@@ -22,7 +22,9 @@ const ReportSocialSectorAffectedColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.ElecForHeal + '_2', DROUGHT, 65),
 ];
 
-const ReportSocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
+const ReportSocialSectorAffectedColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('EMPTY', DROUGHT),
     headerClassName: 'empty-group-header',
@@ -30,9 +32,13 @@ const ReportSocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
       {
         ...getGroupSetup('socialSectorAffected', DROUGHT, true),
         children: [
-          { field: KoboCommonKeys.province },
-          { field: KoboCommonKeys.district },
-          { field: KoboCommonKeys.commune },
+          ...(detailed
+            ? [{ field: KoboCommonKeys.location }]
+            : [
+                { field: KoboCommonKeys.province },
+                { field: KoboCommonKeys.district },
+                { field: KoboCommonKeys.commune },
+              ]),
         ],
       },
     ],

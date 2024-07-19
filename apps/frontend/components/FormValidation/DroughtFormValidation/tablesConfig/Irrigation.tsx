@@ -14,13 +14,17 @@ const IrrigationColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.DigWelNoWat, DROUGHT, 120),
 ];
 
-const IrrigationColumnGroup: GridColumnGroupingModel = [
+const IrrigationColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   {
     ...getGroupSetup('irrigation', DROUGHT, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

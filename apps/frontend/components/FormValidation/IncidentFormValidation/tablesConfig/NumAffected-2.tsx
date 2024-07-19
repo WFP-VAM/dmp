@@ -24,13 +24,19 @@ const NumAffected2Columns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.NumDisRe, INCIDENT),
 ];
 
-const NumAffected2ColumnGroup: GridColumnGroupingModel = [
+const NumAffected2ColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('victimsAffected', INCIDENT, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

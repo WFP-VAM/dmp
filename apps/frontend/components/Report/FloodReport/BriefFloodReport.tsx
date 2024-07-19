@@ -13,16 +13,18 @@ export const BriefFloodReport = ({
 
   return (
     <Stack gap={theme.spacing(4)}>
-      {floodReportTablesMapping.map((tableSetting, index) => (
-        <BriefReportTable
-          columns={tableSetting.columns}
-          columnGroup={tableSetting.columnGroup}
-          data={report}
-          key={index}
-          border={false}
-          columnHeaderHeight={tableSetting.columnHeaderHeight}
-        />
-      ))}
+      {floodReportTablesMapping.map(
+        ({ columns, columnGroup, columnHeaderHeight }, index) => (
+          <BriefReportTable
+            columns={typeof columns === 'function' ? columns(true) : columns}
+            columnGroup={columnGroup(false)}
+            data={report}
+            key={index}
+            border={false}
+            columnHeaderHeight={columnHeaderHeight}
+          />
+        ),
+      )}
     </Stack>
   );
 };

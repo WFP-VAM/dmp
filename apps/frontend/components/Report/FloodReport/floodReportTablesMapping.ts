@@ -15,8 +15,8 @@ import { ReportFoodNeedsColumnSettings } from './tablesConfig/ReportFoodNeeds';
 import { ReportThreatColumnSettings } from './tablesConfig/ReportThreat';
 
 export const floodReportTablesMapping: {
-  columns: GridColDef[];
-  columnGroup: GridColumnGroupingModel;
+  columns: GridColDef[] | ((detailed: boolean) => GridColDef[]);
+  columnGroup: (detailed: boolean) => GridColumnGroupingModel;
   columnHeaderHeight?: number;
 }[] = [
   NumAffected1ColumnSettings,

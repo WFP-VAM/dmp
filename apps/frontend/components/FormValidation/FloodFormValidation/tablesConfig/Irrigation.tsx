@@ -22,13 +22,17 @@ const IrrigationColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.RiverBreakLo, FLOOD),
 ];
 
-const IrrigationColumnGroup: GridColumnGroupingModel = [
+const IrrigationColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   {
     ...getGroupSetup('irrigation', FLOOD, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

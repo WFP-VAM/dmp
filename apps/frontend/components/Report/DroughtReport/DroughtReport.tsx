@@ -50,6 +50,7 @@ export const DroughtReport = ({
           columnGroup={SummaryDroughtReportColumnSettings.columnGroup}
           data={report}
           rotateHeader={false}
+          border
         />
       ) : (
         <BriefReportTable
@@ -57,6 +58,7 @@ export const DroughtReport = ({
           columnGroup={SummaryDroughtReportColumnSettings.columnGroup}
           data={report}
           rotateHeader={false}
+          border
         />
       )}
     </>

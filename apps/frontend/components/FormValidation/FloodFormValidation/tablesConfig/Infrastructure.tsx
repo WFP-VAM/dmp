@@ -18,13 +18,19 @@ const InfrastructureColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.DrainageDam, FLOOD),
 ];
 
-const InfrastructureColumnGroup: GridColumnGroupingModel = [
+const InfrastructureColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('infrastructure', FLOOD, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

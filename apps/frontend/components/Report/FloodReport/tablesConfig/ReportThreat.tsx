@@ -24,13 +24,19 @@ const ReportThreatColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.threat + '_14', FLOOD, width),
 ];
 
-const ReportThreatColumnGroup: GridColumnGroupingModel = [
+const ReportThreatColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('reportThreat', FLOOD, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
       { field: FloodSpecific.threat + '_1' },
       { field: FloodSpecific.threat + '_2' },
       { field: FloodSpecific.threat + '_3' },

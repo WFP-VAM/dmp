@@ -19,13 +19,19 @@ const WaterHouseholdColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NumWatePur, DROUGHT, 8 * 14),
 ];
 
-const WaterHouseholdColumnGroup: GridColumnGroupingModel = [
+const WaterHouseholdColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('waterHousehold', DROUGHT, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

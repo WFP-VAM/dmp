@@ -112,6 +112,7 @@ export const getGroupSetup = (
 
 export const addDetailedReportLocationColumns = (
   columns: GridColDef[],
+  border = false,
 ): GridColDef[] => [
   {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -120,6 +121,7 @@ export const addDetailedReportLocationColumns = (
     width: 300,
     headerAlign: 'left',
     disableColumnMenu: true,
+    headerClassName: border ? undefined : 'left-border',
     valueGetter: (_, row) => {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
       return `${row.province}-${row.district}-${row.commune}`;
