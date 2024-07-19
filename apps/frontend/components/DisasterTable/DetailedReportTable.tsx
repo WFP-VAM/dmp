@@ -1,4 +1,10 @@
-import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
+/* eslint-disable complexity */
+import {
+  GridColDef,
+  GridColumnGroupingModel,
+  GridSortCellParams,
+  gridStringOrNumberComparator,
+} from '@mui/x-data-grid';
 import React from 'react';
 
 import { addDetailedReportLocationColumns } from 'utils/tableFormatting';
@@ -20,20 +26,26 @@ const getLocationIds = (id: string) => {
   };
 };
 
-type RawRow = { id: string; value: string | number | undefined; field: string };
+interface ExtendedGridSortCellParams extends GridSortCellParams {
+  id: string;
+  field: string;
+  value: string | number | undefined;
+}
 
 const findParentData = (
   data: Record<string, string | number | undefined>[],
-  row: RawRow,
-) => {
+  row: ExtendedGridSortCellParams,
+): {
+  provinceData: number | undefined;
+  districtData: number | undefined;
+} => {
   const { provinceId, districtId } = getLocationIds(row.id);
-  console.log({ districtId });
   const provinceData = data.find(
     x => x.province === provinceId && x.district === undefined,
-  )?.[row.field];
+  )?.[row.field] as number | undefined;
   const districtData = data.find(
     x => x.district === districtId && x.commune === undefined,
-  )?.[row.field];
+  )?.[row.field] as number | undefined;
 
   return { provinceData, districtData };
 };
@@ -109,31 +121,53 @@ export const DetailedReportTable = ({
   }, [data]);
 
   // Custom comparator function
+
+  const isNumber = (
+    value: string | number | undefined,
+  ): value is number | undefined =>
+    typeof value === 'number' || value === undefined;
+
   const customComparator = (
-    v1: number,
-    v2: number,
-    row1: RawRow,
-    row2: RawRow,
+    v1: number | undefined,
+    v2: number | undefined,
+    row1: ExtendedGridSortCellParams,
+    row2: ExtendedGridSortCellParams,
   ) => {
-    console.log(row1);
+    if (!isNumber(row1.value) || !isNumber(row2.value)) {
+      return gridStringOrNumberComparator(v1, v2, row1, row2);
+    }
 
     const parentData1 = findParentData(summedData, row1);
     const parentData2 = findParentData(summedData, row2);
 
+    // Compare province data
     if (parentData1.provinceData !== parentData2.provinceData) {
-      return (
-        (parentData2.provinceData as number) -
-        (parentData1.provinceData as number)
-      );
-    }
-    if (parentData1.districtData !== parentData2.districtData) {
-      return (
-        (parentData2.districtData as number) -
-        (parentData1.districtData as number)
-      );
+      const result =
+        (parentData2.provinceData ?? 0) - (parentData1.provinceData ?? 0);
+
+      return result;
     }
 
-    return v2 - v1; // Descending order for the number column
+    // Compare district data
+    if (parentData1.districtData !== parentData2.districtData) {
+      const result =
+        (parentData2.districtData ?? 0) - (parentData1.districtData ?? 0);
+
+      // Handle edge case for districtData
+      if (row1.id.length === 2 && !(row2.id.length === 2)) {
+        return -1; // Province rows should come before non-province rows
+      }
+      if (!(row1.id.length === 2) && row2.id.length === 2) {
+        return 1; // Non-province rows should come after province rows
+      }
+
+      return result;
+    }
+
+    // Compare row values
+    const result = (v2 ?? -Infinity) - (v1 ?? -Infinity);
+
+    return result;
   };
 
   // Add custom comparator to relevant columns
@@ -147,8 +181,6 @@ export const DetailedReportTable = ({
 
     return col;
   });
-
-  console.log({ summedData });
 
   return (
     <DisasterTable
