@@ -1,5 +1,9 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
+import {
+  INCIDENT,
+  IncidentSpecific,
+  KoboCommonKeys,
+} from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -20,47 +24,48 @@ const AgricultureForestColumns: GridColDef[] = [
 
 const AgricultureForestColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('agricultureForest', INCIDENT),
+    ...getGroupSetup('social', INCIDENT, true),
     children: [
-      { field: IncidentSpecific.NumVillAff },
-
-      {
-        ...getGroupSetup('crop', INCIDENT),
-        children: [
-          { field: IncidentSpecific.CropAff },
-          { field: IncidentSpecific.CropDam },
-        ],
-      },
-      {
-        ...getGroupSetup('transplanted', INCIDENT),
-        children: [
-          { field: IncidentSpecific.SamnabAff },
-          { field: IncidentSpecific.SamnabDam },
-        ],
-      },
-      {
-        ...getGroupSetup('paddy', INCIDENT),
-        children: [
-          { field: IncidentSpecific.PaddyAff },
-          { field: IncidentSpecific.PaddyDam },
-        ],
-      },
-      {
-        ...getGroupSetup('livestock', INCIDENT),
-        children: [
-          { field: IncidentSpecific.CowDeath },
-          { field: IncidentSpecific.BaffoDeath },
-          { field: IncidentSpecific.PigDeath },
-          { field: IncidentSpecific.ChickDeath },
-        ],
-      },
-      {
-        ...getGroupSetup('forestFarm', INCIDENT),
-        children: [
-          { field: IncidentSpecific.NumJungleAf },
-          { field: IncidentSpecific.FarmAf },
-        ],
-      },
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+  },
+  {
+    ...getGroupSetup('crop', INCIDENT),
+    children: [
+      { field: IncidentSpecific.CropAff },
+      { field: IncidentSpecific.CropDam },
+    ],
+  },
+  {
+    ...getGroupSetup('transplanted', INCIDENT),
+    children: [
+      { field: IncidentSpecific.SamnabAff },
+      { field: IncidentSpecific.SamnabDam },
+    ],
+  },
+  {
+    ...getGroupSetup('paddy', INCIDENT),
+    children: [
+      { field: IncidentSpecific.PaddyAff },
+      { field: IncidentSpecific.PaddyDam },
+    ],
+  },
+  {
+    ...getGroupSetup('livestock', INCIDENT),
+    children: [
+      { field: IncidentSpecific.CowDeath },
+      { field: IncidentSpecific.BaffoDeath },
+      { field: IncidentSpecific.PigDeath },
+      { field: IncidentSpecific.ChickDeath },
+    ],
+  },
+  {
+    ...getGroupSetup('forestFarm', INCIDENT),
+    children: [
+      { field: IncidentSpecific.NumJungleAf },
+      { field: IncidentSpecific.FarmAf },
     ],
   },
 ];
