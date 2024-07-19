@@ -34,10 +34,12 @@ export const FloodTables = ({
         }
         sx={{ m: 2 }}
       />
-      {getFloodTablesMapping(intl).map((tableSetting, index) => (
+      {getFloodTablesMapping(intl).map(({ columns, columnGroup }, index) => (
         <DisasterTable
-          columns={tableSetting.columns}
-          columnGroup={tableSetting.columnGroup}
+          columns={typeof columns === 'function' ? columns(false) : columns}
+          columnGroup={
+            typeof columnGroup === 'function' ? columnGroup(false) : columnGroup
+          }
           data={[{ id: 1, ...value }]}
           onChange={onChange}
           isEditable={isEditMode}

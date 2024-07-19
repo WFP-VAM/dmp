@@ -10,13 +10,17 @@ const FoodWorkColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.PeoNoFod, DROUGHT, 100),
 ];
 
-const FoodWorkColumnGroup: GridColumnGroupingModel = [
+const FoodWorkColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   {
     ...getGroupSetup('foodWork', DROUGHT, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

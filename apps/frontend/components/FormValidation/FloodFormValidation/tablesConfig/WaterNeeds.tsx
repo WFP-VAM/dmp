@@ -13,13 +13,17 @@ const WaterNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NuFamNoLat, FLOOD, width + 8 * 2),
 ];
 
-const WaterNeedsColumnGroup: GridColumnGroupingModel = [
+const WaterNeedsColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   {
     ...getGroupSetup('waterNeeds', FLOOD, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

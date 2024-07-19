@@ -13,10 +13,10 @@ export const BriefDroughtReport = ({
 
   return (
     <Stack gap={theme.spacing(4)}>
-      {droughtReportTablesMapping.map((tableSetting, index) => (
+      {droughtReportTablesMapping.map(({ columns, columnGroup }, index) => (
         <BriefReportTable
-          columns={tableSetting.columns}
-          columnGroup={tableSetting.columnGroup}
+          columns={columns}
+          columnGroup={columnGroup(false)}
           data={report}
           key={index}
           border={false}

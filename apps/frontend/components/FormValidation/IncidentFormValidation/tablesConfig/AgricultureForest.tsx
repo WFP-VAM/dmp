@@ -22,13 +22,19 @@ const AgricultureForestColumns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.FarmAf, INCIDENT),
 ];
 
-const AgricultureForestColumnGroup: GridColumnGroupingModel = [
+const AgricultureForestColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('social', INCIDENT, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

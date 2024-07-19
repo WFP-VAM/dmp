@@ -275,6 +275,7 @@
         "threat_14": "Other"
       },
       "groupId": {
+        "EMPTY": " ",
         "victimsAffected": "Victims Affected",
         "totalAffected": "Total Numbers Affected",
         "deathToll": "Death Toll",

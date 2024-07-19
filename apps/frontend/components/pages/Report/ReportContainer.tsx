@@ -19,14 +19,14 @@ import { colors } from 'theme/muiTheme';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
 const defaultSearchReportData: SearchFormData = {
-  disTyps: [DisasterMapping['drought']],
+  disTyps: [DisasterMapping['flood']],
   region: {
     province: [],
     district: [],
     commune: [],
   },
   dateRange: {
-    startDate: dayjs().subtract(10, 'years'),
+    startDate: dayjs().subtract(1, 'month'),
     endDate: dayjs(),
   },
 };
@@ -38,7 +38,7 @@ export const ReportContainer = () => {
   );
 
   const [isDetailedReport, setIsDetailedReport] = useState(false);
-  const [isAllColumnReport, setIsAllColumnReport] = useState(true);
+  const [isAllColumnReport, setIsAllColumnReport] = useState(false);
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 

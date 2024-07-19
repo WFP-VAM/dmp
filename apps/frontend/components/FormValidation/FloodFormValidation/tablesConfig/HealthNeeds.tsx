@@ -13,13 +13,17 @@ const HealthNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumStaff, FLOOD, width),
 ];
 
-const HealthNeedsColumnGroup: GridColumnGroupingModel = [
+const HealthNeedsColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   {
     ...getGroupSetup('healthNeeds', FLOOD, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
       { field: FloodSpecific.NonActingH },
       { field: FloodSpecific.PeoCanAceH },
       { field: FloodSpecific.NumDoctor },

@@ -20,13 +20,17 @@ const SocialColumns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.CraftDam, INCIDENT),
 ];
 
-const SocialColumnGroup: GridColumnGroupingModel = [
+const SocialColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   {
     ...getGroupSetup('social', INCIDENT, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

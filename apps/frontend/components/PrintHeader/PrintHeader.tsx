@@ -25,9 +25,9 @@ export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
         <FormattedMessage id="validation_search_params.disaster_type" />
         {' : '}
         {searchReportData.disTyps.map(disTyp => (
-          <>
-            <FormattedMessage key={disTyp} id={`disasters.${disTyp}`} />{' '}
-          </>
+          <span key={disTyp}>
+            <FormattedMessage id={`disasters.${disTyp}`} />{' '}
+          </span>
         ))}
       </Typography>
       {searchReportData.region.province.length !== 0 ? (

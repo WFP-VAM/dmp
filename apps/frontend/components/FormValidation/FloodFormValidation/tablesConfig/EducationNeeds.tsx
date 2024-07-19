@@ -14,13 +14,19 @@ const EducationNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumStuNoCla, FLOOD, width),
 ];
 
-const EducationNeedsColumnGroup: GridColumnGroupingModel = [
+const EducationNeedsColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('educationNeeds', FLOOD, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

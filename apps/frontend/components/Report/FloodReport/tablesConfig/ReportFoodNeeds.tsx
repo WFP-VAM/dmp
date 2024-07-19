@@ -14,13 +14,19 @@ const ReportFoodNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.RicePrice + '_2', FLOOD, 150),
 ];
 
-const ReportFoodNeedsColumnGroup: GridColumnGroupingModel = [
+const ReportFoodNeedsColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('foodNeeds', FLOOD, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

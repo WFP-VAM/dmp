@@ -1,10 +1,10 @@
 /* eslint-disable max-lines */
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup } from 'utils/tableFormatting';
+import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-const defaultColumnWidth = 90;
+const defaultColumnWidth = 8 * 14;
 
 const SummaryDroughtReportColumns: GridColDef[] = [
   getColumnSetup(
@@ -38,21 +38,21 @@ const SummaryDroughtReportColumns: GridColDef[] = [
   getColumnSetup(
     DroughtSpecific.FamAgriAff,
     DROUGHT,
-    defaultColumnWidth + 30,
+    defaultColumnWidth + 8 * 6,
     { type: 'number' },
     true,
   ),
   getColumnSetup(
     DroughtSpecific.FarmAff,
     DROUGHT,
-    defaultColumnWidth + 30,
+    defaultColumnWidth + 8 * 4,
     { type: 'number' },
     true,
   ),
   getColumnSetup(
     DroughtSpecific.FarmDam,
     DROUGHT,
-    defaultColumnWidth + 40,
+    defaultColumnWidth + 8 * 5,
     { type: 'number' },
     true,
   ),
@@ -94,20 +94,25 @@ const SummaryDroughtReportColumns: GridColDef[] = [
   getColumnSetup(
     DroughtSpecific.LandSize,
     DROUGHT,
-    defaultColumnWidth + 20,
+    defaultColumnWidth + 8 * 4,
     { type: 'number' },
     true,
   ),
   getColumnSetup(
     DroughtSpecific.NumFam,
     DROUGHT,
-    defaultColumnWidth + 30,
+    defaultColumnWidth + 8 * 4,
     { type: 'number' },
     true,
   ),
 ];
 
-const SummaryDroughtReportColumnGroup: GridColumnGroupingModel = [];
+const SummaryDroughtReportColumnGroup: GridColumnGroupingModel = [
+  {
+    ...getGroupSetup('EMPTY', DROUGHT, true),
+    children: [{ field: KoboCommonKeys.province }],
+  },
+];
 
 export const SummaryDroughtReportColumnSettings = {
   columns: SummaryDroughtReportColumns,

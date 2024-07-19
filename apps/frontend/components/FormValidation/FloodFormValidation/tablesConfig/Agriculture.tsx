@@ -24,13 +24,17 @@ const AgricultureColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.BirdMissing, FLOOD),
 ];
 
-const AgricultureColumnGroup: GridColumnGroupingModel = [
+const AgricultureColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   {
     ...getGroupSetup('agriculture', FLOOD, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

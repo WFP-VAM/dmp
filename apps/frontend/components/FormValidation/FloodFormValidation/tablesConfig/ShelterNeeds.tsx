@@ -12,13 +12,19 @@ const ShelterNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumPeoRela, FLOOD, 150),
 ];
 
-const ShelterNeedsColumnGroup: GridColumnGroupingModel = [
+const ShelterNeedsColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('shelterNeeds', FLOOD, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
     ],
   },
   {

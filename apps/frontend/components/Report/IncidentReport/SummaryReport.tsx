@@ -1,8 +1,12 @@
 /* eslint-disable max-lines */
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
+import {
+  INCIDENT,
+  IncidentSpecific,
+  KoboCommonKeys,
+} from '@wfp-dmp/interfaces';
 
-import { getColumnSetup } from 'utils/tableFormatting';
+import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 const defaultColumnWidth = 8 * 12;
 
@@ -80,35 +84,35 @@ const SummaryIncidentReportColumns: GridColDef[] = [
   getColumnSetup(
     IncidentSpecific.RivBreakLo,
     INCIDENT,
-    defaultColumnWidth,
+    defaultColumnWidth + 8 * 12,
     { type: 'number' },
     true,
   ),
   getColumnSetup(
     IncidentSpecific.RivBreakWid,
     INCIDENT,
-    defaultColumnWidth,
+    defaultColumnWidth + 8 * 12,
     { type: 'number' },
     true,
   ),
   getColumnSetup(
     IncidentSpecific.NationalRod,
     INCIDENT,
-    defaultColumnWidth,
+    defaultColumnWidth + 8 * 12,
     { type: 'number' },
     true,
   ),
   getColumnSetup(
     IncidentSpecific.RuralRoad,
     INCIDENT,
-    defaultColumnWidth,
+    defaultColumnWidth + 8 * 12,
     { type: 'number' },
     true,
   ),
   getColumnSetup(
     IncidentSpecific.Bridge,
     INCIDENT,
-    defaultColumnWidth + 8 * 4,
+    defaultColumnWidth + 8 * 12,
     { type: 'number' },
     true,
   ),
@@ -129,14 +133,14 @@ const SummaryIncidentReportColumns: GridColDef[] = [
   getColumnSetup(
     IncidentSpecific.BuildingAff,
     INCIDENT,
-    defaultColumnWidth + 8 * 2,
+    defaultColumnWidth + 8 * 4,
     { type: 'number' },
     true,
   ),
   getColumnSetup(
     IncidentSpecific.BuildingDam,
     INCIDENT,
-    defaultColumnWidth + 8 * 2,
+    defaultColumnWidth + 8 * 6,
     { type: 'number' },
     true,
   ),
@@ -156,7 +160,12 @@ const SummaryIncidentReportColumns: GridColDef[] = [
   ),
 ];
 
-const SummaryIncidentReportColumnGroup: GridColumnGroupingModel = [];
+const SummaryIncidentReportColumnGroup: GridColumnGroupingModel = [
+  {
+    ...getGroupSetup('EMPTY', INCIDENT, true),
+    children: [{ field: KoboCommonKeys.province }],
+  },
+];
 
 export const SummaryIncidentReportColumnSettings = {
   columns: SummaryIncidentReportColumns,

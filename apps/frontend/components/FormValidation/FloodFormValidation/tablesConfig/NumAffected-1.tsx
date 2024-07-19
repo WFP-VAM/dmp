@@ -3,7 +3,7 @@ import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
-const NumAffected1Columns: GridColDef[] = [
+const NumAffected1Columns = (detailed: boolean): GridColDef[] => [
   getColumnSetup(FloodSpecific.NumVillAff, FLOOD),
   getColumnSetup(
     FloodSpecific.NumPeoAff,
@@ -12,7 +12,7 @@ const NumAffected1Columns: GridColDef[] = [
     undefined,
     undefined,
     'bold',
-    true,
+    !detailed,
   ),
   getColumnSetup(FloodSpecific.NumFamAff, FLOOD),
   getColumnSetup(FloodSpecific.NumFeAff, FLOOD),
@@ -23,7 +23,7 @@ const NumAffected1Columns: GridColDef[] = [
     undefined,
     undefined,
     'bold',
-    true,
+    !detailed,
   ),
   getColumnSetup(FloodSpecific.NumMeDeath, FLOOD),
   getColumnSetup(FloodSpecific.NumFeDeath, FLOOD),
@@ -37,7 +37,7 @@ const NumAffected1Columns: GridColDef[] = [
     undefined,
     undefined,
     'bold',
-    true,
+    !detailed,
   ),
   getColumnSetup(FloodSpecific.NumMeMissing, FLOOD),
   getColumnSetup(FloodSpecific.NumFeMissing, FLOOD),
@@ -51,7 +51,7 @@ const NumAffected1Columns: GridColDef[] = [
     undefined,
     undefined,
     'bold',
-    true,
+    !detailed,
   ),
   getColumnSetup(FloodSpecific.NumMeInjure, FLOOD),
   getColumnSetup(FloodSpecific.NumFeInjure, FLOOD),
@@ -60,13 +60,19 @@ const NumAffected1Columns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumDisInjure, FLOOD),
 ];
 
-const NumAffected1ColumnGroup: GridColumnGroupingModel = [
+const NumAffected1ColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
     ...getGroupSetup('victimsAffected', FLOOD, true),
     children: [
-      { field: KoboCommonKeys.province },
-      { field: KoboCommonKeys.district },
-      { field: KoboCommonKeys.commune },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
       { field: FloodSpecific.NumVillAff },
     ],
   },
