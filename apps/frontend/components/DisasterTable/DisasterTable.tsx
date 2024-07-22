@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { ArrowLeft, ArrowRight } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import {
@@ -38,27 +39,27 @@ export const DisasterTable = ({
   border = true,
   getRowClassName,
 }: IProps): JSX.Element => {
-  const contentRef = React.useRef<HTMLDivElement>(null);
   const outerRef = React.useRef<HTMLDivElement>(null);
   const [hovering, setHovering] = React.useState(false);
   const [hasOverflow, setHasOverflow] = React.useState(false);
 
-  console.log({ hovering });
+  const { scrollWidth, offsetWidth, scrollLeft } = outerRef.current ?? {};
 
   React.useEffect(() => {
-    if (!contentRef.current || !outerRef.current) {
+    if (!outerRef.current) {
       return;
     }
 
     const obs = new ResizeObserver(() => {
+      const { scrollWidth: scroll, offsetWidth: offset } =
+        outerRef.current ?? {};
       const overflow =
-        (outerRef.current?.offsetWidth ?? 0) <
-        (contentRef.current?.offsetWidth ?? 0);
+        scroll !== undefined && offset !== undefined && scroll > offset;
 
       setHasOverflow(overflow);
     });
 
-    obs.observe(contentRef.current);
+    obs.observe(outerRef.current);
 
     return () => obs.disconnect();
   }, []);
@@ -116,14 +117,23 @@ export const DisasterTable = ({
 
   return (
     <Box position="relative">
-      {hasOverflow && (
-        <ArrowRight
+      {hasOverflow &&
+        offsetWidth !== undefined &&
+        scrollLeft !== undefined &&
+        scrollWidth !== undefined &&
+        offsetWidth + scrollLeft < scrollWidth && (
+          <ArrowRight
+            onClick={() => outerRef.current?.scrollBy({ left: 50 })}
+            fontSize="large"
+            style={{ ...arrowStyles, right: '3rem' }}
+          />
+        )}
+      {hasOverflow && scrollLeft !== undefined && scrollLeft > 0 && (
+        <ArrowLeft
+          onClick={() => outerRef.current?.scrollBy({ left: -50 })}
           fontSize="large"
-          style={{ ...arrowStyles, right: '3rem' }}
+          style={{ ...arrowStyles, left: '3rem' }}
         />
-      )}
-      {hasOverflow && (
-        <ArrowLeft fontSize="large" style={{ ...arrowStyles, left: '3rem' }} />
       )}
       <Box
         overflow="scroll"
@@ -131,12 +141,7 @@ export const DisasterTable = ({
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >
-        <Box
-          ref={contentRef}
-          width={sum(updatedColumns.map(x => x.width ?? 0))}
-          m={2}
-          mt={0}
-        >
+        <Box width={sum(updatedColumns.map(x => x.width ?? 0))} m={2} mt={0}>
           <DataGrid
             sx={{
               '& .MuiDataGrid-columnHeader.empty-group-header': {
