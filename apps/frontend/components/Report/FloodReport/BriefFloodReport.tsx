@@ -14,7 +14,10 @@ export const BriefFloodReport = ({
   return (
     <Stack gap={theme.spacing(4)}>
       {floodReportTablesMapping.map(
-        ({ columns, columnGroup, columnHeaderHeight }, index) => (
+        (
+          { columns, columnGroup, columnHeaderHeight, hideTopRightBorder },
+          index,
+        ) => (
           <BriefReportTable
             columns={typeof columns === 'function' ? columns(false) : columns}
             columnGroup={columnGroup(false)}
@@ -22,6 +25,7 @@ export const BriefFloodReport = ({
             key={index}
             border={false}
             columnHeaderHeight={columnHeaderHeight}
+            hideTopRightBorder={hideTopRightBorder}
           />
         ),
       )}

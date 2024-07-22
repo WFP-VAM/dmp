@@ -17,7 +17,8 @@ import { ReportThreatColumnSettings } from './tablesConfig/ReportThreat';
 export const floodReportTablesMapping: {
   columns: GridColDef[] | ((detailed: boolean) => GridColDef[]);
   columnGroup: (detailed: boolean) => GridColumnGroupingModel;
-  columnHeaderHeight?: number;
+  columnHeaderHeight?: 'large' | 'normal';
+  hideTopRightBorder?: boolean;
 }[] = [
   NumAffected1ColumnSettings,
   NumAffected2ColumnSettings,

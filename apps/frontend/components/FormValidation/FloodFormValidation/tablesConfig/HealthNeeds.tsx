@@ -36,4 +36,5 @@ const HealthNeedsColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
 export const HealthNeedsColumnSettings = {
   columns: HealthNeedsColumns,
   columnGroup: HealthNeedsColumnGroup,
+  hideTopRightBorder: true,
 };

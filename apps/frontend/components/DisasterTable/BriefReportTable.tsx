@@ -10,8 +10,9 @@ interface IProps {
   data: Record<string, string | number | undefined>[];
   rotateHeader?: boolean;
   border?: boolean;
-  columnHeaderHeight?: number;
+  columnHeaderHeight?: 'large' | 'normal';
   showMenuOnLocation?: boolean;
+  hideTopRightBorder?: boolean;
 }
 
 export const BriefReportTable = ({
@@ -22,6 +23,7 @@ export const BriefReportTable = ({
   border,
   columnHeaderHeight,
   showMenuOnLocation = false,
+  hideTopRightBorder,
 }: IProps): JSX.Element => {
   return (
     <DisasterTable
@@ -37,6 +39,7 @@ export const BriefReportTable = ({
       rotateHeader={rotateHeader}
       border={border}
       columnHeaderHeight={columnHeaderHeight}
+      hideTopRightBorder={hideTopRightBorder}
     />
   );
 };
