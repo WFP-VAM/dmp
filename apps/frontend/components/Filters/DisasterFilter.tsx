@@ -87,7 +87,6 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
             onChange={v => {
               onIncidentsChange(v);
             }}
-            sx={{ height: '2.5rem' }}
             placeholder="validation_search_params.incident_type"
             allSelectedText="disasters.ALL_INCIDENTS"
             formatPrefix="disasters"
