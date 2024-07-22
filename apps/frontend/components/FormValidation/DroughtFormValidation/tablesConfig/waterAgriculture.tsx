@@ -34,4 +34,5 @@ const WaterAgricultureColumnGroup = (
 export const WaterAgricultureColumnSettings = {
   columns: WaterAgricultureColumns,
   columnGroup: WaterAgricultureColumnGroup,
+  hideTopRightBorder: true,
 };

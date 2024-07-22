@@ -127,7 +127,7 @@ export const CommuneLevelReportTable = ({
         return '';
       }}
       rotateHeader={rotateHeader}
-      columnHeaderHeight={100}
+      columnHeaderHeight="large"
       border={border}
     />
   );

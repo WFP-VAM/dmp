@@ -1,3 +1,5 @@
+import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
+
 import { AgricultureColumnSettings } from 'components/FormValidation/DroughtFormValidation/tablesConfig/Agriculture';
 import { IrrigationColumnSettings } from 'components/FormValidation/DroughtFormValidation/tablesConfig/Irrigation';
 import { NumAffectedColumnSettings } from 'components/FormValidation/DroughtFormValidation/tablesConfig/NumAffected';
@@ -9,7 +11,11 @@ import { WaterAgricultureColumnSettings } from 'components/FormValidation/Drough
 import { ReportDefenseSecurityColumnSettings } from './tablesConfig/ReportDefenseSecurity';
 import { ReportSocialSectorAffectedColumnSettings } from './tablesConfig/ReportSocialSectorAffected';
 
-export const droughtReportTablesMapping = [
+export const droughtReportTablesMapping: {
+  columns: GridColDef[];
+  columnGroup: (detailed: boolean) => GridColumnGroupingModel;
+  hideTopRightBorder?: boolean;
+}[] = [
   NumAffectedColumnSettings,
   AgricultureColumnSettings,
   ReportSocialSectorAffectedColumnSettings,

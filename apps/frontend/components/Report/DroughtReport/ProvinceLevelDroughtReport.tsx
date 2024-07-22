@@ -13,15 +13,18 @@ export const ProvinceLevelDroughtReport = ({
 
   return (
     <Stack gap={theme.spacing(4)}>
-      {droughtReportTablesMapping.map(({ columns, columnGroup }, index) => (
-        <ProvinceLevelReportTable
-          columns={columns}
-          columnGroup={columnGroup(false)}
-          data={report}
-          key={index}
-          border={false}
-        />
-      ))}
+      {droughtReportTablesMapping.map(
+        ({ columns, columnGroup, hideTopRightBorder }, index) => (
+          <ProvinceLevelReportTable
+            columns={columns}
+            columnGroup={columnGroup(false)}
+            data={report}
+            key={index}
+            border={false}
+            hideTopRightBorder={hideTopRightBorder}
+          />
+        ),
+      )}
     </Stack>
   );
 };

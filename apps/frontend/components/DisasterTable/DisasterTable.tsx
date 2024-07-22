@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+/* eslint-disable complexity */
 import { Box } from '@mui/material';
 import {
   DataGrid,
@@ -23,9 +25,10 @@ interface IProps {
   getRowId?: (row: any) => string;
   isEditable: boolean;
   rotateHeader?: boolean;
-  columnHeaderHeight?: number;
+  columnHeaderHeight?: 'normal' | 'large';
   border?: boolean;
   getRowClassName?: DataGridProps['getRowClassName'];
+  hideTopRightBorder?: boolean;
 }
 
 export const DisasterTable = ({
@@ -35,9 +38,10 @@ export const DisasterTable = ({
   onChange,
   getRowId,
   isEditable,
-  columnHeaderHeight = 72,
+  columnHeaderHeight = 'normal',
   border = true,
   getRowClassName,
+  hideTopRightBorder = false,
 }: IProps): JSX.Element => {
   const outerRef = React.useRef<HTMLDivElement>(null);
   const [hovering, setHovering] = React.useState(false);
@@ -120,7 +124,25 @@ export const DisasterTable = ({
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >
-        <Box width={sum(updatedColumns.map(x => x.width ?? 0))} m={2} mt={0}>
+        <Box
+          position="relative"
+          width={sum(updatedColumns.map(x => x.width ?? 0))}
+          m={2}
+          mt={0}
+        >
+          {hideTopRightBorder && (
+            <div
+              style={{
+                minWidth: '2px',
+                minHeight: `${columnHeaderHeight === 'large' ? 69 : 49}px`,
+                position: 'absolute',
+                background: '#f9f7f7',
+                zIndex: 1,
+                right: 0,
+                top: 0,
+              }}
+            />
+          )}
           <DataGrid
             sx={{
               '& .MuiDataGrid-columnHeader.empty-group-header': {
@@ -218,7 +240,7 @@ export const DisasterTable = ({
             getRowId={getRowId}
             getRowClassName={getRowClassName}
             autoHeight
-            columnHeaderHeight={columnHeaderHeight}
+            columnHeaderHeight={columnHeaderHeight === 'large' ? 100 : 72}
             disableVirtualization
             initialState={{
               columns: {
