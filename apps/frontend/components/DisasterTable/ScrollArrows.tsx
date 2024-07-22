@@ -26,7 +26,7 @@ const ScrollArrows = ({
     position: 'absolute' as const,
     top: '50%',
     zIndex: 1,
-    opacity: hovering ? 0 : 1,
+    opacity: hovering ? 0 : 0.7,
     transition: '0.4s',
   };
 
@@ -43,7 +43,10 @@ const ScrollArrows = ({
       {offsetWidth + scrollLeft < scrollWidth && (
         <ArrowRight
           onClick={() =>
-            outerRef.current?.scrollBy({ left: 150, behavior: 'smooth' })
+            outerRef.current?.scrollTo({
+              left: scrollWidth,
+              behavior: 'smooth',
+            })
           }
           fontSize="large"
           style={{ ...arrowStyles, right: '3rem' }}
@@ -52,7 +55,7 @@ const ScrollArrows = ({
       {scrollLeft > 0 && (
         <ArrowLeft
           onClick={() =>
-            outerRef.current?.scrollBy({ left: -150, behavior: 'smooth' })
+            outerRef.current?.scrollTo({ left: 0, behavior: 'smooth' })
           }
           fontSize="large"
           style={{ ...arrowStyles, left: '3rem' }}
