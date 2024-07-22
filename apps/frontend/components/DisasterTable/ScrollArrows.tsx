@@ -26,7 +26,7 @@ const ScrollArrows = ({
     position: 'absolute' as const,
     top: '50%',
     zIndex: 1,
-    opacity: hovering ? 0 : 1,
+    opacity: hovering ? 0 : 0.7,
     transition: '0.4s',
   };
 
