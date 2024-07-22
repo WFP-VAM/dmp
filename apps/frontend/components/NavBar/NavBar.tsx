@@ -24,7 +24,7 @@ export const NavBar = ({ children }: NavBarProps): JSX.Element => {
       } else if (distanceY <= shrinkOn && shrink) {
         setShrink(false);
       }
-    }, 100); // Adjust the debounce delay as needed
+    }, 100);
 
     window.addEventListener('scroll', handleScroll);
 
