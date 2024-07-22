@@ -114,7 +114,7 @@ export const DetailedReportTable = ({
         return '';
       }}
       rotateHeader={rotateHeader}
-      columnHeaderHeight={100}
+      columnHeaderHeight="large"
       border={border}
     />
   );
