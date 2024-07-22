@@ -69,7 +69,15 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
         <Select
           value={disasterType}
           onChange={onDisasterTypeChange}
-          sx={{ minWidth: 150, backgroundColor: 'white', height: '2.5rem' }}
+          sx={{
+            minWidth: 150,
+            backgroundColor: 'white',
+            height: '2.5rem',
+            '& .MuiInputBase-input': {
+              padding: '0.5rem 0.5rem',
+              fontSize: '14px !important',
+            },
+          }}
         >
           {disasters.map(disaster => {
             return (
@@ -90,6 +98,14 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
             placeholder="validation_search_params.incident_type"
             allSelectedText="disasters.ALL_INCIDENTS"
             formatPrefix="disasters"
+            selectProps={{
+              sx: {
+                '& .MuiInputBase-input': {
+                  padding: '0.5rem 0.5rem',
+                  fontSize: '14px !important',
+                },
+              },
+            }}
           />
         </FormControl>
       )}

@@ -24,7 +24,14 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
   return (
     <Stack direction="row" gap={theme.spacing(1)}>
       <DatePicker
-        sx={{ width: 140, backgroundColor: 'white' }}
+        sx={{
+          width: 140,
+          backgroundColor: 'white',
+          '& .MuiInputBase-input': {
+            padding: '0.5rem 0.5rem',
+            fontSize: '14px !important',
+          },
+        }}
         label={
           value.startDate
             ? undefined
@@ -72,7 +79,14 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
       />
 
       <DatePicker
-        sx={{ width: 140, backgroundColor: 'white' }}
+        sx={{
+          width: 140,
+          backgroundColor: 'white',
+          '& .MuiInputBase-input': {
+            padding: '0.5rem 0.5rem',
+            fontSize: '14px !important',
+          },
+        }}
         label={
           value.endDate
             ? undefined
