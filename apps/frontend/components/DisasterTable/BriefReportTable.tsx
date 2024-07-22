@@ -11,6 +11,7 @@ interface IProps {
   rotateHeader?: boolean;
   border?: boolean;
   columnHeaderHeight?: number;
+  showMenuOnLocation?: boolean;
 }
 
 export const BriefReportTable = ({
@@ -20,10 +21,15 @@ export const BriefReportTable = ({
   rotateHeader = false,
   border,
   columnHeaderHeight,
+  showMenuOnLocation = false,
 }: IProps): JSX.Element => {
   return (
     <DisasterTable
-      columns={addBriefReportLocationColumns(columns, border)}
+      columns={addBriefReportLocationColumns(
+        columns,
+        border,
+        showMenuOnLocation,
+      )}
       columnGroup={columnGroup}
       data={data}
       isEditable={false}

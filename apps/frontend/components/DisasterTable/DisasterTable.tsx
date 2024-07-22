@@ -1,5 +1,3 @@
-/* eslint-disable complexity */
-import { ArrowLeft, ArrowRight } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import {
   DataGrid,
@@ -12,6 +10,8 @@ import { sum } from 'lodash';
 import React from 'react';
 
 import { colors } from 'theme/muiTheme';
+
+import ScrollArrows from './ScrollArrows';
 
 interface IProps {
   columns: GridColDef[];
@@ -104,37 +104,16 @@ export const DisasterTable = ({
 
   const disableBorder = border ? undefined : 'none';
 
-  const arrowStyles = {
-    border: `6px solid ${colors.color5}`,
-    borderRadius: '12px',
-    color: colors.color5,
-    position: 'absolute' as const,
-    top: '50%',
-    zIndex: 1,
-    opacity: hovering ? 0 : 1,
-    transition: '0.4s',
-  };
-
   return (
     <Box position="relative">
-      {hasOverflow &&
-        offsetWidth !== undefined &&
-        scrollLeft !== undefined &&
-        scrollWidth !== undefined &&
-        offsetWidth + scrollLeft < scrollWidth && (
-          <ArrowRight
-            onClick={() => outerRef.current?.scrollBy({ left: 50 })}
-            fontSize="large"
-            style={{ ...arrowStyles, right: '3rem' }}
-          />
-        )}
-      {hasOverflow && scrollLeft !== undefined && scrollLeft > 0 && (
-        <ArrowLeft
-          onClick={() => outerRef.current?.scrollBy({ left: -50 })}
-          fontSize="large"
-          style={{ ...arrowStyles, left: '3rem' }}
-        />
-      )}
+      <ScrollArrows
+        hasOverflow={hasOverflow}
+        hovering={hovering}
+        scrollWidth={scrollWidth}
+        offsetWidth={offsetWidth}
+        scrollLeft={scrollLeft}
+        outerRef={outerRef}
+      />
       <Box
         overflow="scroll"
         ref={outerRef}

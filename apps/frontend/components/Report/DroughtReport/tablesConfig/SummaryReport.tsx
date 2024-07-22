@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import { getColumnSetup } from 'utils/tableFormatting';
 
 const defaultColumnWidth = 8 * 14;
 
@@ -107,12 +107,7 @@ const SummaryDroughtReportColumns: GridColDef[] = [
   ),
 ];
 
-const SummaryDroughtReportColumnGroup: GridColumnGroupingModel = [
-  {
-    ...getGroupSetup('EMPTY', DROUGHT, true),
-    children: [{ field: KoboCommonKeys.province }],
-  },
-];
+const SummaryDroughtReportColumnGroup: GridColumnGroupingModel = [];
 
 export const SummaryDroughtReportColumnSettings = {
   columns: SummaryDroughtReportColumns,
