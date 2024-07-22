@@ -71,18 +71,15 @@ export const createCustomComparator =
 
     // Compare district data
     if (parentData1.districtData !== parentData2.districtData) {
-      const result =
-        (parentData2.districtData ?? 0) - (parentData1.districtData ?? 0);
-
       // Handle edge case for districtData
-      if (row1.id.length === 2 && !(row2.id.length === 2)) {
+      if (parentData1.isProvince && !parentData2.isProvince) {
         return -1; // Province rows should come before non-province rows
       }
-      if (!(row1.id.length === 2) && row2.id.length === 2) {
+      if (!parentData1.isProvince && parentData2.isProvince) {
         return 1; // Non-province rows should come after province rows
       }
 
-      return result;
+      return (parentData2.districtData ?? 0) - (parentData1.districtData ?? 0);
     }
 
     // Compare row values
