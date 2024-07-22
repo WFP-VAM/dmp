@@ -58,5 +58,6 @@ const ReportThreatColumnGroup = (
 export const ReportThreatColumnSettings = {
   columns: ReportThreatColumns,
   columnGroup: ReportThreatColumnGroup,
-  columnHeaderHeight: 100,
+  columnHeaderHeight: 'large',
+  hideTopRightBorder: true,
 };
