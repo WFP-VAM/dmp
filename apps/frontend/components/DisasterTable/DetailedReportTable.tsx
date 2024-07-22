@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import React from 'react';
 
