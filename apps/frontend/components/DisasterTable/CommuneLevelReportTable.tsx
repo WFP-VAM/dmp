@@ -1,7 +1,7 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import React from 'react';
 
-import { addDetailedReportLocationColumns } from 'utils/tableFormatting';
+import { addCommuneLevelReportLocationColumns } from 'utils/tableFormatting';
 
 import { createCustomComparator } from './CustomCommuneSort';
 import { DisasterTable } from './DisasterTable';
@@ -15,7 +15,7 @@ interface IProps {
   showMenuOnLocation?: boolean;
 }
 
-export const DetailedReportTable = ({
+export const CommuneLevelReportTable = ({
   columns,
   columnGroup,
   data,
@@ -100,7 +100,7 @@ export const DetailedReportTable = ({
 
   return (
     <DisasterTable
-      columns={addDetailedReportLocationColumns(
+      columns={addCommuneLevelReportLocationColumns(
         columnsWithComparator as GridColDef[],
         border,
         showMenuOnLocation,

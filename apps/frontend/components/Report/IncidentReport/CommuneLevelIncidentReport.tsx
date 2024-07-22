@@ -1,9 +1,9 @@
 import { Stack, useTheme } from '@mui/material';
 
-import { BriefReportTable } from 'components/DisasterTable/BriefReportTable';
+import { CommuneLevelReportTable } from 'components/DisasterTable/CommuneLevelReportTable';
 import { incidenTablesMapping } from 'components/FormValidation/IncidentFormValidation/incidentTablesMapping';
 
-export const BriefIncidentReport = ({
+export const CommuneLevelIncidentReport = ({
   report,
 }: {
   report: Record<string, string | number | undefined>[];
@@ -13,9 +13,9 @@ export const BriefIncidentReport = ({
   return (
     <Stack gap={theme.spacing(4)}>
       {incidenTablesMapping.map(({ columns, columnGroup }, index) => (
-        <BriefReportTable
+        <CommuneLevelReportTable
           columns={columns}
-          columnGroup={columnGroup(false)}
+          columnGroup={columnGroup(true)}
           data={report}
           key={index}
           border={false}

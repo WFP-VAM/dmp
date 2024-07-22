@@ -5,8 +5,8 @@ import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  generateIncidentBriefReport,
-  generateIncidentDetailedReport,
+  generateIncidentProvinceLevelReport,
+  generateIncidentCommuneLevelReport,
 } from 'utils/aggregate/generateIncidentReport';
 import { formatIncidentFields } from 'utils/formatRawToForm';
 
@@ -14,11 +14,11 @@ import { IncidentSpecificReport } from './IncidentSpecificReport';
 
 export const IncidentReport = ({
   forms,
-  isDetailedReport,
+  isCommuneLevelReport,
   isAllColumnReport,
 }: {
   forms: IncidentDto[];
-  isDetailedReport: boolean;
+  isCommuneLevelReport: boolean;
   isAllColumnReport: boolean;
 }) => {
   const theme = useTheme();
@@ -30,12 +30,12 @@ export const IncidentReport = ({
     return map(groupedData, (incidentSpecificForms, incidentKey) => {
       return {
         incidentKey,
-        report: isDetailedReport
-          ? generateIncidentDetailedReport(incidentSpecificForms)
-          : generateIncidentBriefReport(incidentSpecificForms),
+        report: isCommuneLevelReport
+          ? generateIncidentCommuneLevelReport(incidentSpecificForms)
+          : generateIncidentProvinceLevelReport(incidentSpecificForms),
       };
     });
-  }, [forms, isDetailedReport]);
+  }, [forms, isCommuneLevelReport]);
 
   return (
     <Stack gap={theme.spacing(8)}>
@@ -49,7 +49,7 @@ export const IncidentReport = ({
             </Typography>
             <IncidentSpecificReport
               report={incidentSpecific.report}
-              isDetailedReport={isDetailedReport}
+              isCommuneLevelReport={isCommuneLevelReport}
               isAllColumnReport={isAllColumnReport}
             />
           </Stack>

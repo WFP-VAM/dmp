@@ -14,11 +14,11 @@ import { IncidentReport } from './IncidentReport/IncidentReport';
 
 export const Report = ({
   forms,
-  isDetailedReport,
+  isCommuneLevelReport,
   isAllColumnReport,
 }: {
   forms: FloodDto[] | DroughtDto[] | IncidentDto[];
-  isDetailedReport: boolean;
+  isCommuneLevelReport: boolean;
   isAllColumnReport: boolean;
 }) => {
   if (forms.length === 0)
@@ -34,7 +34,7 @@ export const Report = ({
     return (
       <FloodReport
         forms={forms}
-        isDetailedReport={isDetailedReport}
+        isCommuneLevelReport={isCommuneLevelReport}
         isAllColumnReport={isAllColumnReport}
       />
     );
@@ -43,7 +43,7 @@ export const Report = ({
     return (
       <DroughtReport
         forms={forms}
-        isDetailedReport={isDetailedReport}
+        isCommuneLevelReport={isCommuneLevelReport}
         isAllColumnReport={isAllColumnReport}
       />
     );
@@ -51,7 +51,7 @@ export const Report = ({
   return (
     <IncidentReport
       forms={forms}
-      isDetailedReport={isDetailedReport}
+      isCommuneLevelReport={isCommuneLevelReport}
       isAllColumnReport={isAllColumnReport}
     />
   );
