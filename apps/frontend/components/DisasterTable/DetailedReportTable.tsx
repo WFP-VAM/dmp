@@ -12,6 +12,7 @@ interface IProps {
   data: Record<string, string | number | undefined>[];
   rotateHeader?: boolean;
   border?: boolean;
+  showMenuOnLocation?: boolean;
 }
 
 export const DetailedReportTable = ({
@@ -20,6 +21,7 @@ export const DetailedReportTable = ({
   data,
   rotateHeader = false,
   border,
+  showMenuOnLocation = false,
 }: IProps): JSX.Element => {
   const summedData = React.useMemo(() => {
     const districtMap = new Map<string, typeof data>();
@@ -101,6 +103,7 @@ export const DetailedReportTable = ({
       columns={addDetailedReportLocationColumns(
         columnsWithComparator as GridColDef[],
         border,
+        showMenuOnLocation,
       )}
       columnGroup={columnGroup}
       data={summedData}

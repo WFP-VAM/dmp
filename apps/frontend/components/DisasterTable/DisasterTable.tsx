@@ -1,4 +1,3 @@
-import { ArrowLeft, ArrowRight } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import {
   DataGrid,
@@ -11,6 +10,8 @@ import { sum } from 'lodash';
 import React from 'react';
 
 import { colors } from 'theme/muiTheme';
+
+import ScrollArrows from './ScrollArrows';
 
 interface IProps {
   columns: GridColDef[];
@@ -38,27 +39,27 @@ export const DisasterTable = ({
   border = true,
   getRowClassName,
 }: IProps): JSX.Element => {
-  const contentRef = React.useRef<HTMLDivElement>(null);
   const outerRef = React.useRef<HTMLDivElement>(null);
   const [hovering, setHovering] = React.useState(false);
   const [hasOverflow, setHasOverflow] = React.useState(false);
 
-  console.log({ hovering });
+  const { scrollWidth, offsetWidth, scrollLeft } = outerRef.current ?? {};
 
   React.useEffect(() => {
-    if (!contentRef.current || !outerRef.current) {
+    if (!outerRef.current) {
       return;
     }
 
     const obs = new ResizeObserver(() => {
+      const { scrollWidth: scroll, offsetWidth: offset } =
+        outerRef.current ?? {};
       const overflow =
-        (outerRef.current?.offsetWidth ?? 0) <
-        (contentRef.current?.offsetWidth ?? 0);
+        scroll !== undefined && offset !== undefined && scroll > offset;
 
       setHasOverflow(overflow);
     });
 
-    obs.observe(contentRef.current);
+    obs.observe(outerRef.current);
 
     return () => obs.disconnect();
   }, []);
@@ -103,40 +104,23 @@ export const DisasterTable = ({
 
   const disableBorder = border ? undefined : 'none';
 
-  const arrowStyles = {
-    border: `6px solid ${colors.color5}`,
-    borderRadius: '12px',
-    color: colors.color5,
-    position: 'absolute' as const,
-    top: '50%',
-    zIndex: 1,
-    opacity: hovering ? 0 : 1,
-    transition: '0.4s',
-  };
-
   return (
     <Box position="relative">
-      {hasOverflow && (
-        <ArrowRight
-          fontSize="large"
-          style={{ ...arrowStyles, right: '3rem' }}
-        />
-      )}
-      {hasOverflow && (
-        <ArrowLeft fontSize="large" style={{ ...arrowStyles, left: '3rem' }} />
-      )}
+      <ScrollArrows
+        hasOverflow={hasOverflow}
+        hovering={hovering}
+        scrollWidth={scrollWidth}
+        offsetWidth={offsetWidth}
+        scrollLeft={scrollLeft}
+        outerRef={outerRef}
+      />
       <Box
         overflow="scroll"
         ref={outerRef}
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >
-        <Box
-          ref={contentRef}
-          width={sum(updatedColumns.map(x => x.width ?? 0))}
-          m={2}
-          mt={0}
-        >
+        <Box width={sum(updatedColumns.map(x => x.width ?? 0))} m={2} mt={0}>
           <DataGrid
             sx={{
               '& .MuiDataGrid-columnHeader.empty-group-header': {

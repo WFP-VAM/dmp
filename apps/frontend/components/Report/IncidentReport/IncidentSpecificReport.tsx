@@ -35,6 +35,7 @@ export const IncidentSpecificReport = ({
           data={report}
           rotateHeader={false}
           border
+          showMenuOnLocation
         />
       ) : (
         <BriefReportTable
@@ -43,6 +44,7 @@ export const IncidentSpecificReport = ({
           data={report}
           rotateHeader={false}
           border
+          showMenuOnLocation
         />
       )}
     </>

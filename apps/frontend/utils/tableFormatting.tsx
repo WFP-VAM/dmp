@@ -60,6 +60,7 @@ const getLocationColumnSetup = (
     | KoboCommonKeys.commune,
   width = 90,
   border = false,
+  showMenu = false,
 ): GridColDef => {
   return {
     field,
@@ -69,9 +70,12 @@ const getLocationColumnSetup = (
     disableColumnMenu: true,
     headerClassName: border ? undefined : 'left-border',
     renderHeader: (params: GridColumnHeaderParams) => (
-      <Typography variant="body2">
-        <FormattedMessage id={`forms_table.headers.${params.field}`} />
-      </Typography>
+      <>
+        <Typography variant="body2">
+          <FormattedMessage id={`forms_table.headers.${params.field}`} />
+        </Typography>
+        {showMenu && <CustomToolMenu withBorder={false} />}
+      </>
     ),
     renderCell: (params: GridRenderCellParams) => (
       <FormattedMessage id={`${field}.${params.value as string}`} />
@@ -113,6 +117,7 @@ export const getGroupSetup = (
 export const addDetailedReportLocationColumns = (
   columns: GridColDef[],
   border = false,
+  showMenu = false,
 ): GridColDef[] => [
   {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -127,9 +132,12 @@ export const addDetailedReportLocationColumns = (
       return `${row.province}-${row.district}-${row.commune}`;
     },
     renderHeader: (params: GridColumnHeaderParams) => (
-      <Typography variant="body2">
-        <FormattedMessage id={`forms_table.headers.${params.field}`} />
-      </Typography>
+      <>
+        <Typography variant="body2">
+          <FormattedMessage id={`forms_table.headers.${params.field}`} />
+        </Typography>
+        {showMenu && <CustomToolMenu withBorder={false} />}
+      </>
     ),
     renderCell: (params: GridRenderCellParams) => {
       const [province, district, commune] = (params.value as string)
@@ -160,8 +168,9 @@ export const addDetailedReportLocationColumns = (
 export const addBriefReportLocationColumns = (
   columns: GridColDef[],
   border?: boolean,
+  showMenu = false,
 ): GridColDef[] => [
-  getLocationColumnSetup(KoboCommonKeys.province, 200, border),
+  getLocationColumnSetup(KoboCommonKeys.province, 200, border, showMenu),
   getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 72),
   getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 84),
   ...columns,

@@ -14,7 +14,11 @@ import { FormattedMessage } from 'react-intl';
 
 import { colors } from 'theme/muiTheme';
 
-const CustomToolMenu = () => {
+interface CustomToolMenuProps {
+  withBorder?: boolean;
+}
+
+const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
   const apiRef = useGridApiContext();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState<MenuProps['anchorEl']>(null);
@@ -37,13 +41,16 @@ const CustomToolMenu = () => {
     handleCloseMenu();
   };
 
+  const borderStyles = withBorder
+    ? { border: `1px solid ${colors.gray}`, borderRadius: '4px' }
+    : {};
+
   return (
     <>
       <IconButton
         onClick={handleOpenMenu}
         style={{
-          border: `1px solid ${colors.gray}`,
-          borderRadius: '4px',
+          ...borderStyles,
           padding: theme.spacing(0.5),
           marginRight: theme.spacing(2),
           color: 'black',

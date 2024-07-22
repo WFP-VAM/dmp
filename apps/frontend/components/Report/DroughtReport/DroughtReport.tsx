@@ -51,6 +51,7 @@ export const DroughtReport = ({
           data={report}
           rotateHeader={false}
           border
+          showMenuOnLocation
         />
       ) : (
         <BriefReportTable
@@ -59,6 +60,7 @@ export const DroughtReport = ({
           data={report}
           rotateHeader={false}
           border
+          showMenuOnLocation
         />
       )}
     </>
