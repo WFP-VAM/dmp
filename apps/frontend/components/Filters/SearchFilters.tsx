@@ -96,6 +96,7 @@ export const SearchFilters = ({
               height: '2.5rem',
               ml: 2,
               backgroundColor: 'var(--color_buttons_1)',
+              border: 'none',
             }}
             type="submit"
           >
