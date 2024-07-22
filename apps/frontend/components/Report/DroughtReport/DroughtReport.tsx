@@ -9,6 +9,7 @@ import {
 } from 'utils/aggregate/generateDroughtReport';
 import { formatDroughtFields } from 'utils/formatRawToForm';
 
+import { CommuneLevelDroughtReport } from './CommuneLevelDroughtReport';
 import { ProvinceLevelDroughtReport } from './ProvinceLevelDroughtReport';
 import { SummaryDroughtReportColumnSettings } from './tablesConfig/SummaryReport';
 

@@ -5,8 +5,8 @@ import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  generateIncidentProvinceLevelReport,
   generateIncidentCommuneLevelReport,
+  generateIncidentProvinceLevelReport,
 } from 'utils/aggregate/generateIncidentReport';
 import { formatIncidentFields } from 'utils/formatRawToForm';
 
