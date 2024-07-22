@@ -52,7 +52,6 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
           inputAdornment: {
             sx: {
               display: 'none',
-              cursor: 'pointer',
             },
           },
           textField: {
@@ -65,6 +64,7 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
               onClick: () => setStartOpen(true), // Open calendar on click
               sx: {
                 cursor: 'pointer',
+                height: '2.5rem',
               },
             },
           },
@@ -112,6 +112,7 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
               onClick: () => setEndOpen(true), // Open calendar on click
               sx: {
                 cursor: 'pointer',
+                height: '2.5rem',
               },
             },
           },

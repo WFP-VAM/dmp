@@ -90,7 +90,7 @@ export const LabelSwitch = ({
       border={`1px solid ${colors.gray}`}
       borderRadius="4px"
       padding={`${theme.spacing(0.7)} ${theme.spacing(1)}`}
-      style={{ background: 'white' }}
+      style={{ background: 'white', height: '2.5rem' }}
       alignItems="center"
     >
       <Typography fontWeight="bold" fontSize="14px">

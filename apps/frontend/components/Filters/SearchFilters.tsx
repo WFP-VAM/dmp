@@ -93,7 +93,7 @@ export const SearchFilters = ({
             sx={{
               color: 'black',
               padding: 1,
-              height: '2rem',
+              height: '2.5rem',
               ml: 2,
               backgroundColor: 'var(--color_buttons_1)',
             }}
