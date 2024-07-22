@@ -72,13 +72,20 @@ export const RegionFilters = ({
             onChange({ province: v, district: [], commune: [] });
           }}
           placeholder="common.province"
-          allSelectedText="All Provinces"
+          allSelectedText="validation_search_params.all-province"
           formatPrefix="province"
           selectProps={{
             disabled: disableAll === true || user === undefined ? true : false,
             startAdornment: (
               <InputAdornment position="start">
-                <LocationOnIcon sx={{ color: 'black' }} />
+                <LocationOnIcon
+                  sx={{
+                    color: 'black',
+                    minWidth: '20px',
+                    marginLeft: -1,
+                    marginRight: -2,
+                  }}
+                />
               </InputAdornment>
             ),
           }}
@@ -98,7 +105,14 @@ export const RegionFilters = ({
             disabled: disableAll === true || value.province.length === 0,
             startAdornment: (
               <InputAdornment position="start">
-                <LocationOnIcon sx={{ color: 'black' }} />
+                <LocationOnIcon
+                  sx={{
+                    color: 'black',
+                    minWidth: '20px',
+                    marginLeft: -1,
+                    marginRight: -2,
+                  }}
+                />
               </InputAdornment>
             ),
           }}
@@ -118,7 +132,14 @@ export const RegionFilters = ({
             disabled: disableAll === true || value.district.length === 0,
             startAdornment: (
               <InputAdornment position="start">
-                <LocationOnIcon sx={{ color: 'black' }} />
+                <LocationOnIcon
+                  sx={{
+                    color: 'black',
+                    minWidth: '20px',
+                    marginLeft: -1,
+                    marginRight: -2,
+                  }}
+                />
               </InputAdornment>
             ),
           }}

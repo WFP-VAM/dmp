@@ -88,9 +88,11 @@ export const DisasterTable = ({
   // TODO - activate column visibility model when PR is stable
   const columnVisibilityModel = {}; // generateColumnVisibilityModel(columns, data);
 
-  // Make province, district, commune columns not hideable
+  // Make location columns non-hideable
   const updatedColumns = columns.map(column => {
-    if (['province', 'district', 'commune'].includes(column.field)) {
+    if (
+      ['province', 'district', 'commune', 'location'].includes(column.field)
+    ) {
       return {
         ...column,
         hideable: false,
