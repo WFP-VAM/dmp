@@ -3,6 +3,7 @@ import React from 'react';
 
 import { addDetailedReportLocationColumns } from 'utils/tableFormatting';
 
+import { createCustomComparator } from './CustomCommuneSort';
 import { DisasterTable } from './DisasterTable';
 
 interface IProps {
@@ -85,10 +86,22 @@ export const DetailedReportTable = ({
     return provincesSummed.flat().flat();
   }, [data]);
 
+  // Add custom comparator to relevant columns
+  const columnsWithComparator = columns.map(col => {
+    if (col.type === 'number') {
+      return {
+        ...col,
+        sortComparator: createCustomComparator(summedData),
+      };
+    }
+
+    return col;
+  });
+
   return (
     <DisasterTable
       columns={addDetailedReportLocationColumns(
-        columns,
+        columnsWithComparator as GridColDef[],
         border,
         showMenuOnLocation,
       )}
@@ -96,10 +109,10 @@ export const DetailedReportTable = ({
       data={summedData}
       isEditable={false}
       getRowId={(row: {
-        commune: string;
-        district: string;
+        commune?: string;
+        district?: string;
         province: string;
-      }) => `${row.province}${row.district}${row.commune}`}
+      }) => `${row.commune ?? row.district ?? row.province}`}
       getRowClassName={params => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const { district, commune } = params.row;
