@@ -99,8 +99,8 @@ export const LabelSwitch = ({
       <Typography
         fontSize="14px"
         style={{
-          textDecoration: !value ? 'underline' : 'none',
-          textDecorationColor: colors.color5,
+          textDecoration: 'underline',
+          textDecorationColor: value ? 'transparent' : colors.color5,
           textUnderlineOffset: '4px',
           textDecorationThickness: '2px',
         }}
@@ -111,8 +111,8 @@ export const LabelSwitch = ({
       <Typography
         fontSize="14px"
         style={{
-          textDecoration: value ? 'underline' : 'none',
-          textDecorationColor: colors.color5,
+          textDecoration: 'underline',
+          textDecorationColor: !value ? 'transparent' : colors.color5,
           textUnderlineOffset: '4px',
           textDecorationThickness: '2px',
         }}
