@@ -1,42 +1,42 @@
 import { FloodDto } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
-import { BriefReportTable } from 'components/DisasterTable/BriefReportTable';
-import { DetailedReportTable } from 'components/DisasterTable/DetailedReportTable';
+import { CommuneLevelReportTable } from 'components/DisasterTable/CommuneLevelReportTable';
+import { ProvinceLevelReportTable } from 'components/DisasterTable/ProvinceLevelReportTable';
 import {
-  generateFloodBriefReport,
-  generateFloodDetailedReport,
+  generateFloodCommuneLevelReport,
+  generateFloodProvinceLevelReport,
 } from 'utils/aggregate/generateFloodReport';
 import { formatFloodFields } from 'utils/formatRawToForm';
 
-import { BriefFloodReport } from './BriefFloodReport';
-import { DetailedFloodReport } from './DetailedFloodReport';
+import { CommuneLevelFloodReport } from './CommuneLevelFloodReport';
+import { ProvinceLevelFloodReport } from './ProvinceLevelFloodReport';
 import { SummaryFloodReportColumnSettings } from './tablesConfig/SummaryReport';
 
 export const FloodReport = ({
   forms,
-  isDetailedReport,
+  isCommuneLevelReport,
   isAllColumnReport,
 }: {
   forms: FloodDto[];
-  isDetailedReport: boolean;
+  isCommuneLevelReport: boolean;
   isAllColumnReport: boolean;
 }) => {
   const report = useMemo(() => {
     const formattedForms = forms.map(form => formatFloodFields(form));
 
-    return isDetailedReport
-      ? generateFloodDetailedReport(formattedForms)
-      : generateFloodBriefReport(formattedForms);
-  }, [forms, isDetailedReport]);
+    return isCommuneLevelReport
+      ? generateFloodCommuneLevelReport(formattedForms)
+      : generateFloodProvinceLevelReport(formattedForms);
+  }, [forms, isCommuneLevelReport]);
 
   if (isAllColumnReport) {
     return (
       <>
-        {isDetailedReport ? (
-          <DetailedFloodReport report={report} />
+        {isCommuneLevelReport ? (
+          <CommuneLevelFloodReport report={report} />
         ) : (
-          <BriefFloodReport report={report} />
+          <ProvinceLevelFloodReport report={report} />
         )}
       </>
     );
@@ -44,8 +44,8 @@ export const FloodReport = ({
 
   return (
     <>
-      {isDetailedReport ? (
-        <DetailedReportTable
+      {isCommuneLevelReport ? (
+        <CommuneLevelReportTable
           columns={SummaryFloodReportColumnSettings.columns}
           columnGroup={SummaryFloodReportColumnSettings.columnGroup}
           data={report}
@@ -54,7 +54,7 @@ export const FloodReport = ({
           showMenuOnLocation
         />
       ) : (
-        <BriefReportTable
+        <ProvinceLevelReportTable
           columns={SummaryFloodReportColumnSettings.columns}
           columnGroup={SummaryFloodReportColumnSettings.columnGroup}
           data={report}

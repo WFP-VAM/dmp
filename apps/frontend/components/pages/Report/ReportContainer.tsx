@@ -37,7 +37,7 @@ export const ReportContainer = () => {
     defaultSearchReportData,
   );
 
-  const [isDetailedReport, setIsDetailedReport] = useState(false);
+  const [isCommuneLevelReport, setIsCommuneLevelReport] = useState(false);
   const [isAllColumnReport, setIsAllColumnReport] = useState(false);
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
@@ -76,9 +76,9 @@ export const ReportContainer = () => {
               />
               <LabelSwitch
                 label="report_page.level"
-                value={isDetailedReport}
+                value={isCommuneLevelReport}
                 onChange={(event, checked) => {
-                  setIsDetailedReport(checked);
+                  setIsCommuneLevelReport(checked);
                 }}
                 labelUncheck="common.province"
                 labelCheck="common.commune"
@@ -112,7 +112,7 @@ export const ReportContainer = () => {
             <PrintHeader searchReportData={searchReportData} />
             <Report
               forms={filteredFormsData}
-              isDetailedReport={isDetailedReport}
+              isCommuneLevelReport={isCommuneLevelReport}
               isAllColumnReport={isAllColumnReport}
             />
           </PrintWrapper>

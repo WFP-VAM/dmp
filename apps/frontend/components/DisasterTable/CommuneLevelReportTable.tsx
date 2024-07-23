@@ -1,7 +1,7 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import React from 'react';
 
-import { addDetailedReportLocationColumns } from 'utils/tableFormatting';
+import { addCommuneLevelReportLocationColumns } from 'utils/tableFormatting';
 
 import { createCustomComparator } from './CustomCommuneSort';
 import { DisasterTable } from './DisasterTable';
@@ -15,7 +15,7 @@ interface IProps {
   showMenuOnLocation?: boolean;
 }
 
-export const DetailedReportTable = ({
+export const CommuneLevelReportTable = ({
   columns,
   columnGroup,
   data,
@@ -23,13 +23,17 @@ export const DetailedReportTable = ({
   border,
   showMenuOnLocation = false,
 }: IProps): JSX.Element => {
+  // Sum the data at the district and province level
   const summedData = React.useMemo(() => {
+    // Create a map to group data by district
     const districtMap = new Map<string, typeof data>();
     data.forEach(x => {
       const key = String(x.district);
       const val = districtMap.get(key) ?? [];
       districtMap.set(key, [...val, x]);
     });
+
+    // Group data by commune within each district and sum the values
     const groupedByCommune = Array.from(districtMap.values());
     const districtsSummed = groupedByCommune.map(arr => {
       const [head, ...rest] = arr;
@@ -53,6 +57,7 @@ export const DetailedReportTable = ({
       return [acc, ...arr];
     });
 
+    // Create a map to group summed districts by province
     const provinceMap = new Map<string, typeof districtsSummed>();
     districtsSummed.forEach(x => {
       const key = String(x[0].province);
@@ -100,7 +105,7 @@ export const DetailedReportTable = ({
 
   return (
     <DisasterTable
-      columns={addDetailedReportLocationColumns(
+      columns={addCommuneLevelReportLocationColumns(
         columnsWithComparator as GridColDef[],
         border,
         showMenuOnLocation,
