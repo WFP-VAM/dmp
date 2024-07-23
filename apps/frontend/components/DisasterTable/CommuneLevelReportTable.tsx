@@ -23,13 +23,17 @@ export const CommuneLevelReportTable = ({
   border,
   showMenuOnLocation = false,
 }: IProps): JSX.Element => {
+  // Sum the data at the district and province level
   const summedData = React.useMemo(() => {
+    // Create a map to group data by district
     const districtMap = new Map<string, typeof data>();
     data.forEach(x => {
       const key = String(x.district);
       const val = districtMap.get(key) ?? [];
       districtMap.set(key, [...val, x]);
     });
+
+    // Group data by commune within each district and sum the values
     const groupedByCommune = Array.from(districtMap.values());
     const districtsSummed = groupedByCommune.map(arr => {
       const [head, ...rest] = arr;
@@ -53,6 +57,7 @@ export const CommuneLevelReportTable = ({
       return [acc, ...arr];
     });
 
+    // Create a map to group summed districts by province
     const provinceMap = new Map<string, typeof districtsSummed>();
     districtsSummed.forEach(x => {
       const key = String(x[0].province);
