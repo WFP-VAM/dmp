@@ -88,3 +88,16 @@
   background-color: #d6d6d6;
   cursor: not-allowed;
 }
+
+.loading {
+  animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px #fff;
+  }
+  to {
+    box-shadow: 0 0 20px #275d7b;
+  }
+}
