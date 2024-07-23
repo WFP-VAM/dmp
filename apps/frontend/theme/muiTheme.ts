@@ -8,6 +8,7 @@ export const colors = {
   color4: '#275D7B',
   color5: '#63B2BD',
   gray: '#bdbdbd',
+  gray2: '#999999',
 };
 
 export const muiThemeObject: ThemeOptions = {
@@ -28,6 +29,20 @@ export const muiThemeObject: ThemeOptions = {
       styleOverrides: {
         root: {
           color: 'black',
+        },
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          height: '100%',
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          height: '100%',
         },
       },
     },

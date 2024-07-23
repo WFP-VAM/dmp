@@ -1,5 +1,4 @@
-import { TextField } from '@mui/material';
-import { FloodSpecific, FloodSpecificType } from '@wfp-dmp/interfaces';
+import { FloodSpecificType } from '@wfp-dmp/interfaces';
 import { useIntl } from 'react-intl';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
@@ -22,18 +21,6 @@ export const FloodTables = ({
 
   return (
     <>
-      <TextField
-        disabled={!isEditMode}
-        label={intl.formatMessage({
-          id: 'table.FLOOD.floodN',
-        })}
-        type="number"
-        value={value.floodN}
-        onChange={event =>
-          onChange({ ...value, [FloodSpecific.floodN]: event.target.value })
-        }
-        sx={{ m: 2 }}
-      />
       {getFloodTablesMapping(intl).map(({ columns, columnGroup }, index) => (
         <DisasterTable
           columns={typeof columns === 'function' ? columns(false) : columns}

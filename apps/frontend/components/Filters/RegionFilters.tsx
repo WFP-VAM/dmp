@@ -64,7 +64,7 @@ export const RegionFilters = ({
   );
 
   return (
-    <Stack direction="row" gap={theme.spacing(1)}>
+    <Stack direction="row" gap={theme.spacing(1)} height="100%">
       <FormControl>
         <MultiSelect
           options={allowedProvinces}
