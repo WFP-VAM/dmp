@@ -21,9 +21,9 @@ const ScrollArrows = ({
 }: ScrollArrowsProps) => {
   const arrowStyles = {
     backgroundColor: 'white',
-    border: `6px solid ${colors.color5}`,
+    border: `6px solid ${colors.color6}`,
     borderRadius: '12px',
-    color: colors.color5,
+    color: colors.color6,
     position: 'absolute' as const,
     top: '50%',
     zIndex: 1,

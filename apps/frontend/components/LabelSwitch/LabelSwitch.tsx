@@ -96,11 +96,27 @@ export const LabelSwitch = ({
       <Typography fontWeight="bold" fontSize="14px">
         <FormattedMessage id={label} />:
       </Typography>
-      <Typography fontSize="14px">
+      <Typography
+        fontSize="14px"
+        style={{
+          textDecoration: !value ? 'underline' : 'none',
+          textDecorationColor: colors.color5,
+          textUnderlineOffset: '4px',
+          textDecorationThickness: '2px',
+        }}
+      >
         <FormattedMessage id={labelUncheck} />
       </Typography>
       <IOSSwitch checked={value} onChange={onChange} />
-      <Typography fontSize="14px">
+      <Typography
+        fontSize="14px"
+        style={{
+          textDecoration: value ? 'underline' : 'none',
+          textDecorationColor: colors.color5,
+          textUnderlineOffset: '4px',
+          textDecorationThickness: '2px',
+        }}
+      >
         <FormattedMessage id={labelCheck} />
       </Typography>
     </Stack>
