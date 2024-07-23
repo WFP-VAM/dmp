@@ -114,7 +114,7 @@ export const getGroupSetup = (
   ),
 });
 
-export const addDetailedReportLocationColumns = (
+export const addCommuneLevelReportLocationColumns = (
   columns: GridColDef[],
   border = false,
   showMenu = false,
@@ -165,7 +165,7 @@ export const addDetailedReportLocationColumns = (
   ...columns,
 ];
 
-export const addBriefReportLocationColumns = (
+export const addProvinceLevelReportLocationColumns = (
   columns: GridColDef[],
   border?: boolean,
   showMenu = false,

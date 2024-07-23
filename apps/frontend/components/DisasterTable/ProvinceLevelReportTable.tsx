@@ -1,6 +1,6 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 
-import { addBriefReportLocationColumns } from 'utils/tableFormatting';
+import { addProvinceLevelReportLocationColumns } from 'utils/tableFormatting';
 
 import { DisasterTable } from './DisasterTable';
 
@@ -15,7 +15,7 @@ interface IProps {
   hideTopRightBorder?: boolean;
 }
 
-export const BriefReportTable = ({
+export const ProvinceLevelReportTable = ({
   columns,
   columnGroup,
   data,
@@ -27,7 +27,7 @@ export const BriefReportTable = ({
 }: IProps): JSX.Element => {
   return (
     <DisasterTable
-      columns={addBriefReportLocationColumns(
+      columns={addProvinceLevelReportLocationColumns(
         columns,
         border,
         showMenuOnLocation,
