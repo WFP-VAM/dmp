@@ -44,7 +44,6 @@ export const DisasterTable = ({
   hideTopRightBorder = false,
 }: IProps): JSX.Element => {
   const outerRef = React.useRef<HTMLDivElement>(null);
-  const [hovering, setHovering] = React.useState(false);
   const [hasOverflow, setHasOverflow] = React.useState(false);
 
   const { scrollWidth, offsetWidth, scrollLeft } = outerRef.current ?? {};
@@ -114,18 +113,13 @@ export const DisasterTable = ({
     <Box position="relative">
       <ScrollArrows
         hasOverflow={hasOverflow}
-        hovering={hovering}
+        hovering={false}
         scrollWidth={scrollWidth}
         offsetWidth={offsetWidth}
         scrollLeft={scrollLeft}
         outerRef={outerRef}
       />
-      <Box
-        overflow="scroll"
-        ref={outerRef}
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={() => setHovering(false)}
-      >
+      <Box overflow="scroll" ref={outerRef}>
         <Box
           position="relative"
           width={sum(updatedColumns.map(x => x.width ?? 0))}
