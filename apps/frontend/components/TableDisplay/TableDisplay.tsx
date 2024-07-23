@@ -149,7 +149,10 @@ export const TableDisplay = ({
 
   return (
     <>
-      <TableContainer component={Paper} sx={{ m: 2 }}>
+      <TableContainer
+        component={Paper}
+        sx={{ m: 2, width: 'calc(100% - 32px)' }}
+      >
         <Table sx={{ '& .MuiTableCell-root': { border: '1px solid #ccc' } }}>
           <TableHeader
             isFlood={isFlood}

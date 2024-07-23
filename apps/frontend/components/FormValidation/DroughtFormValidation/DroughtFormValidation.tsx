@@ -211,7 +211,7 @@ export const DroughtFormValidation = ({
       <Box display="flex" justifyContent="center">
         {!isEditMode && (
           <Button
-            sx={{ color: 'white', margin: 2 }}
+            sx={{ color: 'black', margin: 2, border: '1px solid black' }}
             onClick={() => {
               setIsEditMode(true);
             }}

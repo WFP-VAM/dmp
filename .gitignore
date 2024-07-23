@@ -26,3 +26,4 @@ npm-debug.log*
 pnpm-debug.log*
 pnpm-error.log*
 lerna-debug.log*
+.vscode

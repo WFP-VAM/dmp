@@ -1,5 +1,5 @@
 import PrintIcon from '@mui/icons-material/Print';
-import { Box, IconButton, Skeleton, Stack } from '@mui/material';
+import { IconButton, Skeleton, Stack, useTheme } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { useMemo, useRef, useState } from 'react';
@@ -32,11 +32,12 @@ const defaultSearchReportData: SearchFormData = {
 };
 
 export const ReportContainer = () => {
+  const theme = useTheme();
   const [searchReportData, setSearchReportData] = useState(
     defaultSearchReportData,
   );
 
-  const [isDetailedReport, setIsDetailedReport] = useState(false);
+  const [isCommuneLevelReport, setIsCommuneLevelReport] = useState(false);
   const [isAllColumnReport, setIsAllColumnReport] = useState(false);
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
@@ -51,7 +52,7 @@ export const ReportContainer = () => {
   });
 
   return (
-    <Box display="flex" flexDirection="column">
+    <Stack flexDirection="column" gap={theme.spacing(4)} width="100%">
       <Stack justifyContent="space-between" direction="row">
         <SearchFilters
           initSearchFormData={searchReportData}
@@ -75,9 +76,9 @@ export const ReportContainer = () => {
               />
               <LabelSwitch
                 label="report_page.level"
-                value={isDetailedReport}
+                value={isCommuneLevelReport}
                 onChange={(event, checked) => {
-                  setIsDetailedReport(checked);
+                  setIsCommuneLevelReport(checked);
                 }}
                 labelUncheck="common.province"
                 labelCheck="common.commune"
@@ -111,20 +112,12 @@ export const ReportContainer = () => {
             <PrintHeader searchReportData={searchReportData} />
             <Report
               forms={filteredFormsData}
-              isDetailedReport={isDetailedReport}
+              isCommuneLevelReport={isCommuneLevelReport}
               isAllColumnReport={isAllColumnReport}
             />
           </PrintWrapper>
-          {/* Show a print button at the bottom of the page when there is data */}
-          {formsData && formsData.length > 0 && (
-            <Box display="flex" justifyContent="left">
-              <IconButton onClick={handlePrint} color="primary">
-                <PrintIcon />
-              </IconButton>
-            </Box>
-          )}
         </>
       )}
-    </Box>
+    </Stack>
   );
 };

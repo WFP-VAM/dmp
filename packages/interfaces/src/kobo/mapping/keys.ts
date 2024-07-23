@@ -13,6 +13,7 @@ export enum KoboCommonKeys {
   id = 'id',
   validationStatus = 'validationStatus',
   submissionTime = 'submissionTime',
+  location = 'location',
 }
 
 export const koboKeys = {

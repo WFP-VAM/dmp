@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -10,10 +10,19 @@ const WaterAgricultureColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NumFam, DROUGHT, 100),
 ];
 
-const WaterAgricultureColumnGroup: GridColumnGroupingModel = [
+const WaterAgricultureColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
-    ...getGroupSetup('waterAgriculture', DROUGHT),
+    ...getGroupSetup('waterAgriculture', DROUGHT, true),
     children: [
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
       { field: DroughtSpecific.LandSize },
       { field: DroughtSpecific.PumMachine },
       { field: DroughtSpecific.NumGasoline },
@@ -25,4 +34,5 @@ const WaterAgricultureColumnGroup: GridColumnGroupingModel = [
 export const WaterAgricultureColumnSettings = {
   columns: WaterAgricultureColumns,
   columnGroup: WaterAgricultureColumnGroup,
+  hideTopRightBorder: true,
 };

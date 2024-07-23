@@ -1,26 +1,26 @@
-import { BriefReportTable } from 'components/DisasterTable/BriefReportTable';
-import { DetailedReportTable } from 'components/DisasterTable/DetailedReportTable';
+import { CommuneLevelReportTable } from 'components/DisasterTable/CommuneLevelReportTable';
+import { ProvinceLevelReportTable } from 'components/DisasterTable/ProvinceLevelReportTable';
 
-import { BriefIncidentReport } from './BriefIncidentReport';
-import { DetailedIncidentReport } from './DetailedIncidentReport';
+import { CommuneLevelIncidentReport } from './CommuneLevelIncidentReport';
+import { ProvinceLevelIncidentReport } from './ProvinceLevelIncidentReport';
 import { SummaryIncidentReportColumnSettings } from './SummaryReport';
 
 export const IncidentSpecificReport = ({
   report,
-  isDetailedReport,
+  isCommuneLevelReport,
   isAllColumnReport,
 }: {
   report: Record<string, string | number | undefined>[];
-  isDetailedReport: boolean;
+  isCommuneLevelReport: boolean;
   isAllColumnReport: boolean;
 }) => {
   if (isAllColumnReport) {
     return (
       <>
-        {isDetailedReport ? (
-          <DetailedIncidentReport report={report} />
+        {isCommuneLevelReport ? (
+          <CommuneLevelIncidentReport report={report} />
         ) : (
-          <BriefIncidentReport report={report} />
+          <ProvinceLevelIncidentReport report={report} />
         )}
       </>
     );
@@ -28,19 +28,23 @@ export const IncidentSpecificReport = ({
 
   return (
     <>
-      {isDetailedReport ? (
-        <DetailedReportTable
+      {isCommuneLevelReport ? (
+        <CommuneLevelReportTable
           columns={SummaryIncidentReportColumnSettings.columns}
           columnGroup={SummaryIncidentReportColumnSettings.columnGroup}
           data={report}
-          rotateHeader={true}
+          rotateHeader={false}
+          border
+          showMenuOnLocation
         />
       ) : (
-        <BriefReportTable
+        <ProvinceLevelReportTable
           columns={SummaryIncidentReportColumnSettings.columns}
           columnGroup={SummaryIncidentReportColumnSettings.columnGroup}
           data={report}
-          rotateHeader={true}
+          rotateHeader={false}
+          border
+          showMenuOnLocation
         />
       )}
     </>
