@@ -27,10 +27,6 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
         sx={{
           width: 140,
           backgroundColor: 'white',
-          '& .MuiInputBase-input': {
-            padding: '0.5rem 0.5rem',
-            fontSize: '14px !important',
-          },
         }}
         label={
           value.startDate
@@ -82,10 +78,6 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
         sx={{
           width: 140,
           backgroundColor: 'white',
-          '& .MuiInputBase-input': {
-            padding: '0.5rem 0.5rem',
-            fontSize: '14px !important',
-          },
         }}
         label={
           value.endDate

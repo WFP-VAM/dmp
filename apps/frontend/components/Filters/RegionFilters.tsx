@@ -88,12 +88,6 @@ export const RegionFilters = ({
                 />
               </InputAdornment>
             ),
-            sx: {
-              '& .MuiInputBase-input': {
-                padding: '0.5rem 0.5rem',
-                fontSize: '14px !important',
-              },
-            },
           }}
         />
       </FormControl>
@@ -121,12 +115,6 @@ export const RegionFilters = ({
                 />
               </InputAdornment>
             ),
-            sx: {
-              '& .MuiInputBase-input': {
-                padding: '0.5rem 0.5rem',
-                fontSize: '14px !important',
-              },
-            },
           }}
         />
       </FormControl>
@@ -154,12 +142,6 @@ export const RegionFilters = ({
                 />
               </InputAdornment>
             ),
-            sx: {
-              '& .MuiInputBase-input': {
-                padding: '0.5rem 0.5rem',
-                fontSize: '14px !important',
-              },
-            },
           }}
         />
       </FormControl>
