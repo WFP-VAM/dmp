@@ -111,6 +111,6 @@ h6 {
 
 /* Override styles for Mui Inputs */
 .MuiInputBase-input:not(.MuiInput-input) {
-  padding: 0.5rem 0.5rem !important;
+  padding: 0.5rem 0.5rem;
   font-size: 14px !important;
 }
