@@ -13,15 +13,22 @@ export const DetailedDroughtReport = ({
 
   return (
     <Stack gap={theme.spacing(4)}>
-      {droughtReportTablesMapping.map(({ columns, columnGroup }, index) => (
-        <DetailedReportTable
-          columns={columns}
-          columnGroup={columnGroup(true)}
-          data={report}
-          key={index}
-          border={false}
-        />
-      ))}
+      {droughtReportTablesMapping.map(
+        ({ columns, columnGroup, groupParams }, index) => (
+          <DetailedReportTable
+            locationParams={{
+              columns,
+              columnGroup,
+              groupParams,
+            }}
+            disasterTableParams={{
+              data: report,
+              variant: 'open',
+            }}
+            key={index}
+          />
+        ),
+      )}
     </Stack>
   );
 };

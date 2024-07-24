@@ -7,14 +7,15 @@ import { WaterEducationHealthColumnSettings } from 'components/FormValidation/Dr
 import { WaterHouseholdColumnSettings } from 'components/FormValidation/DroughtFormValidation/tablesConfig/WaterHousehold';
 import { FoodWorkColumnSettings } from 'components/FormValidation/DroughtFormValidation/tablesConfig/foodWork';
 import { WaterAgricultureColumnSettings } from 'components/FormValidation/DroughtFormValidation/tablesConfig/waterAgriculture';
+import { ColumnSetupParams } from 'utils/tableFormatting';
 
 import { ReportDefenseSecurityColumnSettings } from './tablesConfig/ReportDefenseSecurity';
 import { ReportSocialSectorAffectedColumnSettings } from './tablesConfig/ReportSocialSectorAffected';
 
 export const droughtReportTablesMapping: {
   columns: GridColDef[];
-  columnGroup: (detailed: boolean) => GridColumnGroupingModel;
-  hideTopRightBorder?: boolean;
+  columnGroup: GridColumnGroupingModel;
+  groupParams: ColumnSetupParams;
 }[] = [
   NumAffectedColumnSettings,
   AgricultureColumnSettings,

@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const colWidth = 8 * 9;
 
@@ -24,21 +28,7 @@ const NumAffected2Columns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumPeoSEC, FLOOD, colWidth + 8 * 6),
 ];
 
-const NumAffected2ColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('victimsAffected', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const NumAffected2ColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('evacuated', FLOOD),
     children: [
@@ -72,7 +62,14 @@ const NumAffected2ColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'victimsAffected',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const NumAffected2ColumnSettings = {
   columns: NumAffected2Columns,
   columnGroup: NumAffected2ColumnGroup,
+  groupParams,
 };

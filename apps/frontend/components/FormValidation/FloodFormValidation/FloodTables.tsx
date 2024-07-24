@@ -1,7 +1,9 @@
+import { Stack, useTheme } from '@mui/material';
 import { FloodSpecificType } from '@wfp-dmp/interfaces';
 import { useIntl } from 'react-intl';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
+import { wrapGroupAsTitle } from 'utils/tableFormatting';
 
 import { FloodCheckBoxes } from './FloodCheckBoxes';
 import { getFloodTablesMapping } from './floodTablesMapping';
@@ -18,21 +20,40 @@ export const FloodTables = ({
   isEditMode,
 }: IProps): JSX.Element => {
   const intl = useIntl();
+  const theme = useTheme();
 
   return (
     <>
-      {getFloodTablesMapping(intl).map(({ columns, columnGroup }, index) => (
-        <DisasterTable
-          columns={typeof columns === 'function' ? columns(false) : columns}
-          columnGroup={
-            typeof columnGroup === 'function' ? columnGroup(false) : columnGroup
-          }
-          data={[{ id: 1, ...value }]}
-          onChange={onChange}
-          isEditable={isEditMode}
-          key={index}
-        />
-      ))}
+      <Stack gap={theme.spacing(4)}>
+        {getFloodTablesMapping(intl).map(
+          ({ columns, columnGroup, groupParams }, index) => {
+            const group = columnGroup;
+            const cols =
+              typeof columns === 'function' ? columns(false) : columns;
+
+            return (
+              <DisasterTable
+                columns={cols}
+                columnGroup={
+                  groupParams
+                    ? wrapGroupAsTitle({
+                        columns: cols,
+                        columnGroup: group,
+                        groupParams,
+                      })
+                    : group
+                }
+                data={[{ id: 1, ...value }]}
+                onChange={onChange}
+                isEditable={isEditMode}
+                key={index}
+                variant="bordered"
+              />
+            );
+          },
+        )}
+      </Stack>
+
       <FloodCheckBoxes
         onChange={onChange}
         value={value}

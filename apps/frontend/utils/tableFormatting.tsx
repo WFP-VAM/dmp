@@ -1,14 +1,16 @@
+/* eslint-disable max-lines */
 import { Typography } from '@mui/material';
 import {
   GridColDef,
+  GridColumnGroup,
+  GridColumnGroupingModel,
   GridColumnHeaderParams,
+  GridColumnNode,
   GridRenderCellParams,
 } from '@mui/x-data-grid';
 import { DisasterType, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import CustomToolMenu from './CustomToolMenu';
 
 export const getColumnSetup = (
   field: string,
@@ -59,8 +61,6 @@ const getLocationColumnSetup = (
     | KoboCommonKeys.district
     | KoboCommonKeys.commune,
   width = 90,
-  border = false,
-  showMenu = false,
 ): GridColDef => {
   return {
     field,
@@ -68,14 +68,10 @@ const getLocationColumnSetup = (
     editable: true,
     headerAlign: 'left',
     disableColumnMenu: true,
-    headerClassName: border ? undefined : 'left-border',
     renderHeader: (params: GridColumnHeaderParams) => (
-      <>
-        <Typography variant="body2">
-          <FormattedMessage id={`forms_table.headers.${params.field}`} />
-        </Typography>
-        {showMenu && <CustomToolMenu withBorder={false} />}
-      </>
+      <Typography variant="body2">
+        <FormattedMessage id={`forms_table.headers.${params.field}`} />
+      </Typography>
     ),
     renderCell: (params: GridRenderCellParams) => (
       <FormattedMessage id={`${field}.${params.value as string}`} />
@@ -99,79 +95,177 @@ const getLocationCountColumnSetup = (
   ),
 });
 
-export const getGroupSetup = (
-  groupId: string,
-  disaster: DisasterType,
-  showMenu = false,
-) => ({
+export const getGroupSetup = (groupId: string, disaster: DisasterType) => ({
   groupId: groupId,
-  headerClassName: showMenu ? 'header-setting-cell' : 'header-top-cell',
+  headerClassName: 'header-top-cell',
   renderHeaderGroup: () => (
-    <>
-      {showMenu && <CustomToolMenu />}
-      <FormattedMessage id={`table.${disaster}.groupId.${groupId}`} />
-    </>
+    <FormattedMessage id={`table.${disaster}.groupId.${groupId}`} />
   ),
 });
 
-export const addDetailedReportLocationColumns = (
-  columns: GridColDef[],
-  border = false,
-  showMenu = false,
-): GridColDef[] => [
-  {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    field: KoboCommonKeys.location,
-    editable: true,
-    width: 300,
-    headerAlign: 'left',
-    disableColumnMenu: true,
-    headerClassName: border ? undefined : 'left-border',
-    valueGetter: (_, row) => {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
-      return `${row.province}-${row.district}-${row.commune}`;
-    },
-    renderHeader: (params: GridColumnHeaderParams) => (
-      <>
+const addGroup = (
+  columnGroup: GridColumnGroupingModel,
+  children: GridColumnNode[],
+  groupParams?: ColumnSetupParams,
+) => {
+  const group: GridColumnGroup | undefined = groupParams
+    ? {
+        ...getGroupSetup(groupParams.groupId, groupParams.disaster),
+        children: [...children, ...groupParams.additionalChildren],
+      }
+    : undefined;
+
+  const groupWithEmpty: GridColumnGroup | undefined =
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    groupParams?.withEmpty && group !== undefined
+      ? {
+          ...getGroupSetup('EMPTY', groupParams.disaster),
+          headerClassName: 'empty-group-header',
+          children: [
+            {
+              ...getGroupSetup('socialSectorAffected', groupParams.disaster),
+              children: [group],
+            },
+          ],
+        }
+      : group;
+
+  const newGroups: GridColumnGroupingModel =
+    groupWithEmpty !== undefined
+      ? [groupWithEmpty, ...columnGroup]
+      : columnGroup;
+
+  return newGroups;
+};
+
+export interface AddDetailedReportLocationColumnsParams {
+  columns: GridColDef[];
+  columnGroup: GridColumnGroupingModel;
+  groupParams?: ColumnSetupParams;
+}
+
+export const addDetailedReportLocationColumns = ({
+  columns,
+  columnGroup,
+  groupParams,
+}: AddDetailedReportLocationColumnsParams) => {
+  const newColumns: GridColDef[] = [
+    {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      field: KoboCommonKeys.location,
+      editable: true,
+      width: 300,
+      headerAlign: 'left',
+      disableColumnMenu: true,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      valueGetter: (_: any, row: any) => {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
+        return `${row.province}-${row.district}-${row.commune}`;
+      },
+      renderHeader: (params: GridColumnHeaderParams) => (
         <Typography variant="body2">
           <FormattedMessage id={`forms_table.headers.${params.field}`} />
         </Typography>
-        {showMenu && <CustomToolMenu withBorder={false} />}
-      </>
-    ),
-    renderCell: (params: GridRenderCellParams) => {
-      const [province, district, commune] = (params.value as string)
-        .split('-')
-        .map(x => (x === 'undefined' ? undefined : x));
+      ),
+      renderCell: (params: GridRenderCellParams) => {
+        const [province, district, commune] = (params.value as string)
+          .split('-')
+          .map(x => (x === 'undefined' ? undefined : x));
 
-      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-nullish-coalescing
-      const location = commune || district || province;
+        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-nullish-coalescing
+        const location = commune || district || province;
 
-      const key =
-        commune !== undefined
-          ? KoboCommonKeys.commune
-          : district !== undefined
-          ? KoboCommonKeys.district
-          : KoboCommonKeys.province;
+        const key =
+          commune !== undefined
+            ? KoboCommonKeys.commune
+            : district !== undefined
+            ? KoboCommonKeys.district
+            : KoboCommonKeys.province;
 
-      return (
-        <>
-          {commune !== undefined && <span>&nbsp;&nbsp;</span>}
-          <FormattedMessage id={`${key}.${location as string}`} />
-        </>
-      );
+        return (
+          <>
+            {commune !== undefined && <span>&nbsp;&nbsp;</span>}
+            <FormattedMessage id={`${key}.${location as string}`} />
+          </>
+        );
+      },
     },
-  },
-  ...columns,
-];
+    ...columns,
+  ];
 
-export const addBriefReportLocationColumns = (
-  columns: GridColDef[],
-  border?: boolean,
-  showMenu = false,
-): GridColDef[] => [
-  getLocationColumnSetup(KoboCommonKeys.province, 200, border, showMenu),
-  getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 72),
-  getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 84),
-  ...columns,
-];
+  const newGroups: GridColumnGroupingModel = addGroup(
+    columnGroup,
+    [{ field: KoboCommonKeys.location }],
+    groupParams,
+  );
+
+  return { columns: newColumns, columnGroup: newGroups };
+};
+
+export interface ColumnSetupParams {
+  groupId: string;
+  disaster: DisasterType;
+  additionalChildren: GridColumnNode[];
+  withEmpty?: boolean;
+}
+
+export interface AddBriefReportLocationColumnsParams {
+  columns: GridColDef[];
+  columnGroup: GridColumnGroupingModel;
+  groupParams?: ColumnSetupParams;
+}
+
+export const addBriefReportLocationColumns = ({
+  columns,
+  columnGroup,
+  groupParams,
+}: AddBriefReportLocationColumnsParams) => {
+  const newColumns: GridColDef[] = [
+    getLocationColumnSetup(KoboCommonKeys.province, 200),
+    getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 72),
+    getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 84),
+    ...columns,
+  ];
+
+  const newGroups: GridColumnGroupingModel = addGroup(
+    columnGroup,
+    [
+      { field: KoboCommonKeys.province },
+      { field: KoboCommonKeys.district },
+      { field: KoboCommonKeys.commune },
+    ],
+    groupParams,
+  );
+
+  return { columns: newColumns, columnGroup: newGroups };
+};
+
+interface WrapGroupAsTitleProps {
+  columns: GridColDef[];
+  columnGroup: GridColumnGroupingModel;
+  groupParams: ColumnSetupParams;
+}
+
+export const wrapGroupAsTitle = ({
+  columns,
+  columnGroup,
+  groupParams,
+}: WrapGroupAsTitleProps): GridColumnGroupingModel => {
+  if (columnGroup.length > 0) {
+    return [
+      {
+        ...getGroupSetup(groupParams.groupId, groupParams.disaster),
+        children: [...groupParams.additionalChildren, ...columnGroup],
+      },
+    ];
+  }
+
+  const children = columns.map(x => ({ field: x.field }));
+
+  return [
+    {
+      ...getGroupSetup(groupParams.groupId, groupParams.disaster),
+      children,
+    },
+  ];
+};

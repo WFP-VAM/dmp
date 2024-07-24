@@ -28,7 +28,7 @@ const NumAffected2ColumnGroup = (
   detailed: boolean,
 ): GridColumnGroupingModel => [
   {
-    ...getGroupSetup('victimsAffected', INCIDENT, true),
+    ...getGroupSetup('victimsAffected', INCIDENT, 'start'),
     children: [
       ...(detailed
         ? [{ field: KoboCommonKeys.location }]

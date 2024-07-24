@@ -18,7 +18,7 @@ export const BriefIncidentReport = ({
           columnGroup={columnGroup(false)}
           data={report}
           key={index}
-          border={false}
+          variant="open"
         />
       ))}
     </Stack>

@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const InfrastructureColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.RubberRoAff, FLOOD),
@@ -18,21 +22,7 @@ const InfrastructureColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.DrainageDam, FLOOD),
 ];
 
-const InfrastructureColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('infrastructure', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const InfrastructureColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('rubberRoad', FLOOD),
     children: [
@@ -77,7 +67,14 @@ const InfrastructureColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'infrastructure',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const InfrastructureColumnSettings = {
   columns: InfrastructureColumns,
   columnGroup: InfrastructureColumnGroup,
+  groupParams,
 };

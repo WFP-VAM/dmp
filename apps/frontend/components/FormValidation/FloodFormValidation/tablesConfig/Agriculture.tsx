@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 // TODO: export as const, as this is the default width in getColumnSetup
 const colWidth = 8 * 9;
@@ -24,19 +28,7 @@ const AgricultureColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.BirdMissing, FLOOD),
 ];
 
-const AgricultureColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('agriculture', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const AgricultureColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('plantation', FLOOD),
     children: [
@@ -84,7 +76,14 @@ const AgricultureColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'agriculture',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const AgricultureColumnSettings = {
   columns: AgricultureColumns,
   columnGroup: AgricultureColumnGroup,
+  groupParams,
 };

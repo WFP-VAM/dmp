@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const colWidth = 8 * 9;
 
@@ -22,19 +26,7 @@ const IrrigationColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.RiverBreakLo, FLOOD),
 ];
 
-const IrrigationColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('irrigation', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const IrrigationColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('dam', FLOOD),
     children: [
@@ -86,7 +78,14 @@ const IrrigationColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'irrigation',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const IrrigationColumnSettings = {
   columns: IrrigationColumns,
   columnGroup: IrrigationColumnGroup,
+  groupParams,
 };

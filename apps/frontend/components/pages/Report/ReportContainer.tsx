@@ -19,14 +19,14 @@ import { colors } from 'theme/muiTheme';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
 const defaultSearchReportData: SearchFormData = {
-  disTyps: [DisasterMapping['flood']],
+  disTyps: [DisasterMapping['drought']],
   region: {
     province: [],
     district: [],
     commune: [],
   },
   dateRange: {
-    startDate: dayjs().subtract(1, 'month'),
+    startDate: dayjs().subtract(10, 'years'),
     endDate: dayjs(),
   },
 };

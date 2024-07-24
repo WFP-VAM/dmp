@@ -1,45 +1,31 @@
-import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
+import {
+  addBriefReportLocationColumns,
+  AddBriefReportLocationColumnsParams,
+} from 'utils/tableFormatting';
 
-import { addBriefReportLocationColumns } from 'utils/tableFormatting';
-
-import { DisasterTable } from './DisasterTable';
+import { DisasterTable, DisasterTableProps } from './DisasterTable';
 
 interface IProps {
-  columns: GridColDef[];
-  columnGroup: GridColumnGroupingModel;
-  data: Record<string, string | number | undefined>[];
-  rotateHeader?: boolean;
-  border?: boolean;
-  columnHeaderHeight?: 'large' | 'normal';
-  showMenuOnLocation?: boolean;
-  hideTopRightBorder?: boolean;
+  locationParams: AddBriefReportLocationColumnsParams;
+  disasterTableParams: Pick<
+    DisasterTableProps,
+    'data' | 'variant' | 'columnHeaderHeight'
+  >;
 }
 
 export const BriefReportTable = ({
-  columns,
-  columnGroup,
-  data,
-  rotateHeader = false,
-  border,
-  columnHeaderHeight,
-  showMenuOnLocation = false,
-  hideTopRightBorder,
+  locationParams,
+  disasterTableParams,
 }: IProps): JSX.Element => {
+  const res = addBriefReportLocationColumns(locationParams);
+
   return (
     <DisasterTable
-      columns={addBriefReportLocationColumns(
-        columns,
-        border,
-        showMenuOnLocation,
-      )}
-      columnGroup={columnGroup}
-      data={data}
+      columns={res.columns}
+      columnGroup={res.columnGroup}
       isEditable={false}
       getRowId={(row: { province: string }) => row.province}
-      rotateHeader={rotateHeader}
-      border={border}
-      columnHeaderHeight={columnHeaderHeight}
-      hideTopRightBorder={hideTopRightBorder}
+      {...disasterTableParams}
     />
   );
 };

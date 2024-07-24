@@ -1,21 +1,8 @@
-/* eslint-disable max-lines */
-import { PhoneAndroid } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  InputAdornment,
-  Stack,
-  TextField,
-  Typography,
-  useTheme,
-} from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
+import { Box, Button, CircularProgress, Stack, useTheme } from '@mui/material';
 import {
   DisasterType,
   FLOOD,
   FloodDto,
-  FloodSpecific,
   floodSpecificKeys,
   koboKeys,
 } from '@wfp-dmp/interfaces';
@@ -26,14 +13,12 @@ import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 
-import { RegionFilters } from 'components/Filters/RegionFilters';
 import { usePatchForm } from 'services/api/kobo/usePatchForm';
-import { colors } from 'theme/muiTheme';
 import { formatFormToRaw } from 'utils/formatFormToRaw';
 import { formatFloodFields } from 'utils/formatRawToForm';
 
-import { DisasterSelect } from '../DisasterSelect';
 import { FloodFormType } from './FloodFormType';
+import FloodHeader from './FloodHeader';
 import { FloodTables } from './FloodTables';
 
 export const FloodFormValidation = ({
@@ -105,213 +90,63 @@ export const FloodFormValidation = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack gap={theme.spacing(2)}>
-        <Stack direction="row" gap={theme.spacing(4)}>
-          <Stack direction="row" gap={theme.spacing(2)} alignItems="center">
-            <Typography color={colors.gray2}>
-              <FormattedMessage id="validation_search_params.location" />
-            </Typography>
-            <Controller
-              name="region"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <RegionFilters
-                  value={{
-                    province: [value.province],
-                    district: [value.district],
-                    commune: [value.commune],
-                  }}
-                  onChange={onChange}
-                  disableAll={!isEditMode}
-                />
-              )}
+      <Stack gap={theme.spacing(6)}>
+        <FloodHeader control={control} isEditMode={isEditMode} />
+        <Controller
+          name="specific"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <FloodTables
+              value={value}
+              onChange={onChange}
+              isEditMode={isEditMode}
             />
-          </Stack>
-          <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
-            <Typography width="3rem" color={colors.gray2}>
-              <FormattedMessage id="forms_table.headers.entry_date" />
-            </Typography>
-            <Controller
-              name="reportDate"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <DatePicker
-                  disabled={!isEditMode}
-                  value={value}
-                  onChange={onChange}
-                  sx={{ width: 150 }}
-                  slotProps={{
-                    inputAdornment: {
-                      position: 'start',
-                    },
-                  }}
-                />
-              )}
-            />
-          </Stack>
-          <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
-            <Typography width="5rem" color={colors.gray2}>
-              <FormattedMessage id="forms_table.headers.dis_date" />
-            </Typography>
-            <Controller
-              name="incidentDate"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <DatePicker
-                  disabled={!isEditMode}
-                  value={value}
-                  onChange={onChange}
-                  sx={{ width: 150 }}
-                  slotProps={{
-                    inputAdornment: {
-                      position: 'start',
-                    },
-                  }}
-                />
-              )}
-            />
-          </Stack>
-        </Stack>
-        <Stack
-          direction="row"
-          gap={theme.spacing(4)}
-          justifyContent="space-between"
-        >
-          <Stack direction="row" gap={theme.spacing(5)}>
-            <Controller
-              name="disTyp"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <DisasterSelect
-                  disabled={!isEditMode}
-                  value={value}
-                  onChange={onChange}
-                  showLabel={false}
-                />
-              )}
-            />
-            <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
-              <Typography width="5rem" color={colors.gray2}>
-                <FormattedMessage id="table.FLOOD.floodN" />
-              </Typography>
-              <Controller
-                name="specific"
-                control={control}
-                render={({ field: { value, onChange } }) => (
-                  <TextField
-                    disabled={!isEditMode}
-                    type="number"
-                    value={value.floodN}
-                    sx={{ width: 75 }}
-                    onChange={event =>
-                      onChange({
-                        ...value,
-                        [FloodSpecific.floodN]: event.target.value,
-                      })
-                    }
-                  />
-                )}
-              />
-            </Stack>
-            <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
-              <Typography width="5rem" color={colors.gray2}>
-                <FormattedMessage id="forms_table.headers.entry_name" />
-              </Typography>
-              <Controller
-                name="interviewer"
-                control={control}
-                render={({ field: { value, onChange } }) => (
-                  <TextField
-                    disabled={!isEditMode}
-                    value={value}
-                    onChange={onChange}
-                    sx={{ width: 200 }}
-                  />
-                )}
-              />
-            </Stack>
-            <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
-              <Typography width="5rem" color={colors.gray2}>
-                <FormattedMessage id="forms_table.headers.phone" />
-              </Typography>
-              <Controller
-                name="phone"
-                control={control}
-                render={({ field: { value, onChange } }) => (
-                  <TextField
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <PhoneAndroid />
-                        </InputAdornment>
-                      ),
-                    }}
-                    disabled={!isEditMode}
-                    type="tel"
-                    value={value}
-                    onChange={onChange}
-                    sx={{ width: 200 }}
-                  />
-                )}
-              />
-            </Stack>
-          </Stack>
-        </Stack>
-      </Stack>
-      <Controller
-        name="specific"
-        control={control}
-        render={({ field: { value, onChange } }) => (
-          <FloodTables
-            value={value}
-            onChange={onChange}
-            isEditMode={isEditMode}
-          />
-        )}
-      />
-      <Box display="flex" justifyContent="center">
-        {!isEditMode && (
-          <Button
-            sx={{ color: 'black', margin: 2, border: '1px solid black' }}
-            onClick={() => {
-              setIsEditMode(true);
-            }}
-          >
-            <FormattedMessage id="form_page.edit" />
-          </Button>
-        )}
-        {isEditMode && (
-          <>
+          )}
+        />
+        <Box display="flex" justifyContent="center">
+          {!isEditMode && (
             <Button
-              type="submit"
-              sx={{ color: 'white', margin: 2 }}
-              disabled={isMutating}
-              endIcon={
-                isMutating ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null
-              }
-            >
-              <FormattedMessage id="form_page.submit" />
-            </Button>
-            <Button
-              sx={{ color: 'white', margin: 2 }}
+              sx={{ color: 'black', margin: 2, border: '1px solid black' }}
               onClick={() => {
-                setIsEditMode(false);
-                setShouldReset(true);
+                setIsEditMode(true);
               }}
-              disabled={isMutating}
-              endIcon={
-                isMutating ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null
-              }
             >
-              <FormattedMessage id="form_page.cancel" />
+              <FormattedMessage id="form_page.edit" />
             </Button>
-          </>
-        )}
-      </Box>
+          )}
+          {isEditMode && (
+            <>
+              <Button
+                type="submit"
+                sx={{ color: 'white', margin: 2 }}
+                disabled={isMutating}
+                endIcon={
+                  isMutating ? (
+                    <CircularProgress color="inherit" size={20} />
+                  ) : null
+                }
+              >
+                <FormattedMessage id="form_page.submit" />
+              </Button>
+              <Button
+                sx={{ color: 'white', margin: 2 }}
+                onClick={() => {
+                  setIsEditMode(false);
+                  setShouldReset(true);
+                }}
+                disabled={isMutating}
+                endIcon={
+                  isMutating ? (
+                    <CircularProgress color="inherit" size={20} />
+                  ) : null
+                }
+              >
+                <FormattedMessage id="form_page.cancel" />
+              </Button>
+            </>
+          )}
+        </Box>
+      </Stack>
     </form>
   );
 };

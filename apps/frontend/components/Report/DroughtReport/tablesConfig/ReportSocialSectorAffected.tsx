@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const ReportSocialSectorAffectedColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NumSchNoHo2, DROUGHT, 98),
@@ -22,27 +26,7 @@ const ReportSocialSectorAffectedColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.ElecForHeal + '_2', DROUGHT, 65),
 ];
 
-const ReportSocialSectorAffectedColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('EMPTY', DROUGHT),
-    headerClassName: 'empty-group-header',
-    children: [
-      {
-        ...getGroupSetup('socialSectorAffected', DROUGHT, true),
-        children: [
-          ...(detailed
-            ? [{ field: KoboCommonKeys.location }]
-            : [
-                { field: KoboCommonKeys.province },
-                { field: KoboCommonKeys.district },
-                { field: KoboCommonKeys.commune },
-              ]),
-        ],
-      },
-    ],
-  },
+const ReportSocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('schoolsNoWater', DROUGHT),
     headerClassName: 'header-top-cell no-border-bottom',
@@ -81,7 +65,15 @@ const ReportSocialSectorAffectedColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'socialSectorAffected',
+  disaster: DROUGHT,
+  additionalChildren: [],
+  // withEmpty: true,
+};
+
 export const ReportSocialSectorAffectedColumnSettings = {
   columns: ReportSocialSectorAffectedColumns,
   columnGroup: ReportSocialSectorAffectedColumnGroup,
+  groupParams,
 };

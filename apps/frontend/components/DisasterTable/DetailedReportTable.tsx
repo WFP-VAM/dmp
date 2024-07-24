@@ -1,28 +1,25 @@
-import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
-import { addDetailedReportLocationColumns } from 'utils/tableFormatting';
+import {
+  AddBriefReportLocationColumnsParams,
+  addDetailedReportLocationColumns,
+} from 'utils/tableFormatting';
 
 import { createCustomComparator } from './CustomCommuneSort';
-import { DisasterTable } from './DisasterTable';
+import { DisasterTable, DisasterTableProps } from './DisasterTable';
 
 interface IProps {
-  columns: GridColDef[];
-  columnGroup: GridColumnGroupingModel;
-  data: Record<string, string | number | undefined>[];
-  rotateHeader?: boolean;
-  border?: boolean;
-  showMenuOnLocation?: boolean;
+  locationParams: AddBriefReportLocationColumnsParams;
+  disasterTableParams: Pick<DisasterTableProps, 'data' | 'variant'>;
 }
 
 export const DetailedReportTable = ({
-  columns,
-  columnGroup,
-  data,
-  rotateHeader = false,
-  border,
-  showMenuOnLocation = false,
+  locationParams,
+  disasterTableParams,
 }: IProps): JSX.Element => {
+  const { data } = disasterTableParams;
+
   const summedData = React.useMemo(() => {
     const districtMap = new Map<string, typeof data>();
     data.forEach(x => {
@@ -87,7 +84,7 @@ export const DetailedReportTable = ({
   }, [data]);
 
   // Add custom comparator to relevant columns
-  const columnsWithComparator = columns.map(col => {
+  const columnsWithComparator = locationParams.columns.map(col => {
     if (col.type === 'number') {
       return {
         ...col,
@@ -98,14 +95,16 @@ export const DetailedReportTable = ({
     return col;
   });
 
+  const res = addDetailedReportLocationColumns({
+    columns: columnsWithComparator as GridColDef[],
+    columnGroup: locationParams.columnGroup,
+    groupParams: locationParams.groupParams,
+  });
+
   return (
     <DisasterTable
-      columns={addDetailedReportLocationColumns(
-        columnsWithComparator as GridColDef[],
-        border,
-        showMenuOnLocation,
-      )}
-      columnGroup={columnGroup}
+      columns={res.columns}
+      columnGroup={res.columnGroup}
       data={summedData}
       isEditable={false}
       getRowId={(row: {
@@ -126,9 +125,8 @@ export const DetailedReportTable = ({
 
         return '';
       }}
-      rotateHeader={rotateHeader}
       columnHeaderHeight="large"
-      border={border}
+      variant={disasterTableParams.variant}
     />
   );
 };

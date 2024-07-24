@@ -29,7 +29,7 @@ export const FormSearch = () => {
     dateRange: {
       startDate:
         startDate === undefined
-          ? dayjs().subtract(1, 'month')
+          ? dayjs().subtract(10, 'years')
           : dayjs(startDate as string),
       endDate: endDate === undefined ? dayjs() : dayjs(endDate as string),
     },

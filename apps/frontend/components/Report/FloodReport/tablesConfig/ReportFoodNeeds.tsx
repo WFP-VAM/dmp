@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const ReportFoodNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumFamNoFod, FLOOD, 140),
@@ -14,21 +18,7 @@ const ReportFoodNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.RicePrice + '_2', FLOOD, 150),
 ];
 
-const ReportFoodNeedsColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('foodNeeds', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const ReportFoodNeedsColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('foodPeople', FLOOD),
     children: [
@@ -52,7 +42,14 @@ const ReportFoodNeedsColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'foodNeeds',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const ReportFoodNeedsColumnSettings = {
   columns: ReportFoodNeedsColumns,
   columnGroup: ReportFoodNeedsColumnGroup,
+  groupParams,
 };

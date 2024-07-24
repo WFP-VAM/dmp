@@ -1,7 +1,7 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import { ColumnSetupParams, getColumnSetup } from 'utils/tableFormatting';
 
 const colWidth = 8 * 9;
 const width = colWidth + 8 * 2;
@@ -24,40 +24,32 @@ const ReportThreatColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.threat + '_14', FLOOD, width),
 ];
 
-const ReportThreatColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('reportThreat', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-      { field: FloodSpecific.threat + '_1' },
-      { field: FloodSpecific.threat + '_2' },
-      { field: FloodSpecific.threat + '_3' },
-      { field: FloodSpecific.threat + '_4' },
-      { field: FloodSpecific.threat + '_5' },
-      { field: FloodSpecific.threat + '_6' },
-      { field: FloodSpecific.threat + '_7' },
-      { field: FloodSpecific.threat + '_8' },
-      { field: FloodSpecific.threat + '_9' },
-      { field: FloodSpecific.threat + '_10' },
-      { field: FloodSpecific.threat + '_11' },
-      { field: FloodSpecific.threat + '_12' },
-      { field: FloodSpecific.threat + '_13' },
-      { field: FloodSpecific.threat + '_14' },
-    ],
-  },
-];
+const ReportThreatColumnGroup: GridColumnGroupingModel = [];
+
+const groupParams: ColumnSetupParams = {
+  groupId: 'reportThreat',
+  disaster: FLOOD,
+  additionalChildren: [
+    { field: FloodSpecific.threat + '_1' },
+    { field: FloodSpecific.threat + '_2' },
+    { field: FloodSpecific.threat + '_3' },
+    { field: FloodSpecific.threat + '_4' },
+    { field: FloodSpecific.threat + '_5' },
+    { field: FloodSpecific.threat + '_6' },
+    { field: FloodSpecific.threat + '_7' },
+    { field: FloodSpecific.threat + '_8' },
+    { field: FloodSpecific.threat + '_9' },
+    { field: FloodSpecific.threat + '_10' },
+    { field: FloodSpecific.threat + '_11' },
+    { field: FloodSpecific.threat + '_12' },
+    { field: FloodSpecific.threat + '_13' },
+    { field: FloodSpecific.threat + '_14' },
+  ],
+};
 
 export const ReportThreatColumnSettings = {
   columns: ReportThreatColumns,
   columnGroup: ReportThreatColumnGroup,
   columnHeaderHeight: 'large',
-  hideTopRightBorder: true,
+  groupParams,
 };

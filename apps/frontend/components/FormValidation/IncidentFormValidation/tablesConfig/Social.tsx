@@ -22,7 +22,7 @@ const SocialColumns: GridColDef[] = [
 
 const SocialColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   {
-    ...getGroupSetup('social', INCIDENT, true),
+    ...getGroupSetup('social', INCIDENT, 'start'),
     children: [
       ...(detailed
         ? [{ field: KoboCommonKeys.location }]

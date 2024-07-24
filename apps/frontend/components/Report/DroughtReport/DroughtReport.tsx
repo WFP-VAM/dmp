@@ -46,21 +46,25 @@ export const DroughtReport = ({
     <>
       {isDetailedReport ? (
         <DetailedReportTable
-          columns={SummaryDroughtReportColumnSettings.columns}
-          columnGroup={SummaryDroughtReportColumnSettings.columnGroup}
-          data={report}
-          rotateHeader={false}
-          border
-          showMenuOnLocation
+          locationParams={{
+            columns: SummaryDroughtReportColumnSettings.columns,
+            columnGroup: SummaryDroughtReportColumnSettings.columnGroup,
+          }}
+          disasterTableParams={{
+            data: report,
+            variant: 'bordered',
+          }}
         />
       ) : (
         <BriefReportTable
-          columns={SummaryDroughtReportColumnSettings.columns}
-          columnGroup={SummaryDroughtReportColumnSettings.columnGroup}
-          data={report}
-          rotateHeader={false}
-          border
-          showMenuOnLocation
+          locationParams={{
+            columns: SummaryDroughtReportColumnSettings.columns,
+            columnGroup: SummaryDroughtReportColumnSettings.columnGroup,
+          }}
+          disasterTableParams={{
+            data: report,
+            variant: 'bordered',
+          }}
         />
       )}
     </>

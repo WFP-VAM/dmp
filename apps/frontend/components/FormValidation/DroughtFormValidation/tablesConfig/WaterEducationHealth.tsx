@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const WaterEducationHealthColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NumWatStor, DROUGHT, 8 * 12),
@@ -16,21 +20,7 @@ const WaterEducationHealthColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NumFanNeed, DROUGHT, 100),
 ];
 
-const WaterEducationHealthColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('waterEducationHealth', DROUGHT, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const WaterEducationHealthColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('waterEducation', DROUGHT),
     children: [
@@ -53,7 +43,14 @@ const WaterEducationHealthColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'waterEducationHealth',
+  disaster: DROUGHT,
+  additionalChildren: [],
+};
+
 export const WaterEducationHealthColumnSettings = {
   columns: WaterEducationHealthColumns,
   columnGroup: WaterEducationHealthColumnGroup,
+  groupParams,
 };

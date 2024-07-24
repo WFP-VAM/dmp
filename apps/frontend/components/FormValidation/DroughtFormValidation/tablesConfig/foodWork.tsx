@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const FoodWorkColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.FamNoIncom, DROUGHT, 120),
@@ -10,19 +14,7 @@ const FoodWorkColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.PeoNoFod, DROUGHT, 100),
 ];
 
-const FoodWorkColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('foodWork', DROUGHT, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const FoodWorkColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('workLoss', DROUGHT),
     children: [
@@ -39,7 +31,14 @@ const FoodWorkColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'foodWork',
+  disaster: DROUGHT,
+  additionalChildren: [],
+};
+
 export const FoodWorkColumnSettings = {
   columns: FoodWorkColumns,
   columnGroup: FoodWorkColumnGroup,
+  groupParams,
 };

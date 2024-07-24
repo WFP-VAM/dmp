@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const IrrigationColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.DamHavWater, DROUGHT, 120),
@@ -14,19 +18,7 @@ const IrrigationColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.DigWelNoWat, DROUGHT, 120),
 ];
 
-const IrrigationColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('irrigation', DROUGHT, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const IrrigationColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('dam', DROUGHT),
     children: [
@@ -57,7 +49,14 @@ const IrrigationColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'irrigation',
+  disaster: DROUGHT,
+  additionalChildren: [],
+};
+
 export const IrrigationColumnSettings = {
   columns: IrrigationColumns,
   columnGroup: IrrigationColumnGroup,
+  groupParams,
 };

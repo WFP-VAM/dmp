@@ -26,7 +26,7 @@ const AgricultureForestColumnGroup = (
   detailed: boolean,
 ): GridColumnGroupingModel => [
   {
-    ...getGroupSetup('social', INCIDENT, true),
+    ...getGroupSetup('social', INCIDENT, 'start'),
     children: [
       ...(detailed
         ? [{ field: KoboCommonKeys.location }]

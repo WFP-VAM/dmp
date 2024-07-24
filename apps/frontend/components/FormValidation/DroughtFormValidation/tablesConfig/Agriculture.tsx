@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const AgricultureColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.FamAgriAff, DROUGHT, 70),
@@ -17,25 +21,7 @@ const AgricultureColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.BirdDeath, DROUGHT, 70),
 ];
 
-const AgricultureColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('EMPTY', DROUGHT),
-    headerClassName: 'empty-group-header',
-    children: [
-      {
-        ...getGroupSetup('agriculture', DROUGHT, true),
-        children: [
-          ...(detailed
-            ? [{ field: KoboCommonKeys.location }]
-            : [
-                { field: KoboCommonKeys.province },
-                { field: KoboCommonKeys.district },
-                { field: KoboCommonKeys.commune },
-              ]),
-        ],
-      },
-    ],
-  },
+const AgricultureColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('plantation', DROUGHT),
     headerClassName: 'header-top-cell no-border-bottom',
@@ -76,7 +62,15 @@ const AgricultureColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'agriculture',
+  disaster: DROUGHT,
+  additionalChildren: [],
+  // withEmpty: true,
+};
+
 export const AgricultureColumnSettings = {
   columns: AgricultureColumns,
   columnGroup: AgricultureColumnGroup,
+  groupParams,
 };

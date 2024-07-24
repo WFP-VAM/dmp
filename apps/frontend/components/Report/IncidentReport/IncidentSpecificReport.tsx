@@ -33,7 +33,6 @@ export const IncidentSpecificReport = ({
           columns={SummaryIncidentReportColumnSettings.columns}
           columnGroup={SummaryIncidentReportColumnSettings.columnGroup}
           data={report}
-          rotateHeader={false}
           border
           showMenuOnLocation
         />
@@ -42,9 +41,7 @@ export const IncidentSpecificReport = ({
           columns={SummaryIncidentReportColumnSettings.columns}
           columnGroup={SummaryIncidentReportColumnSettings.columnGroup}
           data={report}
-          rotateHeader={false}
-          border
-          showMenuOnLocation
+          variant="bordered"
         />
       )}
     </>

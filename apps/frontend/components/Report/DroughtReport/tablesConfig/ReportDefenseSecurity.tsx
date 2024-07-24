@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const ReportDefenseSecurityColumns: GridColDef[] = [
   // Those fields are categorical, the number 1 and 2 are the possible values in Kobo.  They are counted separately in the report
@@ -17,21 +21,7 @@ const ReportDefenseSecurityColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.TreatOccur + '_2', DROUGHT, 8 * 12),
 ];
 
-const ReportDefenseSecurityColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('defenseSecurity', DROUGHT, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const ReportDefenseSecurityColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('reportKidColWater', DROUGHT),
     children: [
@@ -69,7 +59,14 @@ const ReportDefenseSecurityColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'defenseSecurity',
+  disaster: DROUGHT,
+  additionalChildren: [],
+};
+
 export const ReportDefenseSecurityColumnSettings = {
   columns: ReportDefenseSecurityColumns,
   columnGroup: ReportDefenseSecurityColumnGroup,
+  groupParams,
 };

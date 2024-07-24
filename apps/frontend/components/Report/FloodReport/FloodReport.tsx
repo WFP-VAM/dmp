@@ -46,21 +46,25 @@ export const FloodReport = ({
     <>
       {isDetailedReport ? (
         <DetailedReportTable
-          columns={SummaryFloodReportColumnSettings.columns}
-          columnGroup={SummaryFloodReportColumnSettings.columnGroup}
-          data={report}
-          rotateHeader={false}
-          border
-          showMenuOnLocation
+          locationParams={{
+            columns: SummaryFloodReportColumnSettings.columns,
+            columnGroup: SummaryFloodReportColumnSettings.columnGroup,
+          }}
+          disasterTableParams={{
+            data: report,
+            variant: 'bordered',
+          }}
         />
       ) : (
         <BriefReportTable
-          columns={SummaryFloodReportColumnSettings.columns}
-          columnGroup={SummaryFloodReportColumnSettings.columnGroup}
-          data={report}
-          rotateHeader={false}
-          border
-          showMenuOnLocation
+          locationParams={{
+            columns: SummaryFloodReportColumnSettings.columns,
+            columnGroup: SummaryFloodReportColumnSettings.columnGroup,
+          }}
+          disasterTableParams={{
+            data: report,
+            variant: 'bordered',
+          }}
         />
       )}
     </>

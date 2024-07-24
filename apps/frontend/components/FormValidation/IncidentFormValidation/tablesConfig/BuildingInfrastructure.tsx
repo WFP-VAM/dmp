@@ -25,7 +25,7 @@ const BuildingInfrastructureColumnGroup = (
   detailed: boolean,
 ): GridColumnGroupingModel => [
   {
-    ...getGroupSetup('buildingInfrastructure', INCIDENT, true),
+    ...getGroupSetup('buildingInfrastructure', INCIDENT, 'start'),
     children: [
       ...(detailed
         ? [{ field: KoboCommonKeys.location }]

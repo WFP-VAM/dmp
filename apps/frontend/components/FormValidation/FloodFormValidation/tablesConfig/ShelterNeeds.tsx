@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const ShelterNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumFamTent, FLOOD, 150),
@@ -12,21 +16,7 @@ const ShelterNeedsColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumPeoRela, FLOOD, 150),
 ];
 
-const ShelterNeedsColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('shelterNeeds', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const ShelterNeedsColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('shelterTent', FLOOD),
     children: [
@@ -50,7 +40,14 @@ const ShelterNeedsColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'shelterNeeds',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const ShelterNeedsColumnSettings = {
   columns: ShelterNeedsColumns,
   columnGroup: ShelterNeedsColumnGroup,
+  groupParams,
 };

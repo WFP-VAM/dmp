@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const NumAffectedColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NumVillAff, DROUGHT),
@@ -20,20 +24,7 @@ const NumAffectedColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.NumDisDeath, DROUGHT),
 ];
 
-const NumAffectedColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('victimsAffected', DROUGHT, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-      { field: DroughtSpecific.NumVillAff },
-    ],
-  },
+const NumAffectedColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('noWater', DROUGHT),
     children: [
@@ -59,7 +50,14 @@ const NumAffectedColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'victimsAffected',
+  disaster: DROUGHT,
+  additionalChildren: [{ field: DroughtSpecific.NumVillAff }],
+};
+
 export const NumAffectedColumnSettings = {
   columns: NumAffectedColumns,
   columnGroup: NumAffectedColumnGroup,
+  groupParams,
 };

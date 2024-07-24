@@ -1,7 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const colWidth = 8 * 9;
 
@@ -24,19 +28,7 @@ const HouseSocialColumns: GridColDef[] = [
   getColumnSetup(FloodSpecific.NumCraftDam, FLOOD),
 ];
 
-const HouseSocialColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('houseSocial', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const HouseSocialColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('house', FLOOD),
     children: [
@@ -95,7 +87,14 @@ const HouseSocialColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'houseSocial',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const HouseSocialColumnSettings = {
   columns: HouseSocialColumns,
   columnGroup: HouseSocialColumnGroup,
+  groupParams,
 };
