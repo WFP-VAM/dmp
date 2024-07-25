@@ -1,10 +1,10 @@
 import { Stack, useTheme } from '@mui/material';
 
-import { DetailedReportTable } from 'components/DisasterTable/DetailedReportTable';
+import { ProvinceLevelReportTable } from 'components/DisasterTable/ProvinceLevelReportTable';
 
 import { droughtReportTablesMapping } from './droughtReportTablesMapping';
 
-export const DetailedDroughtReport = ({
+export const ProvinceLevelDroughtReport = ({
   report,
 }: {
   report: Record<string, string | number | undefined>[];
@@ -15,17 +15,17 @@ export const DetailedDroughtReport = ({
     <Stack gap={theme.spacing(4)}>
       {droughtReportTablesMapping.map(
         ({ columns, columnGroup, groupParams }, index) => (
-          <DetailedReportTable
+          <ProvinceLevelReportTable
             locationParams={{
               columns,
               columnGroup,
               groupParams,
             }}
+            key={index}
             disasterTableParams={{
               data: report,
               variant: 'open',
             }}
-            key={index}
           />
         ),
       )}

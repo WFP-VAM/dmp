@@ -129,17 +129,17 @@ const addGroup = (
   return newGroups;
 };
 
-export interface AddDetailedReportLocationColumnsParams {
+interface AddCommuneLevelReportLocationColumnsParams {
   columns: GridColDef[];
   columnGroup: GridColumnGroupingModel;
   groupParams?: ColumnSetupParams;
 }
 
-export const addDetailedReportLocationColumns = ({
+export const addCommuneLevelReportLocationColumns = ({
   columns,
   columnGroup,
   groupParams,
-}: AddDetailedReportLocationColumnsParams) => {
+}: AddCommuneLevelReportLocationColumnsParams) => {
   const newColumns: GridColDef[] = [
     {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -199,17 +199,17 @@ export interface ColumnSetupParams {
   additionalChildren: GridColumnNode[];
 }
 
-export interface AddBriefReportLocationColumnsParams {
+export interface AddProvinceLevelReportLocationColumnsParams {
   columns: GridColDef[];
   columnGroup: GridColumnGroupingModel;
   groupParams?: ColumnSetupParams;
 }
 
-export const addBriefReportLocationColumns = ({
+export const addProvinceLevelReportLocationColumns = ({
   columns,
   columnGroup,
   groupParams,
-}: AddBriefReportLocationColumnsParams) => {
+}: AddProvinceLevelReportLocationColumnsParams) => {
   const newColumns: GridColDef[] = [
     getLocationColumnSetup(KoboCommonKeys.province, 200),
     getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 72),

@@ -1,23 +1,23 @@
 import {
-  addBriefReportLocationColumns,
-  AddBriefReportLocationColumnsParams,
+  addProvinceLevelReportLocationColumns,
+  AddProvinceLevelReportLocationColumnsParams,
 } from 'utils/tableFormatting';
 
 import { DisasterTable, DisasterTableProps } from './DisasterTable';
 
 interface IProps {
-  locationParams: AddBriefReportLocationColumnsParams;
+  locationParams: AddProvinceLevelReportLocationColumnsParams;
   disasterTableParams: Pick<
     DisasterTableProps,
     'data' | 'variant' | 'columnHeaderHeight'
   >;
 }
 
-export const BriefReportTable = ({
+export const ProvinceLevelReportTable = ({
   locationParams,
   disasterTableParams,
 }: IProps): JSX.Element => {
-  const res = addBriefReportLocationColumns(locationParams);
+  const res = addProvinceLevelReportLocationColumns(locationParams);
 
   return (
     <DisasterTable

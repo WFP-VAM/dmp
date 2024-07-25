@@ -1,23 +1,22 @@
 import { Stack, useTheme } from '@mui/material';
 
-import { DetailedReportTable } from 'components/DisasterTable/DetailedReportTable';
+import { ProvinceLevelReportTable } from 'components/DisasterTable/ProvinceLevelReportTable';
+import { incidentTablesMapping } from 'components/FormValidation/IncidentFormValidation/incidentTablesMapping';
 
-import { floodReportTablesMapping } from './floodReportTablesMapping';
-
-export const DetailedFloodReport = ({
+export const ProvinceLevelIncidentReport = ({
   report,
 }: {
   report: Record<string, string | number | undefined>[];
-}): JSX.Element => {
+}) => {
   const theme = useTheme();
 
   return (
     <Stack gap={theme.spacing(4)}>
-      {floodReportTablesMapping.map(
+      {incidentTablesMapping.map(
         ({ columns, columnGroup, groupParams }, index) => (
-          <DetailedReportTable
+          <ProvinceLevelReportTable
             locationParams={{
-              columns: typeof columns === 'function' ? columns(true) : columns,
+              columns,
               columnGroup,
               groupParams,
             }}
