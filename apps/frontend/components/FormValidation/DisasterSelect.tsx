@@ -13,6 +13,7 @@ interface Props {
   value: string;
   onChange: (event: SelectChangeEvent) => void;
   disabled?: boolean;
+  showLabel?: boolean;
 }
 
 const selectOptions = (disasterType: string): string[] => {
@@ -33,23 +34,30 @@ export const DisasterSelect = ({
   value,
   onChange,
   disabled,
+  showLabel = true,
 }: Props): JSX.Element => {
   const intl = useIntl();
 
   return (
-    <Box display="flex" flexDirection="row" justifyContent="center" margin={2}>
+    <Box display="flex" flexDirection="row" justifyContent="center">
       <FormControl>
-        <InputLabel>
-          <FormattedMessage id="validation_search_params.disaster_type" />
-        </InputLabel>
+        {showLabel && (
+          <InputLabel>
+            <FormattedMessage id="validation_search_params.disaster_type" />
+          </InputLabel>
+        )}
         <Select
           disabled={disabled}
           value={value}
           onChange={onChange}
           sx={{ minWidth: 200 }}
-          label={intl.formatMessage({
-            id: 'validation_search_params.disaster_type',
-          })}
+          label={
+            showLabel
+              ? intl.formatMessage({
+                  id: 'validation_search_params.disaster_type',
+                })
+              : undefined
+          }
         >
           {selectOptions(value).map(disaster => {
             return (
