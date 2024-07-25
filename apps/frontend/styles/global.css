@@ -109,7 +109,7 @@ h6 {
   height: 100%;
 }
 
-/* Override styles for Mui Inputs */
+/* Override styles for Mui Inputs without breaking the datagrid filter component */
 .MuiInputBase-input:not(.MuiInput-input) {
   padding: 0.5rem 0.5rem;
   font-size: 14px !important;
