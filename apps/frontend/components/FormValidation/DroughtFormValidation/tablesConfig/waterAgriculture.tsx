@@ -4,10 +4,26 @@ import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 import { ColumnSetupParams, getColumnSetup } from 'utils/tableFormatting';
 
 const WaterAgricultureColumns: GridColDef[] = [
-  getColumnSetup(DroughtSpecific.LandSize, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.PumMachine, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.NumGasoline, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.NumFam, DROUGHT, 100),
+  getColumnSetup({
+    field: DroughtSpecific.LandSize,
+    disaster: DROUGHT,
+    width: 120,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.PumMachine,
+    disaster: DROUGHT,
+    width: 120,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NumGasoline,
+    disaster: DROUGHT,
+    width: 120,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NumFam,
+    disaster: DROUGHT,
+    width: 100,
+  }),
 ];
 
 const WaterAgricultureColumnGroup: GridColumnGroupingModel = [];

@@ -10,22 +10,26 @@ import {
 const colWidth = 8 * 9;
 
 const NumAffected2Columns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumFamEva, FLOOD),
-  getColumnSetup(FloodSpecific.NumPeoEva, FLOOD),
-  getColumnSetup(FloodSpecific.NumMeEva, FLOOD),
-  getColumnSetup(FloodSpecific.NumFeEva, FLOOD),
-  getColumnSetup(FloodSpecific.NumKidEva, FLOOD),
-  getColumnSetup(FloodSpecific.NumOldEva, FLOOD),
-  getColumnSetup(FloodSpecific.NumDisEva, FLOOD),
-  getColumnSetup(FloodSpecific.NumFamRe, FLOOD),
-  getColumnSetup(FloodSpecific.NumPeoRe, FLOOD),
-  getColumnSetup(FloodSpecific.NumMeRe, FLOOD),
-  getColumnSetup(FloodSpecific.NumFeRe, FLOOD),
-  getColumnSetup(FloodSpecific.NumKidRe, FLOOD),
-  getColumnSetup(FloodSpecific.NumOldRe, FLOOD),
-  getColumnSetup(FloodSpecific.NumDisRe, FLOOD),
-  getColumnSetup(FloodSpecific.NumSafePla, FLOOD),
-  getColumnSetup(FloodSpecific.NumPeoSEC, FLOOD, colWidth + 8 * 6),
+  getColumnSetup({ field: FloodSpecific.NumFamEva, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumPeoEva, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumMeEva, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumFeEva, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumKidEva, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumOldEva, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumDisEva, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumFamRe, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumPeoRe, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumMeRe, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumFeRe, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumKidRe, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumOldRe, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumDisRe, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumSafePla, disaster: FLOOD }),
+  getColumnSetup({
+    field: FloodSpecific.NumPeoSEC,
+    disaster: FLOOD,
+    width: colWidth + 8 * 6,
+  }),
 ];
 
 const NumAffected2ColumnGroup: GridColumnGroupingModel = [

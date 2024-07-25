@@ -11,21 +11,29 @@ import {
 const colWidth = 8 * 9;
 
 const AgricultureColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.FarmAff, FLOOD, colWidth + 8 * 2),
-  getColumnSetup(FloodSpecific.FarmDam, FLOOD, colWidth + 8 * 2),
-  getColumnSetup(FloodSpecific.SamNabAff, FLOOD),
-  getColumnSetup(FloodSpecific.SamNabDam, FLOOD),
-  getColumnSetup(FloodSpecific.PaddyAff, FLOOD),
-  getColumnSetup(FloodSpecific.PaddyDam, FLOOD),
-  getColumnSetup(FloodSpecific.CowEva, FLOOD),
-  getColumnSetup(FloodSpecific.CowDeath, FLOOD),
-  getColumnSetup(FloodSpecific.CowMissing, FLOOD),
-  getColumnSetup(FloodSpecific.PigEva, FLOOD),
-  getColumnSetup(FloodSpecific.PigDeath, FLOOD),
-  getColumnSetup(FloodSpecific.PigMissing, FLOOD),
-  getColumnSetup(FloodSpecific.BirdEva, FLOOD),
-  getColumnSetup(FloodSpecific.BirdDeath, FLOOD),
-  getColumnSetup(FloodSpecific.BirdMissing, FLOOD),
+  getColumnSetup({
+    field: FloodSpecific.FarmAff,
+    disaster: FLOOD,
+    width: colWidth + 8 * 2,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.FarmDam,
+    disaster: FLOOD,
+    width: colWidth + 8 * 2,
+  }),
+  getColumnSetup({ field: FloodSpecific.SamNabAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.SamNabDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.PaddyAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.PaddyDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.CowEva, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.CowDeath, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.CowMissing, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.PigEva, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.PigDeath, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.PigMissing, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.BirdEva, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.BirdDeath, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.BirdMissing, disaster: FLOOD }),
 ];
 
 const AgricultureColumnGroup: GridColumnGroupingModel = [

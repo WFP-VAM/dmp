@@ -12,19 +12,28 @@ import { DisasterType, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-export const getColumnSetup = (
-  field: string,
-  disaster: DisasterType | 'COMMON',
-  width = 72,
-  opts: {
+interface GetColumnSetupParams {
+  field: string;
+  disaster: DisasterType | 'COMMON';
+  width?: number;
+  opts?: {
     type: 'singleSelect' | 'number';
     valueOptions?: { value: '1' | '2' | ''; label: string }[];
-  } = { type: 'number' },
+  };
+  isSummary?: boolean;
+  fontWeight?: React.CSSProperties['fontWeight'];
+  highlightColumn?: boolean;
+}
+
+export const getColumnSetup = ({
+  field,
+  disaster,
+  width = 72,
+  opts = { type: 'number' },
   isSummary = false,
-  fontWeight: React.CSSProperties['fontWeight'] = undefined,
+  fontWeight = undefined,
   highlightColumn = false,
-  // eslint-disable-next-line max-params
-): GridColDef => {
+}: GetColumnSetupParams): GridColDef => {
   const fields = {
     field,
     width,

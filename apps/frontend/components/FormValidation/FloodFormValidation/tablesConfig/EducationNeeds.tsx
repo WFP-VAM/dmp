@@ -10,12 +10,36 @@ import {
 const width = 150;
 
 const EducationNeedsColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumTemSch, FLOOD, width),
-  getColumnSetup(FloodSpecific.StuAcTemSch, FLOOD, width),
-  getColumnSetup(FloodSpecific.SchUseSafe, FLOOD, width),
-  getColumnSetup(FloodSpecific.NumStu, FLOOD, width),
-  getColumnSetup(FloodSpecific.NumSchStop, FLOOD, width),
-  getColumnSetup(FloodSpecific.NumStuNoCla, FLOOD, width),
+  getColumnSetup({
+    field: FloodSpecific.NumTemSch,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.StuAcTemSch,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.SchUseSafe,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumStu,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumSchStop,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumStuNoCla,
+    disaster: FLOOD,
+    width: width,
+  }),
 ];
 
 const EducationNeedsColumnGroup: GridColumnGroupingModel = [

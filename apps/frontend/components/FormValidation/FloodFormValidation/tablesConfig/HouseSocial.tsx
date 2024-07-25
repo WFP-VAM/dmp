@@ -10,22 +10,30 @@ import {
 const colWidth = 8 * 9;
 
 const HouseSocialColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumHouAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumHouDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumSchoAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumSchoDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumAffHeal, FLOOD),
-  getColumnSetup(FloodSpecific.NumDamHeal, FLOOD),
-  getColumnSetup(FloodSpecific.NumPagoAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumPagoDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumBuilAff, FLOOD, colWidth + 8 * 2),
-  getColumnSetup(FloodSpecific.NumBuilDam, FLOOD, colWidth + 8 * 2),
-  getColumnSetup(FloodSpecific.NumShopAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumShopDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumWareHAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumWareHDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumCraftAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumCraftDam, FLOOD),
+  getColumnSetup({ field: FloodSpecific.NumHouAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumHouDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumSchoAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumSchoDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumAffHeal, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumDamHeal, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumPagoAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumPagoDam, disaster: FLOOD }),
+  getColumnSetup({
+    field: FloodSpecific.NumBuilAff,
+    disaster: FLOOD,
+    width: colWidth + 8 * 2,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumBuilDam,
+    disaster: FLOOD,
+    width: colWidth + 8 * 2,
+  }),
+  getColumnSetup({ field: FloodSpecific.NumShopAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumShopDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumWareHAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumWareHDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumCraftAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumCraftDam, disaster: FLOOD }),
 ];
 
 const HouseSocialColumnGroup: GridColumnGroupingModel = [

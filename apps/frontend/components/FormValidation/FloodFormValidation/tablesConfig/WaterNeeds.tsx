@@ -10,11 +10,31 @@ import {
 const width = 200;
 
 const WaterNeedsColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumFamNoWa, FLOOD, width),
-  getColumnSetup(FloodSpecific.NumPeoNoWa, FLOOD, width),
-  getColumnSetup(FloodSpecific.TimeAceWa, FLOOD, width + 8 * 2),
-  getColumnSetup(FloodSpecific.NuFamNoWaEq, FLOOD, width + 8 * 2),
-  getColumnSetup(FloodSpecific.NuFamNoLat, FLOOD, width + 8 * 2),
+  getColumnSetup({
+    field: FloodSpecific.NumFamNoWa,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumPeoNoWa,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.TimeAceWa,
+    disaster: FLOOD,
+    width: width + 8 * 2,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NuFamNoWaEq,
+    disaster: FLOOD,
+    width: width + 8 * 2,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NuFamNoLat,
+    disaster: FLOOD,
+    width: width + 8 * 2,
+  }),
 ];
 
 const WaterNeedsColumnGroup: GridColumnGroupingModel = [

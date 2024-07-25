@@ -8,16 +8,24 @@ import {
 } from 'utils/tableFormatting';
 
 const SocialColumns: GridColDef[] = [
-  getColumnSetup(IncidentSpecific.PagoAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.PagoDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.BuildingAff, INCIDENT, 8 * 10),
-  getColumnSetup(IncidentSpecific.BuildingDam, INCIDENT, 8 * 10),
-  getColumnSetup(IncidentSpecific.MarketAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.MarketDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.StorageAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.StorageDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.CraftAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.CraftDam, INCIDENT),
+  getColumnSetup({ field: IncidentSpecific.PagoAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.PagoDam, disaster: INCIDENT }),
+  getColumnSetup({
+    field: IncidentSpecific.BuildingAff,
+    disaster: INCIDENT,
+    width: 8 * 10,
+  }),
+  getColumnSetup({
+    field: IncidentSpecific.BuildingDam,
+    disaster: INCIDENT,
+    width: 8 * 10,
+  }),
+  getColumnSetup({ field: IncidentSpecific.MarketAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.MarketDam, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.StorageAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.StorageDam, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.CraftAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.CraftDam, disaster: INCIDENT }),
 ];
 
 const SocialColumnGroup: GridColumnGroupingModel = [

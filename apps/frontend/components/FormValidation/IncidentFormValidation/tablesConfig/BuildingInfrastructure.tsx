@@ -8,17 +8,29 @@ import {
 } from 'utils/tableFormatting';
 
 const BuildingInfrastructureColumns: GridColDef[] = [
-  getColumnSetup(IncidentSpecific.PartlyBurn, INCIDENT),
-  getColumnSetup(IncidentSpecific.CompletBurn, INCIDENT),
-  getColumnSetup(IncidentSpecific.SchAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.SchDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.HealthAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.HealthDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.RivBreakLo, INCIDENT),
-  getColumnSetup(IncidentSpecific.RivBreakWid, INCIDENT),
-  getColumnSetup(IncidentSpecific.NationalRod, INCIDENT, 8 * 12),
-  getColumnSetup(IncidentSpecific.RuralRoad, INCIDENT, 8 * 12),
-  getColumnSetup(IncidentSpecific.Bridge, INCIDENT, 8 * 12),
+  getColumnSetup({ field: IncidentSpecific.PartlyBurn, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.CompletBurn, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.SchAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.SchDam, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.HealthAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.HealthDam, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.RivBreakLo, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.RivBreakWid, disaster: INCIDENT }),
+  getColumnSetup({
+    field: IncidentSpecific.NationalRod,
+    disaster: INCIDENT,
+    width: 8 * 12,
+  }),
+  getColumnSetup({
+    field: IncidentSpecific.RuralRoad,
+    disaster: INCIDENT,
+    width: 8 * 12,
+  }),
+  getColumnSetup({
+    field: IncidentSpecific.Bridge,
+    disaster: INCIDENT,
+    width: 8 * 12,
+  }),
 ];
 
 const BuildingInfrastructureColumnGroup: GridColumnGroupingModel = [

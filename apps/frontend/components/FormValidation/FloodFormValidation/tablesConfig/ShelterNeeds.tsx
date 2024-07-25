@@ -8,12 +8,36 @@ import {
 } from 'utils/tableFormatting';
 
 const ShelterNeedsColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumFamTent, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumPeoTent, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumFamBuil, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumPeoBuil, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumFamRela, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumPeoRela, FLOOD, 150),
+  getColumnSetup({
+    field: FloodSpecific.NumFamTent,
+    disaster: FLOOD,
+    width: 150,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumPeoTent,
+    disaster: FLOOD,
+    width: 150,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumFamBuil,
+    disaster: FLOOD,
+    width: 150,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumPeoBuil,
+    disaster: FLOOD,
+    width: 150,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumFamRela,
+    disaster: FLOOD,
+    width: 150,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumPeoRela,
+    disaster: FLOOD,
+    width: 150,
+  }),
 ];
 
 const ShelterNeedsColumnGroup: GridColumnGroupingModel = [
