@@ -11,6 +11,7 @@ import { FloodSpecific } from '@wfp-dmp/interfaces';
 import { Control, Controller } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 
+import { RegionFilters } from 'components/Filters/RegionFilters';
 import { DisasterSelect } from 'components/FormValidation/DisasterSelect';
 import { colors } from 'theme/muiTheme';
 
@@ -25,13 +26,13 @@ const FloodHeader = ({ control, isEditMode }: FloodHeaderProps) => {
   const theme = useTheme();
 
   return (
-    <Stack gap={theme.spacing(2)}>
+    <Stack gap={theme.spacing(2)} ml={2}>
       <Stack direction="row" gap={theme.spacing(4)}>
         <Stack direction="row" gap={theme.spacing(2)} alignItems="center">
           <Typography color={colors.gray2}>
             <FormattedMessage id="validation_search_params.location" />
           </Typography>
-          {/* <Controller
+          <Controller
             name="region"
             control={control}
             render={({ field: { value, onChange } }) => (
@@ -45,7 +46,7 @@ const FloodHeader = ({ control, isEditMode }: FloodHeaderProps) => {
                 disableAll={!isEditMode}
               />
             )}
-          /> */}
+          />
         </Stack>
         <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
           <Typography width="3rem" color={colors.gray2}>

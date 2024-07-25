@@ -5,6 +5,7 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
+  Typography,
 } from '@mui/material';
 import { FloodSpecificType } from '@wfp-dmp/interfaces';
 import { range, remove } from 'lodash';
@@ -43,31 +44,35 @@ export const FloodCheckBoxes = ({
     <FormControl component="fieldset" sx={{ m: 3 }} variant="standard">
       <FormGroup>
         <FormLabel>
-          <FormattedMessage id="table.FLOOD.securityIssues.title" />
+          <Typography variant="h5">
+            <FormattedMessage id="table.FLOOD.securityIssues.title" />
+          </Typography>
         </FormLabel>
-        {range(1, 15).map(threatNum => {
-          const key = threatNum.toString();
+        <Box display="flex" flexDirection="row" flexWrap="wrap">
+          {range(1, 15).map(threatNum => {
+            const key = threatNum.toString();
 
-          return (
-            <Box key={threatNum}>
-              <FormControlLabel
-                key={threatNum}
-                control={
-                  <Checkbox
-                    disabled={!isEditable}
-                    onChange={changeFn}
-                    name={threatNum.toString()}
-                    key={threatNum}
-                    checked={threatsArr.includes(key)}
-                  />
-                }
-                label={intl.formatMessage({
-                  id: `table.FLOOD.securityIssues.${threatNum}`,
-                })}
-              />
-            </Box>
-          );
-        })}
+            return (
+              <Box key={threatNum} flexBasis={'30%'}>
+                <FormControlLabel
+                  key={threatNum}
+                  control={
+                    <Checkbox
+                      disabled={!isEditable}
+                      onChange={changeFn}
+                      name={threatNum.toString()}
+                      key={threatNum}
+                      checked={threatsArr.includes(key)}
+                    />
+                  }
+                  label={intl.formatMessage({
+                    id: `table.FLOOD.securityIssues.${threatNum}`,
+                  })}
+                />
+              </Box>
+            );
+          })}
+        </Box>
       </FormGroup>
     </FormControl>
   );

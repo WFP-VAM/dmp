@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Stack, useTheme } from '@mui/material';
+import { Stack, useTheme } from '@mui/material';
 import {
   DisasterType,
   FLOOD,
@@ -11,12 +11,13 @@ import { pick } from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 
 import { usePatchForm } from 'services/api/kobo/usePatchForm';
 import { formatFormToRaw } from 'utils/formatFormToRaw';
 import { formatFloodFields } from 'utils/formatRawToForm';
 
+import { FloodCheckBoxes } from './FloodCheckBoxes';
+import FloodFooter from './FloodFooter';
 import { FloodFormType } from './FloodFormType';
 import FloodHeader from './FloodHeader';
 import { FloodTables } from './FloodTables';
@@ -53,16 +54,12 @@ export const FloodFormValidation = ({
     },
   });
 
-  const { trigger, isMutating } = usePatchForm(
-    disasterType as DisasterType,
-    id as string,
-  );
+  const { trigger } = usePatchForm(disasterType as DisasterType, id as string);
 
   const [isEditMode, setIsEditMode] = useState(false);
   // We set this state to avoid race condition between a field update and the reset coming from react hook form
   const [shouldReset, setShouldReset] = useState(false);
 
-  console.log({ isEditMode });
   useEffect(() => {
     if (shouldReset) {
       reset();
@@ -103,49 +100,25 @@ export const FloodFormValidation = ({
             />
           )}
         />
-        <Box display="flex" justifyContent="center">
-          {!isEditMode && (
-            <Button
-              sx={{ color: 'black', margin: 2, border: '1px solid black' }}
-              onClick={() => {
-                setIsEditMode(true);
-              }}
-            >
-              <FormattedMessage id="form_page.edit" />
-            </Button>
+        <Controller
+          name="specific"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <FloodCheckBoxes
+              onChange={onChange}
+              value={value}
+              isEditable={isEditMode}
+            />
           )}
-          {isEditMode && (
-            <>
-              <Button
-                type="submit"
-                sx={{ color: 'white', margin: 2 }}
-                disabled={isMutating}
-                endIcon={
-                  isMutating ? (
-                    <CircularProgress color="inherit" size={20} />
-                  ) : null
-                }
-              >
-                <FormattedMessage id="form_page.submit" />
-              </Button>
-              <Button
-                sx={{ color: 'white', margin: 2 }}
-                onClick={() => {
-                  setIsEditMode(false);
-                  setShouldReset(true);
-                }}
-                disabled={isMutating}
-                endIcon={
-                  isMutating ? (
-                    <CircularProgress color="inherit" size={20} />
-                  ) : null
-                }
-              >
-                <FormattedMessage id="form_page.cancel" />
-              </Button>
-            </>
-          )}
-        </Box>
+        />
+        {/* spacer for the footer when we are fully scrolled */}
+        <div style={{ minHeight: '5rem' }} />
+        <FloodFooter
+          isEditMode={isEditMode}
+          setIsEditMode={setIsEditMode}
+          setShouldReset={setShouldReset}
+          status={validationForm._validation_status.uid}
+        />
       </Stack>
     </form>
   );

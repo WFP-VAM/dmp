@@ -1,7 +1,7 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Error from '@mui/icons-material/Error';
-import { Button, Stack, Tooltip, Typography } from '@mui/material';
+import { Button, Stack, Tooltip, Typography, useTheme } from '@mui/material';
 import { ValidationStatusValue } from '@wfp-dmp/interfaces';
 import { FormattedMessage } from 'react-intl';
 
@@ -12,6 +12,8 @@ export const ValidationIndicator = ({
   valStatus: ValidationStatusValue | undefined;
   textVersion?: boolean;
 }) => {
+  const theme = useTheme();
+
   let id;
   let Icon;
   let color;
@@ -35,11 +37,12 @@ export const ValidationIndicator = ({
   if (textVersion) {
     return (
       <Typography display="flex" fontSize="inherit">
-        <Tooltip title={<FormattedMessage id={id} />}>
-          <Icon htmlColor={color} />
-        </Tooltip>
-        &nbsp;
-        <FormattedMessage id={id} />
+        <Stack gap={theme.spacing(1)} flexDirection="row">
+          <Tooltip title={<FormattedMessage id={id} />}>
+            <Icon htmlColor={color} />
+          </Tooltip>
+          <FormattedMessage id={id} />
+        </Stack>
       </Typography>
     );
   }

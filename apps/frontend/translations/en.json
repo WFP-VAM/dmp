@@ -70,10 +70,10 @@
     "end_date": "To"
   },
   "form_page": {
-    "approve": "Approve",
-    "reject": "Reject",
+    "approve": "Approve Report",
+    "reject": "Reject Report",
     "submit": "Submit",
-    "edit": "Edit",
+    "edit": "Edit Report",
     "cancel": "Cancel"
   },
   "disasters": {
