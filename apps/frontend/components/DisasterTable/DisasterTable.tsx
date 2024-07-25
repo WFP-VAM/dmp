@@ -205,19 +205,19 @@ export const DisasterTable = ({
           mt={0}
         >
           {(updatedColumnGroup.length === 1 ||
-            (!isLastCovered(
+            !isLastCovered(
               updatedColumnGroup,
               updatedColumns[updatedColumns.length - 1].field,
-            ) &&
-              variant === 'open')) && (
-            <div
-              style={{
-                ...hideBorderDivStyles,
-                right: 0,
-                top: 0,
-              }}
-            />
-          )}
+            )) &&
+            variant === 'open' && (
+              <div
+                style={{
+                  ...hideBorderDivStyles,
+                  right: 0,
+                  top: 0,
+                }}
+              />
+            )}
           {variant === 'open' && (
             <div
               style={{
