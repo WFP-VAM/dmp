@@ -33,7 +33,7 @@ export type NextApplicationPage<P = unknown, IP = unknown> = NextPage<P, IP> & {
 
 // https://nextjs.org/docs/basic-features/font-optimization
 const inter = Inter({ subsets: ['latin'] });
-const roboto = Roboto({ weight: ['400', '500', '700'] });
+const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
 const MyApp = ({
   Component,
