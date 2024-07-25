@@ -30,18 +30,25 @@ export const IncidentSpecificReport = ({
     <>
       {isDetailedReport ? (
         <DetailedReportTable
-          columns={SummaryIncidentReportColumnSettings.columns}
-          columnGroup={SummaryIncidentReportColumnSettings.columnGroup}
-          data={report}
-          border
-          showMenuOnLocation
+          locationParams={{
+            columns: SummaryIncidentReportColumnSettings.columns,
+            columnGroup: SummaryIncidentReportColumnSettings.columnGroup,
+          }}
+          disasterTableParams={{
+            data: report,
+            variant: 'bordered',
+          }}
         />
       ) : (
         <BriefReportTable
-          columns={SummaryIncidentReportColumnSettings.columns}
-          columnGroup={SummaryIncidentReportColumnSettings.columnGroup}
-          data={report}
-          variant="bordered"
+          locationParams={{
+            columns: SummaryIncidentReportColumnSettings.columns,
+            columnGroup: SummaryIncidentReportColumnSettings.columnGroup,
+          }}
+          disasterTableParams={{
+            data: report,
+            variant: 'bordered',
+          }}
         />
       )}
     </>

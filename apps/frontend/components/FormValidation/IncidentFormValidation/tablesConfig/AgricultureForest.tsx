@@ -1,11 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import {
-  INCIDENT,
-  IncidentSpecific,
-  KoboCommonKeys,
-} from '@wfp-dmp/interfaces';
+import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const AgricultureForestColumns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.CropAff, INCIDENT),
@@ -22,21 +22,7 @@ const AgricultureForestColumns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.FarmAf, INCIDENT),
 ];
 
-const AgricultureForestColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('social', INCIDENT, 'start'),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const AgricultureForestColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('crop', INCIDENT),
     children: [
@@ -76,7 +62,14 @@ const AgricultureForestColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'social',
+  disaster: INCIDENT,
+  additionalChildren: [],
+};
+
 export const AgricultureForestColumnSettings = {
   columns: AgricultureForestColumns,
   columnGroup: AgricultureForestColumnGroup,
+  groupParams,
 };

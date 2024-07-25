@@ -97,7 +97,6 @@ const getLocationCountColumnSetup = (
 
 export const getGroupSetup = (groupId: string, disaster: DisasterType) => ({
   groupId: groupId,
-  headerClassName: 'header-top-cell',
   renderHeaderGroup: () => (
     <FormattedMessage id={`table.${disaster}.groupId.${groupId}`} />
   ),
@@ -115,25 +114,8 @@ const addGroup = (
       }
     : undefined;
 
-  const groupWithEmpty: GridColumnGroup | undefined =
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    groupParams?.withEmpty && group !== undefined
-      ? {
-          ...getGroupSetup('EMPTY', groupParams.disaster),
-          headerClassName: 'empty-group-header',
-          children: [
-            {
-              ...getGroupSetup('socialSectorAffected', groupParams.disaster),
-              children: [group],
-            },
-          ],
-        }
-      : group;
-
   const newGroups: GridColumnGroupingModel =
-    groupWithEmpty !== undefined
-      ? [groupWithEmpty, ...columnGroup]
-      : columnGroup;
+    group !== undefined ? [group, ...columnGroup] : columnGroup;
 
   return newGroups;
 };
@@ -206,7 +188,6 @@ export interface ColumnSetupParams {
   groupId: string;
   disaster: DisasterType;
   additionalChildren: GridColumnNode[];
-  withEmpty?: boolean;
 }
 
 export interface AddBriefReportLocationColumnsParams {

@@ -29,7 +29,6 @@ const ReportSocialSectorAffectedColumns: GridColDef[] = [
 const ReportSocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('schoolsNoWater', DROUGHT),
-    headerClassName: 'header-top-cell no-border-bottom',
     children: [
       { field: DroughtSpecific.NumSchNoHo2 },
       { field: DroughtSpecific.BotSourTang },
@@ -47,7 +46,6 @@ const ReportSocialSectorAffectedColumnGroup: GridColumnGroupingModel = [
   },
   {
     ...getGroupSetup('healthCentersNoWater', DROUGHT),
-    headerClassName: 'header-top-cell no-border-bottom',
     children: [
       { field: DroughtSpecific.HealCenNoHo2 },
       { field: DroughtSpecific.HBotSourTang },
@@ -69,7 +67,6 @@ const groupParams: ColumnSetupParams = {
   groupId: 'socialSectorAffected',
   disaster: DROUGHT,
   additionalChildren: [],
-  // withEmpty: true,
 };
 
 export const ReportSocialSectorAffectedColumnSettings = {

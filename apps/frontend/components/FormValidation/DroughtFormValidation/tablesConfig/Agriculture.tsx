@@ -24,7 +24,6 @@ const AgricultureColumns: GridColDef[] = [
 const AgricultureColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('plantation', DROUGHT),
-    headerClassName: 'header-top-cell no-border-bottom',
     children: [
       { field: DroughtSpecific.FamAgriAff },
       {
@@ -52,7 +51,6 @@ const AgricultureColumnGroup: GridColumnGroupingModel = [
   },
   {
     ...getGroupSetup('livestock', DROUGHT),
-    headerClassName: 'header-top-cell no-border-bottom',
     children: [
       { field: DroughtSpecific.CowDeath },
       { field: DroughtSpecific.BaffoDeath },
@@ -66,7 +64,6 @@ const groupParams: ColumnSetupParams = {
   groupId: 'agriculture',
   disaster: DROUGHT,
   additionalChildren: [],
-  // withEmpty: true,
 };
 
 export const AgricultureColumnSettings = {

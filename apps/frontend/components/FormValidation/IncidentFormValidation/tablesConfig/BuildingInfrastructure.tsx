@@ -1,11 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import {
-  INCIDENT,
-  IncidentSpecific,
-  KoboCommonKeys,
-} from '@wfp-dmp/interfaces';
+import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const BuildingInfrastructureColumns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.PartlyBurn, INCIDENT),
@@ -21,21 +21,7 @@ const BuildingInfrastructureColumns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.Bridge, INCIDENT, 8 * 12),
 ];
 
-const BuildingInfrastructureColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('buildingInfrastructure', INCIDENT, 'start'),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const BuildingInfrastructureColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('house', INCIDENT),
     children: [
@@ -69,7 +55,14 @@ const BuildingInfrastructureColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'buildingInfrastructure',
+  disaster: INCIDENT,
+  additionalChildren: [],
+};
+
 export const BuildingInfrastructureColumnSettings = {
   columns: BuildingInfrastructureColumns,
   columnGroup: BuildingInfrastructureColumnGroup,
+  groupParams,
 };

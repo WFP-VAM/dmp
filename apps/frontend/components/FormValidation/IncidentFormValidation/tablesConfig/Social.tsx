@@ -1,11 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import {
-  INCIDENT,
-  IncidentSpecific,
-  KoboCommonKeys,
-} from '@wfp-dmp/interfaces';
+import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const SocialColumns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.PagoAff, INCIDENT),
@@ -20,19 +20,7 @@ const SocialColumns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.CraftDam, INCIDENT),
 ];
 
-const SocialColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('social', INCIDENT, 'start'),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const SocialColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('pagoda', INCIDENT),
     children: [
@@ -70,7 +58,14 @@ const SocialColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'social',
+  disaster: INCIDENT,
+  additionalChildren: [],
+};
+
 export const SocialColumnSettings = {
   columns: SocialColumns,
   columnGroup: SocialColumnGroup,
+  groupParams,
 };

@@ -1,11 +1,11 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import {
-  INCIDENT,
-  IncidentSpecific,
-  KoboCommonKeys,
-} from '@wfp-dmp/interfaces';
+import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const NumAffected1Columns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.NumVillAff, INCIDENT),
@@ -32,22 +32,7 @@ const NumAffected1Columns: GridColDef[] = [
   getColumnSetup(IncidentSpecific.NumDisInjure, INCIDENT),
 ];
 
-const NumAffected1ColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('victimsAffected', INCIDENT, 'start'),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-      { field: IncidentSpecific.NumVillAff },
-    ],
-  },
+const NumAffected1ColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('totalAffected', INCIDENT),
     children: [
@@ -91,7 +76,14 @@ const NumAffected1ColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'victimsAffected',
+  disaster: INCIDENT,
+  additionalChildren: [{ field: IncidentSpecific.NumVillAff }],
+};
+
 export const NumAffected1ColumnSettings = {
   columns: NumAffected1Columns,
   columnGroup: NumAffected1ColumnGroup,
+  groupParams,
 };
