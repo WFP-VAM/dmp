@@ -66,6 +66,15 @@ const authenticate = async (email: string, password: string) => {
               companyName: 'Disaster Monitoring Platform',
               withMadeWithLove: false,
               favicon: 'https://dmp.ovio.org/favicon.ico',
+              theme: {
+                colors: {
+                  primary100: '#63B2BD', // Example color for primary buttons
+                  primary80: '#fff', // Example color for primary buttons on hover
+                  primary60: '#fff', // Example color for primary buttons on active
+                  primary40: '#fff', // Example color for primary buttons on focus
+                  primary20: '#fff', // Example color for primary buttons on disabled
+                },
+              },
             },
             locale: {
               language: 'en',
