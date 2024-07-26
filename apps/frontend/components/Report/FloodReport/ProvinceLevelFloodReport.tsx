@@ -14,18 +14,19 @@ export const ProvinceLevelFloodReport = ({
   return (
     <Stack gap={theme.spacing(4)}>
       {floodReportTablesMapping.map(
-        (
-          { columns, columnGroup, columnHeaderHeight, hideTopRightBorder },
-          index,
-        ) => (
+        ({ columns, columnGroup, columnHeaderHeight, groupParams }, index) => (
           <ProvinceLevelReportTable
-            columns={typeof columns === 'function' ? columns(false) : columns}
-            columnGroup={columnGroup(false)}
-            data={report}
+            locationParams={{
+              columns: typeof columns === 'function' ? columns(false) : columns,
+              columnGroup,
+              groupParams,
+            }}
             key={index}
-            border={false}
-            columnHeaderHeight={columnHeaderHeight}
-            hideTopRightBorder={hideTopRightBorder}
+            disasterTableParams={{
+              data: report,
+              variant: 'open',
+              columnHeaderHeight: columnHeaderHeight,
+            }}
           />
         ),
       )}

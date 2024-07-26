@@ -1,34 +1,48 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const width = 150;
 
 const EducationNeedsColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumTemSch, FLOOD, width),
-  getColumnSetup(FloodSpecific.StuAcTemSch, FLOOD, width),
-  getColumnSetup(FloodSpecific.SchUseSafe, FLOOD, width),
-  getColumnSetup(FloodSpecific.NumStu, FLOOD, width),
-  getColumnSetup(FloodSpecific.NumSchStop, FLOOD, width),
-  getColumnSetup(FloodSpecific.NumStuNoCla, FLOOD, width),
+  getColumnSetup({
+    field: FloodSpecific.NumTemSch,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.StuAcTemSch,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.SchUseSafe,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumStu,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumSchStop,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumStuNoCla,
+    disaster: FLOOD,
+    width: width,
+  }),
 ];
 
-const EducationNeedsColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('educationNeeds', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const EducationNeedsColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('schoolStop', FLOOD),
     children: [
@@ -52,7 +66,14 @@ const EducationNeedsColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'educationNeeds',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const EducationNeedsSettings = {
   columns: EducationNeedsColumns,
   columnGroup: EducationNeedsColumnGroup,
+  groupParams,
 };

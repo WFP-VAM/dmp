@@ -1,38 +1,28 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const InfrastructureColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.RubberRoAff, FLOOD),
-  getColumnSetup(FloodSpecific.RubberRoDam, FLOOD),
-  getColumnSetup(FloodSpecific.ConcretAff, FLOOD),
-  getColumnSetup(FloodSpecific.ConcretDam, FLOOD),
-  getColumnSetup(FloodSpecific.RuralRoAff, FLOOD),
-  getColumnSetup(FloodSpecific.RuralRoDam, FLOOD),
-  getColumnSetup(FloodSpecific.BridgeAff, FLOOD),
-  getColumnSetup(FloodSpecific.BridgeDam, FLOOD),
-  getColumnSetup(FloodSpecific.BeleBridAff, FLOOD),
-  getColumnSetup(FloodSpecific.BeleBridDam, FLOOD),
-  getColumnSetup(FloodSpecific.DrainageAff, FLOOD),
-  getColumnSetup(FloodSpecific.DrainageDam, FLOOD),
+  getColumnSetup({ field: FloodSpecific.RubberRoAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.RubberRoDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.ConcretAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.ConcretDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.RuralRoAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.RuralRoDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.BridgeAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.BridgeDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.BeleBridAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.BeleBridDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.DrainageAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.DrainageDam, disaster: FLOOD }),
 ];
 
-const InfrastructureColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('infrastructure', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const InfrastructureColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('rubberRoad', FLOOD),
     children: [
@@ -77,7 +67,14 @@ const InfrastructureColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'infrastructure',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const InfrastructureColumnSettings = {
   columns: InfrastructureColumns,
   columnGroup: InfrastructureColumnGroup,
+  groupParams,
 };

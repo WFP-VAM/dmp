@@ -1,36 +1,66 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const WaterEducationHealthColumns: GridColDef[] = [
-  getColumnSetup(DroughtSpecific.NumWatStor, DROUGHT, 8 * 12),
-  getColumnSetup(DroughtSpecific.WatSorRepar, DROUGHT, 8 * 20),
-  getColumnSetup(DroughtSpecific.WatStoRepar, DROUGHT, 8 * 20),
-  getColumnSetup(DroughtSpecific.SolarNeed, DROUGHT, 8 * 14),
-  getColumnSetup(DroughtSpecific.FanNeed, DROUGHT, 100),
-  getColumnSetup(DroughtSpecific.WatStorNed, DROUGHT, 8 * 16),
-  getColumnSetup(DroughtSpecific.WatSorRep, DROUGHT, 8 * 20),
-  getColumnSetup(DroughtSpecific.WatStoRep, DROUGHT, 8 * 20),
-  getColumnSetup(DroughtSpecific.NuSolarNeed, DROUGHT, 8 * 16),
-  getColumnSetup(DroughtSpecific.NumFanNeed, DROUGHT, 100),
+  getColumnSetup({
+    field: DroughtSpecific.NumWatStor,
+    disaster: DROUGHT,
+    width: 8 * 12,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.WatSorRepar,
+    disaster: DROUGHT,
+    width: 8 * 20,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.WatStoRepar,
+    disaster: DROUGHT,
+    width: 8 * 20,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.SolarNeed,
+    disaster: DROUGHT,
+    width: 8 * 14,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.FanNeed,
+    disaster: DROUGHT,
+    width: 100,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.WatStorNed,
+    disaster: DROUGHT,
+    width: 8 * 16,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.WatSorRep,
+    disaster: DROUGHT,
+    width: 8 * 20,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.WatStoRep,
+    disaster: DROUGHT,
+    width: 8 * 20,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NuSolarNeed,
+    disaster: DROUGHT,
+    width: 8 * 16,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NumFanNeed,
+    disaster: DROUGHT,
+    width: 100,
+  }),
 ];
 
-const WaterEducationHealthColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('waterEducationHealth', DROUGHT, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const WaterEducationHealthColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('waterEducation', DROUGHT),
     children: [
@@ -53,7 +83,14 @@ const WaterEducationHealthColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'waterEducationHealth',
+  disaster: DROUGHT,
+  additionalChildren: [],
+};
+
 export const WaterEducationHealthColumnSettings = {
   columns: WaterEducationHealthColumns,
   columnGroup: WaterEducationHealthColumnGroup,
+  groupParams,
 };

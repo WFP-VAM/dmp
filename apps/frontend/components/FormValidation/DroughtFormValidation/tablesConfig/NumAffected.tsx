@@ -1,39 +1,30 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const NumAffectedColumns: GridColDef[] = [
-  getColumnSetup(DroughtSpecific.NumVillAff, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumFamAff, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumPeoAff, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumMe, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumFe, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumKid, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumOld, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumDisMising, DROUGHT),
-  getColumnSetup(DroughtSpecific.TNumDeath, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumMeDeath, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumFeDeath, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumKidDeath, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumOldDeath, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumDisDeath, DROUGHT),
+  getColumnSetup({ field: DroughtSpecific.NumVillAff, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.NumFamAff, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.NumPeoAff, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.NumMe, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.NumFe, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.NumKid, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.NumOld, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.NumDisMising, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.TNumDeath, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.NumMeDeath, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.NumFeDeath, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.NumKidDeath, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.NumOldDeath, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.NumDisDeath, disaster: DROUGHT }),
 ];
 
-const NumAffectedColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('victimsAffected', DROUGHT, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-      { field: DroughtSpecific.NumVillAff },
-    ],
-  },
+const NumAffectedColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('noWater', DROUGHT),
     children: [
@@ -59,7 +50,14 @@ const NumAffectedColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'victimsAffected',
+  disaster: DROUGHT,
+  additionalChildren: [{ field: DroughtSpecific.NumVillAff }],
+};
+
 export const NumAffectedColumnSettings = {
   columns: NumAffectedColumns,
   columnGroup: NumAffectedColumnGroup,
+  groupParams,
 };

@@ -1,31 +1,43 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const width = 200;
 
 const WaterNeedsColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumFamNoWa, FLOOD, width),
-  getColumnSetup(FloodSpecific.NumPeoNoWa, FLOOD, width),
-  getColumnSetup(FloodSpecific.TimeAceWa, FLOOD, width + 8 * 2),
-  getColumnSetup(FloodSpecific.NuFamNoWaEq, FLOOD, width + 8 * 2),
-  getColumnSetup(FloodSpecific.NuFamNoLat, FLOOD, width + 8 * 2),
+  getColumnSetup({
+    field: FloodSpecific.NumFamNoWa,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumPeoNoWa,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.TimeAceWa,
+    disaster: FLOOD,
+    width: width + 8 * 2,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NuFamNoWaEq,
+    disaster: FLOOD,
+    width: width + 8 * 2,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NuFamNoLat,
+    disaster: FLOOD,
+    width: width + 8 * 2,
+  }),
 ];
 
-const WaterNeedsColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('waterNeeds', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const WaterNeedsColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('noWater', FLOOD),
     children: [
@@ -35,7 +47,14 @@ const WaterNeedsColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'waterNeeds',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const WaterNeedsColumnSettings = {
   columns: WaterNeedsColumns,
   columnGroup: WaterNeedsColumnGroup,
+  groupParams,
 };

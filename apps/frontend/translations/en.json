@@ -36,9 +36,12 @@
     "submit": "Update"
   },
   "valStatus": {
-    "approved": "Approved",
-    "notApproved": "Rejected",
-    "onHold": "Not yet approved"
+    "approved-normal": "Approved",
+    "notApproved-normal": "Rejected",
+    "onHold-normal": "Not yet approved",
+    "approved-long": "Report approved",
+    "notApproved-long": "Report rejected",
+    "onHold-long": "Report not yet approved"
   },
   "navigation": {
     "home": "Home",
@@ -70,10 +73,10 @@
     "end_date": "To"
   },
   "form_page": {
-    "approve": "Approve",
-    "reject": "Reject",
+    "approve": "Approve Report",
+    "reject": "Reject Report",
     "submit": "Submit",
-    "edit": "Edit",
+    "edit": "Edit Report",
     "cancel": "Cancel"
   },
   "disasters": {
