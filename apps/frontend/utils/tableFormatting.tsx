@@ -92,6 +92,7 @@ const getLocationCountColumnSetup = (
   width: width,
   headerAlign: 'center',
   disableColumnMenu: true,
+  type: 'number',
   renderHeader: (params: GridColumnHeaderParams) => (
     <Typography variant="body2">
       <FormattedMessage id={`table.${disaster}.column.${params.field}`} />
