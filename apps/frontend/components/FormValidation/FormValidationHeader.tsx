@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { FloodSpecific } from '@wfp-dmp/interfaces';
+import { Dayjs } from 'dayjs';
 import { Control, Controller } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 
@@ -15,14 +16,34 @@ import { RegionFilters } from 'components/Filters/RegionFilters';
 import { DisasterSelect } from 'components/FormValidation/DisasterSelect';
 import { colors } from 'theme/muiTheme';
 
-import { FloodFormType } from './FloodFormType';
+import { DroughtFormType } from './DroughtFormValidation/DroughtFormType';
+import { FloodFormType } from './FloodFormValidation/FloodFormType';
+import { IncidentFormType } from './IncidentFormValidation/IncidentFormType';
 
-interface FloodHeaderProps {
-  control: Control<FloodFormType>;
+export type BaseFormType = {
+  region: {
+    province: string[];
+    district: string[];
+    commune: string[];
+  };
+  interviewer: string;
+  disTyp: string;
+  phone: string;
+  reportDate: Dayjs;
+  incidentDate: Dayjs;
+};
+
+interface FormValidationHeaderProps {
+  control: Control<FloodFormType | DroughtFormType | IncidentFormType>;
   isEditMode: boolean;
+  isFloodType?: boolean;
 }
 
-const FloodHeader = ({ control, isEditMode }: FloodHeaderProps) => {
+const FormValidationHeader = ({
+  control,
+  isEditMode,
+  isFloodType = false,
+}: FormValidationHeaderProps) => {
   const theme = useTheme();
 
   return (
@@ -112,29 +133,31 @@ const FloodHeader = ({ control, isEditMode }: FloodHeaderProps) => {
               />
             )}
           />
-          <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
-            <Typography width="5rem" color={colors.gray2}>
-              <FormattedMessage id="table.FLOOD.floodN" />
-            </Typography>
-            <Controller
-              name="specific"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <TextField
-                  disabled={!isEditMode}
-                  type="number"
-                  value={value.floodN}
-                  sx={{ width: 75 }}
-                  onChange={event =>
-                    onChange({
-                      ...value,
-                      [FloodSpecific.floodN]: event.target.value,
-                    })
-                  }
-                />
-              )}
-            />
-          </Stack>
+          {isFloodType && (
+            <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
+              <Typography width="5rem" color={colors.gray2}>
+                <FormattedMessage id="table.FLOOD.floodN" />
+              </Typography>
+              <Controller
+                name="specific"
+                control={control as Control<FloodFormType>}
+                render={({ field: { value, onChange } }) => (
+                  <TextField
+                    disabled={!isEditMode}
+                    type="number"
+                    value={value.floodN}
+                    sx={{ width: 75 }}
+                    onChange={event =>
+                      onChange({
+                        ...value,
+                        [FloodSpecific.floodN]: event.target.value,
+                      })
+                    }
+                  />
+                )}
+              />
+            </Stack>
+          )}
           <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
             <Typography width="5rem" color={colors.gray2}>
               <FormattedMessage id="forms_table.headers.entry_name" />
@@ -183,4 +206,4 @@ const FloodHeader = ({ control, isEditMode }: FloodHeaderProps) => {
   );
 };
 
-export default FloodHeader;
+export default FormValidationHeader;

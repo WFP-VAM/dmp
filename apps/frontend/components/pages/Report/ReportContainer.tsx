@@ -26,7 +26,7 @@ const defaultSearchReportData: SearchFormData = {
     commune: [],
   },
   dateRange: {
-    startDate: dayjs().subtract(10, 'years'),
+    startDate: dayjs().subtract(1, 'month'),
     endDate: dayjs(),
   },
 };

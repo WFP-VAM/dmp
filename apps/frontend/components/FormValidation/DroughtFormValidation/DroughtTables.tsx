@@ -1,3 +1,4 @@
+import { Stack, useTheme } from '@mui/material';
 import { droughtSpecificKeys } from '@wfp-dmp/interfaces';
 import { useIntl } from 'react-intl';
 
@@ -23,9 +24,10 @@ export const DroughtTables = ({
   isEditMode,
 }: IProps): JSX.Element => {
   const intl = useIntl();
+  const theme = useTheme();
 
   return (
-    <>
+    <Stack gap={theme.spacing(4)}>
       {getDroughtTablesMapping(intl).map(
         ({ columns, columnGroup, groupParams }, index) => (
           <DisasterTable
@@ -39,7 +41,7 @@ export const DroughtTables = ({
                   })
                 : columnGroup
             }
-            variant="bordered"
+            variant="open"
             data={[{ id: 1, ...value }]}
             onChange={onChange}
             isEditable={isEditMode}
@@ -47,6 +49,6 @@ export const DroughtTables = ({
           />
         ),
       )}
-    </>
+    </Stack>
   );
 };

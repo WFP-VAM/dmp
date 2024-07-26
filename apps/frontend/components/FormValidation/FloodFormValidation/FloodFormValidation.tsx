@@ -16,10 +16,10 @@ import { usePatchForm } from 'services/api/kobo/usePatchForm';
 import { formatFormToRaw } from 'utils/formatFormToRaw';
 import { formatFloodFields } from 'utils/formatRawToForm';
 
+import FormValidationFooter from '../FormValidationFooter';
+import FormValidationHeader from '../FormValidationHeader';
 import { FloodCheckBoxes } from './FloodCheckBoxes';
-import FloodFooter from './FloodFooter';
 import { FloodFormType } from './FloodFormType';
-import FloodHeader from './FloodHeader';
 import { FloodTables } from './FloodTables';
 
 export const FloodFormValidation = ({
@@ -88,7 +88,12 @@ export const FloodFormValidation = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack gap={theme.spacing(6)}>
-        <FloodHeader control={control} isEditMode={isEditMode} />
+        <FormValidationHeader
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+          control={control as any}
+          isEditMode={isEditMode}
+          isFloodType
+        />
         <Controller
           name="specific"
           control={control}
@@ -111,9 +116,7 @@ export const FloodFormValidation = ({
             />
           )}
         />
-        {/* spacer for the footer when we are fully scrolled */}
-        <div style={{ minHeight: '5rem' }} />
-        <FloodFooter
+        <FormValidationFooter
           isEditMode={isEditMode}
           setIsEditMode={setIsEditMode}
           setShouldReset={setShouldReset}
