@@ -38,12 +38,13 @@ const FloodHeader = ({ control, isEditMode }: FloodHeaderProps) => {
             render={({ field: { value, onChange } }) => (
               <RegionFilters
                 value={{
-                  province: [value.province],
-                  district: [value.district],
-                  commune: [value.commune],
+                  province: value.province,
+                  district: value.district,
+                  commune: value.commune,
                 }}
                 onChange={onChange}
                 disableAll={!isEditMode}
+                disableMulti
               />
             )}
           />

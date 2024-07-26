@@ -29,12 +29,14 @@ interface Props {
   value: Region;
   onChange: (regionValues: Region) => void;
   disableAll?: boolean;
+  disableMulti?: boolean;
 }
 
 export const RegionFilters = ({
   value,
   onChange,
   disableAll,
+  disableMulti,
 }: Props): JSX.Element => {
   const { user } = useAuth();
   const theme = useTheme();
@@ -67,6 +69,7 @@ export const RegionFilters = ({
     <Stack direction="row" gap={theme.spacing(1)} height="100%">
       <FormControl>
         <MultiSelect
+          value={value.province}
           options={allowedProvinces}
           onChange={v => {
             onChange({ province: v, district: [], commune: [] });
@@ -74,6 +77,7 @@ export const RegionFilters = ({
           placeholder="common.province"
           allSelectedText="validation_search_params.all-province"
           formatPrefix="province"
+          disableMulti={disableMulti}
           selectProps={{
             disabled: disableAll === true || user === undefined ? true : false,
             startAdornment: (
@@ -94,6 +98,7 @@ export const RegionFilters = ({
 
       <FormControl>
         <MultiSelect
+          value={value.district}
           options={districtsFiltered}
           onChange={v => {
             onChange({ ...value, district: v, commune: [] });
@@ -101,6 +106,7 @@ export const RegionFilters = ({
           placeholder="common.district"
           allSelectedText="validation_search_params.all-district"
           formatPrefix="district"
+          disableMulti={disableMulti}
           selectProps={{
             disabled: disableAll === true || value.province.length === 0,
             startAdornment: (
@@ -121,6 +127,7 @@ export const RegionFilters = ({
 
       <FormControl>
         <MultiSelect
+          value={value.commune}
           options={communesFiltered}
           onChange={v => {
             onChange({ ...value, commune: v });
@@ -128,6 +135,7 @@ export const RegionFilters = ({
           placeholder="common.commune"
           allSelectedText="validation_search_params.all-commune"
           formatPrefix="commune"
+          disableMulti={disableMulti}
           selectProps={{
             disabled: disableAll === true || value.district.length === 0,
             startAdornment: (

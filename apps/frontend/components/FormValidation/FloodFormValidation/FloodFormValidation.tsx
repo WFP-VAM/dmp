@@ -38,9 +38,9 @@ export const FloodFormValidation = ({
   const { control, handleSubmit, reset } = useForm<FloodFormType>({
     defaultValues: {
       region: {
-        province: formattedForm.province,
-        district: formattedForm.district,
-        commune: formattedForm.commune,
+        province: [formattedForm.province],
+        district: [formattedForm.district],
+        commune: [formattedForm.commune],
       },
       interviewer: formattedForm.entryName,
       disTyp: formattedForm.disTyp,
