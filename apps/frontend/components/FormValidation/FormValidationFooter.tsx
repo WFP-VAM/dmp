@@ -56,7 +56,7 @@ const FormValidationFooter = ({
         left={0}
         right={0}
       >
-        <ValidationIndicator valStatus={status} textVersion />
+        <ValidationIndicator valStatus={status} textVersion="long" />
         <Stack flexDirection="row" gap={theme.spacing(5)}>
           {!isEditMode && (
             <Button
