@@ -13,7 +13,6 @@ import { Control, Controller } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 
 import { RegionFilters } from 'components/Filters/RegionFilters';
-import { DisasterSelect } from 'components/FormValidation/DisasterSelect';
 import { colors } from 'theme/muiTheme';
 
 import { DroughtFormType } from './DroughtFormValidation/DroughtFormType';
@@ -121,18 +120,6 @@ const FormValidationHeader = ({
         justifyContent="space-between"
       >
         <Stack direction="row" gap={theme.spacing(5)}>
-          <Controller
-            name="disTyp"
-            control={control}
-            render={({ field: { value, onChange } }) => (
-              <DisasterSelect
-                disabled={!isEditMode}
-                value={value}
-                onChange={onChange}
-                showLabel={false}
-              />
-            )}
-          />
           {isFloodType && (
             <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
               <Typography width="5rem" color={colors.gray2}>
