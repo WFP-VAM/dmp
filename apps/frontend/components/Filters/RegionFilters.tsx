@@ -29,7 +29,7 @@ interface Props {
   value: Region;
   onChange: (regionValues: Region) => void;
   disableAll?: boolean;
-  disableMulti?: boolean;
+  disableMulti: boolean;
 }
 
 export const RegionFilters = ({
@@ -84,7 +84,7 @@ export const RegionFilters = ({
               <InputAdornment position="start">
                 <LocationOnIcon
                   sx={{
-                    color: 'black',
+                    color: disableMulti ? 'grey' : 'black',
                     minWidth: '20px',
                     marginLeft: -1,
                     marginRight: -2,
@@ -113,7 +113,7 @@ export const RegionFilters = ({
               <InputAdornment position="start">
                 <LocationOnIcon
                   sx={{
-                    color: 'black',
+                    color: disableMulti ? 'grey' : 'black',
                     minWidth: '20px',
                     marginLeft: -1,
                     marginRight: -2,
@@ -142,7 +142,7 @@ export const RegionFilters = ({
               <InputAdornment position="start">
                 <LocationOnIcon
                   sx={{
-                    color: 'black',
+                    color: disableMulti ? 'grey' : 'black',
                     minWidth: '20px',
                     marginLeft: -1,
                     marginRight: -2,

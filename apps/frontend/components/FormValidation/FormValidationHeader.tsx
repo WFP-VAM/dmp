@@ -46,7 +46,7 @@ const FormValidationHeader = ({
   const theme = useTheme();
 
   return (
-    <Stack gap={theme.spacing(2)} ml={2}>
+    <Stack gap={theme.spacing(2)} ml={2} style={{ fontSize: '14px' }}>
       <Stack direction="row" gap={theme.spacing(4)}>
         <Stack direction="row" gap={theme.spacing(2)} alignItems="center">
           <Typography color={colors.gray2}>
@@ -70,7 +70,7 @@ const FormValidationHeader = ({
           />
         </Stack>
         <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
-          <Typography width="3rem" color={colors.gray2}>
+          <Typography maxWidth="3rem" color={colors.gray2}>
             <FormattedMessage id="forms_table.headers.entry_date" />
           </Typography>
           <Controller
@@ -81,7 +81,7 @@ const FormValidationHeader = ({
                 disabled={!isEditMode}
                 value={value}
                 onChange={onChange}
-                sx={{ width: 150 }}
+                sx={{ width: 140, backgroundColor: 'white' }}
                 slotProps={{
                   inputAdornment: {
                     position: 'start',
@@ -92,7 +92,7 @@ const FormValidationHeader = ({
           />
         </Stack>
         <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
-          <Typography width="5rem" color={colors.gray2}>
+          <Typography maxWidth="4rem" color={colors.gray2}>
             <FormattedMessage id="forms_table.headers.dis_date" />
           </Typography>
           <Controller
@@ -103,7 +103,7 @@ const FormValidationHeader = ({
                 disabled={!isEditMode}
                 value={value}
                 onChange={onChange}
-                sx={{ width: 150 }}
+                sx={{ width: 140, backgroundColor: 'white' }}
                 slotProps={{
                   inputAdornment: {
                     position: 'start',
@@ -133,7 +133,7 @@ const FormValidationHeader = ({
                     disabled={!isEditMode}
                     type="number"
                     value={value.floodN}
-                    sx={{ width: 75 }}
+                    sx={{ width: 75, backgroundColor: 'white' }}
                     onChange={event =>
                       onChange({
                         ...value,
@@ -157,7 +157,7 @@ const FormValidationHeader = ({
                   disabled={!isEditMode}
                   value={value}
                   onChange={onChange}
-                  sx={{ width: 200 }}
+                  sx={{ width: 200, backgroundColor: 'white' }}
                 />
               )}
             />
@@ -182,7 +182,7 @@ const FormValidationHeader = ({
                   type="tel"
                   value={value}
                   onChange={onChange}
-                  sx={{ width: 200 }}
+                  sx={{ width: 200, backgroundColor: 'white' }}
                 />
               )}
             />
