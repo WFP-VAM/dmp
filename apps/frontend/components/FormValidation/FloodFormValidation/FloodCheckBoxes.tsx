@@ -44,11 +44,11 @@ export const FloodCheckBoxes = ({
     <FormControl component="fieldset" sx={{ m: 3 }} variant="standard">
       <FormGroup>
         <FormLabel>
-          <Typography variant="h5">
+          <Typography fontWeight={600} fontSize={16}>
             <FormattedMessage id="table.FLOOD.securityIssues.title" />
           </Typography>
         </FormLabel>
-        <Box display="flex" flexDirection="row" flexWrap="wrap">
+        <Box display="flex" flexDirection="row" flexWrap="wrap" pt={1}>
           {range(1, 15).map(threatNum => {
             const key = threatNum.toString();
 
