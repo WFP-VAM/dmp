@@ -1,3 +1,5 @@
+import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
+
 import { AgricultureColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/Agriculture';
 import { EducationNeedsSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/EducationNeeds';
 import { HealthNeedsColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/HealthNeeds';
@@ -12,7 +14,12 @@ import { WaterNeedsColumnSettings } from 'components/FormValidation/FloodFormVal
 import { ReportFoodNeedsColumnSettings } from './tablesConfig/ReportFoodNeeds';
 import { ReportThreatColumnSettings } from './tablesConfig/ReportThreat';
 
-export const floodReportTablesMapping = [
+export const floodReportTablesMapping: {
+  columns: GridColDef[] | ((detailed: boolean) => GridColDef[]);
+  columnGroup: (detailed: boolean) => GridColumnGroupingModel;
+  columnHeaderHeight?: 'large' | 'normal';
+  hideTopRightBorder?: boolean;
+}[] = [
   NumAffected1ColumnSettings,
   NumAffected2ColumnSettings,
   HouseSocialColumnSettings,

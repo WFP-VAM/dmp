@@ -1,20 +1,29 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
+const width = 200;
+
 const HealthNeedsColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NonActingH, FLOOD, 200),
-  getColumnSetup(FloodSpecific.PeoCanAceH, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumDoctor, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumNurse, FLOOD, 200),
-  getColumnSetup(FloodSpecific.NumStaff, FLOOD, 200),
+  getColumnSetup(FloodSpecific.NonActingH, FLOOD, width),
+  getColumnSetup(FloodSpecific.PeoCanAceH, FLOOD, width),
+  getColumnSetup(FloodSpecific.NumDoctor, FLOOD, width),
+  getColumnSetup(FloodSpecific.NumNurse, FLOOD, width),
+  getColumnSetup(FloodSpecific.NumStaff, FLOOD, width),
 ];
 
-const HealthNeedsColumnGroup: GridColumnGroupingModel = [
+const HealthNeedsColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   {
-    ...getGroupSetup('healthNeeds', FLOOD),
+    ...getGroupSetup('healthNeeds', FLOOD, true),
     children: [
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
       { field: FloodSpecific.NonActingH },
       { field: FloodSpecific.PeoCanAceH },
       { field: FloodSpecific.NumDoctor },
@@ -27,4 +36,5 @@ const HealthNeedsColumnGroup: GridColumnGroupingModel = [
 export const HealthNeedsColumnSettings = {
   columns: HealthNeedsColumns,
   columnGroup: HealthNeedsColumnGroup,
+  hideTopRightBorder: true,
 };

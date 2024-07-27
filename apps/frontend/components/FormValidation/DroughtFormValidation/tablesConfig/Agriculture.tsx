@@ -1,5 +1,5 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
@@ -17,47 +17,61 @@ const AgricultureColumns: GridColDef[] = [
   getColumnSetup(DroughtSpecific.BirdDeath, DROUGHT, 70),
 ];
 
-const AgricultureColumnGroup: GridColumnGroupingModel = [
+const AgricultureColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   {
-    ...getGroupSetup('agriculture', DROUGHT),
+    ...getGroupSetup('EMPTY', DROUGHT),
+    headerClassName: 'empty-group-header',
     children: [
-      { field: DroughtSpecific.NumVillAff },
       {
-        ...getGroupSetup('plantation', DROUGHT),
+        ...getGroupSetup('agriculture', DROUGHT, true),
         children: [
-          { field: DroughtSpecific.FamAgriAff },
-          {
-            ...getGroupSetup('crops', DROUGHT),
-            children: [
-              { field: DroughtSpecific.FarmAff },
-              { field: DroughtSpecific.FarmDam },
-            ],
-          },
-          {
-            ...getGroupSetup('transplanted', DROUGHT),
-            children: [
-              { field: DroughtSpecific.SamNabAff },
-              { field: DroughtSpecific.SamNabDam },
-            ],
-          },
-          {
-            ...getGroupSetup('paddy', DROUGHT),
-            children: [
-              { field: DroughtSpecific.PaddyAff },
-              { field: DroughtSpecific.PaddyDam },
-            ],
-          },
+          ...(detailed
+            ? [{ field: KoboCommonKeys.location }]
+            : [
+                { field: KoboCommonKeys.province },
+                { field: KoboCommonKeys.district },
+                { field: KoboCommonKeys.commune },
+              ]),
+        ],
+      },
+    ],
+  },
+  {
+    ...getGroupSetup('plantation', DROUGHT),
+    headerClassName: 'header-top-cell no-border-bottom',
+    children: [
+      { field: DroughtSpecific.FamAgriAff },
+      {
+        ...getGroupSetup('crops', DROUGHT),
+        children: [
+          { field: DroughtSpecific.FarmAff },
+          { field: DroughtSpecific.FarmDam },
         ],
       },
       {
-        ...getGroupSetup('livestock', DROUGHT),
+        ...getGroupSetup('transplanted', DROUGHT),
         children: [
-          { field: DroughtSpecific.CowDeath },
-          { field: DroughtSpecific.BaffoDeath },
-          { field: DroughtSpecific.PigDeath },
-          { field: DroughtSpecific.BirdDeath },
+          { field: DroughtSpecific.SamNabAff },
+          { field: DroughtSpecific.SamNabDam },
         ],
       },
+      {
+        ...getGroupSetup('paddy', DROUGHT),
+        children: [
+          { field: DroughtSpecific.PaddyAff },
+          { field: DroughtSpecific.PaddyDam },
+        ],
+      },
+    ],
+  },
+  {
+    ...getGroupSetup('livestock', DROUGHT),
+    headerClassName: 'header-top-cell no-border-bottom',
+    children: [
+      { field: DroughtSpecific.CowDeath },
+      { field: DroughtSpecific.BaffoDeath },
+      { field: DroughtSpecific.PigDeath },
+      { field: DroughtSpecific.BirdDeath },
     ],
   },
 ];

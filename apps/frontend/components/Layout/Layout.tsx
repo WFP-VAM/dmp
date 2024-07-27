@@ -9,7 +9,7 @@ export interface LayoutProps {
 export const Layout = ({
   alignItems,
   children,
-  backgroundColor = '#f5f5f5',
+  backgroundColor = '#f9f7f7',
 }: React.PropsWithChildren<LayoutProps>): JSX.Element => {
   const theme = useTheme();
 
@@ -18,14 +18,14 @@ export const Layout = ({
   return (
     <Box
       flexGrow={1}
+      width="100vw"
       display="flex"
-      height="100vh"
       flexDirection="column"
       alignItems={alignItems ?? 'left'}
       sx={{ p: 1 }}
       style={{ backgroundColor, paddingTop: theme.spacing(5) }}
     >
-      <Box maxWidth={1500}>{children}</Box>
+      {children}
     </Box>
   );
 };

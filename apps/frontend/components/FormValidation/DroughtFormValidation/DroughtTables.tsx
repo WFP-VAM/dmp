@@ -25,10 +25,12 @@ export const DroughtTables = ({
 
   return (
     <>
-      {getDroughtTablesMapping(intl).map((tableSetting, index) => (
+      {getDroughtTablesMapping(intl).map(({ columns, columnGroup }, index) => (
         <DisasterTable
-          columns={tableSetting.columns}
-          columnGroup={tableSetting.columnGroup}
+          columns={columns}
+          columnGroup={
+            typeof columnGroup === 'function' ? columnGroup(false) : columnGroup
+          }
           data={[{ id: 1, ...value }]}
           onChange={onChange}
           isEditable={isEditMode}

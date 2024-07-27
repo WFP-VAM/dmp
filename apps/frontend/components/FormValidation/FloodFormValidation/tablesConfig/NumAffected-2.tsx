@@ -1,62 +1,73 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
+const colWidth = 8 * 9;
+
 const NumAffected2Columns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumFamEva, FLOOD, 70),
-  getColumnSetup(FloodSpecific.NumPeoEva, FLOOD, 70),
-  getColumnSetup(FloodSpecific.NumMeEva, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumFeEva, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumKidEva, FLOOD, 70),
-  getColumnSetup(FloodSpecific.NumOldEva, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumDisEva, FLOOD, 70),
-  getColumnSetup(FloodSpecific.NumFamRe, FLOOD, 70),
-  getColumnSetup(FloodSpecific.NumPeoRe, FLOOD, 70),
-  getColumnSetup(FloodSpecific.NumMeRe, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumFeRe, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumKidRe, FLOOD, 70),
-  getColumnSetup(FloodSpecific.NumOldRe, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumDisRe, FLOOD, 70),
-  getColumnSetup(FloodSpecific.NumSafePla, FLOOD, 100),
-  getColumnSetup(FloodSpecific.NumPeoSEC, FLOOD, 100),
+  getColumnSetup(FloodSpecific.NumFamEva, FLOOD),
+  getColumnSetup(FloodSpecific.NumPeoEva, FLOOD),
+  getColumnSetup(FloodSpecific.NumMeEva, FLOOD),
+  getColumnSetup(FloodSpecific.NumFeEva, FLOOD),
+  getColumnSetup(FloodSpecific.NumKidEva, FLOOD),
+  getColumnSetup(FloodSpecific.NumOldEva, FLOOD),
+  getColumnSetup(FloodSpecific.NumDisEva, FLOOD),
+  getColumnSetup(FloodSpecific.NumFamRe, FLOOD),
+  getColumnSetup(FloodSpecific.NumPeoRe, FLOOD),
+  getColumnSetup(FloodSpecific.NumMeRe, FLOOD),
+  getColumnSetup(FloodSpecific.NumFeRe, FLOOD),
+  getColumnSetup(FloodSpecific.NumKidRe, FLOOD),
+  getColumnSetup(FloodSpecific.NumOldRe, FLOOD),
+  getColumnSetup(FloodSpecific.NumDisRe, FLOOD),
+  getColumnSetup(FloodSpecific.NumSafePla, FLOOD),
+  getColumnSetup(FloodSpecific.NumPeoSEC, FLOOD, colWidth + 8 * 6),
 ];
 
-const NumAffected2ColumnGroup: GridColumnGroupingModel = [
+const NumAffected2ColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
-    ...getGroupSetup('victimsAffected', FLOOD),
+    ...getGroupSetup('victimsAffected', FLOOD, true),
     children: [
-      {
-        ...getGroupSetup('evacuated', FLOOD),
-        children: [
-          { field: FloodSpecific.NumFamEva },
-          { field: FloodSpecific.NumPeoEva },
-          { field: FloodSpecific.NumMeEva },
-          { field: FloodSpecific.NumFeEva },
-          { field: FloodSpecific.NumKidEva },
-          { field: FloodSpecific.NumOldEva },
-          { field: FloodSpecific.NumDisEva },
-        ],
-      },
-      {
-        ...getGroupSetup('relocated', FLOOD),
-        children: [
-          { field: FloodSpecific.NumFamRe },
-          { field: FloodSpecific.NumPeoRe },
-          { field: FloodSpecific.NumMeRe },
-          { field: FloodSpecific.NumFeRe },
-          { field: FloodSpecific.NumKidRe },
-          { field: FloodSpecific.NumOldRe },
-          { field: FloodSpecific.NumDisRe },
-        ],
-      },
-      {
-        ...getGroupSetup('safeLocation', FLOOD),
-        children: [
-          { field: FloodSpecific.NumSafePla },
-          { field: FloodSpecific.NumPeoSEC },
-        ],
-      },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
+    ],
+  },
+  {
+    ...getGroupSetup('evacuated', FLOOD),
+    children: [
+      { field: FloodSpecific.NumFamEva },
+      { field: FloodSpecific.NumPeoEva },
+      { field: FloodSpecific.NumMeEva },
+      { field: FloodSpecific.NumFeEva },
+      { field: FloodSpecific.NumKidEva },
+      { field: FloodSpecific.NumOldEva },
+      { field: FloodSpecific.NumDisEva },
+    ],
+  },
+  {
+    ...getGroupSetup('relocated', FLOOD),
+    children: [
+      { field: FloodSpecific.NumFamRe },
+      { field: FloodSpecific.NumPeoRe },
+      { field: FloodSpecific.NumMeRe },
+      { field: FloodSpecific.NumFeRe },
+      { field: FloodSpecific.NumKidRe },
+      { field: FloodSpecific.NumOldRe },
+      { field: FloodSpecific.NumDisRe },
+    ],
+  },
+  {
+    ...getGroupSetup('safeLocation', FLOOD),
+    children: [
+      { field: FloodSpecific.NumSafePla },
+      { field: FloodSpecific.NumPeoSEC },
     ],
   },
 ];

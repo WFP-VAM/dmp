@@ -1,6 +1,7 @@
 import { Stack, useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import { debounce } from 'lodash'; // Import debounce from lodash
 import React, { ReactNode } from 'react';
 
 import NavBarButtons from './NavBarButtons';
@@ -15,20 +16,23 @@ export const NavBar = ({ children }: NavBarProps): JSX.Element => {
   const [shrink, setShrink] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = debounce(() => {
       const distanceY = document.documentElement.scrollTop;
-      // TODO: increase maybe?
       const shrinkOn = 50;
-      if (distanceY > shrinkOn) {
+      if (distanceY > shrinkOn && !shrink) {
         setShrink(true);
-      } else {
+      } else if (distanceY <= shrinkOn && shrink) {
         setShrink(false);
       }
-    };
+    }, 100);
+
     window.addEventListener('scroll', handleScroll);
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      handleScroll.cancel(); // Cancel any pending debounced calls
+    };
+  }, [shrink]);
 
   return (
     <>

@@ -1,42 +1,53 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
+const width = 150;
+
 const EducationNeedsColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumTemSch, FLOOD, 150),
-  getColumnSetup(FloodSpecific.StuAcTemSch, FLOOD, 150),
-  getColumnSetup(FloodSpecific.SchUseSafe, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumStu, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumSchStop, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumStuNoCla, FLOOD, 150),
+  getColumnSetup(FloodSpecific.NumTemSch, FLOOD, width),
+  getColumnSetup(FloodSpecific.StuAcTemSch, FLOOD, width),
+  getColumnSetup(FloodSpecific.SchUseSafe, FLOOD, width),
+  getColumnSetup(FloodSpecific.NumStu, FLOOD, width),
+  getColumnSetup(FloodSpecific.NumSchStop, FLOOD, width),
+  getColumnSetup(FloodSpecific.NumStuNoCla, FLOOD, width),
 ];
 
-const EducationNeedsColumnGroup: GridColumnGroupingModel = [
+const EducationNeedsColumnGroup = (
+  detailed: boolean,
+): GridColumnGroupingModel => [
   {
-    ...getGroupSetup('educationNeeds', FLOOD),
+    ...getGroupSetup('educationNeeds', FLOOD, true),
     children: [
-      {
-        ...getGroupSetup('schoolStop', FLOOD),
-        children: [
-          { field: FloodSpecific.NumTemSch },
-          { field: FloodSpecific.StuAcTemSch },
-        ],
-      },
-      {
-        ...getGroupSetup('schoolNeeded', FLOOD),
-        children: [
-          { field: FloodSpecific.SchUseSafe },
-          { field: FloodSpecific.NumStu },
-        ],
-      },
-      {
-        ...getGroupSetup('schoolShelter', FLOOD),
-        children: [
-          { field: FloodSpecific.NumSchStop },
-          { field: FloodSpecific.NumStuNoCla },
-        ],
-      },
+      ...(detailed
+        ? [{ field: KoboCommonKeys.location }]
+        : [
+            { field: KoboCommonKeys.province },
+            { field: KoboCommonKeys.district },
+            { field: KoboCommonKeys.commune },
+          ]),
+    ],
+  },
+  {
+    ...getGroupSetup('schoolStop', FLOOD),
+    children: [
+      { field: FloodSpecific.NumTemSch },
+      { field: FloodSpecific.StuAcTemSch },
+    ],
+  },
+  {
+    ...getGroupSetup('schoolNeeded', FLOOD),
+    children: [
+      { field: FloodSpecific.SchUseSafe },
+      { field: FloodSpecific.NumStu },
+    ],
+  },
+  {
+    ...getGroupSetup('schoolShelter', FLOOD),
+    children: [
+      { field: FloodSpecific.NumSchStop },
+      { field: FloodSpecific.NumStuNoCla },
     ],
   },
 ];

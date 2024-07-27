@@ -67,6 +67,7 @@ export const FloodFormValidation = ({
   // We set this state to avoid race condition between a field update and the reset coming from react hook form
   const [shouldReset, setShouldReset] = useState(false);
 
+  console.log({ isEditMode });
   useEffect(() => {
     if (shouldReset) {
       reset();
@@ -209,7 +210,7 @@ export const FloodFormValidation = ({
       <Box display="flex" justifyContent="center">
         {!isEditMode && (
           <Button
-            sx={{ color: 'white', margin: 2 }}
+            sx={{ color: 'black', margin: 2, border: '1px solid black' }}
             onClick={() => {
               setIsEditMode(true);
             }}
