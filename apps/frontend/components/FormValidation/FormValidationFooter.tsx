@@ -113,7 +113,9 @@ const FormValidationFooter = ({
             disabled={isMutating}
             startIcon={<Cancel />}
             onClick={() => {
-              void trigger(ValidationStatusValue.notApproved);
+              void trigger(ValidationStatusValue.notApproved).then(() => {
+                window.close();
+              });
             }}
             endIcon={
               isMutating ? <CircularProgress color="inherit" size={20} /> : null
@@ -131,7 +133,9 @@ const FormValidationFooter = ({
             startIcon={<CheckCircle />}
             disabled={isMutating}
             onClick={() => {
-              void trigger(ValidationStatusValue.approved);
+              void trigger(ValidationStatusValue.approved).then(() => {
+                window.close();
+              });
             }}
             endIcon={
               isMutating ? <CircularProgress color="inherit" size={20} /> : null
