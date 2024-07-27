@@ -2,8 +2,9 @@ import { Stack, useTheme } from '@mui/material';
 import { incidentSpecificKeys } from '@wfp-dmp/interfaces';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
+import { wrapGroupAsTitle } from 'utils/tableFormatting';
 
-import { incidenTablesMapping } from './incidentTablesMapping';
+import { incidentTablesMapping } from './incidentTablesMapping';
 
 export type IncidentSpecificType = Record<
   keyof typeof incidentSpecificKeys,
@@ -25,16 +26,23 @@ export const IncidentTables = ({
 
   return (
     <Stack gap={theme.spacing(4)}>
-      {incidenTablesMapping.map(({ columns, columnGroup }, index) => (
-        <DisasterTable
-          columns={columns}
-          columnGroup={columnGroup(false)}
-          data={[{ id: 1, ...value }]}
-          onChange={onChange}
-          isEditable={isEditMode}
-          key={index}
-        />
-      ))}
+      {incidentTablesMapping.map(
+        ({ columns, columnGroup, groupParams }, index) => {
+          const group = wrapGroupAsTitle({ columns, columnGroup, groupParams });
+
+          return (
+            <DisasterTable
+              columns={columns}
+              columnGroup={group}
+              data={[{ id: 1, ...value }]}
+              onChange={onChange}
+              isEditable={isEditMode}
+              variant="open"
+              key={index}
+            />
+          );
+        },
+      )}
     </Stack>
   );
 };

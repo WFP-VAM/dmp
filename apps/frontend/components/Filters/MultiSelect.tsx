@@ -23,6 +23,7 @@ const MenuProps = {
 };
 
 interface MultiSelectProps {
+  value?: string[];
   options: string[];
   onChange: (v: string[]) => void;
   placeholder: string;
@@ -42,6 +43,7 @@ interface MultiSelectProps {
       | 'defaultValue'
     >
   >;
+  disableMulti?: boolean;
 }
 
 const MultiSelect = ({
@@ -52,9 +54,11 @@ const MultiSelect = ({
   formatPrefix,
   width = 200,
   selectProps = {},
+  value: propValue = [],
+  disableMulti = false,
 }: MultiSelectProps) => {
   const intl = useIntl();
-  const [value, setValue] = React.useState<string[]>([]);
+  const [value, setValue] = React.useState<string[]>(propValue);
 
   React.useEffect(() => {
     const filtered = value.filter(x => options.includes(x));
@@ -79,8 +83,9 @@ const MultiSelect = ({
     // On autofill we get a stringified value.
     const newVal =
       typeof newValue === 'string' ? newValue.split(',') : newValue;
-    setValue(newVal);
-    onChange(newVal);
+    const keepLast = disableMulti ? [newVal[newVal.length - 1]] : newVal;
+    setValue(keepLast);
+    onChange(keepLast);
   };
 
   return (
@@ -110,19 +115,21 @@ const MultiSelect = ({
         MenuProps={MenuProps}
         {...selectProps}
       >
-        <MenuItem key="allSelected" value="all">
-          <Checkbox
-            checked={isAllSelected}
-            indeterminate={value.length > 0 && value.length < options.length}
-          />
-          <ListItemText
-            primary={
-              <Typography fontWeight="bold">
-                <FormattedMessage id={allSelectedText} />
-              </Typography>
-            }
-          />
-        </MenuItem>
+        {!disableMulti && (
+          <MenuItem key="allSelected" value="all">
+            <Checkbox
+              checked={isAllSelected}
+              indeterminate={value.length > 0 && value.length < options.length}
+            />
+            <ListItemText
+              primary={
+                <Typography fontWeight="bold">
+                  <FormattedMessage id={allSelectedText} />
+                </Typography>
+              }
+            />
+          </MenuItem>
+        )}
         {options.map(option => (
           <MenuItem key={option} value={option}>
             <Checkbox checked={value.indexOf(option) > -1} />

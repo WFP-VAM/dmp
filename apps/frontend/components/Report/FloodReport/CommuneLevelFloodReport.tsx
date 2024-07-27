@@ -13,15 +13,22 @@ export const CommuneLevelFloodReport = ({
 
   return (
     <Stack gap={theme.spacing(4)}>
-      {floodReportTablesMapping.map(({ columns, columnGroup }, index) => (
-        <CommuneLevelReportTable
-          columns={typeof columns === 'function' ? columns(true) : columns}
-          columnGroup={columnGroup(true)}
-          data={report}
-          key={index}
-          border={false}
-        />
-      ))}
+      {floodReportTablesMapping.map(
+        ({ columns, columnGroup, groupParams }, index) => (
+          <CommuneLevelReportTable
+            locationParams={{
+              columns: typeof columns === 'function' ? columns(true) : columns,
+              columnGroup,
+              groupParams,
+            }}
+            disasterTableParams={{
+              data: report,
+              variant: 'open',
+            }}
+            key={index}
+          />
+        ),
+      )}
     </Stack>
   );
 };

@@ -1,38 +1,46 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { DROUGHT, DroughtSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import { ColumnSetupParams, getColumnSetup } from 'utils/tableFormatting';
 
 const WaterAgricultureColumns: GridColDef[] = [
-  getColumnSetup(DroughtSpecific.LandSize, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.PumMachine, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.NumGasoline, DROUGHT, 120),
-  getColumnSetup(DroughtSpecific.NumFam, DROUGHT, 100),
+  getColumnSetup({
+    field: DroughtSpecific.LandSize,
+    disaster: DROUGHT,
+    width: 120,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.PumMachine,
+    disaster: DROUGHT,
+    width: 120,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NumGasoline,
+    disaster: DROUGHT,
+    width: 120,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NumFam,
+    disaster: DROUGHT,
+    width: 100,
+  }),
 ];
 
-const WaterAgricultureColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('waterAgriculture', DROUGHT, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-      { field: DroughtSpecific.LandSize },
-      { field: DroughtSpecific.PumMachine },
-      { field: DroughtSpecific.NumGasoline },
-      { field: DroughtSpecific.NumFam },
-    ],
-  },
-];
+const WaterAgricultureColumnGroup: GridColumnGroupingModel = [];
+
+const groupParams: ColumnSetupParams = {
+  groupId: 'waterAgriculture',
+  disaster: DROUGHT,
+  additionalChildren: [
+    { field: DroughtSpecific.LandSize },
+    { field: DroughtSpecific.PumMachine },
+    { field: DroughtSpecific.NumGasoline },
+    { field: DroughtSpecific.NumFam },
+  ],
+};
 
 export const WaterAgricultureColumnSettings = {
   columns: WaterAgricultureColumns,
   columnGroup: WaterAgricultureColumnGroup,
-  hideTopRightBorder: true,
+  groupParams,
 };

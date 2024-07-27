@@ -1,29 +1,25 @@
-import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
-import { addCommuneLevelReportLocationColumns } from 'utils/tableFormatting';
+import {
+  addCommuneLevelReportLocationColumns,
+  AddProvinceLevelReportLocationColumnsParams,
+} from 'utils/tableFormatting';
 
 import { createCustomComparator } from './CustomCommuneSort';
-import { DisasterTable } from './DisasterTable';
+import { DisasterTable, DisasterTableProps } from './DisasterTable';
 
 interface IProps {
-  columns: GridColDef[];
-  columnGroup: GridColumnGroupingModel;
-  data: Record<string, string | number | undefined>[];
-  rotateHeader?: boolean;
-  border?: boolean;
-  showMenuOnLocation?: boolean;
+  locationParams: AddProvinceLevelReportLocationColumnsParams;
+  disasterTableParams: Pick<DisasterTableProps, 'data' | 'variant'>;
 }
 
 export const CommuneLevelReportTable = ({
-  columns,
-  columnGroup,
-  data,
-  rotateHeader = false,
-  border,
-  showMenuOnLocation = false,
+  locationParams,
+  disasterTableParams,
 }: IProps): JSX.Element => {
-  // Sum the data at the district and province level
+  const { data } = disasterTableParams;
+
   const summedData = React.useMemo(() => {
     // Create a map to group data by district
     const districtMap = new Map<string, typeof data>();
@@ -92,7 +88,7 @@ export const CommuneLevelReportTable = ({
   }, [data]);
 
   // Add custom comparator to relevant columns
-  const columnsWithComparator = columns.map(col => {
+  const columnsWithComparator = locationParams.columns.map(col => {
     if (col.type === 'number') {
       return {
         ...col,
@@ -103,14 +99,16 @@ export const CommuneLevelReportTable = ({
     return col;
   });
 
+  const res = addCommuneLevelReportLocationColumns({
+    columns: columnsWithComparator as GridColDef[],
+    columnGroup: locationParams.columnGroup,
+    groupParams: locationParams.groupParams,
+  });
+
   return (
     <DisasterTable
-      columns={addCommuneLevelReportLocationColumns(
-        columnsWithComparator as GridColDef[],
-        border,
-        showMenuOnLocation,
-      )}
-      columnGroup={columnGroup}
+      columns={res.columns}
+      columnGroup={res.columnGroup}
       data={summedData}
       isEditable={false}
       getRowId={(row: {
@@ -131,9 +129,8 @@ export const CommuneLevelReportTable = ({
 
         return '';
       }}
-      rotateHeader={rotateHeader}
       columnHeaderHeight="large"
-      border={border}
+      variant={disasterTableParams.variant}
     />
   );
 };

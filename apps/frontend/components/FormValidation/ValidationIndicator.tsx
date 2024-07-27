@@ -1,45 +1,50 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Error from '@mui/icons-material/Error';
-import { Button, Stack, Tooltip, Typography } from '@mui/material';
+import { Button, Stack, Tooltip, Typography, useTheme } from '@mui/material';
 import { ValidationStatusValue } from '@wfp-dmp/interfaces';
 import { FormattedMessage } from 'react-intl';
 
+type TextVersion = 'long' | 'normal' | 'none';
+
 export const ValidationIndicator = ({
   valStatus,
-  textVersion = false,
+  textVersion = 'none',
 }: {
   valStatus: ValidationStatusValue | undefined;
-  textVersion?: boolean;
+  textVersion?: TextVersion;
 }) => {
+  const theme = useTheme();
+
   let id;
   let Icon;
   let color;
   switch (valStatus) {
     case ValidationStatusValue.approved:
-      id = 'valStatus.approved';
+      id = `valStatus.approved-${textVersion}`;
       Icon = CheckCircleIcon;
       color = '#63B2BD';
       break;
     case ValidationStatusValue.notApproved:
-      id = 'valStatus.notApproved';
+      id = `valStatus.notApproved-${textVersion}`;
       Icon = CancelIcon;
       color = '#D32C38';
       break;
     default:
-      id = 'valStatus.onHold';
+      id = `valStatus.onHold-${textVersion}`;
       Icon = Error;
       color = '#FCAE65';
   }
 
-  if (textVersion) {
+  if (textVersion !== 'none') {
     return (
       <Typography display="flex" fontSize="inherit">
-        <Tooltip title={<FormattedMessage id={id} />}>
-          <Icon htmlColor={color} />
-        </Tooltip>
-        &nbsp;
-        <FormattedMessage id={id} />
+        <Stack gap={theme.spacing(1)} flexDirection="row">
+          <Tooltip title={<FormattedMessage id={id} />}>
+            <Icon htmlColor={color} />
+          </Tooltip>
+          <FormattedMessage id={id} />
+        </Stack>
       </Typography>
     );
   }
@@ -60,11 +65,11 @@ export const ValidationIndicator = ({
 export const ValidationLinkButton = ({
   valStatus,
   valLink,
-  textVersion = true,
+  textVersion = 'normal',
 }: {
   valStatus: ValidationStatusValue | undefined;
   valLink: string;
-  textVersion?: boolean;
+  textVersion?: TextVersion;
 }) => {
   return (
     <Button

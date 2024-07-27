@@ -19,7 +19,7 @@ import { colors } from 'theme/muiTheme';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
 const defaultSearchReportData: SearchFormData = {
-  disTyps: [DisasterMapping['flood']],
+  disTyps: [DisasterMapping['drought']],
   region: {
     province: [],
     district: [],

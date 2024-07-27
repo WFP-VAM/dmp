@@ -16,7 +16,7 @@ const NavBarInfo = ({ shrink }: NavBarInfoProps) => {
   const isSmallScreen = useMediaQuery('(max-width:1000px)');
 
   const imageTransition = shrink ? '40px' : '60px';
-  const textTransition = shrink ? 0 : 'inherit';
+  const textTransition = shrink ? 0 : '16px';
 
   return (
     <Stack direction="row" gap={theme.spacing(3)}>

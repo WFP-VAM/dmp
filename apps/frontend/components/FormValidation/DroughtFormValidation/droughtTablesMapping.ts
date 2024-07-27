@@ -1,4 +1,7 @@
+import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import { IntlShape } from 'react-intl';
+
+import { ColumnSetupParams } from 'utils/tableFormatting';
 
 import { AgricultureColumnSettings } from './tablesConfig/Agriculture';
 import { getDefenseSecurityColumnSettings } from './tablesConfig/DefenseSecurity';
@@ -10,7 +13,13 @@ import { WaterHouseholdColumnSettings } from './tablesConfig/WaterHousehold';
 import { FoodWorkColumnSettings } from './tablesConfig/foodWork';
 import { WaterAgricultureColumnSettings } from './tablesConfig/waterAgriculture';
 
-export const getDroughtTablesMapping = (intl: IntlShape) => [
+export const getDroughtTablesMapping = (
+  intl: IntlShape,
+): {
+  columns: GridColDef[];
+  columnGroup: GridColumnGroupingModel;
+  groupParams?: ColumnSetupParams;
+}[] => [
   NumAffectedColumnSettings,
   AgricultureColumnSettings,
   getSocialSectorAffectedColumnSettings(intl),

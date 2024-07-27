@@ -115,3 +115,8 @@ h6 {
   padding: 0.5rem 0.5rem;
   font-size: 14px !important;
 }
+
+/* Override styles for Mui Typography root */
+.MuiTypography-root {
+  font-size: 14px;
+}

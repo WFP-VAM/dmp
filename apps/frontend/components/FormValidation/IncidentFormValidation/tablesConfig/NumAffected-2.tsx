@@ -1,44 +1,38 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import {
-  INCIDENT,
-  IncidentSpecific,
-  KoboCommonKeys,
-} from '@wfp-dmp/interfaces';
+import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const NumAffected2Columns: GridColDef[] = [
-  getColumnSetup(IncidentSpecific.NumPeoEva, INCIDENT, 8 * 12),
-  getColumnSetup(IncidentSpecific.NumFamEva, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumMeEva, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumFeEva, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumKidEva, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumOldEva, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumDisEva, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumPeoRe, INCIDENT, 8 * 12),
-  getColumnSetup(IncidentSpecific.NumFamRe, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumMeRe, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumFeRe, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumKidRe, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumOldRe, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumDisRe, INCIDENT),
+  getColumnSetup({
+    field: IncidentSpecific.NumPeoEva,
+    disaster: INCIDENT,
+    width: 8 * 12,
+  }),
+  getColumnSetup({ field: IncidentSpecific.NumFamEva, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumMeEva, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumFeEva, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumKidEva, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumOldEva, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumDisEva, disaster: INCIDENT }),
+  getColumnSetup({
+    field: IncidentSpecific.NumPeoRe,
+    disaster: INCIDENT,
+    width: 8 * 12,
+  }),
+  getColumnSetup({ field: IncidentSpecific.NumFamRe, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumMeRe, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumFeRe, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumKidRe, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumOldRe, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumDisRe, disaster: INCIDENT }),
 ];
 
-const NumAffected2ColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('victimsAffected', INCIDENT, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const NumAffected2ColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('evacuated', INCIDENT),
     children: [
@@ -65,7 +59,14 @@ const NumAffected2ColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'victimsAffected',
+  disaster: INCIDENT,
+  additionalChildren: [],
+};
+
 export const NumAffected2ColumnSettings = {
   columns: NumAffected2Columns,
   columnGroup: NumAffected2ColumnGroup,
+  groupParams,
 };

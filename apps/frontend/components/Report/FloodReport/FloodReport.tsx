@@ -46,21 +46,25 @@ export const FloodReport = ({
     <>
       {isCommuneLevelReport ? (
         <CommuneLevelReportTable
-          columns={SummaryFloodReportColumnSettings.columns}
-          columnGroup={SummaryFloodReportColumnSettings.columnGroup}
-          data={report}
-          rotateHeader={false}
-          border
-          showMenuOnLocation
+          locationParams={{
+            columns: SummaryFloodReportColumnSettings.columns,
+            columnGroup: SummaryFloodReportColumnSettings.columnGroup,
+          }}
+          disasterTableParams={{
+            data: report,
+            variant: 'bordered',
+          }}
         />
       ) : (
         <ProvinceLevelReportTable
-          columns={SummaryFloodReportColumnSettings.columns}
-          columnGroup={SummaryFloodReportColumnSettings.columnGroup}
-          data={report}
-          rotateHeader={false}
-          border
-          showMenuOnLocation
+          locationParams={{
+            columns: SummaryFloodReportColumnSettings.columns,
+            columnGroup: SummaryFloodReportColumnSettings.columnGroup,
+          }}
+          disasterTableParams={{
+            data: report,
+            variant: 'bordered',
+          }}
         />
       )}
     </>
