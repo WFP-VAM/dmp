@@ -12,6 +12,7 @@ import { Dayjs } from 'dayjs';
 import { Control, Controller } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 
+import { DisasterFilter } from 'components/Filters/DisasterFilter';
 import { RegionFilters } from 'components/Filters/RegionFilters';
 import { colors } from 'theme/muiTheme';
 
@@ -120,6 +121,14 @@ const FormValidationHeader = ({
         justifyContent="space-between"
       >
         <Stack direction="row" gap={theme.spacing(5)}>
+          <Controller
+            name="disTyp"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              // Keep disabled to avoid changing the value
+              <DisasterFilter value={[value]} onChange={onChange} disabled />
+            )}
+          />
           {isFloodType && (
             <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
               <Typography width="5rem" color={colors.gray2}>

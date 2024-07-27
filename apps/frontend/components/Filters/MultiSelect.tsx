@@ -44,6 +44,7 @@ interface MultiSelectProps {
     >
   >;
   disableMulti?: boolean;
+  disabled?: boolean;
 }
 
 const MultiSelect = ({
@@ -56,6 +57,7 @@ const MultiSelect = ({
   selectProps = {},
   value: propValue = [],
   disableMulti = false,
+  disabled,
 }: MultiSelectProps) => {
   const intl = useIntl();
   const [value, setValue] = React.useState<string[]>(propValue);
@@ -91,6 +93,7 @@ const MultiSelect = ({
   return (
     <FormControl sx={{ m: 0, width, backgroundColor: 'white' }}>
       <Select
+        disabled={disabled}
         sx={{ height: '2.5rem' }}
         multiple
         value={value}
