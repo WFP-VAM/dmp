@@ -46,7 +46,7 @@ const FormValidationHeader = ({
   const theme = useTheme();
 
   return (
-    <Stack gap={theme.spacing(2)} ml={2} style={{ fontSize: '14px' }}>
+    <Stack gap={theme.spacing(2)} ml={2}>
       <Stack direction="row" gap={theme.spacing(4)}>
         <Stack direction="row" gap={theme.spacing(2)} alignItems="center">
           <Typography color={colors.gray2}>
