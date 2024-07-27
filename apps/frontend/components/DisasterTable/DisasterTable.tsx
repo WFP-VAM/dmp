@@ -122,7 +122,6 @@ export const DisasterTable = ({
           renderHeaderGroup: (params: GridColumnGroupHeaderParams) => {
             return (
               <>
-                {variant === 'open' && <CustomToolMenu />}
                 {groupHead.renderHeaderGroup?.(params)}
                 {variant === 'bordered' && (
                   <CustomToolMenu withBorder={false} />
