@@ -4,7 +4,7 @@ import 'styles/tableFormatting.css';
 import { ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Inter, Roboto } from '@next/font/google';
+import { Inter } from '@next/font/google';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import React from 'react';
@@ -33,7 +33,6 @@ export type NextApplicationPage<P = unknown, IP = unknown> = NextPage<P, IP> & {
 
 // https://nextjs.org/docs/basic-features/font-optimization
 const inter = Inter({ subsets: ['latin'] });
-const roboto = Roboto({ weight: ['400', '500', '700'] });
 
 const MyApp = ({
   Component,
@@ -43,7 +42,7 @@ const MyApp = ({
     <>
       <style jsx global>{`
         html {
-          font-family: ${inter.style.fontFamily}, ${roboto.style.fontFamily};
+          font-family: ${inter.style.fontFamily};
         }
       `}</style>
       <ThemeProvider theme={muiTheme}>
