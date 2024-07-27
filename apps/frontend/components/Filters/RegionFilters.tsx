@@ -29,7 +29,7 @@ interface Props {
   value: Region;
   onChange: (regionValues: Region) => void;
   disableAll?: boolean;
-  disableMulti: boolean;
+  disableMulti?: boolean;
 }
 
 export const RegionFilters = ({
@@ -65,6 +65,19 @@ export const RegionFilters = ({
     [value.district],
   );
 
+  const startAdornment = (
+    <InputAdornment position="start">
+      <LocationOnIcon
+        sx={{
+          color: disableMulti ?? false ? 'grey' : 'black',
+          minWidth: '20px',
+          marginLeft: -1,
+          marginRight: -2,
+        }}
+      />
+    </InputAdornment>
+  );
+
   return (
     <Stack direction="row" gap={theme.spacing(1)} height="100%">
       <FormControl>
@@ -80,18 +93,7 @@ export const RegionFilters = ({
           disableMulti={disableMulti}
           selectProps={{
             disabled: disableAll === true || user === undefined ? true : false,
-            startAdornment: (
-              <InputAdornment position="start">
-                <LocationOnIcon
-                  sx={{
-                    color: disableMulti ? 'grey' : 'black',
-                    minWidth: '20px',
-                    marginLeft: -1,
-                    marginRight: -2,
-                  }}
-                />
-              </InputAdornment>
-            ),
+            startAdornment,
           }}
         />
       </FormControl>
@@ -109,18 +111,7 @@ export const RegionFilters = ({
           disableMulti={disableMulti}
           selectProps={{
             disabled: disableAll === true || value.province.length === 0,
-            startAdornment: (
-              <InputAdornment position="start">
-                <LocationOnIcon
-                  sx={{
-                    color: disableMulti ? 'grey' : 'black',
-                    minWidth: '20px',
-                    marginLeft: -1,
-                    marginRight: -2,
-                  }}
-                />
-              </InputAdornment>
-            ),
+            startAdornment,
           }}
         />
       </FormControl>
@@ -138,18 +129,7 @@ export const RegionFilters = ({
           disableMulti={disableMulti}
           selectProps={{
             disabled: disableAll === true || value.district.length === 0,
-            startAdornment: (
-              <InputAdornment position="start">
-                <LocationOnIcon
-                  sx={{
-                    color: disableMulti ? 'grey' : 'black',
-                    minWidth: '20px',
-                    marginLeft: -1,
-                    marginRight: -2,
-                  }}
-                />
-              </InputAdornment>
-            ),
+            startAdornment,
           }}
         />
       </FormControl>
