@@ -38,7 +38,11 @@ export const ValidationIndicator = ({
 
   if (textVersion !== 'none') {
     return (
-      <Typography display="flex" fontSize="inherit">
+      <Typography
+        display="flex"
+        fontSize="inherit"
+        fontWeight={textVersion === 'long' ? 'bold' : 'inherit'}
+      >
         <Stack gap={theme.spacing(1)} flexDirection="row">
           <Tooltip title={<FormattedMessage id={id} />}>
             <Icon htmlColor={color} />
