@@ -69,7 +69,11 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
         <Select
           value={disasterType}
           onChange={onDisasterTypeChange}
-          sx={{ minWidth: 150, backgroundColor: 'white' }}
+          sx={{
+            minWidth: 150,
+            backgroundColor: 'white',
+            height: '2.5rem',
+          }}
         >
           {disasters.map(disaster => {
             return (

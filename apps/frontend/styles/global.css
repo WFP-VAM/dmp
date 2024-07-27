@@ -42,6 +42,7 @@
 html,
 body {
   height: 100%;
+  font-family: 'Roboto', sans-serif;
   background-color: #f9f7f7;
 }
 
@@ -52,17 +53,17 @@ body {
 */
 body {
   line-height: 1.5;
-  font-family: 'Khmer OS Muol light', sans-serif;
+  font-family: 'Khmer OS Muol light', 'Roboto', sans-serif;
 }
 
 h1 {
-  font-family: 'Khmer OS Muol light', sans-serif;
+  font-family: 'Khmer OS Muol light', 'Roboto', sans-serif;
 }
 
 p,
 span,
 div {
-  font-family: 'Khmer OS Siemreap', sans-serif;
+  font-family: 'Khmer OS Siemreap', 'Roboto', sans-serif;
 }
 
 /*
@@ -109,11 +110,9 @@ h6 {
   height: 100%;
 }
 
-/* Override styles for Mui Inputs */
-
-/* Override styles for Mui Inputs */
-.MuiInputBase-input {
-  padding: 0.5rem 0.5rem; /* Adjust padding as needed */
+/* Override styles for Mui Inputs without breaking the datagrid filter component */
+.MuiInputBase-input:not(.MuiInput-input) {
+  padding: 0.5rem 0.5rem;
   font-size: 14px !important;
 }
 

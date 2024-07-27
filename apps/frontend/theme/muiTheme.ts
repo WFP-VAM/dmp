@@ -7,6 +7,7 @@ export const colors = {
   color3: '#3A84AD',
   color4: '#275D7B',
   color5: '#63B2BD',
+  color6: '#91c9d0',
   gray: '#bdbdbd',
   gray2: '#999999',
 };

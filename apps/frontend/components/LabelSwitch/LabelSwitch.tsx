@@ -90,17 +90,33 @@ export const LabelSwitch = ({
       border={`1px solid ${colors.gray}`}
       borderRadius="4px"
       padding={`${theme.spacing(0.7)} ${theme.spacing(1)}`}
-      style={{ background: 'white' }}
+      style={{ background: 'white', height: '2.5rem' }}
       alignItems="center"
     >
       <Typography fontWeight="bold" fontSize="14px">
         <FormattedMessage id={label} />:
       </Typography>
-      <Typography fontSize="14px">
+      <Typography
+        fontSize="14px"
+        style={{
+          textDecoration: 'underline',
+          textDecorationColor: value ? 'transparent' : colors.color5,
+          textUnderlineOffset: '4px',
+          textDecorationThickness: '2px',
+        }}
+      >
         <FormattedMessage id={labelUncheck} />
       </Typography>
       <IOSSwitch checked={value} onChange={onChange} />
-      <Typography fontSize="14px">
+      <Typography
+        fontSize="14px"
+        style={{
+          textDecoration: 'underline',
+          textDecorationColor: !value ? 'transparent' : colors.color5,
+          textUnderlineOffset: '4px',
+          textDecorationThickness: '2px',
+        }}
+      >
         <FormattedMessage id={labelCheck} />
       </Typography>
     </Stack>
