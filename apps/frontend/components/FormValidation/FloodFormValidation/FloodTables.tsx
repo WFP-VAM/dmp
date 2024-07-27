@@ -44,7 +44,7 @@ export const FloodTables = ({
               onChange={onChange}
               isEditable={isEditMode}
               key={index}
-              variant="bordered"
+              variant="open"
             />
           );
         },
