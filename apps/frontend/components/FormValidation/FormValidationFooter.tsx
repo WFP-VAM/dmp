@@ -111,14 +111,7 @@ const FormValidationFooter = ({
               fontWeight: 'bold',
             }}
             disabled={isMutating}
-            startIcon={
-              <Cancel
-                sx={{
-                  backgroundColor: 'white',
-                  borderRadius: '50%',
-                }}
-              />
-            }
+            startIcon={<Cancel />}
             onClick={() => {
               void trigger(ValidationStatusValue.notApproved);
             }}
@@ -135,14 +128,7 @@ const FormValidationFooter = ({
               pl: 2,
               fontWeight: 'bold',
             }}
-            startIcon={
-              <CheckCircle
-                sx={{
-                  backgroundColor: 'white',
-                  borderRadius: '50%',
-                }}
-              />
-            }
+            startIcon={<CheckCircle />}
             disabled={isMutating}
             onClick={() => {
               void trigger(ValidationStatusValue.approved);
