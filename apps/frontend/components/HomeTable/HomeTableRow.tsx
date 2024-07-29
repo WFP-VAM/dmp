@@ -102,7 +102,9 @@ const HomeTableRow = ({ isLoading, disastersPerDate }: HomeTableRowProps) => {
                   key={disTyp}
                   title={
                     <>
-                      <FormattedMessage id={`disasters.${disTyp}`} />
+                      <strong>
+                        <FormattedMessage id={`disasters.${disTyp}`} />
+                      </strong>
                       <br />
                       {filterLocations(
                         disasters.disTypLocations[disTyp],
