@@ -49,6 +49,7 @@ const FormValidationFooter = ({
         style={{
           backgroundColor: 'white',
           boxShadow: '0px -2px 4px 0px #0000001A',
+          zIndex: 2,
         }}
         alignItems="center"
         flexDirection="row"
