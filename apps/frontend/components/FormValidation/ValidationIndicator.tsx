@@ -78,7 +78,7 @@ export const ValidationLinkButton = ({
   return (
     <Button
       href={valLink}
-      target="_blank"
+      // target="_blank"
       rel="noopener noreferrer"
       variant="contained"
       disableElevation
