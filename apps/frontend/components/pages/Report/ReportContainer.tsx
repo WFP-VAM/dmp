@@ -26,7 +26,7 @@ const defaultSearchReportData: SearchFormData = {
     commune: [],
   },
   dateRange: {
-    startDate: dayjs().subtract(1, 'month'),
+    startDate: dayjs().subtract(10, 'years'),
     endDate: dayjs(),
   },
 };
@@ -38,7 +38,7 @@ export const ReportContainer = () => {
   );
 
   const [isCommuneLevelReport, setIsCommuneLevelReport] = useState(false);
-  const [isAllColumnReport, setIsAllColumnReport] = useState(false);
+  const [isAllColumnReport, setIsAllColumnReport] = useState(true);
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 
@@ -107,16 +107,14 @@ export const ReportContainer = () => {
         />
       )}
       {!isLoading && (
-        <>
-          <PrintWrapper printRef={printRef}>
-            <PrintHeader searchReportData={searchReportData} />
-            <Report
-              forms={filteredFormsData}
-              isCommuneLevelReport={isCommuneLevelReport}
-              isAllColumnReport={isAllColumnReport}
-            />
-          </PrintWrapper>
-        </>
+        <PrintWrapper printRef={printRef}>
+          <PrintHeader searchReportData={searchReportData} />
+          <Report
+            forms={filteredFormsData}
+            isCommuneLevelReport={isCommuneLevelReport}
+            isAllColumnReport={isAllColumnReport}
+          />
+        </PrintWrapper>
       )}
     </Stack>
   );

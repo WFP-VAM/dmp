@@ -42,7 +42,14 @@ export const IncidentReport = ({
       {reports.map(incidentSpecific => {
         return (
           <Stack key={incidentSpecific.incidentKey}>
-            <Typography fontWeight="bold">
+            <Typography
+              fontWeight="bold"
+              sx={{
+                '@media print': {
+                  paddingLeft: '2rem',
+                },
+              }}
+            >
               <FormattedMessage
                 id={`disasters.${incidentSpecific.incidentKey}`}
               />

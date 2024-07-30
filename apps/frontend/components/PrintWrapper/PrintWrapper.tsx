@@ -11,7 +11,6 @@ const printStyles = (
       },
       '@page': {
         size: 'A4 landscape',
-        margin: '50px !important',
       },
     }}
   />
@@ -23,7 +22,23 @@ interface Props {
 }
 export const PrintWrapper = ({ printRef, children }: Props): JSX.Element => {
   return (
-    <Box ref={printRef}>
+    <Box
+      ref={printRef}
+      sx={{
+        background: '#f9f7f7',
+      }}
+    >
+      <Box
+        sx={{
+          '@media print': {
+            position: 'fixed',
+            height: '100%',
+            width: '100%',
+            zIndex: -1,
+            backgroundColor: '#f9f7f7',
+          },
+        }}
+      />
       {printStyles}
       {children}
     </Box>
