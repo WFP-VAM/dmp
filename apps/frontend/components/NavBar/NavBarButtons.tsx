@@ -1,4 +1,10 @@
-import { ContentPaste, Home, Logout, Person, Star } from '@mui/icons-material';
+import {
+  AssignmentTurnedIn,
+  ContentPaste,
+  Home,
+  Logout,
+  Person,
+} from '@mui/icons-material';
 import { Stack, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -34,7 +40,7 @@ const links = [
     key: 3,
     linkTo: '/forms/search',
     textId: 'navigation.forms.header',
-    icon: <Star />,
+    icon: <AssignmentTurnedIn />,
   },
 ];
 
