@@ -48,6 +48,11 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
   return (
     <>
       <IconButton
+        sx={{
+          '@media print': {
+            display: 'none',
+          },
+        }}
         onClick={handleOpenMenu}
         style={{
           ...borderStyles,
