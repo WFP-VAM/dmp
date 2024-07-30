@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 /* eslint-disable complexity */
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, useTheme } from '@mui/material';
 import {
   DataGrid,
   DataGridProps,
@@ -64,6 +64,7 @@ export const DisasterTable = ({
   columnHeaderHeight = 'normal',
   getRowClassName,
 }: DisasterTableProps): JSX.Element => {
+  const theme = useTheme();
   const outerRef = React.useRef<HTMLDivElement>(null);
   const [hovering, setHovering] = React.useState(false);
   const [hasOverflow, setHasOverflow] = React.useState(false);
@@ -199,9 +200,20 @@ export const DisasterTable = ({
           overflow: 'scroll',
           '@media print': {
             overflow: 'unset',
+            breakInside: 'avoid',
           },
         }}
       >
+        {/* Adds padding for printing */}
+        <Box
+          sx={{
+            '@media print': {
+              minWidth: '2rem',
+              minHeight: theme.spacing(4),
+              // background: 'red',
+            },
+          }}
+        />
         <Stack
           direction="row"
           position="relative"

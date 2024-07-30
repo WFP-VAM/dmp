@@ -1,7 +1,7 @@
-import { Stack, useTheme } from '@mui/material';
 import { incidentSpecificKeys } from '@wfp-dmp/interfaces';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
+import ReportTablesWrapper from 'components/ReportTablesWrapper';
 import { wrapGroupAsTitle } from 'utils/tableFormatting';
 
 import { incidentTablesMapping } from './incidentTablesMapping';
@@ -22,10 +22,8 @@ export const IncidentTables = ({
   onChange,
   isEditMode,
 }: IProps): JSX.Element => {
-  const theme = useTheme();
-
   return (
-    <Stack gap={theme.spacing(4)}>
+    <ReportTablesWrapper>
       {incidentTablesMapping.map(
         ({ columns, columnGroup, groupParams }, index) => {
           const group = wrapGroupAsTitle({ columns, columnGroup, groupParams });
@@ -43,6 +41,6 @@ export const IncidentTables = ({
           );
         },
       )}
-    </Stack>
+    </ReportTablesWrapper>
   );
 };

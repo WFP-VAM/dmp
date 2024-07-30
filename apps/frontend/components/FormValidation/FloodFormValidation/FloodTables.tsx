@@ -1,8 +1,8 @@
-import { Stack, useTheme } from '@mui/material';
 import { FloodSpecificType } from '@wfp-dmp/interfaces';
 import { useIntl } from 'react-intl';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
+import ReportTablesWrapper from 'components/ReportTablesWrapper';
 import { wrapGroupAsTitle } from 'utils/tableFormatting';
 
 import { getFloodTablesMapping } from './floodTablesMapping';
@@ -19,10 +19,9 @@ export const FloodTables = ({
   isEditMode,
 }: IProps): JSX.Element => {
   const intl = useIntl();
-  const theme = useTheme();
 
   return (
-    <Stack gap={theme.spacing(4)}>
+    <ReportTablesWrapper>
       {getFloodTablesMapping(intl).map(
         ({ columns, columnGroup, groupParams }, index) => {
           const group = columnGroup;
@@ -49,6 +48,6 @@ export const FloodTables = ({
           );
         },
       )}
-    </Stack>
+    </ReportTablesWrapper>
   );
 };

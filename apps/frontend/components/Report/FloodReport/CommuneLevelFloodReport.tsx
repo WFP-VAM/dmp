@@ -1,6 +1,5 @@
-import { Stack, useTheme } from '@mui/material';
-
 import { CommuneLevelReportTable } from 'components/DisasterTable/CommuneLevelReportTable';
+import ReportTablesWrapper from 'components/ReportTablesWrapper';
 
 import { floodReportTablesMapping } from './floodReportTablesMapping';
 
@@ -9,10 +8,8 @@ export const CommuneLevelFloodReport = ({
 }: {
   report: Record<string, string | number | undefined>[];
 }): JSX.Element => {
-  const theme = useTheme();
-
   return (
-    <Stack gap={theme.spacing(4)}>
+    <ReportTablesWrapper>
       {floodReportTablesMapping.map(
         ({ columns, columnGroup, groupParams }, index) => (
           <CommuneLevelReportTable
@@ -29,6 +26,6 @@ export const CommuneLevelFloodReport = ({
           />
         ),
       )}
-    </Stack>
+    </ReportTablesWrapper>
   );
 };

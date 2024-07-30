@@ -1,17 +1,14 @@
-import { Stack, useTheme } from '@mui/material';
-
 import { ProvinceLevelReportTable } from 'components/DisasterTable/ProvinceLevelReportTable';
 import { incidentTablesMapping } from 'components/FormValidation/IncidentFormValidation/incidentTablesMapping';
+import ReportTablesWrapper from 'components/ReportTablesWrapper';
 
 export const ProvinceLevelIncidentReport = ({
   report,
 }: {
   report: Record<string, string | number | undefined>[];
 }) => {
-  const theme = useTheme();
-
   return (
-    <Stack gap={theme.spacing(4)}>
+    <ReportTablesWrapper>
       {incidentTablesMapping.map(
         ({ columns, columnGroup, groupParams }, index) => (
           <ProvinceLevelReportTable
@@ -28,6 +25,6 @@ export const ProvinceLevelIncidentReport = ({
           />
         ),
       )}
-    </Stack>
+    </ReportTablesWrapper>
   );
 };
