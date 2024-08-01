@@ -38,7 +38,7 @@ export const ReportContainer = () => {
   );
 
   const [isCommuneLevelReport, setIsCommuneLevelReport] = useState(false);
-  const [isAllColumnReport, setIsAllColumnReport] = useState(true);
+  const [isAllColumnReport, setIsAllColumnReport] = useState(false);
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 
