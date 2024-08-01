@@ -210,7 +210,6 @@ export const DisasterTable = ({
             '@media print': {
               minWidth: '2rem',
               minHeight: theme.spacing(4),
-              // background: 'red',
             },
           }}
         />
