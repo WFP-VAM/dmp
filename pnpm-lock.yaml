@@ -327,6 +327,9 @@ importers:
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.0
         version: 6.5.2
+      '@fortawesome/free-regular-svg-icons':
+        specifier: ^6.6.0
+        version: 6.6.0
       '@fortawesome/free-solid-svg-icons':
         specifier: ^6.4.0
         version: 6.5.2
@@ -343,8 +346,8 @@ importers:
         specifier: ^7.10.0
         version: 7.10.0(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@mui/material@5.15.20(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.0.19)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@mui/x-date-pickers':
-        specifier: ^6.0.3
-        version: 6.20.2(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@mui/material@5.15.20(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@mui/system@5.16.2(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(date-fns@2.30.0)(dayjs@1.11.11)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^7.11.0
+        version: 7.11.0(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@mui/material@5.15.20(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.0.19)(date-fns@2.30.0)(dayjs@1.11.11)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@next/font':
         specifier: 13.1.6
         version: 13.1.6
@@ -376,8 +379,8 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: 7.35.0
-        version: 7.35.0(react@18.2.0)
+        specifier: ^7.52.1
+        version: 7.52.1(react@18.2.0)
       react-intl:
         specifier: 6.1.1
         version: 6.1.1(react@18.2.0)(typescript@4.7.4)
@@ -546,10 +549,10 @@ importers:
         version: link:../eslint-config-custom
       jest:
         specifier: 29.0.3
-        version: 29.0.3(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4))
+        version: 29.0.3(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5))
       ts-jest:
         specifier: 28.0.8
-        version: 28.0.8(@babel/core@7.24.7)(@jest/types@28.1.3)(jest@29.0.3(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4)))(typescript@4.7.4)
+        version: 28.0.8(@babel/core@7.24.7)(@jest/types@28.1.3)(jest@29.0.3(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5)))(typescript@4.7.4)
       tsconfig:
         specifier: workspace:*
         version: link:../tsconfig
@@ -1377,6 +1380,10 @@ packages:
     resolution: {integrity: sha512-UwgBRMjJP+xv857DCngvqXI3Iq6J4v0wXmwc6sapg+zyhbwmQX67LUEFrkK5tbyJ30jGuG3ZvWpBiB9LCy1kWw==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/runtime@7.24.8':
+    resolution: {integrity: sha512-5F7SDGs1T72ZczbRwbGO9lQi0NLjQxzl6i4lJxLxfW9U5UluCSyEJeniWvnhl3/euNiqQVbo8zruhsDfid0esA==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/template@7.24.7':
     resolution: {integrity: sha512-jYqfPrU9JTF0PmPy1tLYHW4Mp4KlgxJD9l2nP9fD6yT/ICi554DmrWBAEYpIelzjHf1msDP3PxJIRt/nFNfBig==}
     engines: {node: '>=6.9.0'}
@@ -1608,8 +1615,16 @@ packages:
     resolution: {integrity: sha512-gBxPg3aVO6J0kpfHNILc+NMhXnqHumFxOmjYCFfOiLZfwhnnfhtsdA2hfJlDnj+8PjAs6kKQPenOTKj3Rf7zHw==}
     engines: {node: '>=6'}
 
+  '@fortawesome/fontawesome-common-types@6.6.0':
+    resolution: {integrity: sha512-xyX0X9mc0kyz9plIyryrRbl7ngsA9jz77mCZJsUkLl+ZKs0KWObgaEBoSgQiYWAsSmjz/yjl0F++Got0Mdp4Rw==}
+    engines: {node: '>=6'}
+
   '@fortawesome/fontawesome-svg-core@6.5.2':
     resolution: {integrity: sha512-5CdaCBGl8Rh9ohNdxeeTMxIj8oc3KNBgIeLMvJosBMdslK/UnEB8rzyDRrbKdL1kDweqBPo4GT9wvnakHWucZw==}
+    engines: {node: '>=6'}
+
+  '@fortawesome/free-regular-svg-icons@6.6.0':
+    resolution: {integrity: sha512-Yv9hDzL4aI73BEwSEh20clrY8q/uLxawaQ98lekBx6t9dQKDHcDzzV1p2YtBGTtolYtNqcWdniOnhzB+JPnQEQ==}
     engines: {node: '>=6'}
 
   '@fortawesome/free-solid-svg-icons@6.5.2':
@@ -1928,16 +1943,15 @@ packages:
       react: ^17.0.0 || ^18.0.0
       react-dom: ^17.0.0 || ^18.0.0
 
-  '@mui/x-date-pickers@6.20.2':
-    resolution: {integrity: sha512-x1jLg8R+WhvkmUETRfX2wC+xJreMii78EXKLl6r3G+ggcAZlPyt0myID1Amf6hvJb9CtR7CgUo8BwR+1Vx9Ggw==}
+  '@mui/x-date-pickers@7.11.0':
+    resolution: {integrity: sha512-+zPWs1dwe7J1nZ2iFhTgCae31BLMYMQ2VtQfHxx21Dh6gbBRy/U7YJZg1LdhfQyE093S3e4A5uMZ6PUWdne7iA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       '@emotion/react': ^11.9.0
       '@emotion/styled': ^11.8.1
-      '@mui/material': ^5.8.6
-      '@mui/system': ^5.8.0
+      '@mui/material': ^5.15.14
       date-fns: ^2.25.0 || ^3.2.0
-      date-fns-jalali: ^2.13.0-0
+      date-fns-jalali: ^2.13.0-0 || ^3.2.0-0
       dayjs: ^1.10.7
       luxon: ^3.0.2
       moment: ^2.29.4
@@ -6475,11 +6489,11 @@ packages:
   react-fast-compare@3.2.2:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
 
-  react-hook-form@7.35.0:
-    resolution: {integrity: sha512-9CYdOed+Itbiu5VMVxW0PK9mBR3f0gDGJcZEyUSm0eJbDymQ913TRs2gHcQZZmfTC+rtxyDFRuelMxx/+xwMcw==}
+  react-hook-form@7.52.1:
+    resolution: {integrity: sha512-uNKIhaoICJ5KQALYZ4TOaOLElyM+xipord+Ha3crEFhTntdLvWZqVY49Wqd/0GiVCA/f9NjemLeiNPjG7Hpurg==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
-      react: ^16.8.0 || ^17 || ^18
+      react: ^16.8.0 || ^17 || ^18 || ^19
 
   react-i18next@11.18.6:
     resolution: {integrity: sha512-yHb2F9BiT0lqoQDt8loZ5gWP331GwctHz9tYQ8A2EIEUu+CcEdjBLQWli1USG3RdWQt3W+jqQLg/d4rrQR96LA==}
@@ -9048,6 +9062,10 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
+  '@babel/runtime@7.24.8':
+    dependencies:
+      regenerator-runtime: 0.14.1
+
   '@babel/template@7.24.7':
     dependencies:
       '@babel/code-frame': 7.24.7
@@ -9154,7 +9172,7 @@ snapshots:
       '@types/node': 20.5.1
       chalk: 4.1.2
       cosmiconfig: 8.3.6(typescript@4.9.5)
-      cosmiconfig-typescript-loader: 4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@4.9.5))(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5))(typescript@4.9.5)
+      cosmiconfig-typescript-loader: 4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@4.9.5))(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4))(typescript@4.9.5)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -9395,9 +9413,15 @@ snapshots:
 
   '@fortawesome/fontawesome-common-types@6.5.2': {}
 
+  '@fortawesome/fontawesome-common-types@6.6.0': {}
+
   '@fortawesome/fontawesome-svg-core@6.5.2':
     dependencies:
       '@fortawesome/fontawesome-common-types': 6.5.2
+
+  '@fortawesome/free-regular-svg-icons@6.6.0':
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.6.0
 
   '@fortawesome/free-solid-svg-icons@6.5.2':
     dependencies:
@@ -9570,7 +9594,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  '@jest/core@29.7.0(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4))':
+  '@jest/core@29.7.0(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5))':
     dependencies:
       '@jest/console': 29.7.0
       '@jest/reporters': 29.7.0
@@ -9584,7 +9608,7 @@ snapshots:
       exit: 0.1.2
       graceful-fs: 4.2.11
       jest-changed-files: 29.7.0
-      jest-config: 29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4))
+      jest-config: 29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5))
       jest-haste-map: 29.7.0
       jest-message-util: 29.7.0
       jest-regex-util: 29.6.3
@@ -9829,7 +9853,7 @@ snapshots:
   '@mui/private-theming@5.15.20(@types/react@18.0.19)(react@18.2.0)':
     dependencies:
       '@babel/runtime': 7.24.7
-      '@mui/utils': 5.15.20(@types/react@18.0.19)(react@18.2.0)
+      '@mui/utils': 5.16.2(@types/react@18.0.19)(react@18.2.0)
       prop-types: 15.8.1
       react: 18.2.0
     optionalDependencies:
@@ -9944,13 +9968,13 @@ snapshots:
       - '@emotion/styled'
       - '@types/react'
 
-  '@mui/x-date-pickers@6.20.2(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@mui/material@5.15.20(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@mui/system@5.16.2(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(date-fns@2.30.0)(dayjs@1.11.11)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@mui/x-date-pickers@7.11.0(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@mui/material@5.15.20(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.0.19)(date-fns@2.30.0)(dayjs@1.11.11)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@mui/base': 5.0.0-beta.40(@types/react@18.0.19)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@mui/material': 5.15.20(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@mui/system': 5.16.2(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0)
-      '@mui/utils': 5.15.20(@types/react@18.0.19)(react@18.2.0)
+      '@mui/utils': 5.16.2(@types/react@18.0.19)(react@18.2.0)
       '@types/react-transition-group': 4.4.10
       clsx: 2.1.1
       prop-types: 15.8.1
@@ -12146,7 +12170,7 @@ snapshots:
       object-assign: 4.1.1
       vary: 1.1.2
 
-  cosmiconfig-typescript-loader@4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@4.9.5))(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5))(typescript@4.9.5):
+  cosmiconfig-typescript-loader@4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@4.9.5))(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4))(typescript@4.9.5):
     dependencies:
       '@types/node': 20.5.1
       cosmiconfig: 8.3.6(typescript@4.9.5)
@@ -12232,13 +12256,13 @@ snapshots:
       - supports-color
       - ts-node
 
-  create-jest@29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4)):
+  create-jest@29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5)):
     dependencies:
       '@jest/types': 29.6.3
       chalk: 4.1.2
       exit: 0.1.2
       graceful-fs: 4.2.11
-      jest-config: 29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4))
+      jest-config: 29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5))
       jest-util: 29.7.0
       prompts: 2.4.2
     transitivePeerDependencies:
@@ -14265,16 +14289,16 @@ snapshots:
       - supports-color
       - ts-node
 
-  jest-cli@29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4)):
+  jest-cli@29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5)):
     dependencies:
-      '@jest/core': 29.7.0(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4))
+      '@jest/core': 29.7.0(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5))
       '@jest/test-result': 29.7.0
       '@jest/types': 29.6.3
       chalk: 4.1.2
-      create-jest: 29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4))
+      create-jest: 29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5))
       exit: 0.1.2
       import-local: 3.1.0
-      jest-config: 29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4))
+      jest-config: 29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5))
       jest-util: 29.7.0
       jest-validate: 29.7.0
       yargs: 17.7.2
@@ -14470,7 +14494,7 @@ snapshots:
       - babel-plugin-macros
       - supports-color
 
-  jest-config@29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4)):
+  jest-config@29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5)):
     dependencies:
       '@babel/core': 7.23.3
       '@jest/test-sequencer': 29.7.0
@@ -14793,12 +14817,12 @@ snapshots:
       - supports-color
       - ts-node
 
-  jest@29.0.3(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4)):
+  jest@29.0.3(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5)):
     dependencies:
-      '@jest/core': 29.7.0(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4))
+      '@jest/core': 29.7.0(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5))
       '@jest/types': 29.6.3
       import-local: 3.1.0
-      jest-cli: 29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4))
+      jest-cli: 29.7.0(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5))
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -15905,7 +15929,7 @@ snapshots:
 
   react-fast-compare@3.2.2: {}
 
-  react-hook-form@7.35.0(react@18.2.0):
+  react-hook-form@7.52.1(react@18.2.0):
     dependencies:
       react: 18.2.0
 
@@ -16894,11 +16918,11 @@ snapshots:
       '@babel/core': 7.23.3
       '@jest/types': 28.1.3
 
-  ts-jest@28.0.8(@babel/core@7.24.7)(@jest/types@28.1.3)(jest@29.0.3(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4)))(typescript@4.7.4):
+  ts-jest@28.0.8(@babel/core@7.24.7)(@jest/types@28.1.3)(jest@29.0.3(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5)))(typescript@4.7.4):
     dependencies:
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
-      jest: 29.0.3(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.7.4))
+      jest: 29.0.3(@types/node@18.19.39)(babel-plugin-macros@3.1.0)(ts-node@10.9.1(@types/node@20.5.1)(typescript@4.9.5))
       jest-util: 28.1.3
       json5: 2.2.3
       lodash.memoize: 4.1.2

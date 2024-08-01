@@ -1,42 +1,28 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import {
-  INCIDENT,
-  IncidentSpecific,
-  KoboCommonKeys,
-} from '@wfp-dmp/interfaces';
+import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const AgricultureForestColumns: GridColDef[] = [
-  getColumnSetup(IncidentSpecific.CropAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.CropDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.SamnabAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.SamnabDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.PaddyAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.PaddyDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.CowDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.BaffoDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.PigDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.ChickDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumJungleAf, INCIDENT),
-  getColumnSetup(IncidentSpecific.FarmAf, INCIDENT),
+  getColumnSetup({ field: IncidentSpecific.CropAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.CropDam, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.SamnabAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.SamnabDam, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.PaddyAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.PaddyDam, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.CowDeath, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.BaffoDeath, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.PigDeath, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.ChickDeath, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumJungleAf, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.FarmAf, disaster: INCIDENT }),
 ];
 
-const AgricultureForestColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('social', INCIDENT, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const AgricultureForestColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('crop', INCIDENT),
     children: [
@@ -76,7 +62,14 @@ const AgricultureForestColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'social',
+  disaster: INCIDENT,
+  additionalChildren: [],
+};
+
 export const AgricultureForestColumnSettings = {
   columns: AgricultureForestColumns,
   columnGroup: AgricultureForestColumnGroup,
+  groupParams,
 };

@@ -51,14 +51,14 @@ const TableHeader = ({
       <TableCell sx={{ color: 'inherit' }}>
         <FormattedMessage id="forms_table.headers.dis_date" />
       </TableCell>
-      <TableCell sx={{ color: 'inherit', width: '110px' }}>
+      <TableCell sx={{ color: 'inherit', minWidth: '110px' }}>
         <FormattedMessage id="forms_table.headers.entry_date" />
       </TableCell>
       <TableCell sx={{ color: 'inherit' }}>
         <FormattedMessage id="forms_table.headers.dis_type" />
       </TableCell>
       {isFlood && (
-        <TableCell sx={{ color: 'inherit', width: '100px' }}>
+        <TableCell sx={{ color: 'inherit', minWidth: '90px' }}>
           {batchEditMode && <BatchEditWarningTooltip />}
           <FormattedMessage id="forms_table.headers.flood_number" />
           <br />
@@ -74,10 +74,10 @@ const TableHeader = ({
       <TableCell sx={{ color: 'inherit' }}>
         <FormattedMessage id="forms_table.headers.entry_name" />
       </TableCell>
-      <TableCell sx={{ color: 'inherit', width: '120px' }}>
+      <TableCell sx={{ color: 'inherit', minWidth: '120px' }}>
         <FormattedMessage id="forms_table.headers.phone" />
       </TableCell>
-      <TableCell sx={{ color: 'inherit' }}>
+      <TableCell sx={{ color: 'inherit', minWidth: '200px' }}>
         <FormattedMessage id="forms_table.headers.review_link" />
       </TableCell>
     </TableRow>

@@ -1,53 +1,38 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import {
-  INCIDENT,
-  IncidentSpecific,
-  KoboCommonKeys,
-} from '@wfp-dmp/interfaces';
+import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const NumAffected1Columns: GridColDef[] = [
-  getColumnSetup(IncidentSpecific.NumVillAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumPeoAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumFamAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumFeAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumDeathTo, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumMeDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumFeDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumKidDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumOldDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumDisDeath, INCIDENT),
-  getColumnSetup(IncidentSpecific.ToNumMising, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumMeMising, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumFeMising, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumKidMising, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumOldMising, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumDisMising, INCIDENT),
-  getColumnSetup(IncidentSpecific.ToNumInjure, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumMeInjure, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumFeInjure, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumKidInjure, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumOldInjure, INCIDENT),
-  getColumnSetup(IncidentSpecific.NumDisInjure, INCIDENT),
+  getColumnSetup({ field: IncidentSpecific.NumVillAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumPeoAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumFamAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumFeAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumDeathTo, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumMeDeath, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumFeDeath, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumKidDeath, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumOldDeath, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumDisDeath, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.ToNumMising, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumMeMising, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumFeMising, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumKidMising, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumOldMising, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumDisMising, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.ToNumInjure, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumMeInjure, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumFeInjure, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumKidInjure, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumOldInjure, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.NumDisInjure, disaster: INCIDENT }),
 ];
 
-const NumAffected1ColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('victimsAffected', INCIDENT, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-      { field: IncidentSpecific.NumVillAff },
-    ],
-  },
+const NumAffected1ColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('totalAffected', INCIDENT),
     children: [
@@ -91,7 +76,14 @@ const NumAffected1ColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'victimsAffected',
+  disaster: INCIDENT,
+  additionalChildren: [{ field: IncidentSpecific.NumVillAff }],
+};
+
 export const NumAffected1ColumnSettings = {
   columns: NumAffected1Columns,
   columnGroup: NumAffected1ColumnGroup,
+  groupParams,
 };

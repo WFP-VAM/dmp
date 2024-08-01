@@ -1,81 +1,58 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const NumAffected1Columns = (detailed: boolean): GridColDef[] => [
-  getColumnSetup(FloodSpecific.NumVillAff, FLOOD),
-  getColumnSetup(
-    FloodSpecific.NumPeoAff,
-    FLOOD,
-    undefined,
-    undefined,
-    undefined,
-    'bold',
-    !detailed,
-  ),
-  getColumnSetup(FloodSpecific.NumFamAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumFeAff, FLOOD),
-  getColumnSetup(
-    FloodSpecific.NumTDeath,
-    FLOOD,
-    undefined,
-    undefined,
-    undefined,
-    'bold',
-    !detailed,
-  ),
-  getColumnSetup(FloodSpecific.NumMeDeath, FLOOD),
-  getColumnSetup(FloodSpecific.NumFeDeath, FLOOD),
-  getColumnSetup(FloodSpecific.NumKidDeath, FLOOD),
-  getColumnSetup(FloodSpecific.NumOldDeath, FLOOD),
-  getColumnSetup(FloodSpecific.NumDisDeath, FLOOD),
-  getColumnSetup(
-    FloodSpecific.NumTMissing,
-    FLOOD,
-    undefined,
-    undefined,
-    undefined,
-    'bold',
-    !detailed,
-  ),
-  getColumnSetup(FloodSpecific.NumMeMissing, FLOOD),
-  getColumnSetup(FloodSpecific.NumFeMissing, FLOOD),
-  getColumnSetup(FloodSpecific.NumKidMissing, FLOOD),
-  getColumnSetup(FloodSpecific.NumOldMissing, FLOOD),
-  getColumnSetup(FloodSpecific.NumDisMissing, FLOOD),
-  getColumnSetup(
-    FloodSpecific.NumTInjure,
-    FLOOD,
-    undefined,
-    undefined,
-    undefined,
-    'bold',
-    !detailed,
-  ),
-  getColumnSetup(FloodSpecific.NumMeInjure, FLOOD),
-  getColumnSetup(FloodSpecific.NumFeInjure, FLOOD),
-  getColumnSetup(FloodSpecific.NumKidInjure, FLOOD),
-  getColumnSetup(FloodSpecific.NumOldInjure, FLOOD),
-  getColumnSetup(FloodSpecific.NumDisInjure, FLOOD),
+  getColumnSetup({ field: FloodSpecific.NumVillAff, disaster: FLOOD }),
+  getColumnSetup({
+    field: FloodSpecific.NumPeoAff,
+    disaster: FLOOD,
+    fontWeight: 'bold',
+    highlightColumn: !detailed,
+  }),
+  getColumnSetup({ field: FloodSpecific.NumFamAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumFeAff, disaster: FLOOD }),
+  getColumnSetup({
+    field: FloodSpecific.NumTDeath,
+    disaster: FLOOD,
+    fontWeight: 'bold',
+    highlightColumn: !detailed,
+  }),
+  getColumnSetup({ field: FloodSpecific.NumMeDeath, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumFeDeath, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumKidDeath, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumOldDeath, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumDisDeath, disaster: FLOOD }),
+  getColumnSetup({
+    field: FloodSpecific.NumTMissing,
+    disaster: FLOOD,
+    fontWeight: 'bold',
+    highlightColumn: !detailed,
+  }),
+  getColumnSetup({ field: FloodSpecific.NumMeMissing, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumFeMissing, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumKidMissing, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumOldMissing, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumDisMissing, disaster: FLOOD }),
+  getColumnSetup({
+    field: FloodSpecific.NumTInjure,
+    disaster: FLOOD,
+    fontWeight: 'bold',
+    highlightColumn: !detailed,
+  }),
+  getColumnSetup({ field: FloodSpecific.NumMeInjure, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumFeInjure, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumKidInjure, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumOldInjure, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumDisInjure, disaster: FLOOD }),
 ];
 
-const NumAffected1ColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('victimsAffected', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-      { field: FloodSpecific.NumVillAff },
-    ],
-  },
+const NumAffected1ColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('totalAffected', FLOOD),
     children: [
@@ -119,7 +96,14 @@ const NumAffected1ColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'victimsAffected',
+  disaster: FLOOD,
+  additionalChildren: [{ field: FloodSpecific.NumVillAff }],
+};
+
 export const NumAffected1ColumnSettings = {
   columns: NumAffected1Columns,
   columnGroup: NumAffected1ColumnGroup,
+  groupParams,
 };

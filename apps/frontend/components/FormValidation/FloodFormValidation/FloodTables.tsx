@@ -1,10 +1,10 @@
-import { TextField } from '@mui/material';
-import { FloodSpecific, FloodSpecificType } from '@wfp-dmp/interfaces';
+import { Stack, useTheme } from '@mui/material';
+import { FloodSpecificType } from '@wfp-dmp/interfaces';
 import { useIntl } from 'react-intl';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
+import { wrapGroupAsTitle } from 'utils/tableFormatting';
 
-import { FloodCheckBoxes } from './FloodCheckBoxes';
 import { getFloodTablesMapping } from './floodTablesMapping';
 
 interface IProps {
@@ -19,38 +19,36 @@ export const FloodTables = ({
   isEditMode,
 }: IProps): JSX.Element => {
   const intl = useIntl();
+  const theme = useTheme();
 
   return (
-    <>
-      <TextField
-        disabled={!isEditMode}
-        label={intl.formatMessage({
-          id: 'table.FLOOD.floodN',
-        })}
-        type="number"
-        value={value.floodN}
-        onChange={event =>
-          onChange({ ...value, [FloodSpecific.floodN]: event.target.value })
-        }
-        sx={{ m: 2 }}
-      />
-      {getFloodTablesMapping(intl).map(({ columns, columnGroup }, index) => (
-        <DisasterTable
-          columns={typeof columns === 'function' ? columns(false) : columns}
-          columnGroup={
-            typeof columnGroup === 'function' ? columnGroup(false) : columnGroup
-          }
-          data={[{ id: 1, ...value }]}
-          onChange={onChange}
-          isEditable={isEditMode}
-          key={index}
-        />
-      ))}
-      <FloodCheckBoxes
-        onChange={onChange}
-        value={value}
-        isEditable={isEditMode}
-      />
-    </>
+    <Stack gap={theme.spacing(4)}>
+      {getFloodTablesMapping(intl).map(
+        ({ columns, columnGroup, groupParams }, index) => {
+          const group = columnGroup;
+          const cols = typeof columns === 'function' ? columns(false) : columns;
+
+          return (
+            <DisasterTable
+              columns={cols}
+              columnGroup={
+                groupParams
+                  ? wrapGroupAsTitle({
+                      columns: cols,
+                      columnGroup: group,
+                      groupParams,
+                    })
+                  : group
+              }
+              data={[{ id: 1, ...value }]}
+              onChange={onChange}
+              isEditable={isEditMode}
+              key={index}
+              variant="open"
+            />
+          );
+        },
+      )}
+    </Stack>
   );
 };

@@ -30,21 +30,25 @@ export const IncidentSpecificReport = ({
     <>
       {isCommuneLevelReport ? (
         <CommuneLevelReportTable
-          columns={SummaryIncidentReportColumnSettings.columns}
-          columnGroup={SummaryIncidentReportColumnSettings.columnGroup}
-          data={report}
-          rotateHeader={false}
-          border
-          showMenuOnLocation
+          locationParams={{
+            columns: SummaryIncidentReportColumnSettings.columns,
+            columnGroup: SummaryIncidentReportColumnSettings.columnGroup,
+          }}
+          disasterTableParams={{
+            data: report,
+            variant: 'bordered',
+          }}
         />
       ) : (
         <ProvinceLevelReportTable
-          columns={SummaryIncidentReportColumnSettings.columns}
-          columnGroup={SummaryIncidentReportColumnSettings.columnGroup}
-          data={report}
-          rotateHeader={false}
-          border
-          showMenuOnLocation
+          locationParams={{
+            columns: SummaryIncidentReportColumnSettings.columns,
+            columnGroup: SummaryIncidentReportColumnSettings.columnGroup,
+          }}
+          disasterTableParams={{
+            data: report,
+            variant: 'bordered',
+          }}
         />
       )}
     </>

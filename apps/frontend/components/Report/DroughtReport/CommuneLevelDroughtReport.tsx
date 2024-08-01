@@ -13,15 +13,22 @@ export const CommuneLevelDroughtReport = ({
 
   return (
     <Stack gap={theme.spacing(4)}>
-      {droughtReportTablesMapping.map(({ columns, columnGroup }, index) => (
-        <CommuneLevelReportTable
-          columns={columns}
-          columnGroup={columnGroup(true)}
-          data={report}
-          key={index}
-          border={false}
-        />
-      ))}
+      {droughtReportTablesMapping.map(
+        ({ columns, columnGroup, groupParams }, index) => (
+          <CommuneLevelReportTable
+            locationParams={{
+              columns,
+              columnGroup,
+              groupParams,
+            }}
+            disasterTableParams={{
+              data: report,
+              variant: 'open',
+            }}
+            key={index}
+          />
+        ),
+      )}
     </Stack>
   );
 };

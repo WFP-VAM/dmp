@@ -5,17 +5,41 @@ import {
   DataGrid,
   DataGridProps,
   GridColDef,
+  GridColumnGroupHeaderParams,
   GridColumnGroupingModel,
+  GridColumnHeaderParams,
+  GridColumnNode,
   GridRowModel,
+  isLeaf,
 } from '@mui/x-data-grid';
 import { sum } from 'lodash';
 import React from 'react';
 
 import { colors } from 'theme/muiTheme';
+import CustomToolMenu from 'utils/CustomToolMenu';
+
+const isLastCovered = (group: GridColumnNode[], field: string): boolean => {
+  for (let index = 0; index < group.length; index++) {
+    const element = group[index];
+
+    if (isLeaf(element)) {
+      if (element.field === field) return true;
+      continue;
+    }
+
+    if (isLastCovered(element.children, field)) {
+      return true;
+    }
+  }
+
+  return false;
+};
 
 import ScrollArrows from './ScrollArrows';
 
-interface IProps {
+export type DisasterTableVariant = 'open' | 'bordered';
+
+export interface DisasterTableProps {
   columns: GridColDef[];
   columnGroup: GridColumnGroupingModel;
   data: Record<string, string | number | undefined>[];
@@ -24,11 +48,9 @@ interface IProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getRowId?: (row: any) => string;
   isEditable: boolean;
-  rotateHeader?: boolean;
   columnHeaderHeight?: 'normal' | 'large';
-  border?: boolean;
+  variant: DisasterTableVariant;
   getRowClassName?: DataGridProps['getRowClassName'];
-  hideTopRightBorder?: boolean;
 }
 
 export const DisasterTable = ({
@@ -38,11 +60,10 @@ export const DisasterTable = ({
   onChange,
   getRowId,
   isEditable,
+  variant,
   columnHeaderHeight = 'normal',
-  border = true,
   getRowClassName,
-  hideTopRightBorder = false,
-}: IProps): JSX.Element => {
+}: DisasterTableProps): JSX.Element => {
   const outerRef = React.useRef<HTMLDivElement>(null);
   const [hovering, setHovering] = React.useState(false);
   const [hasOverflow, setHasOverflow] = React.useState(false);
@@ -88,8 +109,41 @@ export const DisasterTable = ({
   // TODO - activate column visibility model when PR is stable
   const columnVisibilityModel = {}; // generateColumnVisibilityModel(columns, data);
 
+  const hasGroups = columnGroup.length > 0;
+  const withTopCellDef = columnGroup.map(x => ({
+    ...x,
+    headerClassName: `${x.headerClassName?.toString() ?? ''} header-top-cell`,
+  }));
+  const [groupHead, ...groupRest] = withTopCellDef;
+  const updatedColumnGroup = hasGroups
+    ? [
+        {
+          ...groupHead,
+          renderHeaderGroup: (params: GridColumnGroupHeaderParams) => {
+            return (
+              <>
+                {groupHead.renderHeaderGroup?.(params)}
+                {variant === 'bordered' && (
+                  <CustomToolMenu withBorder={false} />
+                )}
+              </>
+            );
+          },
+          headerClassName:
+            variant === 'open'
+              ? `${groupHead.headerClassName
+                  .toString()
+                  .split(' ')
+                  .filter(x => x !== 'header-top-cell')
+                  .join(' ')} header-setting-cell`
+              : groupHead.headerClassName,
+        },
+        ...groupRest,
+      ]
+    : [];
+
   // Make location columns non-hideable
-  const updatedColumns = columns.map(column => {
+  const _updatedColumns = columns.map(column => {
     if (
       ['province', 'district', 'commune', 'location'].includes(column.field)
     ) {
@@ -101,14 +155,31 @@ export const DisasterTable = ({
 
     return column;
   });
+  const [columnsHead, ...columnsRest] = _updatedColumns;
+  const updatedColumns = !hasGroups
+    ? [
+        {
+          ...columnsHead,
+          renderHeader: (params: GridColumnHeaderParams) => (
+            <>
+              {columnsHead.renderHeader?.(params)}
+              <CustomToolMenu withBorder={false} />
+            </>
+          ),
+        },
+        ...columnsRest,
+      ]
+    : _updatedColumns;
 
   const borderCSS = `1px solid ${colors.gray}`;
-  const transparentBorder = '1px solid transparent';
 
-  const showBorder = border ? undefined : borderCSS;
-  const showTransBorder = border ? undefined : transparentBorder;
-
-  const disableBorder = border ? undefined : 'none';
+  const hideBorderDivStyles = {
+    minWidth: '2px',
+    minHeight: `${columnHeaderHeight === 'large' ? 69 : 49}px`,
+    position: 'absolute' as const,
+    background: '#f9f7f7',
+    zIndex: 1,
+  };
 
   return (
     <Box position="relative">
@@ -132,27 +203,31 @@ export const DisasterTable = ({
           m={2}
           mt={0}
         >
-          {hideTopRightBorder && (
+          {(updatedColumnGroup.length === 1 ||
+            !isLastCovered(
+              updatedColumnGroup,
+              updatedColumns[updatedColumns.length - 1].field,
+            )) &&
+            variant === 'open' && (
+              <div
+                style={{
+                  ...hideBorderDivStyles,
+                  right: 0,
+                  top: 0,
+                }}
+              />
+            )}
+          {variant === 'open' && (
             <div
               style={{
-                minWidth: '2px',
-                minHeight: `${columnHeaderHeight === 'large' ? 69 : 49}px`,
-                position: 'absolute',
-                background: '#f9f7f7',
-                zIndex: 1,
-                right: 0,
+                ...hideBorderDivStyles,
+                left: 0,
                 top: 0,
               }}
             />
           )}
           <DataGrid
             sx={{
-              '& .MuiDataGrid-columnHeader.empty-group-header': {
-                backgroundColor: '#f9f7f7',
-              },
-              '& .left-border': {
-                borderLeft: borderCSS,
-              },
               '& .MuiDataGrid-row.highlight-1': {
                 background: `${colors.color1}`,
               },
@@ -163,25 +238,15 @@ export const DisasterTable = ({
                 background: '#D0EBF9',
               },
               '& .MuiDataGrid-columnHeader.header-top-cell': {
-                borderTop: borderCSS,
-                borderBottom: borderCSS,
-                outline: 'none',
-              },
-              '& .MuiDataGrid-columnHeader.header-top-cell.no-border-bottom': {
-                borderBottom: 'none',
+                borderTop: variant === 'open' ? borderCSS : undefined,
               },
               '& .MuiDataGrid-columnHeader.header-setting-cell': {
                 fontWeight: 'bold',
-                borderBottom: borderCSS,
                 backgroundColor: '#f9f7f7',
                 outline: 'none',
               },
-              '& .MuiDataGrid-columnHeaders': {
-                borderLeft: showTransBorder,
-              },
               '& .MuiDataGrid-row': {
                 background: 'white',
-                borderLeft: showBorder,
               },
               '& .MuiDataGrid-cell': {
                 borderColor: colors.gray,
@@ -204,10 +269,15 @@ export const DisasterTable = ({
               '& .MuiDataGrid-columnHeader--emptyGroup': {
                 backgroundColor: '#f9f7f7',
                 borderBottom: borderCSS,
-                borderTop: showBorder,
               },
               '& .MuiDataGrid-iconButtonContainer': {
                 display: 'none',
+              },
+              '& .MuiDataGrid-columnHeader--filledGroup': {
+                borderBottom: borderCSS,
+              },
+              '& .MuiDataGrid-columnHeader--filledGroup:focus-within': {
+                outline: 'none',
               },
               '& .MuiDataGrid-columnHeaderTitleContainer': {
                 border: 'none !important',
@@ -220,9 +290,13 @@ export const DisasterTable = ({
                 overflow: 'hidden',
               },
               breakInside: 'avoid',
-              borderTop: disableBorder,
-              borderLeft: disableBorder,
+              borderTop: variant === 'bordered' ? undefined : 'none',
               borderColor: colors.gray,
+              '& .MuiDataGrid-cell:focus-within': {
+                outline: 'solid green 3px',
+                outlineWidth: '3px',
+                outlineOffset: '-3px',
+              },
             }}
             disableColumnResize
             density="compact"
@@ -232,7 +306,7 @@ export const DisasterTable = ({
             rows={data}
             columns={updatedColumns}
             hideFooter
-            columnGroupingModel={columnGroup}
+            columnGroupingModel={updatedColumnGroup}
             isCellEditable={() => isEditable}
             processRowUpdate={(newRow: GridRowModel) => {
               if (onChange) onChange(newRow);

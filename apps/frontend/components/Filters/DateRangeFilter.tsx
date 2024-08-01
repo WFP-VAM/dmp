@@ -24,7 +24,10 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
   return (
     <Stack direction="row" gap={theme.spacing(1)}>
       <DatePicker
-        sx={{ width: 140, backgroundColor: 'white' }}
+        sx={{
+          width: 140,
+          backgroundColor: 'white',
+        }}
         label={
           value.startDate
             ? undefined
@@ -52,7 +55,6 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
           inputAdornment: {
             sx: {
               display: 'none',
-              cursor: 'pointer',
             },
           },
           textField: {
@@ -65,6 +67,7 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
               onClick: () => setStartOpen(true), // Open calendar on click
               sx: {
                 cursor: 'pointer',
+                height: '2.5rem',
               },
             },
           },
@@ -72,7 +75,10 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
       />
 
       <DatePicker
-        sx={{ width: 140, backgroundColor: 'white' }}
+        sx={{
+          width: 140,
+          backgroundColor: 'white',
+        }}
         label={
           value.endDate
             ? undefined
@@ -112,6 +118,7 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
               onClick: () => setEndOpen(true), // Open calendar on click
               sx: {
                 cursor: 'pointer',
+                height: '2.5rem',
               },
             },
           },

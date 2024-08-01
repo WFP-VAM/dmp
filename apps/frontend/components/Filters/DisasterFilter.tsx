@@ -27,9 +27,14 @@ const incidentsKeys = Object.keys(IncidentMapping).map(
 interface Props {
   value: string[];
   onChange: (newValue: string[]) => void;
+  disabled?: boolean;
 }
 
-export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
+export const DisasterFilter = ({
+  value,
+  onChange,
+  disabled,
+}: Props): JSX.Element => {
   // value can contain more than one element only for incident
   // value can be empty if it is an INCIDENT
   const disTyp =
@@ -67,9 +72,14 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
     >
       <FormControl>
         <Select
+          disabled={disabled}
           value={disasterType}
           onChange={onDisasterTypeChange}
-          sx={{ minWidth: 150, backgroundColor: 'white' }}
+          sx={{
+            minWidth: 150,
+            backgroundColor: 'white',
+            height: '2.5rem',
+          }}
         >
           {disasters.map(disaster => {
             return (
@@ -83,6 +93,8 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
       {disasterType === INCIDENT && (
         <FormControl sx={{ ml: 2 }}>
           <MultiSelect
+            value={value}
+            disabled={disabled}
             options={incidentsKeys}
             onChange={v => {
               onIncidentsChange(v);

@@ -10,15 +10,16 @@ import { NumAffected1ColumnSettings } from 'components/FormValidation/FloodFormV
 import { NumAffected2ColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/NumAffected-2';
 import { ShelterNeedsColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/ShelterNeeds';
 import { WaterNeedsColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/WaterNeeds';
+import { ColumnSetupParams } from 'utils/tableFormatting';
 
 import { ReportFoodNeedsColumnSettings } from './tablesConfig/ReportFoodNeeds';
 import { ReportThreatColumnSettings } from './tablesConfig/ReportThreat';
 
 export const floodReportTablesMapping: {
   columns: GridColDef[] | ((detailed: boolean) => GridColDef[]);
-  columnGroup: (detailed: boolean) => GridColumnGroupingModel;
+  columnGroup: GridColumnGroupingModel;
   columnHeaderHeight?: 'large' | 'normal';
-  hideTopRightBorder?: boolean;
+  groupParams: ColumnSetupParams;
 }[] = [
   NumAffected1ColumnSettings,
   NumAffected2ColumnSettings,

@@ -20,13 +20,15 @@ const ScrollArrows = ({
   outerRef,
 }: ScrollArrowsProps) => {
   const arrowStyles = {
-    border: `6px solid ${colors.color5}`,
+    backgroundColor: 'white',
+    border: `6px solid ${colors.color6}`,
     borderRadius: '12px',
-    color: colors.color5,
+    color: colors.color6,
     position: 'absolute' as const,
     top: '50%',
     zIndex: 1,
-    opacity: hovering ? 0 : 0.7,
+    opacity: hovering ? 0.9 : 1,
+    cursor: 'pointer',
     transition: '0.4s',
   };
 

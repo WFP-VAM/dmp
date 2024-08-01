@@ -1,42 +1,42 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const colWidth = 8 * 9;
 
 const HouseSocialColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumHouAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumHouDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumSchoAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumSchoDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumAffHeal, FLOOD),
-  getColumnSetup(FloodSpecific.NumDamHeal, FLOOD),
-  getColumnSetup(FloodSpecific.NumPagoAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumPagoDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumBuilAff, FLOOD, colWidth + 8 * 2),
-  getColumnSetup(FloodSpecific.NumBuilDam, FLOOD, colWidth + 8 * 2),
-  getColumnSetup(FloodSpecific.NumShopAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumShopDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumWareHAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumWareHDam, FLOOD),
-  getColumnSetup(FloodSpecific.NumCraftAff, FLOOD),
-  getColumnSetup(FloodSpecific.NumCraftDam, FLOOD),
+  getColumnSetup({ field: FloodSpecific.NumHouAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumHouDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumSchoAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumSchoDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumAffHeal, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumDamHeal, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumPagoAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumPagoDam, disaster: FLOOD }),
+  getColumnSetup({
+    field: FloodSpecific.NumBuilAff,
+    disaster: FLOOD,
+    width: colWidth + 8 * 2,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumBuilDam,
+    disaster: FLOOD,
+    width: colWidth + 8 * 2,
+  }),
+  getColumnSetup({ field: FloodSpecific.NumShopAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumShopDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumWareHAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumWareHDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumCraftAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumCraftDam, disaster: FLOOD }),
 ];
 
-const HouseSocialColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('houseSocial', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const HouseSocialColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('house', FLOOD),
     children: [
@@ -95,7 +95,14 @@ const HouseSocialColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'houseSocial',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const HouseSocialColumnSettings = {
   columns: HouseSocialColumns,
   columnGroup: HouseSocialColumnGroup,
+  groupParams,
 };

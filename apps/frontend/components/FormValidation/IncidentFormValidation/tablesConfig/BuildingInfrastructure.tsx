@@ -1,41 +1,39 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import {
-  INCIDENT,
-  IncidentSpecific,
-  KoboCommonKeys,
-} from '@wfp-dmp/interfaces';
+import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const BuildingInfrastructureColumns: GridColDef[] = [
-  getColumnSetup(IncidentSpecific.PartlyBurn, INCIDENT),
-  getColumnSetup(IncidentSpecific.CompletBurn, INCIDENT),
-  getColumnSetup(IncidentSpecific.SchAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.SchDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.HealthAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.HealthDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.RivBreakLo, INCIDENT),
-  getColumnSetup(IncidentSpecific.RivBreakWid, INCIDENT),
-  getColumnSetup(IncidentSpecific.NationalRod, INCIDENT, 8 * 12),
-  getColumnSetup(IncidentSpecific.RuralRoad, INCIDENT, 8 * 12),
-  getColumnSetup(IncidentSpecific.Bridge, INCIDENT, 8 * 12),
+  getColumnSetup({ field: IncidentSpecific.PartlyBurn, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.CompletBurn, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.SchAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.SchDam, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.HealthAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.HealthDam, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.RivBreakLo, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.RivBreakWid, disaster: INCIDENT }),
+  getColumnSetup({
+    field: IncidentSpecific.NationalRod,
+    disaster: INCIDENT,
+    width: 8 * 12,
+  }),
+  getColumnSetup({
+    field: IncidentSpecific.RuralRoad,
+    disaster: INCIDENT,
+    width: 8 * 12,
+  }),
+  getColumnSetup({
+    field: IncidentSpecific.Bridge,
+    disaster: INCIDENT,
+    width: 8 * 12,
+  }),
 ];
 
-const BuildingInfrastructureColumnGroup = (
-  detailed: boolean,
-): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('buildingInfrastructure', INCIDENT, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const BuildingInfrastructureColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('house', INCIDENT),
     children: [
@@ -69,7 +67,14 @@ const BuildingInfrastructureColumnGroup = (
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'buildingInfrastructure',
+  disaster: INCIDENT,
+  additionalChildren: [],
+};
+
 export const BuildingInfrastructureColumnSettings = {
   columns: BuildingInfrastructureColumns,
   columnGroup: BuildingInfrastructureColumnGroup,
+  groupParams,
 };

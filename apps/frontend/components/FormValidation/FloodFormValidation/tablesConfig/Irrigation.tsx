@@ -1,40 +1,40 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
-import { FLOOD, FloodSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const colWidth = 8 * 9;
 
 const IrrigationColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.DamAff, FLOOD),
-  getColumnSetup(FloodSpecific.DamDamaged, FLOOD),
-  getColumnSetup(FloodSpecific.WatGateAff, FLOOD),
-  getColumnSetup(FloodSpecific.WatGateDam, FLOOD),
-  getColumnSetup(FloodSpecific.PlumWelAff, FLOOD),
-  getColumnSetup(FloodSpecific.PlumWelDam, FLOOD),
-  getColumnSetup(FloodSpecific.DigWellAff, FLOOD, colWidth + 8 * 2),
-  getColumnSetup(FloodSpecific.DigWellDam, FLOOD, colWidth + 8 * 2),
-  getColumnSetup(FloodSpecific.PondAff, FLOOD),
-  getColumnSetup(FloodSpecific.PondDam, FLOOD),
-  getColumnSetup(FloodSpecific.LatrineAff, FLOOD),
-  getColumnSetup(FloodSpecific.LatrineDam, FLOOD),
-  getColumnSetup(FloodSpecific.RiverBreak, FLOOD),
-  getColumnSetup(FloodSpecific.RiverBreakLo, FLOOD),
+  getColumnSetup({ field: FloodSpecific.DamAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.DamDamaged, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.WatGateAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.WatGateDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.PlumWelAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.PlumWelDam, disaster: FLOOD }),
+  getColumnSetup({
+    field: FloodSpecific.DigWellAff,
+    disaster: FLOOD,
+    width: colWidth + 8 * 2,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.DigWellDam,
+    disaster: FLOOD,
+    width: colWidth + 8 * 2,
+  }),
+  getColumnSetup({ field: FloodSpecific.PondAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.PondDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.LatrineAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.LatrineDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.RiverBreak, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.RiverBreakLo, disaster: FLOOD }),
 ];
 
-const IrrigationColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
-  {
-    ...getGroupSetup('irrigation', FLOOD, true),
-    children: [
-      ...(detailed
-        ? [{ field: KoboCommonKeys.location }]
-        : [
-            { field: KoboCommonKeys.province },
-            { field: KoboCommonKeys.district },
-            { field: KoboCommonKeys.commune },
-          ]),
-    ],
-  },
+const IrrigationColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('dam', FLOOD),
     children: [
@@ -86,7 +86,14 @@ const IrrigationColumnGroup = (detailed: boolean): GridColumnGroupingModel => [
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'irrigation',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const IrrigationColumnSettings = {
   columns: IrrigationColumns,
   columnGroup: IrrigationColumnGroup,
+  groupParams,
 };
