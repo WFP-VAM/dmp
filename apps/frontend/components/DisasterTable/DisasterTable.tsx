@@ -292,6 +292,11 @@ export const DisasterTable = ({
               breakInside: 'avoid',
               borderTop: variant === 'bordered' ? undefined : 'none',
               borderColor: colors.gray,
+              '& .MuiDataGrid-cell:focus-within': {
+                outline: 'solid green 3px',
+                outlineWidth: '3px',
+                outlineOffset: '-3px',
+              },
             }}
             disableColumnResize
             density="compact"
