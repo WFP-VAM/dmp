@@ -77,7 +77,7 @@ const TableHeader = ({
       <TableCell sx={{ color: 'inherit', width: '120px' }}>
         <FormattedMessage id="forms_table.headers.phone" />
       </TableCell>
-      <TableCell sx={{ color: 'inherit' }}>
+      <TableCell sx={{ color: 'inherit', width: '200px' }}>
         <FormattedMessage id="forms_table.headers.review_link" />
       </TableCell>
     </TableRow>

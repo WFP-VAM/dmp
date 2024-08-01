@@ -3,6 +3,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Error from '@mui/icons-material/Error';
 import { Button, Stack, Tooltip, Typography, useTheme } from '@mui/material';
 import { ValidationStatusValue } from '@wfp-dmp/interfaces';
+import { useRouter } from 'next/router';
 import { FormattedMessage } from 'react-intl';
 
 type TextVersion = 'long' | 'normal' | 'none';
@@ -42,8 +43,12 @@ export const ValidationIndicator = ({
         display="flex"
         fontSize="inherit"
         fontWeight={textVersion === 'long' ? 'bold' : 'inherit'}
+        style={{
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+        }}
       >
-        <Stack gap={theme.spacing(1)} flexDirection="row">
+        <Stack gap={theme.spacing(1)} flexDirection="row" alignItems="center">
           <Tooltip title={<FormattedMessage id={id} />}>
             <Icon htmlColor={color} />
           </Tooltip>
@@ -75,11 +80,16 @@ export const ValidationLinkButton = ({
   valLink: string;
   textVersion?: TextVersion;
 }) => {
+  const router = useRouter();
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    void router.push(valLink);
+  };
+
   return (
     <Button
-      href={valLink}
-      target="_blank"
-      rel="noopener noreferrer"
+      onClick={handleClick}
       variant="contained"
       disableElevation
       sx={{
