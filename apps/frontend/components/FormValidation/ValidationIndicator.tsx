@@ -43,8 +43,12 @@ export const ValidationIndicator = ({
         display="flex"
         fontSize="inherit"
         fontWeight={textVersion === 'long' ? 'bold' : 'inherit'}
+        style={{
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+        }}
       >
-        <Stack gap={theme.spacing(1)} flexDirection="row">
+        <Stack gap={theme.spacing(1)} flexDirection="row" alignItems="center">
           <Tooltip title={<FormattedMessage id={id} />}>
             <Icon htmlColor={color} />
           </Tooltip>
