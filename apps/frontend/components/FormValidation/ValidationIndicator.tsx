@@ -82,14 +82,11 @@ export const ValidationLinkButton = ({
 }) => {
   const router = useRouter();
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    void router.push(valLink);
-  };
-
   return (
     <Button
-      onClick={handleClick}
+      href={valLink}
+      target="_blank"
+      rel="noopener noreferrer"
       variant="contained"
       disableElevation
       sx={{
