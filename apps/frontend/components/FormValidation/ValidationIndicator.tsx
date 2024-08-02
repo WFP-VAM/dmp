@@ -3,7 +3,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Error from '@mui/icons-material/Error';
 import { Button, Stack, Tooltip, Typography, useTheme } from '@mui/material';
 import { ValidationStatusValue } from '@wfp-dmp/interfaces';
-import { useRouter } from 'next/router';
 import { FormattedMessage } from 'react-intl';
 
 type TextVersion = 'long' | 'normal' | 'none';
@@ -80,8 +79,6 @@ export const ValidationLinkButton = ({
   valLink: string;
   textVersion?: TextVersion;
 }) => {
-  const router = useRouter();
-
   return (
     <Button
       href={valLink}
