@@ -212,10 +212,11 @@ export const ChartsContainer = () => {
           setSearchFormData={setSearchReportData}
           submitButtonContent={
             <FormattedMessage
-              id="report_page.showReport"
-              defaultMessage="Show Charts"
+              id="charts_page.showReport"
+              defaultMessage="Charts"
             />
           }
+          hideDisasterFilter
         />
         <IconButton
           onClick={handlePrint}
