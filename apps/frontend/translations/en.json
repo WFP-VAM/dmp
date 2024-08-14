@@ -47,6 +47,7 @@
     "home": "Home",
     "forms": { "header": "Forms", "search": "Search forms" },
     "reports": "Reports",
+    "charts": "Summary charts",
     "admin": "Admin",
     "language": {
       "english": "English",
