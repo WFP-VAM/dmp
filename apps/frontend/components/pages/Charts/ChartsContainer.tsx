@@ -10,6 +10,7 @@ import {
 import {
   BarElement,
   CategoryScale,
+  ChartData,
   Chart as ChartJS,
   Legend,
   LinearScale,
@@ -104,8 +105,6 @@ export const ChartsContainer = () => {
     defaultSearchReportData,
   );
 
-  console.log({ defaultSearchReportData });
-
   const { formattedForms, isLoading } = useFormattedForms(searchReportData);
 
   const printRef = useRef(null);
@@ -114,33 +113,44 @@ export const ChartsContainer = () => {
   });
 
   const intl = useIntl();
-  const chartRef = useRef<Chart | null>(null);
   const [chartData, setChartData] = useState<ChartData<'bar'>>({
     datasets: [],
   });
 
   useEffect(() => {
+    // TODO - group at different levels depending on the search values
+    // Decide on logic for grouping
+    let groupByLevel: 'province' | 'district' | 'commune' = 'province';
+    if (searchReportData.region.commune.length > 1) {
+      groupByLevel = 'commune';
+    } else if (searchReportData.region.district.length > 1) {
+      groupByLevel = 'district';
+    } else if (searchReportData.region.district.length > 0) {
+      groupByLevel = 'commune';
+    }
+    console.log({ groupByLevel });
+
     if (formattedForms.length > 0) {
       const groupedData = formattedForms.reduce((acc, form) => {
-        const province = form.province;
-        if (!acc[province]) {
-          acc[province] = { flood: 0, drought: 0, incident: 0 };
+        const location = form[groupByLevel];
+        if (!acc[location]) {
+          acc[location] = { flood: 0, drought: 0, incident: 0 };
         }
         if (form.disTyp === DisasterMapping['flood']) {
-          acc[province].flood++;
+          acc[location].flood++;
         } else if (form.disTyp === DisasterMapping['drought']) {
-          acc[province].drought++;
+          acc[location].drought++;
         } else {
-          acc[province].incident++;
+          acc[location].incident++;
         }
 
         return acc;
       }, {} as Record<string, { flood: number; drought: number; incident: number }>);
 
-      const labels = Object.keys(groupedData).map(province =>
+      const labels = Object.keys(groupedData).map(location =>
         intl.formatMessage({
-          id: `province.${province}`,
-          defaultMessage: province,
+          id: `${groupByLevel}.${location}`,
+          defaultMessage: location,
         }),
       );
 
@@ -181,6 +191,8 @@ export const ChartsContainer = () => {
       };
 
       setChartData(data);
+    } else {
+      setChartData({ datasets: [] });
     }
   }, [formattedForms, intl]);
 
