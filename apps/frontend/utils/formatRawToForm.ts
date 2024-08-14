@@ -9,9 +9,7 @@ import {
 } from '@wfp-dmp/interfaces';
 import { mapValues } from 'lodash';
 
-export const formatFloodFields = (
-  form: FloodDto,
-): Record<string, string | undefined> => ({
+export const formatFloodFields = (form: FloodDto) => ({
   ...formatCommonFields(form),
   ...mapValues(floodSpecificKeys, value => form[value]),
 });
