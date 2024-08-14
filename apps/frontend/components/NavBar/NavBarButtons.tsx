@@ -19,12 +19,35 @@ import { apiBaseUrl } from 'services/api/client';
 import { colors } from 'theme/muiTheme';
 import { logout } from 'utils/logout';
 
+type NormalLink = {
+  key: number;
+  linkTo: string;
+  textId: string;
+  icon: React.ReactNode;
+};
+
+type SubMenuItem = {
+  key: string;
+  linkTo: string;
+  textId: string;
+  icon: React.ReactNode;
+};
+
+type LinkWithSubMenu = {
+  key: number;
+  textId: string;
+  icon: React.ReactNode;
+  subMenu: SubMenuItem[];
+};
+
+type NavLink = NormalLink | LinkWithSubMenu;
+
 const handleAdminClick = () => {
   const path = new URL('/admin/login', apiBaseUrl).toString();
   window.location.href = path;
 };
 
-const links = [
+const links: NavLink[] = [
   {
     key: 1,
     linkTo: '/',
@@ -78,6 +101,10 @@ const links = [
   },
 ];
 
+const isLinkWithSubMenu = (link: NavLink): link is LinkWithSubMenu => {
+  return 'subMenu' in link;
+};
+
 const NavBarButtons = () => {
   const intl = useIntl();
   const path = usePathname();
@@ -98,6 +125,89 @@ const NavBarButtons = () => {
     setOpenMenuKey(null);
   };
 
+  const renderSubMenu = (x: LinkWithSubMenu) => {
+    const { key, textId, icon, subMenu } = x;
+    const selected = subMenu.some(item => item.linkTo === path);
+
+    return (
+      <React.Fragment key={key}>
+        <Button
+          variant="text"
+          startIcon={icon}
+          onClick={e => handleClick(e, key)}
+          aria-controls={openMenuKey === key ? `menu-${key}` : undefined}
+          aria-haspopup="true"
+          aria-expanded={openMenuKey === key ? 'true' : undefined}
+        >
+          <Typography
+            fontWeight={selected ? 'bold' : undefined}
+            color={selected ? colors.color3 : undefined}
+            style={
+              selected
+                ? {
+                    textDecoration: 'underline',
+                    textDecorationThickness: '4px',
+                  }
+                : undefined
+            }
+          >
+            {intl.formatMessage({ id: textId })}
+          </Typography>
+        </Button>
+        <Menu
+          id={`menu-${key}`}
+          anchorEl={anchorEl}
+          open={openMenuKey === key}
+          onClose={handleClose}
+        >
+          {subMenu.map(item => (
+            <MenuItem
+              key={item.key}
+              onClick={handleClose}
+              component={Link}
+              href={item.linkTo}
+            >
+              {item.icon}
+              <Typography marginLeft={1}>
+                {intl.formatMessage({ id: item.textId })}
+              </Typography>
+            </MenuItem>
+          ))}
+        </Menu>
+      </React.Fragment>
+    );
+  };
+
+  const renderNormalMenu = (x: NormalLink) => {
+    const { key, linkTo, textId, icon } = x;
+    const selected = linkTo === path;
+
+    return (
+      <Link
+        key={key}
+        href={linkTo}
+        style={{ textDecoration: 'none', color: 'inherit' }}
+      >
+        <Button variant="text" startIcon={icon}>
+          <Typography
+            fontWeight={selected ? 'bold' : undefined}
+            color={selected ? colors.color3 : undefined}
+            style={
+              selected
+                ? {
+                    textDecoration: 'underline',
+                    textDecorationThickness: '4px',
+                  }
+                : undefined
+            }
+          >
+            {intl.formatMessage({ id: textId })}
+          </Typography>
+        </Button>
+      </Link>
+    );
+  };
+
   return (
     <Stack
       direction="row"
@@ -106,87 +216,9 @@ const NavBarButtons = () => {
       gap={theme.spacing(4)}
       marginRight={1}
     >
-      {links.map(x => {
-        const { key, linkTo, textId, icon, subMenu } = x;
-        const selected =
-          linkTo === path ||
-          (subMenu && subMenu.some(item => item.linkTo === path));
-
-        if (subMenu) {
-          return (
-            <React.Fragment key={key}>
-              <Button
-                variant="text"
-                startIcon={icon}
-                onClick={e => handleClick(e, key)}
-                aria-controls={openMenuKey === key ? `menu-${key}` : undefined}
-                aria-haspopup="true"
-                aria-expanded={openMenuKey === key ? 'true' : undefined}
-              >
-                <Typography
-                  fontWeight={selected ? 'bold' : undefined}
-                  color={selected ? colors.color3 : undefined}
-                  style={
-                    selected
-                      ? {
-                          textDecoration: 'underline',
-                          textDecorationThickness: '4px',
-                        }
-                      : undefined
-                  }
-                >
-                  {intl.formatMessage({ id: textId })}
-                </Typography>
-              </Button>
-              <Menu
-                id={`menu-${key}`}
-                anchorEl={anchorEl}
-                open={openMenuKey === key}
-                onClose={handleClose}
-              >
-                {subMenu.map(item => (
-                  <MenuItem
-                    key={item.key}
-                    onClick={handleClose}
-                    component={Link}
-                    href={item.linkTo}
-                  >
-                    {item.icon}
-                    <Typography marginLeft={1}>
-                      {intl.formatMessage({ id: item.textId })}
-                    </Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </React.Fragment>
-          );
-        }
-
-        return (
-          <Link
-            key={key}
-            href={linkTo}
-            style={{ textDecoration: 'none', color: 'inherit' }}
-          >
-            <Button variant="text" startIcon={icon}>
-              <Typography
-                fontWeight={selected ? 'bold' : undefined}
-                color={selected ? colors.color3 : undefined}
-                style={
-                  selected
-                    ? {
-                        textDecoration: 'underline',
-                        textDecorationThickness: '4px',
-                      }
-                    : undefined
-                }
-              >
-                {intl.formatMessage({ id: textId })}
-              </Typography>
-            </Button>
-          </Link>
-        );
-      })}
+      {links.map(x =>
+        isLinkWithSubMenu(x) ? renderSubMenu(x) : renderNormalMenu(x),
+      )}
       <Button
         variant="text"
         startIcon={<Person style={{ minWidth: '1.5rem' }} />}
