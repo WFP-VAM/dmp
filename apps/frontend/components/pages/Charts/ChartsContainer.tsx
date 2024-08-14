@@ -7,9 +7,19 @@ import {
   IncidentDto,
   IncidentMapping,
 } from '@wfp-dmp/interfaces';
+import {
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  Title,
+  Tooltip,
+} from 'chart.js';
 import dayjs from 'dayjs';
-import { useMemo, useRef, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Bar } from 'react-chartjs-2';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useReactToPrint } from 'react-to-print';
 
 import {
@@ -26,6 +36,15 @@ import {
   formatFloodFields,
   formatIncidentFields,
 } from 'utils/formatRawToForm';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 const defaultSearchReportData: SearchFormData = {
   disTyps: [DisasterMapping['drought'], DisasterMapping['flood']],
@@ -94,6 +113,85 @@ export const ChartsContainer = () => {
     content: () => printRef.current,
   });
 
+  const intl = useIntl();
+  const chartRef = useRef<Chart | null>(null);
+  const [chartData, setChartData] = useState<ChartData<'bar'>>({
+    datasets: [],
+  });
+
+  useEffect(() => {
+    if (formattedForms.length > 0) {
+      const groupedData = formattedForms.reduce((acc, form) => {
+        const province = form.province;
+        if (!acc[province]) {
+          acc[province] = { flood: 0, drought: 0, incident: 0 };
+        }
+        if (form.disTyp === DisasterMapping['flood']) {
+          acc[province].flood++;
+        } else if (form.disTyp === DisasterMapping['drought']) {
+          acc[province].drought++;
+        } else {
+          acc[province].incident++;
+        }
+
+        return acc;
+      }, {} as Record<string, { flood: number; drought: number; incident: number }>);
+
+      const labels = Object.keys(groupedData).map(province =>
+        intl.formatMessage({
+          id: `province.${province}`,
+          defaultMessage: province,
+        }),
+      );
+
+      const data: ChartData<'bar'> = {
+        labels,
+        datasets: [
+          {
+            label: intl.formatMessage({
+              id: 'disasters.FLOOD',
+              defaultMessage: 'Lalla',
+            }),
+            data: Object.values(groupedData).map(d => d.flood),
+            backgroundColor: '#05476B',
+            borderColor: '#000000',
+            borderWidth: 1,
+          },
+          {
+            label: intl.formatMessage({
+              id: 'disasters.DROUGHT',
+              defaultMessage: 'Drought',
+            }),
+            data: Object.values(groupedData).map(d => d.drought),
+            backgroundColor: '#63B2BD',
+            borderColor: '#000000',
+            borderWidth: 1,
+          },
+          {
+            label: intl.formatMessage({
+              id: 'disasters.INCIDENT',
+              defaultMessage: 'Incident',
+            }),
+            data: Object.values(groupedData).map(d => d.incident),
+            backgroundColor: '#D0EBF9',
+            borderColor: '#000000',
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      setChartData(data);
+    }
+  }, [formattedForms, intl]);
+
+  const options = {
+    responsive: true,
+    scales: {
+      x: { stacked: true },
+      y: { stacked: true },
+    },
+  };
+
   return (
     <Stack flexDirection="column" gap={theme.spacing(4)} width="100%">
       <Stack justifyContent="space-between" direction="row">
@@ -128,23 +226,19 @@ export const ChartsContainer = () => {
         />
       )}
       {!isLoading && (
-        <>
-          <PrintWrapper printRef={printRef}>
-            <PrintHeader searchReportData={searchReportData} />
-            {/* Count by disTyp */}
-            <pre>
-              {JSON.stringify(
-                formattedForms.reduce((acc, form) => {
-                  acc[form.disTyp] = (acc[form.disTyp] || 0) + 1;
-
-                  return acc;
-                }, {} as Record<string, number>),
-                null,
-                2,
-              )}
-            </pre>
-          </PrintWrapper>
-        </>
+        <PrintWrapper printRef={printRef}>
+          <PrintHeader searchReportData={searchReportData} />
+          <div
+            style={{
+              width: '100%',
+              height: '400px',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <Bar data={chartData} options={options} width={1000} height={400} />
+          </div>
+        </PrintWrapper>
       )}
     </Stack>
   );
