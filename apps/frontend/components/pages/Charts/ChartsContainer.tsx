@@ -5,6 +5,7 @@ import {
   DroughtDto,
   FloodDto,
   IncidentDto,
+  IncidentMapping,
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { useMemo, useRef, useState } from 'react';
@@ -39,6 +40,45 @@ const defaultSearchReportData: SearchFormData = {
   },
 };
 
+const useFormattedForms = (searchReportData: SearchFormData) => {
+  const { data: floodData, isLoading: isFloodLoading } = useGetForms({
+    ...searchReportData,
+    disTyps: [DisasterMapping['flood']],
+  });
+  const { data: droughtData, isLoading: isDroughtLoading } = useGetForms({
+    ...searchReportData,
+    disTyps: [DisasterMapping['drought']],
+  });
+  const { data: incidentData, isLoading: isIncidentLoading } = useGetForms({
+    ...searchReportData,
+    disTyps: Object.values(IncidentMapping),
+  });
+
+  const formattedForms = useMemo(() => {
+    const floodForms = floodData
+      ? dropNotApproved(floodData).map(form =>
+          formatFloodFields(form as FloodDto),
+        )
+      : [];
+    const droughtForms = droughtData
+      ? dropNotApproved(droughtData).map(form =>
+          formatDroughtFields(form as DroughtDto),
+        )
+      : [];
+    const incidentForms = incidentData
+      ? dropNotApproved(incidentData).map(form =>
+          formatIncidentFields(form as IncidentDto),
+        )
+      : [];
+
+    return [...floodForms, ...droughtForms, ...incidentForms];
+  }, [floodData, droughtData, incidentData]);
+
+  const isLoading = isFloodLoading || isDroughtLoading || isIncidentLoading;
+
+  return { formattedForms, isLoading };
+};
+
 export const ChartsContainer = () => {
   const theme = useTheme();
   const [searchReportData, setSearchReportData] = useState(
@@ -47,34 +87,12 @@ export const ChartsContainer = () => {
 
   console.log({ defaultSearchReportData });
 
-  const { data: formsData, isLoading } = useGetForms(searchReportData);
-
-  const filteredFormsData = useMemo(() => {
-    return formsData !== undefined ? dropNotApproved(formsData) : [];
-  }, [formsData]);
+  const { formattedForms, isLoading } = useFormattedForms(searchReportData);
 
   const printRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
   });
-
-  const formattedForms = useMemo(() => {
-    if (searchReportData.disTyps.includes(DisasterMapping['flood'])) {
-      return (filteredFormsData as FloodDto[]).map(form =>
-        formatFloodFields(form),
-      );
-    } else if (searchReportData.disTyps.includes(DisasterMapping['drought'])) {
-      return (filteredFormsData as DroughtDto[]).map(form =>
-        formatDroughtFields(form),
-      );
-    } else if (searchReportData.disTyps.includes(DisasterMapping['incident'])) {
-      return (filteredFormsData as IncidentDto[]).map(form =>
-        formatIncidentFields(form),
-      );
-    }
-
-    return [];
-  }, [filteredFormsData, searchReportData.disTyps]);
 
   return (
     <Stack flexDirection="column" gap={theme.spacing(4)} width="100%">
@@ -125,7 +143,6 @@ export const ChartsContainer = () => {
                 2,
               )}
             </pre>
-            <pre>{JSON.stringify(formattedForms, null, 2)}</pre>
           </PrintWrapper>
         </>
       )}
