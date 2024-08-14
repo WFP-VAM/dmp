@@ -199,8 +199,18 @@ export const ChartsContainer = () => {
   const options = {
     responsive: true,
     scales: {
-      x: { stacked: true },
-      y: { stacked: true },
+      x: {
+        stacked: true,
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        stacked: true,
+        grid: {
+          display: true,
+        },
+      },
     },
   };
 
