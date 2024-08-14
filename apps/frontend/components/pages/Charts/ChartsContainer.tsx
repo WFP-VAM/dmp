@@ -38,6 +38,8 @@ import {
   formatIncidentFields,
 } from 'utils/formatRawToForm';
 
+import { formatChartData, FormattedForm } from './data';
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -118,83 +120,17 @@ export const ChartsContainer = () => {
   });
 
   useEffect(() => {
-    // TODO - group at different levels depending on the search values
-    // Decide on logic for grouping
-    let groupByLevel: 'province' | 'district' | 'commune' = 'province';
-    if (searchReportData.region.commune.length > 1) {
-      groupByLevel = 'commune';
-    } else if (searchReportData.region.district.length > 1) {
-      groupByLevel = 'district';
-    } else if (searchReportData.region.district.length > 0) {
-      groupByLevel = 'commune';
-    }
-    console.log({ groupByLevel });
-
     if (formattedForms.length > 0) {
-      const groupedData = formattedForms.reduce((acc, form) => {
-        const location = form[groupByLevel];
-        if (!acc[location]) {
-          acc[location] = { flood: 0, drought: 0, incident: 0 };
-        }
-        if (form.disTyp === DisasterMapping['flood']) {
-          acc[location].flood++;
-        } else if (form.disTyp === DisasterMapping['drought']) {
-          acc[location].drought++;
-        } else {
-          acc[location].incident++;
-        }
-
-        return acc;
-      }, {} as Record<string, { flood: number; drought: number; incident: number }>);
-
-      const labels = Object.keys(groupedData).map(location =>
-        intl.formatMessage({
-          id: `${groupByLevel}.${location}`,
-          defaultMessage: location,
-        }),
+      const data = formatChartData(
+        formattedForms as FormattedForm[],
+        searchReportData,
+        intl,
       );
-
-      const data: ChartData<'bar'> = {
-        labels,
-        datasets: [
-          {
-            label: intl.formatMessage({
-              id: 'disasters.FLOOD',
-              defaultMessage: 'Lalla',
-            }),
-            data: Object.values(groupedData).map(d => d.flood),
-            backgroundColor: '#05476B',
-            borderColor: '#000000',
-            borderWidth: 1,
-          },
-          {
-            label: intl.formatMessage({
-              id: 'disasters.DROUGHT',
-              defaultMessage: 'Drought',
-            }),
-            data: Object.values(groupedData).map(d => d.drought),
-            backgroundColor: '#63B2BD',
-            borderColor: '#000000',
-            borderWidth: 1,
-          },
-          {
-            label: intl.formatMessage({
-              id: 'disasters.INCIDENT',
-              defaultMessage: 'Incident',
-            }),
-            data: Object.values(groupedData).map(d => d.incident),
-            backgroundColor: '#D0EBF9',
-            borderColor: '#000000',
-            borderWidth: 1,
-          },
-        ],
-      };
-
       setChartData(data);
     } else {
       setChartData({ datasets: [] });
     }
-  }, [formattedForms, intl]);
+  }, [formattedForms, searchReportData, intl]);
 
   const options = {
     responsive: true,
