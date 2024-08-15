@@ -134,6 +134,9 @@
     "all_columns": "Detailed",
     "level": "Level"
   },
+  "charts_page": {
+    "update": "Update"
+  },
   "table": {
     "FLOOD": {
       "floodN": "Flood Number",

@@ -157,10 +157,7 @@ export const ChartsContainer = () => {
           initSearchFormData={searchReportData}
           setSearchFormData={setSearchReportData}
           submitButtonContent={
-            <FormattedMessage
-              id="charts_page.showReport"
-              defaultMessage="Charts"
-            />
+            <FormattedMessage id="charts_page.update" defaultMessage="update" />
           }
           hideDisasterFilter
         />

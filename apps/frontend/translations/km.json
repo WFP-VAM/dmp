@@ -143,6 +143,9 @@
     "all_columns": "លម្អិត",
     "level": "កម្រិត"
   },
+  "charts_page": {
+    "update": "ធ្វើបច្ចុប្បន្នភាព"
+  },
   "table": {
     "FLOOD": {
       "floodN": "ចំនួនលើកទឹកជំនន់",
