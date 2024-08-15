@@ -48,6 +48,8 @@ export const IncidentReport = ({
                 '@media print': {
                   paddingLeft: '2rem',
                 },
+                paddingLeft: theme.spacing(2),
+                paddingBottom: theme.spacing(1),
               }}
             >
               <FormattedMessage
