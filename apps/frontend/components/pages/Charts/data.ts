@@ -25,12 +25,16 @@ export const formatChartData = (
   intl: IntlShape,
 ): ChartData<'bar'> => {
   let groupByLevel: GroupByLevel = 'province';
-  if (searchReportData.region.commune.length > 1) {
+  if (
+    searchReportData.region.commune.length > 0 ||
+    searchReportData.region.district.length === 1
+  ) {
     groupByLevel = 'commune';
-  } else if (searchReportData.region.district.length > 1) {
+  } else if (
+    searchReportData.region.district.length > 0 ||
+    searchReportData.region.province.length === 1
+  ) {
     groupByLevel = 'district';
-  } else if (searchReportData.region.district.length > 0) {
-    groupByLevel = 'commune';
   }
 
   const groupedData = formattedForms.reduce((acc, form) => {
