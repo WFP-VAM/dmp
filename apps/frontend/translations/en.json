@@ -135,7 +135,9 @@
     "level": "Level"
   },
   "charts_page": {
-    "update": "Update"
+    "update": "Update",
+    "events": "Number of Events",
+    "affected": "Number of Affected People"
   },
   "table": {
     "FLOOD": {

@@ -21,15 +21,17 @@ export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
         },
       }}
     >
-      <Typography>
-        <FormattedMessage id="validation_search_params.disaster_type" />
-        {' : '}
-        {searchReportData.disTyps.map(disTyp => (
-          <span key={disTyp}>
-            <FormattedMessage id={`disasters.${disTyp}`} />{' '}
-          </span>
-        ))}
-      </Typography>
+      {searchReportData.disTyps.length > 0 && (
+        <Typography>
+          <FormattedMessage id="validation_search_params.disaster_type" />
+          {' : '}
+          {searchReportData.disTyps.map(disTyp => (
+            <span key={disTyp}>
+              <FormattedMessage id={`disasters.${disTyp}`} />{' '}
+            </span>
+          ))}
+        </Typography>
+      )}
       {searchReportData.region.province.length !== 0 ? (
         <Typography ml={3}>
           <FormattedMessage id="validation_search_params.province" />

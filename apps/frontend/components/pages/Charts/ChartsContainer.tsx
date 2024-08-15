@@ -1,5 +1,11 @@
 import PrintIcon from '@mui/icons-material/Print';
-import { IconButton, Skeleton, Stack, useTheme } from '@mui/material';
+import {
+  IconButton,
+  Skeleton,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import {
   DisasterMapping,
   DroughtDto,
@@ -50,7 +56,7 @@ ChartJS.register(
 );
 
 const defaultSearchReportData: SearchFormData = {
-  disTyps: [DisasterMapping['drought'], DisasterMapping['flood']],
+  disTyps: [],
   region: {
     province: [],
     district: [],
@@ -115,8 +121,12 @@ export const ChartsContainer = () => {
   });
 
   const intl = useIntl();
-  const [chartData, setChartData] = useState<ChartData<'bar'>>({
-    datasets: [],
+  const [chartData, setChartData] = useState<{
+    events: ChartData<'bar'>;
+    affected: ChartData<'bar'>;
+  }>({
+    events: { datasets: [] },
+    affected: { datasets: [] },
   });
 
   useEffect(() => {
@@ -128,7 +138,7 @@ export const ChartsContainer = () => {
       );
       setChartData(data);
     } else {
-      setChartData({ datasets: [] });
+      setChartData({ events: { datasets: [] }, affected: { datasets: [] } });
     }
   }, [formattedForms, searchReportData, intl]);
 
@@ -187,12 +197,46 @@ export const ChartsContainer = () => {
           <div
             style={{
               width: '100%',
-              height: '400px',
               display: 'flex',
-              justifyContent: 'center',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: theme.spacing(4),
             }}
           >
-            <Bar data={chartData} options={options} width={1000} height={400} />
+            <div style={{ width: '60%' }}>
+              <Typography variant="h5" align="center" gutterBottom>
+                <FormattedMessage
+                  id="charts_page.events"
+                  defaultMessage="Number of Events"
+                />
+              </Typography>
+              <Bar
+                data={chartData.events}
+                options={options}
+                width={1000}
+                height={400}
+              />
+            </div>
+            <div
+              style={{
+                width: '60%',
+                pageBreakInside: 'avoid',
+                breakInside: 'avoid',
+              }}
+            >
+              <Typography variant="h5" align="center" gutterBottom>
+                <FormattedMessage
+                  id="charts_page.affected"
+                  defaultMessage="Number of Affected People"
+                />
+              </Typography>
+              <Bar
+                data={chartData.affected}
+                options={options}
+                width={1000}
+                height={400}
+              />
+            </div>
           </div>
         </PrintWrapper>
       )}
