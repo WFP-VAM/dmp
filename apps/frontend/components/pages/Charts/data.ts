@@ -9,7 +9,7 @@ export interface FormattedForm {
   district: string;
   commune: string;
   disTyp: string;
-  NumPeoAff: number;
+  NumPeoAff: string;
 }
 
 interface SearchReportData {
