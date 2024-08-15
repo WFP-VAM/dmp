@@ -299,7 +299,7 @@ export const DisasterTable = ({
                   lineHeight: 'normal',
                 },
                 '& .MuiDataGrid-columnHeader': {
-                  padding: '6px 8px',
+                  padding: '8px 0px 8px 6px',
                   borderColor: colors.gray,
                   backgroundColor: '#f1f1f1',
                 },
