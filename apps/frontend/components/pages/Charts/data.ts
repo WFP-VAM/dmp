@@ -63,7 +63,15 @@ export const formatChartData = (
     return acc;
   }, {} as Record<string, { flood: number; floodPeoAff: number; drought: number; droughtPeoAff: number; incident: number; incidentPeoAff: number }>);
 
-  const labels = Object.keys(groupedData).map(location =>
+  // Sort the groupedData by total number of events
+  const sortedData = Object.entries(groupedData).sort((a, b) => {
+    const totalEventsA = a[1].flood + a[1].drought + a[1].incident;
+    const totalEventsB = b[1].flood + b[1].drought + b[1].incident;
+
+    return totalEventsB - totalEventsA; // Sort in descending order
+  });
+
+  const labels = sortedData.map(([location]) =>
     intl.formatMessage({
       id: `${groupByLevel}.${location}`,
       defaultMessage: location,
@@ -84,7 +92,7 @@ export const formatChartData = (
             id: 'disasters.FLOOD',
             defaultMessage: 'Flood',
           }),
-          data: Object.values(groupedData).map(d => d.flood),
+          data: sortedData.map(([, d]) => d.flood),
           backgroundColor: '#05476B',
           ...commonDatasetProperties,
         },
@@ -93,7 +101,7 @@ export const formatChartData = (
             id: 'disasters.DROUGHT',
             defaultMessage: 'Drought',
           }),
-          data: Object.values(groupedData).map(d => d.drought),
+          data: sortedData.map(([, d]) => d.drought),
           backgroundColor: '#63B2BD',
           ...commonDatasetProperties,
         },
@@ -102,7 +110,7 @@ export const formatChartData = (
             id: 'disasters.INCIDENT',
             defaultMessage: 'Incident',
           }),
-          data: Object.values(groupedData).map(d => d.incident),
+          data: sortedData.map(([, d]) => d.incident),
           backgroundColor: '#D0EBF9',
           ...commonDatasetProperties,
         },
@@ -116,7 +124,7 @@ export const formatChartData = (
             id: 'disasters.FLOOD',
             defaultMessage: 'Flood',
           }),
-          data: Object.values(groupedData).map(d => d.floodPeoAff),
+          data: sortedData.map(([, d]) => d.floodPeoAff),
           backgroundColor: '#05476B',
           ...commonDatasetProperties,
         },
@@ -125,7 +133,7 @@ export const formatChartData = (
             id: 'disasters.DROUGHT',
             defaultMessage: 'Drought',
           }),
-          data: Object.values(groupedData).map(d => d.droughtPeoAff),
+          data: sortedData.map(([, d]) => d.droughtPeoAff),
           backgroundColor: '#63B2BD',
           ...commonDatasetProperties,
         },
@@ -134,7 +142,7 @@ export const formatChartData = (
             id: 'disasters.INCIDENT',
             defaultMessage: 'Incident',
           }),
-          data: Object.values(groupedData).map(d => d.incidentPeoAff),
+          data: sortedData.map(([, d]) => d.incidentPeoAff),
           backgroundColor: '#D0EBF9',
           ...commonDatasetProperties,
         },
