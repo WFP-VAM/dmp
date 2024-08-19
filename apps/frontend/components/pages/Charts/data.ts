@@ -40,7 +40,6 @@ export const formatChartData = (
 
   const groupedData = formattedForms.reduce((acc, form) => {
     const location = form[groupByLevel];
-    console.log(form[groupByLevel], form.disTyp, form.NumPeoAff);
     acc[location] ??= {
       flood: 0,
       floodPeoAff: 0,
@@ -63,12 +62,18 @@ export const formatChartData = (
     return acc;
   }, {} as Record<string, { flood: number; floodPeoAff: number; drought: number; droughtPeoAff: number; incident: number; incidentPeoAff: number }>);
 
-  // Sort the groupedData by total number of events
+  // Sort the groupedData alphabetically by location name
   const sortedData = Object.entries(groupedData).sort((a, b) => {
-    const totalEventsA = a[1].flood + a[1].drought + a[1].incident;
-    const totalEventsB = b[1].flood + b[1].drought + b[1].incident;
+    const locationA = intl.formatMessage({
+      id: `${groupByLevel}.${a[0]}`,
+      defaultMessage: a[0],
+    });
+    const locationB = intl.formatMessage({
+      id: `${groupByLevel}.${b[0]}`,
+      defaultMessage: b[0],
+    });
 
-    return totalEventsB - totalEventsA; // Sort in descending order
+    return locationA.localeCompare(locationB);
   });
 
   const labels = sortedData.map(([location]) =>

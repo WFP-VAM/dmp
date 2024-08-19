@@ -39,6 +39,7 @@ import { useGetForms } from 'services/api/kobo/useGetForms';
 import { colors } from 'theme/muiTheme';
 import { dropNotApproved } from 'utils/dropNotApproved';
 import {
+  filterFloodReports,
   formatDroughtFields,
   formatFloodFields,
   formatIncidentFields,
@@ -83,11 +84,13 @@ const useFormattedForms = (searchReportData: SearchFormData) => {
   });
 
   const formattedForms = useMemo(() => {
-    const floodForms = floodData
-      ? dropNotApproved(floodData).map(form =>
-          formatFloodFields(form as FloodDto),
-        )
-      : [];
+    const floodForms = filterFloodReports(
+      floodData
+        ? dropNotApproved(floodData).map(form =>
+            formatFloodFields(form as FloodDto),
+          )
+        : [],
+    );
     const droughtForms = droughtData
       ? dropNotApproved(droughtData).map(form =>
           formatDroughtFields(form as DroughtDto),
