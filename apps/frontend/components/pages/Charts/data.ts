@@ -10,6 +10,7 @@ export interface FormattedForm {
   commune: string;
   disTyp: string;
   NumPeoAff: string;
+  floodN: string;
 }
 
 interface SearchReportData {
@@ -41,7 +42,7 @@ export const formatChartData = (
   const groupedData = formattedForms.reduce((acc, form) => {
     const location = form[groupByLevel];
     acc[location] ??= {
-      flood: 0,
+      flood: new Set(), // Use a set  to track distinct flood events
       floodPeoAff: 0,
       drought: 0,
       droughtPeoAff: 0,
@@ -49,7 +50,7 @@ export const formatChartData = (
       incidentPeoAff: 0,
     };
     if (form.disTyp === DisasterMapping['flood']) {
-      acc[location].flood++;
+      acc[location].flood.add(form.floodN);
       acc[location].floodPeoAff += +form.NumPeoAff;
     } else if (form.disTyp === DisasterMapping['drought']) {
       acc[location].drought++;
@@ -60,7 +61,7 @@ export const formatChartData = (
     }
 
     return acc;
-  }, {} as Record<string, { flood: number; floodPeoAff: number; drought: number; droughtPeoAff: number; incident: number; incidentPeoAff: number }>);
+  }, {} as Record<string, { flood: Set<string>; floodPeoAff: number; drought: number; droughtPeoAff: number; incident: number; incidentPeoAff: number }>);
 
   // Sort the groupedData alphabetically by location name
   const sortedData = Object.entries(groupedData).sort((a, b) => {
@@ -97,7 +98,7 @@ export const formatChartData = (
             id: 'disasters.FLOOD',
             defaultMessage: 'Flood',
           }),
-          data: sortedData.map(([, d]) => d.flood),
+          data: sortedData.map(([, d]) => d.flood.size), // Use Set size for flood count
           backgroundColor: '#05476B',
           ...commonDatasetProperties,
         },
