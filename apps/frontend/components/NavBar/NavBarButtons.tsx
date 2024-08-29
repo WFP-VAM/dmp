@@ -1,4 +1,10 @@
-import { ContentPaste, Home, Logout, Person, Star } from '@mui/icons-material';
+import { faClipboard } from '@fortawesome/free-regular-svg-icons';
+import {
+  faClipboardCheck,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Home, Logout, Person } from '@mui/icons-material';
 import { Stack, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -28,13 +34,23 @@ const links = [
     key: 2,
     linkTo: '/report',
     textId: 'navigation.reports',
-    icon: <ContentPaste />,
+    icon: (
+      <FontAwesomeIcon
+        icon={faClipboard as IconDefinition}
+        style={{ color: colors.color3, fontSize: '1rem' }}
+      />
+    ),
   },
   {
     key: 3,
     linkTo: '/forms/search',
     textId: 'navigation.forms.header',
-    icon: <Star />,
+    icon: (
+      <FontAwesomeIcon
+        icon={faClipboardCheck}
+        style={{ color: colors.color3, fontSize: '1rem' }}
+      />
+    ),
   },
 ];
 

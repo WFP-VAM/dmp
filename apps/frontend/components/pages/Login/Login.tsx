@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next/types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -35,7 +35,10 @@ export const Login: NextPage = () => {
     formState: { errors },
   } = useForm<LoginData>();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmit = async (data: LoginData) => {
+    setIsLoading(true);
     try {
       await login(data);
     } catch {
@@ -43,6 +46,7 @@ export const Login: NextPage = () => {
         type: 'server',
         message: 'Username or password is incorrect',
       });
+      setIsLoading(false); // Reset loading state on error
     }
   };
 
@@ -125,7 +129,12 @@ export const Login: NextPage = () => {
           {errors.email?.message != null && (
             <Typography color="red">{errors.email.message}</Typography>
           )}
-          <button type="submit" className={style.submit}>
+          <button
+            type="submit"
+            className={`${style.submit} ${isLoading ? style.loading : ''}`}
+            disabled={isLoading} // Disable button on loading
+            style={{ opacity: isLoading ? 0.7 : 1 }}
+          >
             <FormattedMessage id="login.submit" />
           </button>
         </form>

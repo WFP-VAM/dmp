@@ -41,9 +41,12 @@
     "submit": "ធ្វើបច្ចុប្បន្នភាព"
   },
   "valStatus": {
-    "approved": "របាយការណ៌បានឯកភាពរួច",
-    "notApproved": "របាយការណ៌៍ត្រូវបានបដិសេធ",
-    "onHold": "របាយការណ៍ដែលមិនទាន់ឯកភាព"
+    "approved-normal": "របាយការណ៌បានឯកភាពរួច",
+    "notApproved-normal": "របាយការណ៌៍ត្រូវបានបដិសេធ",
+    "onHold-normal": "របាយការណ៍ដែលមិនទាន់ឯកភាព",
+    "approved-long": "របាយការណ៌បានឯកភាពរួច",
+    "notApproved-long": "របាយការណ៌៍ត្រូវបានបដិសេធ",
+    "onHold-long": "របាយការណ៌បានឯកភាពរួច"
   },
   "navigation": {
     "home": "ទំព័រដើម",
@@ -107,15 +110,28 @@
   "forms_table": {
     "no_forms": "គ្មានទម្រង់ដែលត្រូវគ្នានឹងប៉ារ៉ាម៉ែត្រស្វែងរករបស់អ្នកទេ។",
     "headers": {
+      "location": "ទីតាំង",
       "province": "ខេត្ត",
       "district": "ស្រុក",
       "commune": "ឃុំ",
       "dis_date": "ការបរិច្ឆេទថ្ងៃកើតហេតុ",
       "dis_type": "ប្រភេទគ្រោះមហន្តរាយ",
+      "flood_number": "ចំនួនលើកទឹកជំនន់",
+      "select": "ជ្រើសរើស",
       "entry_name": "ឈ្មោះរបាយការណ៍",
       "phone": "លេខទូរសព្ឌ័",
       "entry_date": "ការបរិច្ឆេទបញ្ចូលរបាយការណ៍",
       "review_link": "ពិនិត្យ និងឯកភាព"
+    },
+    "batch_edit": {
+      "edit": "កែសម្រួល",
+      "cancel": "បោះបង់",
+      "save": "រក្សាទុក",
+      "warning": "អ្នកអាចកែសម្រួលទម្រង់ជាក្រុមបានតែពីខេត្តដូចគ្នាប៉ុណ្ណោះ",
+      "dialog_title": "កែសម្រួលចំនួនទឹកជំនន់ជាក្រុម",
+      "forms_selected": "ទម្រង់ដែលបានជ្រើសរើស",
+      "open_dialog": "បើកប្រអប់សន្ទនា",
+      "new_flood_number": "ចំនួនទឹកជំនន់ថ្មី"
     }
   },
   "report_page": {
@@ -271,6 +287,7 @@
         "threat_14": "ផ្សេងៗ"
       },
       "groupId": {
+        "EMPTY": " ",
         "victimsAffected": "ចំនួនមនុស្សប៉ះពាល់",
         "totalAffected": "ចំនួនមនុស្សប៉ះពាល់សរុប",
         "deathToll": "ចំនួសស្លាប់សរុប",
@@ -349,23 +366,23 @@
         "14": "ផ្សេងៗ"
       },
       "summary_column": {
-        "NumFamAff": "Number of Families Affected",
-        "NumPeoAff": "Number of People Affected",
-        "NumFeAff": "Number of Women Affected",
-        "NumTDeath": "Total Death Toll",
-        "NumFamEva": "Number of Families Evacuated",
-        "NumPeoEva": "Number of People Evacuated",
-        "NumFeEva": "Number of Women Evacuated",
-        "NumHouAff": "Number of Houses Affected",
-        "NumSchoAff": "Number of Schools Affected",
-        "SamNabAff": "Seedlings Affected (ha)",
-        "SamNabDam": "Seedlings Damaged (ha)",
-        "PaddyAff": "Paddies Affected (ha)",
-        "PaddyDam": "Paddies Damaged (ha)",
-        "RubberRoAff": "Rubber Road affected (m)",
-        "ConcretAff": "Contret Road affected (m)",
-        "RuralRoAff": "Gravel Road affected (m)",
-        "BridgeAff": "Number of Concret Bridges Affected"
+        "NumFamAff": "ចំនួនគ្រួសារដែលរងផលប៉ះពាល់",
+        "NumPeoAff": "ចំនួនមនុស្សដែលរងផលប៉ះពាល់",
+        "NumFeAff": "ចំនួនស្រ្តីដែលរងផលប៉ះពាល់",
+        "NumTDeath": "ចំនួនអ្នកស្លាប់សរុប",
+        "NumFamEva": "ចំនួនគ្រួសារដែលបានជម្លៀស",
+        "NumPeoEva": "ចំនួនមនុស្សដែលបានជម្លៀស",
+        "NumFeEva": "ចំនួនស្រ្តីដែលបានជម្លៀស",
+        "NumHouAff": "ចំនួនផ្ទះដែលរងផលប៉ះពាល់",
+        "NumSchoAff": "ចំនួនសាលាដែលរងផលប៉ះពាល់",
+        "SamNabAff": "ចំនួនសំណាបដែលរងផលប៉ះពាល់ (ហិចតា)",
+        "SamNabDam": "ចំនួនសំណាបដែលខូចខាត (ហិចតា)",
+        "PaddyAff": "ចំនួនស្រែដែលរងផលប៉ះពាល់ (ហិចតា)",
+        "PaddyDam": "ចំនួនស្រែដែលខូចខាត (ហិចតា)",
+        "RubberRoAff": "ចំនួនផ្លូវកៅស៊ូដែលរងផលប៉ះពាល់ (ម៉ែត្រ)",
+        "ConcretAff": "ចំនួនផ្លូវបេតុងដែលរងផលប៉ះពាល់ (ម៉ែត្រ)",
+        "RuralRoAff": "ចំនួនផ្លូវគ្រួសក្រហមដែលរងផលប៉ះពាល់ (ម៉ែត្រ)",
+        "BridgeAff": "ចំនួនស្ពានបេតុងដែលរងផលប៉ះពាល់"
       }
     },
     "DROUGHT": {
@@ -467,6 +484,7 @@
         "TreatOccur_2": "មានការរំលោភបំពានផ្លូវភេទកើតឡើងក្នុងអំឡុងពេលទៅប្រមូលទឹក"
       },
       "groupId": {
+        "EMPTY": " ",
         "victimsAffected": "ចំនួនមនុស្សប៉ះពាល់",
         "noWater": "ចំនួនគ្រួសារខ្វះទឹកស្អាតប្រើប្រាស់ ",
         "deathToll": "ចំនួសស្លាប់សរុប",
@@ -514,20 +532,20 @@
         "sexualAbuse": "មានការរំលោភបំពានផ្លូវភេទកើតឡើងក្នុងអំឡុងពេលទៅប្រមូលទឹក"
       },
       "summary_column": {
-        "NumFamAff": "Number of Families Missing Water",
-        "NumPeoAff": "Number of People Missing Water",
-        "NumFe": "Number of Women Missing Water",
-        "TNumDeath": "Total Death Toll",
-        "FamAgriAff": "Number of families with Affected Plantations",
-        "FarmAff": "Number of Crop/Subsidiary plants Affected (ha)",
-        "FarmDam": "Number of Crop/Subsidiary plants Damaged (ha)",
-        "SamNabAff": "Seedlings Affected (ha)",
-        "SamNabDam": "Seedlings Damaged (ha)",
-        "PaddyAff": "Paddies Affected (ha)",
-        "PaddyDam": "Paddies Damaged (ha)",
-        "CowDeath": "Number of Dead Cows",
-        "LandSize": "Number of irrigated area needing water(ha)",
-        "NumFam": "Number of families needing water for their lands"
+        "NumFamAff": "ចំនួនគ្រួសារដែលខ្វះទឹកស្អាតប្រើប្រាស់",
+        "NumPeoAff": "ចំនួនមនុស្សដែលខ្វះទឹកស្អាតប្រើប្រាស់",
+        "NumFe": "ចំនួនស្រ្តីដែលខ្វះទឹកស្អាតប្រើប្រាស់",
+        "TNumDeath": "ចំនួនអ្នកស្លាប់សរុប",
+        "FamAgriAff": "ចំនួនគ្រួសារដែលរងផលប៉ះពាល់ដំណាំ",
+        "FarmAff": "ចំនួនដំណាំ/ដំណាំរួមផ្សំដែលរងផលប៉ះពាល់ (ហិចតា)",
+        "FarmDam": "ចំនួនដំណាំ/ដំណាំរួមផ្សំដែលខូចខាត (ហិចតា)",
+        "SamNabAff": "ចំនួនសំណាបដែលរងផលប៉ះពាល់ (ហិចតា)",
+        "SamNabDam": "ចំនួនសំណាបដែលខូចខាត (ហិចតា)",
+        "PaddyAff": "ចំនួនស្រែដែលរងផលប៉ះពាល់ (ហិចតា)",
+        "PaddyDam": "ចំនួនស្រែដែលខូចខាត (ហិចតា)",
+        "CowDeath": "ចំនួនគោស្លាប់",
+        "LandSize": "ចំនួនតំបន់ស្រោចស្រពដែលត្រូវការទឹក (ហិចតា)",
+        "NumFam": "ចំនួនគ្រួសារដែលត្រូវការទឹកសម្រាប់ដីរបស់ពួកគេ"
       }
     },
     "INCIDENT": {
@@ -603,6 +621,7 @@
         "FarmAf": "ហិចតា"
       },
       "groupId": {
+        "EMPTY": " ",
         "victimsAffected": "ចំនួនមនុស្សប៉ះពាល់",
         "totalAffected": "ចំនួនមនុស្សប៉ះពាល់សរុប",
         "deathToll": "ចំនួសស្លាប់សរុប",
@@ -629,27 +648,27 @@
         "forestFarm": "ព្រៃឬចម្ការដែលខូចខាត"
       },
       "summary_column": {
-        "NumFamAff": "Number of Families Affected",
-        "NumPeoAff": "Number of People Affected",
-        "NumFeAff": "Number of Women Affected",
-        "NumDeathTo": "Total Death Toll",
-        "ToNumMising": "Total Missing",
-        "ToNumInjure": "Total Injured",
-        "SchAff": "Number of Schools Affected",
-        "SchDam": "Number of Schools Damaged",
-        "HealthAff": "Number of Hospitals Affected",
-        "HealthDam": "Number of Hospitals Damaged",
-        "RivBreakLo": "River Bank Length Affected by Lanslides (m)",
-        "RivBreakWid": "River Bank Width Affected by Lanslides (m)",
-        "NationalRod": "Concrete Road Affected by Lanslides (m)",
-        "RuralRoad": "Gravel Road Affected by Lanslides (m)",
-        "Bridge": "Bridges Affected by Lanslides (number)",
-        "PagoAff": "Number of Pagoda Affected",
-        "PagoDam": "Number of Pagoda Damaged",
-        "BuildingAff": "Number of Administration Building Affected",
-        "BuildingDam": "Number of Administration Building Damaged",
-        "MarketAff": "Number of Markets Affected",
-        "MarketDam": "Number of Markets Damaged"
+        "NumFamAff": "ចំនួនគ្រួសារដែលរងផលប៉ះពាល់",
+        "NumPeoAff": "ចំនួនមនុស្សដែលរងផលប៉ះពាល់",
+        "NumFeAff": "ចំនួនស្រ្តីដែលរងផលប៉ះពាល់",
+        "NumDeathTo": "ចំនួនអ្នកស្លាប់សរុប",
+        "ToNumMising": "ចំនួនបាត់ខ្លួនសរុប",
+        "ToNumInjure": "ចំនួនរងរបួសសរុប",
+        "SchAff": "ចំនួនសាលាដែលរងផលប៉ះពាល់",
+        "SchDam": "ចំនួនសាលាដែលខូចខាត",
+        "HealthAff": "ចំនួនមន្ទីរពេទ្យដែលរងផលប៉ះពាល់",
+        "HealthDam": "ចំនួនមន្ទីរពេទ្យដែលខូចខាត",
+        "RivBreakLo": "ប្រវែងច្រាំងទន្លេដែលរងផលប៉ះពាល់ដោយបាក់ដី (ម៉ែត្រ)",
+        "RivBreakWid": "ទទឹងច្រាំងទន្លេដែលរងផលប៉ះពាល់ដោយបាក់ដី (ម៉ែត្រ)",
+        "NationalRod": "ផ្លូវបេតុងដែលរងផលប៉ះពាល់ដោយបាក់ដី (ម៉ែត្រ)",
+        "RuralRoad": "ផ្លូវគ្រួសក្រហមដែលរងផលប៉ះពាល់ដោយបាក់ដី (ម៉ែត្រ)",
+        "Bridge": "ចំនួនស្ពានដែលរងផលប៉ះពាល់ដោយបាក់ដី (ចំនួន)",
+        "PagoAff": "ចំនួនវត្តអារាមដែលរងផលប៉ះពាល់",
+        "PagoDam": "ចំនួនវត្តអារាមដែលខូចខាត",
+        "BuildingAff": "ចំនួនអគាររដ្ឋបាលដែលរងផលប៉ះពាល់",
+        "BuildingDam": "ចំនួនអគាររដ្ឋបាលដែលខូចខាត",
+        "MarketAff": "ចំនួនទីផ្សារដែលរងផលប៉ះពាល់",
+        "MarketDam": "ចំនួនទីផ្សារដែលខូចខាត"
       }
     },
     "COMMON": {
