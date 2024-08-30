@@ -47,6 +47,7 @@
     "home": "Home",
     "forms": { "header": "Forms", "search": "Search forms" },
     "reports": "Reports",
+    "charts": "Summary charts",
     "admin": "Admin",
     "language": {
       "english": "English",
@@ -132,6 +133,11 @@
     "summary": "Summary",
     "all_columns": "Detailed",
     "level": "Level"
+  },
+  "charts_page": {
+    "update": "Update",
+    "events": "Number of Events",
+    "affected": "Number of Affected People"
   },
   "table": {
     "FLOOD": {
