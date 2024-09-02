@@ -55,6 +55,7 @@
       "search": "ស្វែងរក"
     },
     "reports": "របាយការណ៍",
+    "charts": "តារាងសង្ខេប",
     "admin": "ទំព័រអ្នកគ្រប់គ្រង",
     "language": {
       "english": "English",
@@ -141,6 +142,11 @@
     "summary": "សង្ខេប",
     "all_columns": "លម្អិត",
     "level": "កម្រិត"
+  },
+  "charts_page": {
+    "update": "ធ្វើបច្ចុប្បន្នភាព",
+    "events": "ចំនួនព្រឹត្តិការណ៍",
+    "affected": "ចំនួនមនុស្សដែលរងផលប៉ះពាល់"
   },
   "table": {
     "FLOOD": {
