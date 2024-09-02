@@ -12,7 +12,7 @@ export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
 
   const content = [
     {
-      shouldShow: true,
+      shouldShow: searchReportData.disTyps.length > 0,
       title: 'validation_search_params.disaster_type',
       value: searchReportData.disTyps
         .map(disTyp => intl.formatMessage({ id: `disasters.${disTyp}` }))
