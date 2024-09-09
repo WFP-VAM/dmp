@@ -110,6 +110,14 @@ export const DisasterTable = ({
   // TODO - activate column visibility model when PR is stable
   const columnVisibilityModel = {}; // generateColumnVisibilityModel(columns, data);
 
+  const nonEmptyData = data.filter(row =>
+    columns.some(column => {
+      const value = row[column.field];
+
+      return value !== undefined && value !== '';
+    }),
+  );
+
   const hasGroups = columnGroup.length > 0;
   const withTopCellDef = columnGroup.map(x => ({
     ...x,
@@ -205,7 +213,7 @@ export const DisasterTable = ({
           '@media print': {
             transform: `scale(${scaleFactor})`,
             transformOrigin: 'top left',
-            overflow: 'unset',
+            overflowX: 'unset',
             breakInside: 'avoid',
           },
         }}
@@ -346,7 +354,7 @@ export const DisasterTable = ({
               disableRowSelectionOnClick={!isEditable}
               showCellVerticalBorder
               showColumnVerticalBorder
-              rows={data}
+              rows={nonEmptyData}
               columns={updatedColumns}
               hideFooter
               columnGroupingModel={updatedColumnGroup}
