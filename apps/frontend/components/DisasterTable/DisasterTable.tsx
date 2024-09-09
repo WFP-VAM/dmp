@@ -173,7 +173,7 @@ export const DisasterTable = ({
     : _updatedColumns;
 
   const totalWidth = sum(updatedColumns.map(x => x.width ?? 0));
-  const maxPrintWidth = 1550; // Maximum print width in pixels
+  const maxPrintWidth = 1600; // Maximum print width in pixels
   const scaleFactor = Math.min(1, maxPrintWidth / totalWidth);
 
   const borderCSS = `1px solid ${colors.gray}`;
