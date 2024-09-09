@@ -215,7 +215,7 @@ export const DisasterTable = ({
           '@media print': {
             transform: `scale(${scaleFactor})`,
             transformOrigin: 'top left',
-            overflowX: 'unset',
+            overflow: 'unset',
             breakInside: 'avoid',
           },
         }}
