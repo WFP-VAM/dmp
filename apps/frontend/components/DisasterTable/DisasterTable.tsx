@@ -110,13 +110,15 @@ export const DisasterTable = ({
   // TODO - activate column visibility model when PR is stable
   const columnVisibilityModel = {}; // generateColumnVisibilityModel(columns, data);
 
-  const nonEmptyData = data.filter(row =>
-    columns.some(column => {
-      const value = row[column.field];
+  const nonEmptyData = isEditable
+    ? data
+    : data.filter(row =>
+        columns.some(column => {
+          const value = row[column.field];
 
-      return value !== undefined && value !== '';
-    }),
-  );
+          return value !== undefined && value !== '';
+        }),
+      );
 
   const hasGroups = columnGroup.length > 0;
   const withTopCellDef = columnGroup.map(x => ({
