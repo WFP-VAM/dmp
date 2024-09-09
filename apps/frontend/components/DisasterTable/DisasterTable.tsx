@@ -172,6 +172,10 @@ export const DisasterTable = ({
       ]
     : _updatedColumns;
 
+  const totalWidth = sum(updatedColumns.map(x => x.width ?? 0));
+  const maxPrintWidth = 1550; // Maximum print width in pixels
+  const scaleFactor = Math.min(1, maxPrintWidth / totalWidth);
+
   const borderCSS = `1px solid ${colors.gray}`;
 
   const hideBorderDivStyles = {
@@ -199,6 +203,8 @@ export const DisasterTable = ({
         sx={{
           overflow: 'scroll',
           '@media print': {
+            transform: `scale(${scaleFactor})`,
+            transformOrigin: 'top left',
             overflow: 'unset',
             breakInside: 'avoid',
           },
@@ -262,7 +268,7 @@ export const DisasterTable = ({
               }}
             />
           )}
-          <Box width={sum(updatedColumns.map(x => x.width ?? 0))}>
+          <Box width={totalWidth}>
             <DataGrid
               sx={{
                 '& .MuiDataGrid-row.highlight-1': {
