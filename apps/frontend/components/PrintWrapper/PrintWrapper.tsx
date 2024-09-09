@@ -25,7 +25,7 @@ export const PrintWrapper = ({ printRef, children }: Props): JSX.Element => {
     <Box
       ref={printRef}
       sx={{
-        background: 'none',
+        background: 'white',
       }}
     >
       <Box
@@ -35,7 +35,7 @@ export const PrintWrapper = ({ printRef, children }: Props): JSX.Element => {
             height: '100%',
             width: '100%',
             zIndex: -1,
-            backgroundColor: 'none',
+            backgroundColor: 'white',
           },
         }}
       />
