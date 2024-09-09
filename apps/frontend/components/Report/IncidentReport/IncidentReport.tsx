@@ -39,9 +39,18 @@ export const IncidentReport = ({
 
   return (
     <Stack gap={theme.spacing(8)}>
-      {reports.map(incidentSpecific => {
+      {reports.map((incidentSpecific, index) => {
+        const isLastReport = index === reports.length - 1;
+
         return (
-          <Stack key={incidentSpecific.incidentKey}>
+          <Stack
+            key={incidentSpecific.incidentKey}
+            sx={{
+              '@media print': {
+                pageBreakAfter: isLastReport ? 'avoid' : 'always',
+              },
+            }}
+          >
             <Typography
               fontWeight="bold"
               sx={{
