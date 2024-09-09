@@ -61,7 +61,7 @@ export const DisasterTable = ({
   getRowId,
   isEditable,
   variant,
-  columnHeaderHeight = 'normal',
+  columnHeaderHeight = 'large',
   getRowClassName,
 }: DisasterTableProps): JSX.Element => {
   const theme = useTheme();
@@ -212,12 +212,6 @@ export const DisasterTable = ({
         onMouseLeave={() => setHovering(false)}
         sx={{
           overflow: 'scroll',
-          '@media print': {
-            transform: `scale(${scaleFactor})`,
-            transformOrigin: 'top left',
-            overflow: 'unset',
-            breakInside: 'avoid',
-          },
         }}
       >
         {/* Adds padding for printing */}
@@ -229,23 +223,13 @@ export const DisasterTable = ({
             },
           }}
         />
-        <Stack
-          direction="row"
-          position="relative"
-          m={2}
-          mt={0}
-          sx={{
-            '@media print': {
-              breakInside: 'avoid',
-            },
-          }}
-        >
+        <Stack direction="row" position="relative" m={2} mt={0}>
           {/* Adds padding for printing */}
           <Box
             sx={{
               '@media print': {
                 minWidth: '2rem',
-                minHeight: '100% ',
+                minHeight: '100%',
               },
             }}
           />
@@ -281,6 +265,11 @@ export const DisasterTable = ({
           <Box width={totalWidth}>
             <DataGrid
               sx={{
+                '@media print': {
+                  transform: `scale(${scaleFactor})`,
+                  transformOrigin: 'top left',
+                  overflow: 'unset',
+                },
                 '& .MuiDataGrid-row.highlight-1': {
                   background: `${colors.color1}`,
                 },
@@ -342,7 +331,6 @@ export const DisasterTable = ({
                 '& .MuiDataGrid-scrollbar': {
                   overflow: 'hidden',
                 },
-                breakInside: 'avoid',
                 borderTop: variant === 'bordered' ? undefined : 'none',
                 borderColor: colors.gray,
                 '& .MuiDataGrid-cell:focus-within': {
@@ -383,7 +371,7 @@ export const DisasterTable = ({
             sx={{
               '@media print': {
                 minWidth: '2rem',
-                minHeight: '100% ',
+                minHeight: '100%',
               },
             }}
           />

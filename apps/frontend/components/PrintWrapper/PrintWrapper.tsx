@@ -7,6 +7,7 @@ const printStyles = (
       '@media print': {
         'html, body': {
           fontSize: '0.9em',
+          background: 'white !important',
         },
       },
       '@page': {
@@ -22,12 +23,7 @@ interface Props {
 }
 export const PrintWrapper = ({ printRef, children }: Props): JSX.Element => {
   return (
-    <Box
-      ref={printRef}
-      sx={{
-        background: 'white',
-      }}
-    >
+    <Box ref={printRef}>
       <Box
         sx={{
           '@media print': {
