@@ -13,7 +13,7 @@ import {
   isLeaf,
 } from '@mui/x-data-grid';
 import { chunk, sum } from 'lodash';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { usePrintContext } from 'components/PrintWrapper/PrintWrapper';
 import { colors } from 'theme/muiTheme';
@@ -199,9 +199,9 @@ export const DisasterTable = ({
   };
 
   const rowsPerPage = Math.floor(20 / scaleFactor);
-  const dataChunks = isPrinting
-    ? chunk(nonEmptyData, rowsPerPage)
-    : [nonEmptyData];
+  const dataChunks = useMemo(() => {
+    return isPrinting ? chunk(nonEmptyData, rowsPerPage) : [nonEmptyData];
+  }, [isPrinting, nonEmptyData, rowsPerPage]);
 
   return (
     <Box position="relative">
