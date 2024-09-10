@@ -32,7 +32,7 @@ const printStyles = (
 
 interface Props {
   printRef: MutableRefObject<null>;
-  isPrinting: boolean;
+  isPrinting?: boolean;
   children: ReactNode;
 }
 export const PrintWrapper = ({
