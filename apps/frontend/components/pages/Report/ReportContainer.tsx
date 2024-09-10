@@ -39,6 +39,7 @@ export const ReportContainer = () => {
 
   const [isCommuneLevelReport, setIsCommuneLevelReport] = useState(false);
   const [isAllColumnReport, setIsAllColumnReport] = useState(false);
+  const [isPrinting, setIsPrinting] = useState(false);
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 
@@ -49,6 +50,14 @@ export const ReportContainer = () => {
   const printRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
+    onBeforeGetContent: () => {
+      setIsPrinting(true);
+
+      return new Promise<void>(resolve => {
+        setTimeout(resolve, 0.5);
+      });
+    },
+    onAfterPrint: () => setIsPrinting(false),
   });
 
   return (
@@ -107,7 +116,7 @@ export const ReportContainer = () => {
         />
       )}
       {!isLoading && (
-        <PrintWrapper printRef={printRef}>
+        <PrintWrapper printRef={printRef} isPrinting={isPrinting}>
           <PrintHeader searchReportData={searchReportData} />
           <Report
             forms={filteredFormsData}

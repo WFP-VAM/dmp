@@ -1,5 +1,4 @@
 import { CommuneLevelReportTable } from 'components/DisasterTable/CommuneLevelReportTable';
-import ReportTablesWrapper from 'components/ReportTablesWrapper';
 
 import { floodReportTablesMapping } from './floodReportTablesMapping';
 
@@ -9,7 +8,7 @@ export const CommuneLevelFloodReport = ({
   report: Record<string, string | number | undefined>[];
 }): JSX.Element => {
   return (
-    <ReportTablesWrapper>
+    <>
       {floodReportTablesMapping.map(
         ({ columns, columnGroup, groupParams }, index) => (
           <CommuneLevelReportTable
@@ -26,6 +25,6 @@ export const CommuneLevelFloodReport = ({
           />
         ),
       )}
-    </ReportTablesWrapper>
+    </>
   );
 };
