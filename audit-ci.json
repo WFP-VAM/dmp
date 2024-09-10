@@ -1,5 +1,4 @@
 {
-  "moderate": true,
   "high": true,
   "skip-dev": true,
   "allowlist": [
