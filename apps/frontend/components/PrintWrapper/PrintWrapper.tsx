@@ -43,17 +43,6 @@ export const PrintWrapper = ({
   return (
     <PrintContext.Provider value={isPrinting}>
       <Box ref={printRef}>
-        <Box
-          sx={{
-            '@media print': {
-              position: 'fixed',
-              height: '100vh',
-              width: '100%',
-              zIndex: -1,
-              backgroundColor: 'white',
-            },
-          }}
-        />
         {printStyles}
         {children}
       </Box>
