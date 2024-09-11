@@ -54,7 +54,7 @@ export const ReportContainer = () => {
       setIsPrinting(true);
 
       return new Promise<void>(resolve => {
-        setTimeout(resolve, 0.5);
+        setTimeout(resolve, 0);
       });
     },
     onAfterPrint: () => setIsPrinting(false),
@@ -116,7 +116,11 @@ export const ReportContainer = () => {
         />
       )}
       {!isLoading && (
-        <PrintWrapper printRef={printRef} isPrinting={isPrinting}>
+        <PrintWrapper
+          key={isPrinting ? 'printing' : 'not-printing'}
+          printRef={printRef}
+          isPrinting={isPrinting}
+        >
           <PrintHeader searchReportData={searchReportData} />
           <Report
             forms={filteredFormsData}
