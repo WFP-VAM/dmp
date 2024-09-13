@@ -22,6 +22,7 @@ export const ProvinceLevelDroughtReport = ({
             disasterTableParams={{
               data: report,
               variant: 'open',
+              isFirstTable: index === 0,
             }}
           />
         ),

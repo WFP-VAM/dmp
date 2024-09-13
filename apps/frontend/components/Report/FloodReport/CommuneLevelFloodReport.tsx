@@ -20,6 +20,7 @@ export const CommuneLevelFloodReport = ({
             disasterTableParams={{
               data: report,
               variant: 'open',
+              isFirstTable: index === 0,
             }}
             key={index}
           />

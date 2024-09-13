@@ -23,6 +23,7 @@ export const ProvinceLevelFloodReport = ({
               data: report,
               variant: 'open',
               columnHeaderHeight: columnHeaderHeight,
+              isFirstTable: index === 0,
             }}
           />
         ),
