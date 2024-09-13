@@ -1,4 +1,9 @@
-import { FilterList, MoreVert, ViewColumn } from '@mui/icons-material';
+import {
+  FileDownload,
+  FilterList,
+  MoreVert,
+  ViewColumn,
+} from '@mui/icons-material';
 import {
   IconButton,
   ListItemIcon,
@@ -38,6 +43,11 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
 
   const handleOpenColumnMenu = () => {
     apiRef.current.showPreferences(GridPreferencePanelsValue.columns);
+    handleCloseMenu();
+  };
+
+  const handleDownloadCSV = () => {
+    apiRef.current.exportDataAsCsv({ fileName: 'report data' });
     handleCloseMenu();
   };
 
@@ -82,6 +92,14 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="Manage Columns"></FormattedMessage>
+          </ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleDownloadCSV}>
+          <ListItemIcon>
+            <FileDownload fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="Download CSV" />
           </ListItemText>
         </MenuItem>
       </Menu>
