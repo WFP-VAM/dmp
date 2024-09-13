@@ -2,7 +2,25 @@ import { Box, Grid, Typography } from '@mui/material';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
+const FooterField = ({ messageId }: { messageId: string }) => (
+  <>
+    <Grid item xs={6}>
+      <Typography>
+        <FormattedMessage id={`print_footer.${messageId}`} />:
+      </Typography>
+    </Grid>
+    <Grid item xs={6}>
+      <Typography sx={{ borderBottom: '1px solid black', height: '1.5em' }}>
+        &nbsp;
+      </Typography>
+    </Grid>
+  </>
+);
+
 export const PrintFooter = (): JSX.Element => {
+  const mainFields = ['date', 'prepared_by', 'role', 'signature'];
+  const reviewFields = ['reviewed_by', 'signature_stamp'];
+
   return (
     <Box
       sx={{
@@ -21,84 +39,17 @@ export const PrintFooter = (): JSX.Element => {
     >
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
         <Grid container spacing={2} sx={{ maxWidth: '400px' }}>
-          <Grid item xs={6}>
-            <Typography>
-              <FormattedMessage id="print_footer.date" />:
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography
-              sx={{ borderBottom: '1px solid black', height: '1.5em' }}
-            >
-              &nbsp;
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography>
-              <FormattedMessage id="print_footer.prepared_by" />:
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography
-              sx={{ borderBottom: '1px solid black', height: '1.5em' }}
-            >
-              &nbsp;
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography>
-              <FormattedMessage id="print_footer.role" />:
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography
-              sx={{ borderBottom: '1px solid black', height: '1.5em' }}
-            >
-              &nbsp;
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography>
-              <FormattedMessage id="print_footer.signature" />:
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography
-              sx={{ borderBottom: '1px solid black', height: '1.5em' }}
-            >
-              &nbsp;
-            </Typography>
-          </Grid>
-          {/* Add any other fields here using the same pattern */}
+          {mainFields.map(field => (
+            <FooterField key={field} messageId={field} />
+          ))}
         </Grid>
       </Box>
 
       <Box sx={{ mt: 4 }}>
         <Grid container spacing={2} sx={{ maxWidth: '400px' }}>
-          <Grid item xs={6}>
-            <Typography>
-              <FormattedMessage id="print_footer.reviewed_by" />:
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography
-              sx={{ borderBottom: '1px solid black', height: '1.5em' }}
-            >
-              &nbsp;
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography>
-              <FormattedMessage id="print_footer.signature_stamp" />:
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography
-              sx={{ borderBottom: '1px solid black', height: '1.5em' }}
-            >
-              &nbsp;
-            </Typography>
-          </Grid>
+          {reviewFields.map(field => (
+            <FooterField key={field} messageId={field} />
+          ))}
         </Grid>
       </Box>
     </Box>
