@@ -16,6 +16,7 @@ import {
 import { GridPreferencePanelsValue, useGridApiContext } from '@mui/x-data-grid';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import * as XLSX from 'xlsx';
 
 import { colors } from 'theme/muiTheme';
 
@@ -48,6 +49,15 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
 
   const handleDownloadCSV = () => {
     apiRef.current.exportDataAsCsv({ fileName: 'Report Data' });
+    handleCloseMenu();
+  };
+
+  const handleDownloadExcel = () => {
+    const csvString = apiRef.current.getDataAsCsv();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    const workbook = XLSX.read(csvString, { type: 'string' }) as XLSX.WorkBook;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    XLSX.writeFile(workbook, 'Report Data.xlsx');
     handleCloseMenu();
   };
 
@@ -100,6 +110,14 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="Download CSV" />
+          </ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleDownloadExcel}>
+          <ListItemIcon>
+            <FileDownload fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="Download Excel" />
           </ListItemText>
         </MenuItem>
       </Menu>
