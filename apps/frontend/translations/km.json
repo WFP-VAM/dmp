@@ -6,7 +6,7 @@
   },
   "generic": {
     "password_input": {
-      "show_password": "Show"
+      "show_password": "បង្ហាញ"
     }
   },
   "login": {
@@ -147,6 +147,14 @@
     "update": "ធ្វើបច្ចុប្បន្នភាព",
     "events": "ចំនួនព្រឹត្តិការណ៍",
     "affected": "ចំនួនមនុស្សដែលរងផលប៉ះពាល់"
+  },
+  "print_footer": {
+    "date": "កាលបរិច្ឆេទ",
+    "prepared_by": "រៀបចំដោយ",
+    "role": "តួនាទី",
+    "signature": "ហត្ថលេខា",
+    "reviewed_by": "ពិនិត្យដោយ",
+    "signature_stamp": "ហត្ថលេខា និងត្រា"
   },
   "table": {
     "FLOOD": {

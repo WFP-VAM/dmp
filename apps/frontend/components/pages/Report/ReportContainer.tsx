@@ -11,6 +11,7 @@ import {
   SearchFormData,
 } from 'components/Filters/SearchFilters';
 import { LabelSwitch } from 'components/LabelSwitch';
+import { PrintFooter } from 'components/PrintFooter';
 import { PrintHeader } from 'components/PrintHeader';
 import { PrintWrapper } from 'components/PrintWrapper';
 import { Report } from 'components/Report/Report';
@@ -127,6 +128,7 @@ export const ReportContainer = () => {
             isCommuneLevelReport={isCommuneLevelReport}
             isAllColumnReport={isAllColumnReport}
           />
+          <PrintFooter />
         </PrintWrapper>
       )}
     </Stack>
