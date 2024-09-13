@@ -47,7 +47,7 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
   };
 
   const handleDownloadCSV = () => {
-    apiRef.current.exportDataAsCsv({ fileName: 'report data' });
+    apiRef.current.exportDataAsCsv({ fileName: 'Report Data' });
     handleCloseMenu();
   };
 
