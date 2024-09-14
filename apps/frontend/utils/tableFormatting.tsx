@@ -147,6 +147,7 @@ export const addCommuneLevelReportLocationColumns = ({
   columnGroup,
   groupParams,
 }: AddCommuneLevelReportLocationColumnsParams) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const intl = useIntl();
 
   const newColumns: GridColDef[] = [
