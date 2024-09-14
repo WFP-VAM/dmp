@@ -55,7 +55,7 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
   const handleDownloadExcel = () => {
     const csvString = apiRef.current.getDataAsCsv();
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    const workbook = XLSX.read(csvString, { type: 'string' }) as XLSX.WorkBook;
+    const workbook = XLSX.read(csvString, { type: 'string' });
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     XLSX.writeFile(workbook, 'Report Data.xlsx');
     handleCloseMenu();
