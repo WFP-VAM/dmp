@@ -44,7 +44,7 @@
     "react-intl": "6.1.1",
     "react-to-print": "^2.14.12",
     "swr": "^2.1.1",
-    "xlsx": "^0.18.5"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
   },
   "devDependencies": {
     "@axe-core/react": "4.4.4",
