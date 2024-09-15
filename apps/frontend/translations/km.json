@@ -157,6 +157,12 @@
     "signature_stamp": "ហត្ថលេខា និងត្រា"
   },
   "table": {
+    "menu": {
+      "open_filters": "បើកតម្រង",
+      "manage_columns": "គ្រប់គ្រងជួរឈរ",
+      "download_csv": "ទាញយក CSV",
+      "download_json": "ទាញយក JSON"
+    },
     "FLOOD": {
       "floodN": "ចំនួនលើកទឹកជំនន់",
       "column": {

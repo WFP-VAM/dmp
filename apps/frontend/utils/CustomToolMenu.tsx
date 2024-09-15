@@ -1,4 +1,9 @@
-import { FilterList, MoreVert, ViewColumn } from '@mui/icons-material';
+import {
+  FileDownload,
+  FilterList,
+  MoreVert,
+  ViewColumn,
+} from '@mui/icons-material';
 import {
   IconButton,
   ListItemIcon,
@@ -11,6 +16,7 @@ import {
 import { GridPreferencePanelsValue, useGridApiContext } from '@mui/x-data-grid';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import * as XLSX from 'xlsx';
 
 import { colors } from 'theme/muiTheme';
 
@@ -38,6 +44,20 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
 
   const handleOpenColumnMenu = () => {
     apiRef.current.showPreferences(GridPreferencePanelsValue.columns);
+    handleCloseMenu();
+  };
+
+  const handleDownloadCSV = () => {
+    apiRef.current.exportDataAsCsv({ fileName: 'Report Data' });
+    handleCloseMenu();
+  };
+
+  const handleDownloadExcel = () => {
+    const csvString = apiRef.current.getDataAsCsv();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    const workbook = XLSX.read(csvString, { type: 'string' });
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    XLSX.writeFile(workbook, 'Report Data.xlsx');
     handleCloseMenu();
   };
 
@@ -73,7 +93,7 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
             <FilterList fontSize="small" />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="Open Filters"></FormattedMessage>
+            <FormattedMessage id="table.menu.open_filters" />
           </ListItemText>
         </MenuItem>
         <MenuItem onClick={handleOpenColumnMenu}>
@@ -81,7 +101,23 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
             <ViewColumn fontSize="small" />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="Manage Columns"></FormattedMessage>
+            <FormattedMessage id="table.menu.manage_columns" />
+          </ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleDownloadCSV}>
+          <ListItemIcon>
+            <FileDownload fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="table.menu.download_csv" />
+          </ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleDownloadExcel}>
+          <ListItemIcon>
+            <FileDownload fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="table.menu.download_json" />
           </ListItemText>
         </MenuItem>
       </Menu>

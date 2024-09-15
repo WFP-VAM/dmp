@@ -138,9 +138,8 @@ export const DisasterTable = ({
             return (
               <>
                 {groupHead.renderHeaderGroup?.(params)}
-                {variant === 'bordered' && (
-                  <CustomToolMenu withBorder={false} />
-                )}
+
+                <CustomToolMenu withBorder={false} />
               </>
             );
           },
