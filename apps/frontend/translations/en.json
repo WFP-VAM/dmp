@@ -148,6 +148,12 @@
     "signature_stamp": "Signature and Stamp"
   },
   "table": {
+    "menu": {
+      "open_filters": "Open Filters",
+      "manage_columns": "Manage Columns",
+      "download_csv": "Download CSV",
+      "download_json": "Download JSON"
+    },
     "FLOOD": {
       "floodN": "Flood Number",
       "column": {

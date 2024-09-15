@@ -93,7 +93,7 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
             <FilterList fontSize="small" />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="Open Filters"></FormattedMessage>
+            <FormattedMessage id="table.menu.open_filters" />
           </ListItemText>
         </MenuItem>
         <MenuItem onClick={handleOpenColumnMenu}>
@@ -101,7 +101,7 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
             <ViewColumn fontSize="small" />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="Manage Columns"></FormattedMessage>
+            <FormattedMessage id="table.menu.manage_columns" />
           </ListItemText>
         </MenuItem>
         <MenuItem onClick={handleDownloadCSV}>
@@ -109,7 +109,7 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
             <FileDownload fontSize="small" />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="Download CSV" />
+            <FormattedMessage id="table.menu.download_csv" />
           </ListItemText>
         </MenuItem>
         <MenuItem onClick={handleDownloadExcel}>
@@ -117,7 +117,7 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
             <FileDownload fontSize="small" />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="Download Excel" />
+            <FormattedMessage id="table.menu.download_json" />
           </ListItemText>
         </MenuItem>
       </Menu>
