@@ -3,8 +3,8 @@ import { omit } from 'lodash';
 
 import { aggregate } from './aggregate';
 import {
-  briefReportCountKeys,
-  detailedReportFirstKeys,
+  communeLeveldReportFirstKeys,
+  provinceLevelReportCountKeys,
 } from './commonReportAggregateKeys';
 
 const countCategoriesKeys = [
@@ -19,26 +19,26 @@ const countCategoriesKeys = [
 
 const sumKeys = Object.values(omit(DroughtSpecific, countCategoriesKeys));
 
-export const generateDroughtDetailedReport = (
+export const generateDroughtCommuneLevelReport = (
   data: Record<string, string | undefined>[],
 ) => {
   return aggregate({
     data,
     groupKey: KoboCommonKeys.commune,
-    firstKeys: detailedReportFirstKeys,
+    firstKeys: communeLeveldReportFirstKeys,
     sumKeys,
     countCategoriesKeys,
   });
 };
 
-export const generateDroughtBriefReport = (
+export const generateDroughtProvinceLevelReport = (
   data: Record<string, string | undefined>[],
 ) => {
   return aggregate({
     data,
     groupKey: KoboCommonKeys.province,
     sumKeys,
-    countKeys: briefReportCountKeys,
+    countKeys: provinceLevelReportCountKeys,
     countCategoriesKeys,
   });
 };

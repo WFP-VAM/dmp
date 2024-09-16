@@ -1,47 +1,79 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
+
+const width = 150;
 
 const EducationNeedsColumns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumTemSch, FLOOD, 150),
-  getColumnSetup(FloodSpecific.StuAcTemSch, FLOOD, 150),
-  getColumnSetup(FloodSpecific.SchUseSafe, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumStu, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumSchStop, FLOOD, 150),
-  getColumnSetup(FloodSpecific.NumStuNoCla, FLOOD, 150),
+  getColumnSetup({
+    field: FloodSpecific.NumTemSch,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.StuAcTemSch,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.SchUseSafe,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumStu,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumSchStop,
+    disaster: FLOOD,
+    width: width,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumStuNoCla,
+    disaster: FLOOD,
+    width: width,
+  }),
 ];
 
 const EducationNeedsColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('educationNeeds', FLOOD),
+    ...getGroupSetup('schoolStop', FLOOD),
     children: [
-      {
-        ...getGroupSetup('schoolStop', FLOOD),
-        children: [
-          { field: FloodSpecific.NumTemSch },
-          { field: FloodSpecific.StuAcTemSch },
-        ],
-      },
-      {
-        ...getGroupSetup('schoolNeeded', FLOOD),
-        children: [
-          { field: FloodSpecific.SchUseSafe },
-          { field: FloodSpecific.NumStu },
-        ],
-      },
-      {
-        ...getGroupSetup('schoolShelter', FLOOD),
-        children: [
-          { field: FloodSpecific.NumSchStop },
-          { field: FloodSpecific.NumStuNoCla },
-        ],
-      },
+      { field: FloodSpecific.NumTemSch },
+      { field: FloodSpecific.StuAcTemSch },
+    ],
+  },
+  {
+    ...getGroupSetup('schoolNeeded', FLOOD),
+    children: [
+      { field: FloodSpecific.SchUseSafe },
+      { field: FloodSpecific.NumStu },
+    ],
+  },
+  {
+    ...getGroupSetup('schoolShelter', FLOOD),
+    children: [
+      { field: FloodSpecific.NumSchStop },
+      { field: FloodSpecific.NumStuNoCla },
     ],
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'educationNeeds',
+  disaster: FLOOD,
+  additionalChildren: [],
+};
+
 export const EducationNeedsSettings = {
   columns: EducationNeedsColumns,
   columnGroup: EducationNeedsColumnGroup,
+  groupParams,
 };

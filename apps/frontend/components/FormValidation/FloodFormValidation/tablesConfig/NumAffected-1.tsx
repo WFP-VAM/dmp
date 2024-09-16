@@ -1,84 +1,109 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import { FLOOD, FloodSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
-const NumAffected1Columns: GridColDef[] = [
-  getColumnSetup(FloodSpecific.NumVillAff, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumPeoAff, FLOOD, 55),
-  getColumnSetup(FloodSpecific.NumFamAff, FLOOD, 65),
-  getColumnSetup(FloodSpecific.NumFeAff, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumTDeath, FLOOD, 50),
-  getColumnSetup(FloodSpecific.NumMeDeath, FLOOD, 45),
-  getColumnSetup(FloodSpecific.NumFeDeath, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumKidDeath, FLOOD, 65),
-  getColumnSetup(FloodSpecific.NumOldDeath, FLOOD, 55),
-  getColumnSetup(FloodSpecific.NumDisDeath, FLOOD, 65),
-  getColumnSetup(FloodSpecific.NumTMissing, FLOOD, 58),
-  getColumnSetup(FloodSpecific.NumMeMissing, FLOOD, 45),
-  getColumnSetup(FloodSpecific.NumFeMissing, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumKidMissing, FLOOD, 65),
-  getColumnSetup(FloodSpecific.NumOldMissing, FLOOD, 55),
-  getColumnSetup(FloodSpecific.NumDisMissing, FLOOD, 65),
-  getColumnSetup(FloodSpecific.NumTInjure, FLOOD, 55),
-  getColumnSetup(FloodSpecific.NumMeInjure, FLOOD, 45),
-  getColumnSetup(FloodSpecific.NumFeInjure, FLOOD, 60),
-  getColumnSetup(FloodSpecific.NumKidInjure, FLOOD, 65),
-  getColumnSetup(FloodSpecific.NumOldInjure, FLOOD, 55),
-  getColumnSetup(FloodSpecific.NumDisInjure, FLOOD, 65),
+const NumAffected1Columns = (detailed: boolean): GridColDef[] => [
+  getColumnSetup({ field: FloodSpecific.NumVillAff, disaster: FLOOD }),
+  getColumnSetup({
+    field: FloodSpecific.NumPeoAff,
+    disaster: FLOOD,
+    fontWeight: 'bold',
+    highlightColumn: !detailed,
+  }),
+  getColumnSetup({ field: FloodSpecific.NumFamAff, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumFeAff, disaster: FLOOD }),
+  getColumnSetup({
+    field: FloodSpecific.NumTDeath,
+    disaster: FLOOD,
+    fontWeight: 'bold',
+    highlightColumn: !detailed,
+  }),
+  getColumnSetup({ field: FloodSpecific.NumMeDeath, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumFeDeath, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumKidDeath, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumOldDeath, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumDisDeath, disaster: FLOOD }),
+  getColumnSetup({
+    field: FloodSpecific.NumTMissing,
+    disaster: FLOOD,
+    fontWeight: 'bold',
+    highlightColumn: !detailed,
+  }),
+  getColumnSetup({ field: FloodSpecific.NumMeMissing, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumFeMissing, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumKidMissing, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumOldMissing, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumDisMissing, disaster: FLOOD }),
+  getColumnSetup({
+    field: FloodSpecific.NumTInjure,
+    disaster: FLOOD,
+    fontWeight: 'bold',
+    highlightColumn: !detailed,
+  }),
+  getColumnSetup({ field: FloodSpecific.NumMeInjure, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumFeInjure, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumKidInjure, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumOldInjure, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumDisInjure, disaster: FLOOD }),
 ];
 
 const NumAffected1ColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('victimsAffected', FLOOD),
+    ...getGroupSetup('totalAffected', FLOOD),
     children: [
-      { field: FloodSpecific.NumVillAff },
-      {
-        ...getGroupSetup('totalAffected', FLOOD),
-        children: [
-          { field: FloodSpecific.NumPeoAff },
-          { field: FloodSpecific.NumFamAff },
-          { field: FloodSpecific.NumFeAff },
-        ],
-      },
-      {
-        ...getGroupSetup('deathToll', FLOOD),
-        children: [
-          { field: FloodSpecific.NumTDeath },
-          { field: FloodSpecific.NumMeDeath },
-          { field: FloodSpecific.NumFeDeath },
-          { field: FloodSpecific.NumKidDeath },
-          { field: FloodSpecific.NumOldDeath },
-          { field: FloodSpecific.NumDisDeath },
-        ],
-      },
-      {
-        ...getGroupSetup('missing', FLOOD),
-        children: [
-          { field: FloodSpecific.NumTMissing },
-          { field: FloodSpecific.NumMeMissing },
-          { field: FloodSpecific.NumFeMissing },
-          { field: FloodSpecific.NumKidMissing },
-          { field: FloodSpecific.NumOldMissing },
-          { field: FloodSpecific.NumDisMissing },
-        ],
-      },
-      {
-        ...getGroupSetup('injured', FLOOD),
-        children: [
-          { field: FloodSpecific.NumTInjure },
-          { field: FloodSpecific.NumMeInjure },
-          { field: FloodSpecific.NumFeInjure },
-          { field: FloodSpecific.NumKidInjure },
-          { field: FloodSpecific.NumOldInjure },
-          { field: FloodSpecific.NumDisInjure },
-        ],
-      },
+      { field: FloodSpecific.NumPeoAff },
+      { field: FloodSpecific.NumFamAff },
+      { field: FloodSpecific.NumFeAff },
+    ],
+  },
+  {
+    ...getGroupSetup('deathToll', FLOOD),
+    children: [
+      { field: FloodSpecific.NumTDeath },
+      { field: FloodSpecific.NumMeDeath },
+      { field: FloodSpecific.NumFeDeath },
+      { field: FloodSpecific.NumKidDeath },
+      { field: FloodSpecific.NumOldDeath },
+      { field: FloodSpecific.NumDisDeath },
+    ],
+  },
+  {
+    ...getGroupSetup('missing', FLOOD),
+    children: [
+      { field: FloodSpecific.NumTMissing },
+      { field: FloodSpecific.NumMeMissing },
+      { field: FloodSpecific.NumFeMissing },
+      { field: FloodSpecific.NumKidMissing },
+      { field: FloodSpecific.NumOldMissing },
+      { field: FloodSpecific.NumDisMissing },
+    ],
+  },
+  {
+    ...getGroupSetup('injured', FLOOD),
+    children: [
+      { field: FloodSpecific.NumTInjure },
+      { field: FloodSpecific.NumMeInjure },
+      { field: FloodSpecific.NumFeInjure },
+      { field: FloodSpecific.NumKidInjure },
+      { field: FloodSpecific.NumOldInjure },
+      { field: FloodSpecific.NumDisInjure },
     ],
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'victimsAffected',
+  disaster: FLOOD,
+  additionalChildren: [{ field: FloodSpecific.NumVillAff }],
+};
+
 export const NumAffected1ColumnSettings = {
   columns: NumAffected1Columns,
   columnGroup: NumAffected1ColumnGroup,
+  groupParams,
 };

@@ -1,22 +1,31 @@
-import { Box } from '@mui/material';
-import { ReactNode } from 'react';
+import { Box, useTheme } from '@mui/material';
+import React from 'react';
 
-interface Props {
-  alignItems?: string;
-  children: ReactNode;
+export interface LayoutProps {
+  alignItems?: React.CSSProperties['alignItems'];
+  backgroundColor?: string;
 }
-export const Layout = ({ alignItems, children }: Props): JSX.Element => {
+
+export const Layout = ({
+  alignItems,
+  children,
+  backgroundColor = '#f9f7f7',
+}: React.PropsWithChildren<LayoutProps>): JSX.Element => {
+  const theme = useTheme();
+
   // Warning: the maxWidth will influence the way the PDF are generated
   // TODO investigate how to reduce this value without changing th PDF display
   return (
     <Box
       flexGrow={1}
+      width="100vw"
       display="flex"
       flexDirection="column"
       alignItems={alignItems ?? 'left'}
       sx={{ p: 1 }}
+      style={{ backgroundColor, paddingTop: theme.spacing(5) }}
     >
-      <Box maxWidth={1500}>{children}</Box>
+      {children}
     </Box>
   );
 };

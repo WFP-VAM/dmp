@@ -1,7 +1,6 @@
 import {
   Box,
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -12,21 +11,30 @@ import {
   DROUGHT,
   FLOOD,
   INCIDENT,
+  IncidentMapping,
 } from '@wfp-dmp/interfaces';
 import { useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
-import { IncidentSelect } from './IncidentSelect';
+import MultiSelect from './MultiSelect';
 
 const disasters = [FLOOD, DROUGHT, INCIDENT];
+
+const incidentsKeys = Object.keys(IncidentMapping).map(
+  incident => IncidentMapping[incident],
+);
 
 interface Props {
   value: string[];
   onChange: (newValue: string[]) => void;
+  disabled?: boolean;
 }
 
-export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
-  const intl = useIntl();
+export const DisasterFilter = ({
+  value,
+  onChange,
+  disabled,
+}: Props): JSX.Element => {
   // value can contain more than one element only for incident
   // value can be empty if it is an INCIDENT
   const disTyp =
@@ -61,19 +69,17 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
       flexDirection="row"
       justifyContent="left"
       alignItems="center"
-      margin={2}
     >
       <FormControl>
-        <InputLabel>
-          <FormattedMessage id="validation_search_params.disaster_type" />
-        </InputLabel>
         <Select
+          disabled={disabled}
           value={disasterType}
           onChange={onDisasterTypeChange}
-          label={intl.formatMessage({
-            id: 'validation_search_params.disaster_type',
-          })}
-          sx={{ minWidth: 150, mr: 2 }}
+          sx={{
+            minWidth: 150,
+            backgroundColor: 'white',
+            height: '2.5rem',
+          }}
         >
           {disasters.map(disaster => {
             return (
@@ -85,7 +91,19 @@ export const DisasterFilter = ({ value, onChange }: Props): JSX.Element => {
         </Select>
       </FormControl>
       {disasterType === INCIDENT && (
-        <IncidentSelect value={incidents} onChange={onIncidentsChange} />
+        <FormControl sx={{ ml: 2 }}>
+          <MultiSelect
+            value={value}
+            disabled={disabled}
+            options={incidentsKeys}
+            onChange={v => {
+              onIncidentsChange(v);
+            }}
+            placeholder="validation_search_params.incident_type"
+            allSelectedText="disasters.ALL_INCIDENTS"
+            formatPrefix="disasters"
+          />
+        </FormControl>
       )}
     </Box>
   );
