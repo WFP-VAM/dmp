@@ -48,12 +48,15 @@ const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
   };
 
   const handleDownloadCSV = () => {
-    apiRef.current.exportDataAsCsv({ fileName: 'Report Data' });
+    apiRef.current.exportDataAsCsv({
+      fileName: 'Report Data',
+      allColumns: true,
+    });
     handleCloseMenu();
   };
 
   const handleDownloadExcel = () => {
-    const csvString = apiRef.current.getDataAsCsv();
+    const csvString = apiRef.current.getDataAsCsv({ allColumns: true });
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     const workbook = XLSX.read(csvString, { type: 'string' });
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
