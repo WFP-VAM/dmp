@@ -30,6 +30,9 @@ const ScrollArrows = ({
     opacity: hovering ? 0.9 : 1,
     cursor: 'pointer',
     transition: '0.4s',
+    '@media print': {
+      display: 'none',
+    },
   };
 
   if (
@@ -51,7 +54,7 @@ const ScrollArrows = ({
             })
           }
           fontSize="large"
-          style={{ ...arrowStyles, right: '3rem' }}
+          sx={{ ...arrowStyles, right: '3rem' }}
         />
       )}
       {scrollLeft > 0 && (
@@ -60,7 +63,7 @@ const ScrollArrows = ({
             outerRef.current?.scrollTo({ left: 0, behavior: 'smooth' })
           }
           fontSize="large"
-          style={{ ...arrowStyles, left: '3rem' }}
+          sx={{ ...arrowStyles, left: '3rem' }}
         />
       )}
     </>

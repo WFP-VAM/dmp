@@ -72,7 +72,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Check for vulnerable dependencies
-        run: pnpm run security
+        run: pnpm run security --level 2
 
   frontend_build_and_deploy:
     needs: test
@@ -116,7 +116,7 @@ jobs:
         uses: dswistowski/surge-sh-action@v1
         with:
           domain: ${{ env.surge_url }}
-          project: "apps/frontend/out/."
+          project: 'apps/frontend/out/.'
           login: ${{ secrets.surge_login }}
           token: ${{ secrets.surge_token }}
       - name: Get current date

@@ -139,7 +139,21 @@
     "events": "Number of Events",
     "affected": "Number of Affected People"
   },
+  "print_footer": {
+    "date": "Date",
+    "prepared_by": "Prepared by",
+    "role": "Role",
+    "signature": "Signature",
+    "reviewed_by": "Reviewed by",
+    "signature_stamp": "Signature and Stamp"
+  },
   "table": {
+    "menu": {
+      "open_filters": "Open Filters",
+      "manage_columns": "Manage Columns",
+      "download_csv": "Download CSV",
+      "download_json": "Download JSON"
+    },
     "FLOOD": {
       "floodN": "Flood Number",
       "column": {

@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 /* eslint-disable complexity */
-import { Box } from '@mui/material';
+import { Box, Stack, useTheme } from '@mui/material';
 import {
   DataGrid,
   DataGridProps,
@@ -12,9 +12,10 @@ import {
   GridRowModel,
   isLeaf,
 } from '@mui/x-data-grid';
-import { sum } from 'lodash';
-import React from 'react';
+import { chunk, sum } from 'lodash';
+import React, { useMemo } from 'react';
 
+import { usePrintContext } from 'components/PrintWrapper/PrintWrapper';
 import { colors } from 'theme/muiTheme';
 import CustomToolMenu from 'utils/CustomToolMenu';
 
@@ -51,6 +52,7 @@ export interface DisasterTableProps {
   columnHeaderHeight?: 'normal' | 'large';
   variant: DisasterTableVariant;
   getRowClassName?: DataGridProps['getRowClassName'];
+  isFirstTable?: boolean;
 }
 
 export const DisasterTable = ({
@@ -61,12 +63,15 @@ export const DisasterTable = ({
   getRowId,
   isEditable,
   variant,
-  columnHeaderHeight = 'normal',
+  columnHeaderHeight = 'large',
   getRowClassName,
+  isFirstTable = true,
 }: DisasterTableProps): JSX.Element => {
+  const theme = useTheme();
   const outerRef = React.useRef<HTMLDivElement>(null);
   const [hovering, setHovering] = React.useState(false);
   const [hasOverflow, setHasOverflow] = React.useState(false);
+  const isPrinting = usePrintContext();
 
   const { scrollWidth, offsetWidth, scrollLeft } = outerRef.current ?? {};
 
@@ -90,7 +95,6 @@ export const DisasterTable = ({
   }, []);
 
   // Generate column visibility model and hide empty columns by default.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const generateColumnVisibilityModel = (
     inputColumns: GridColDef[],
     inputData: Record<string, string | number | undefined>[],
@@ -106,8 +110,17 @@ export const DisasterTable = ({
     }, {} as Record<string, boolean>);
   };
 
-  // TODO - activate column visibility model when PR is stable
-  const columnVisibilityModel = {}; // generateColumnVisibilityModel(columns, data);
+  const columnVisibilityModel = generateColumnVisibilityModel(columns, data);
+
+  const nonEmptyData = isEditable
+    ? data
+    : data.filter(row =>
+        columns.some(column => {
+          const value = row[column.field];
+
+          return value !== undefined && value !== '';
+        }),
+      );
 
   const hasGroups = columnGroup.length > 0;
   const withTopCellDef = columnGroup.map(x => ({
@@ -123,9 +136,8 @@ export const DisasterTable = ({
             return (
               <>
                 {groupHead.renderHeaderGroup?.(params)}
-                {variant === 'bordered' && (
-                  <CustomToolMenu withBorder={false} />
-                )}
+
+                <CustomToolMenu withBorder={false} />
               </>
             );
           },
@@ -171,6 +183,10 @@ export const DisasterTable = ({
       ]
     : _updatedColumns;
 
+  const totalWidth = sum(updatedColumns.map(x => x.width ?? 0));
+  const maxPrintWidth = 1600; // Maximum print width in pixels
+  const scaleFactor = Math.min(1, maxPrintWidth / totalWidth);
+
   const borderCSS = `1px solid ${colors.gray}`;
 
   const hideBorderDivStyles = {
@@ -181,151 +197,202 @@ export const DisasterTable = ({
     zIndex: 1,
   };
 
-  return (
-    <Box position="relative">
-      <ScrollArrows
-        hasOverflow={hasOverflow}
-        hovering={hovering}
-        scrollWidth={scrollWidth}
-        offsetWidth={offsetWidth}
-        scrollLeft={scrollLeft}
-        outerRef={outerRef}
-      />
-      <Box
-        overflow="scroll"
-        ref={outerRef}
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={() => setHovering(false)}
-      >
-        <Box
-          position="relative"
-          width={sum(updatedColumns.map(x => x.width ?? 0))}
-          m={2}
-          mt={0}
-        >
-          {(updatedColumnGroup.length === 1 ||
-            !isLastCovered(
-              updatedColumnGroup,
-              updatedColumns[updatedColumns.length - 1].field,
-            )) &&
-            variant === 'open' && (
-              <div
-                style={{
-                  ...hideBorderDivStyles,
-                  right: 0,
-                  top: 0,
-                }}
-              />
-            )}
-          {variant === 'open' && (
-            <div
-              style={{
-                ...hideBorderDivStyles,
-                left: 0,
-                top: 0,
-              }}
-            />
-          )}
-          <DataGrid
-            sx={{
-              '& .MuiDataGrid-row.highlight-1': {
-                background: `${colors.color1}`,
-              },
-              '& .MuiDataGrid-row.highlight-2': {
-                background: `#D0EBF9`,
-              },
-              '& .MuiDataGrid-cell.highlighted-cell': {
-                background: '#D0EBF9',
-              },
-              '& .MuiDataGrid-columnHeader.header-top-cell': {
-                borderTop: variant === 'open' ? borderCSS : undefined,
-              },
-              '& .MuiDataGrid-columnHeader.header-setting-cell': {
-                fontWeight: 'bold',
-                backgroundColor: '#f9f7f7',
-                outline: 'none',
-              },
-              '& .MuiDataGrid-row': {
-                background: 'white',
-              },
-              '& .MuiDataGrid-cell': {
-                borderColor: colors.gray,
-                whiteSpace: 'normal !important',
-                wordWrap: 'break-word !important',
-              },
-              '& .MuiDataGrid-cell:focus': {
-                outline: isEditable ? '' : 'none',
-              },
-              '& .MuiDataGrid-columnHeaderTitleContainerContent': {
-                whiteSpace: 'normal !important',
-                wordWrap: 'break-word !important',
-                lineHeight: 'normal',
-              },
-              '& .MuiDataGrid-columnHeader': {
-                padding: '6px 8px',
-                borderColor: colors.gray,
-                backgroundColor: '#f1f1f1',
-              },
-              '& .MuiDataGrid-columnHeader--emptyGroup': {
-                backgroundColor: '#f9f7f7',
-                borderBottom: borderCSS,
-              },
-              '& .MuiDataGrid-iconButtonContainer': {
-                display: 'none',
-              },
-              '& .MuiDataGrid-columnHeader--filledGroup': {
-                borderBottom: borderCSS,
-              },
-              '& .MuiDataGrid-columnHeader--filledGroup:focus-within': {
-                outline: 'none',
-              },
-              '& .MuiDataGrid-columnHeaderTitleContainer': {
-                border: 'none !important',
-              },
-              '& .MuiDataGrid-virtualScroller': {
-                overflow: 'unset',
-                overflowY: 'unset !important',
-              },
-              '& .MuiDataGrid-scrollbar': {
-                overflow: 'hidden',
-              },
-              breakInside: 'avoid',
-              borderTop: variant === 'bordered' ? undefined : 'none',
-              borderColor: colors.gray,
-              '& .MuiDataGrid-cell:focus-within': {
-                outline: 'solid green 3px',
-                outlineWidth: '3px',
-                outlineOffset: '-3px',
-              },
-            }}
-            disableColumnResize
-            density="compact"
-            disableRowSelectionOnClick={!isEditable}
-            showCellVerticalBorder
-            showColumnVerticalBorder
-            rows={data}
-            columns={updatedColumns}
-            hideFooter
-            columnGroupingModel={updatedColumnGroup}
-            isCellEditable={() => isEditable}
-            processRowUpdate={(newRow: GridRowModel) => {
-              if (onChange) onChange(newRow);
+  // TODO - Debug why the table is not printing correctly when there are more than 28 rows
+  const rowsPerPage = Math.min(28, Math.floor(20 / scaleFactor));
+  const dataChunks = useMemo(() => {
+    return isPrinting ? chunk(nonEmptyData, rowsPerPage) : [nonEmptyData];
+  }, [isPrinting, nonEmptyData, rowsPerPage]);
 
-              return newRow;
-            }}
-            getRowId={getRowId}
-            getRowClassName={getRowClassName}
-            autoHeight
-            columnHeaderHeight={columnHeaderHeight === 'large' ? 100 : 72}
-            disableVirtualization
-            initialState={{
-              columns: {
-                columnVisibilityModel,
-              },
-            }}
-          />
+  return (
+    <>
+      {/* Add page break before additional tables */}
+      {!isFirstTable && isPrinting && (
+        <Box sx={{ pageBreakBefore: 'always', height: '0px' }} />
+      )}
+      <Box position="relative">
+        <ScrollArrows
+          hasOverflow={hasOverflow}
+          hovering={hovering}
+          scrollWidth={scrollWidth}
+          offsetWidth={offsetWidth}
+          scrollLeft={scrollLeft}
+          outerRef={outerRef}
+        />
+        <Box
+          ref={outerRef}
+          onMouseEnter={() => setHovering(true)}
+          onMouseLeave={() => setHovering(false)}
+          sx={{
+            overflow: 'scroll',
+            '@media print': {
+              overflow: 'visible',
+            },
+          }}
+        >
+          {dataChunks.map((chunkOfRows, index) => (
+            <React.Fragment key={index}>
+              {index > 0 && (
+                <Box sx={{ pageBreakBefore: 'always', height: '20px' }} />
+              )}
+              <Stack direction="row" position="relative" m={2} mt={0}>
+                {/* Adds padding for printing */}
+                <Box
+                  sx={{
+                    '@media print': {
+                      minWidth: '2rem',
+                      minHeight: theme.spacing(4),
+                    },
+                  }}
+                />
+                {(updatedColumnGroup.length === 1 ||
+                  !isLastCovered(
+                    updatedColumnGroup,
+                    updatedColumns[updatedColumns.length - 1].field,
+                  )) &&
+                  variant === 'open' && (
+                    <Box
+                      sx={{
+                        ...hideBorderDivStyles,
+                        right: 0,
+                        top: 0,
+                        '@media print': {
+                          right: '2rem',
+                        },
+                      }}
+                    />
+                  )}
+                {variant === 'open' && (
+                  <Box
+                    sx={{
+                      ...hideBorderDivStyles,
+                      left: 0,
+                      top: 0,
+                      '@media print': {
+                        left: '2rem',
+                      },
+                    }}
+                  />
+                )}
+                <Box width={totalWidth}>
+                  <DataGrid
+                    sx={{
+                      '@media print': {
+                        transform: `scale(${scaleFactor})`,
+                        transformOrigin: 'top left',
+                        overflow: 'unset',
+                      },
+                      '& .MuiDataGrid-row.highlight-1': {
+                        background: `${colors.color1}`,
+                      },
+                      '& .MuiDataGrid-row.highlight-2': {
+                        background: `#D0EBF9`,
+                      },
+                      '& .MuiDataGrid-cell.highlighted-cell': {
+                        background: '#D0EBF9',
+                      },
+                      '& .MuiDataGrid-columnHeader.header-top-cell': {
+                        borderTop: variant === 'open' ? borderCSS : undefined,
+                      },
+                      '& .MuiDataGrid-columnHeader.header-setting-cell': {
+                        fontWeight: 'bold',
+                        backgroundColor: '#f9f7f7',
+                        outline: 'none',
+                      },
+                      '& .MuiDataGrid-row': {
+                        background: 'white',
+                      },
+                      '& .MuiDataGrid-cell': {
+                        borderColor: colors.gray,
+                        whiteSpace: 'normal !important',
+                        wordWrap: 'break-word !important',
+                      },
+                      '& .MuiDataGrid-cell:focus': {
+                        outline: isEditable ? '' : 'none',
+                      },
+                      '& .MuiDataGrid-columnHeaderTitleContainerContent': {
+                        whiteSpace: 'normal !important',
+                        wordWrap: 'break-word !important',
+                        lineHeight: 'normal',
+                      },
+                      '& .MuiDataGrid-columnHeader': {
+                        padding: '8px 0px 8px 6px',
+                        borderColor: colors.gray,
+                        backgroundColor: '#f1f1f1',
+                      },
+                      '& .MuiDataGrid-columnHeader--emptyGroup': {
+                        backgroundColor: '#f9f7f7',
+                        borderBottom: borderCSS,
+                      },
+                      '& .MuiDataGrid-iconButtonContainer': {
+                        display: 'none',
+                      },
+                      '& .MuiDataGrid-columnHeader--filledGroup': {
+                        borderBottom: borderCSS,
+                      },
+                      '& .MuiDataGrid-columnHeader--filledGroup:focus-within': {
+                        outline: 'none',
+                      },
+                      '& .MuiDataGrid-columnHeaderTitleContainer': {
+                        border: 'none !important',
+                      },
+                      '& .MuiDataGrid-virtualScroller': {
+                        overflow: 'unset',
+                        overflowY: 'unset !important',
+                      },
+                      '& .MuiDataGrid-scrollbar': {
+                        overflow: 'hidden',
+                      },
+                      borderTop: variant === 'bordered' ? undefined : 'none',
+                      borderColor: colors.gray,
+                      '& .MuiDataGrid-cell:focus-within': {
+                        outline: 'solid green 3px',
+                        outlineWidth: '3px',
+                        outlineOffset: '-3px',
+                      },
+                    }}
+                    disableColumnResize
+                    density="compact"
+                    disableRowSelectionOnClick={!isEditable}
+                    showCellVerticalBorder
+                    showColumnVerticalBorder
+                    rows={chunkOfRows}
+                    columns={updatedColumns}
+                    hideFooter
+                    columnGroupingModel={updatedColumnGroup}
+                    isCellEditable={() => isEditable}
+                    processRowUpdate={(newRow: GridRowModel) => {
+                      if (onChange) onChange(newRow);
+
+                      return newRow;
+                    }}
+                    getRowId={getRowId}
+                    getRowClassName={getRowClassName}
+                    autoHeight
+                    columnHeaderHeight={
+                      columnHeaderHeight === 'large' ? 100 : 72
+                    }
+                    disableVirtualization
+                    initialState={{
+                      columns: {
+                        columnVisibilityModel,
+                      },
+                    }}
+                  />
+                </Box>
+                {/* Adds padding for printing */}
+                <Box
+                  sx={{
+                    '@media print': {
+                      minWidth: '2rem',
+                      minHeight: '100%',
+                    },
+                  }}
+                />
+              </Stack>
+            </React.Fragment>
+          ))}
         </Box>
       </Box>
-    </Box>
+    </>
   );
 };
