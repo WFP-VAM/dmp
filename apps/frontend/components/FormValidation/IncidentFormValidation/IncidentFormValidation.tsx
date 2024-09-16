@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
-import { Box, Button, CircularProgress, TextField } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
+import { Stack, useTheme } from '@mui/material';
 import {
   DisasterType,
   INCIDENT,
@@ -13,28 +12,25 @@ import { pick } from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { FormattedMessage, useIntl } from 'react-intl';
 
-import { RegionFilters } from 'components/Filters/RegionFilters';
 import { usePatchForm } from 'services/api/kobo/usePatchForm';
 import { formatFormToRaw } from 'utils/formatFormToRaw';
 import { formatIncidentFields } from 'utils/formatRawToForm';
 
-import { DisasterSelect } from '../DisasterSelect';
+import FormValidationFooter from '../FormValidationFooter';
+import FormValidationHeader from '../FormValidationHeader';
 import { IncidentFormType } from './IncidentFormType';
 import { IncidentTables } from './IncidentTables';
-
-const minWidth = 240;
 
 export const IncidentFormValidation = ({
   validationForm,
 }: {
   validationForm: IncidentDto;
 }): JSX.Element => {
+  const theme = useTheme();
   const router = useRouter();
   const { disasterType, id } = router.query;
 
-  const intl = useIntl();
   const formattedForm = useMemo(
     () => formatIncidentFields(validationForm),
     [validationForm],
@@ -42,9 +38,9 @@ export const IncidentFormValidation = ({
   const { control, handleSubmit, reset } = useForm<IncidentFormType>({
     defaultValues: {
       region: {
-        province: formattedForm.province,
-        district: formattedForm.district,
-        commune: formattedForm.commune,
+        province: [formattedForm.province],
+        district: [formattedForm.district],
+        commune: [formattedForm.commune],
       },
       interviewer: formattedForm.entryName,
       disTyp: formattedForm.disTyp,
@@ -60,10 +56,7 @@ export const IncidentFormValidation = ({
     },
   });
 
-  const { trigger, isMutating } = usePatchForm(
-    disasterType as DisasterType,
-    id as string,
-  );
+  const { trigger } = usePatchForm(disasterType as DisasterType, id as string);
 
   const [isEditMode, setIsEditMode] = useState(false);
   // We set this state to avoid race condition between a field update and the reset coming from react hook form
@@ -96,157 +89,30 @@ export const IncidentFormValidation = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Box display="flex" flexDirection="column" justifyContent={'center'}>
-        <Box display="flex" flexDirection="row">
-          <Box mr={7}>
-            <Controller
-              name="disTyp"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <DisasterSelect
-                  disabled={!isEditMode}
-                  value={value}
-                  onChange={onChange}
-                />
-              )}
+      <Stack gap={theme.spacing(6)}>
+        <FormValidationHeader
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+          control={control as any}
+          isEditMode={isEditMode}
+        />
+        <Controller
+          name="specific"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <IncidentTables
+              value={value}
+              onChange={onChange}
+              isEditMode={isEditMode}
             />
-          </Box>
-          <Controller
-            name="region"
-            control={control}
-            render={({ field: { value, onChange } }) => (
-              <RegionFilters
-                value={value}
-                onChange={onChange}
-                disableAll={!isEditMode}
-              />
-            )}
-          />
-        </Box>
-        <Box display="flex" flexDirection="row" sx={{ m: 2, mt: 5 }}>
-          <Box sx={{ mr: 6 }}>
-            <Controller
-              name="interviewer"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <TextField
-                  disabled={!isEditMode}
-                  label={intl.formatMessage({
-                    id: 'forms_table.headers.entry_name',
-                  })}
-                  value={value}
-                  onChange={onChange}
-                  sx={{ minWidth: minWidth }}
-                />
-              )}
-            />
-          </Box>
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field: { value, onChange } }) => (
-              <TextField
-                disabled={!isEditMode}
-                label={intl.formatMessage({
-                  id: 'forms_table.headers.phone',
-                })}
-                type="tel"
-                value={value}
-                onChange={onChange}
-                sx={{ minWidth: minWidth }}
-              />
-            )}
-          />
-        </Box>
-        <Box display="flex" flexDirection="row" sx={{ m: 2, mt: 5 }}>
-          <Box mr={6}>
-            <Controller
-              name="reportDate"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <DatePicker
-                  disabled={!isEditMode}
-                  label={intl.formatMessage({
-                    id: 'forms_table.headers.entry_date',
-                  })}
-                  value={value}
-                  onChange={onChange}
-                  sx={{ minWidth: minWidth }}
-                />
-              )}
-            />
-          </Box>
-          <Controller
-            name="incidentDate"
-            control={control}
-            render={({ field: { value, onChange } }) => (
-              <DatePicker
-                disabled={!isEditMode}
-                label={intl.formatMessage({
-                  id: 'forms_table.headers.dis_date',
-                })}
-                value={value}
-                onChange={onChange}
-                sx={{ minWidth: minWidth }}
-              />
-            )}
-          />
-        </Box>
-      </Box>
-      <Controller
-        name="specific"
-        control={control}
-        render={({ field: { value, onChange } }) => (
-          <IncidentTables
-            value={value}
-            onChange={onChange}
-            isEditMode={isEditMode}
-          />
-        )}
-      />
-      <Box display="flex" justifyContent="center">
-        {!isEditMode && (
-          <Button
-            sx={{ color: 'white', margin: 2 }}
-            onClick={() => {
-              setIsEditMode(true);
-            }}
-          >
-            <FormattedMessage id="form_page.edit" />
-          </Button>
-        )}
-        {isEditMode && (
-          <>
-            <Button
-              type="submit"
-              sx={{ color: 'white', margin: 2 }}
-              disabled={isMutating}
-              endIcon={
-                isMutating ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null
-              }
-            >
-              <FormattedMessage id="form_page.submit" />
-            </Button>
-            <Button
-              sx={{ color: 'white', margin: 2 }}
-              onClick={() => {
-                setIsEditMode(false);
-                setShouldReset(true);
-              }}
-              disabled={isMutating}
-              endIcon={
-                isMutating ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null
-              }
-            >
-              <FormattedMessage id="form_page.cancel" />
-            </Button>
-          </>
-        )}
-      </Box>
+          )}
+        />
+        <FormValidationFooter
+          isEditMode={isEditMode}
+          setIsEditMode={setIsEditMode}
+          setShouldReset={setShouldReset}
+          status={validationForm._validation_status.uid}
+        />
+      </Stack>
     </form>
   );
 };

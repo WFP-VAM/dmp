@@ -1,8 +1,10 @@
 import { incidentSpecificKeys } from '@wfp-dmp/interfaces';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
+import ReportTablesWrapper from 'components/ReportTablesWrapper';
+import { wrapGroupAsTitle } from 'utils/tableFormatting';
 
-import { incidenTablesMapping } from './incidentTablesMapping';
+import { incidentTablesMapping } from './incidentTablesMapping';
 
 export type IncidentSpecificType = Record<
   keyof typeof incidentSpecificKeys,
@@ -21,17 +23,24 @@ export const IncidentTables = ({
   isEditMode,
 }: IProps): JSX.Element => {
   return (
-    <>
-      {incidenTablesMapping.map((tableSetting, index) => (
-        <DisasterTable
-          columns={tableSetting.columns}
-          columnGroup={tableSetting.columnGroup}
-          data={[{ id: 1, ...value }]}
-          onChange={onChange}
-          isEditable={isEditMode}
-          key={index}
-        />
-      ))}
-    </>
+    <ReportTablesWrapper>
+      {incidentTablesMapping.map(
+        ({ columns, columnGroup, groupParams }, index) => {
+          const group = wrapGroupAsTitle({ columns, columnGroup, groupParams });
+
+          return (
+            <DisasterTable
+              columns={columns}
+              columnGroup={group}
+              data={[{ id: 1, ...value }]}
+              onChange={onChange}
+              isEditable={isEditMode}
+              variant="open"
+              key={index}
+            />
+          );
+        },
+      )}
+    </ReportTablesWrapper>
   );
 };

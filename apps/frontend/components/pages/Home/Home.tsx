@@ -1,6 +1,5 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { DisasterDtoType } from '@wfp-dmp/interfaces';
-import { FormattedMessage } from 'react-intl';
 import useSWR from 'swr';
 
 import { HomeTable } from 'components/HomeTable';
@@ -13,11 +12,8 @@ export const Home = (): JSX.Element => {
 
   return (
     <Box>
-      <Typography variant="h3" mb={5}>
-        <FormattedMessage id="navigation.banner" />
-      </Typography>
       <Box display="flex" justifyContent="center">
-        <Box sx={{ maxWidth: 700, flexGrow: 1 }}>
+        <Box sx={{ width: 700, flexGrow: 1 }}>
           <HomeTable isLoading={isLoading} forms={lastForms} />
         </Box>
       </Box>

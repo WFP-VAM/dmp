@@ -1,6 +1,11 @@
 :root {
   --spacing_very-small: 0.25rem;
+  --white: white;
   --color_primary_1: black;
-  --color_primary_2: grey;
-  --color_primary_3: white;
+  --color_primary_2: #666;
+  --color_primary_3: #3A84AD;
+  --color_buttons_1: #63B2BD;
+  --background-color-main: #f9f7f7;
+  --color_table_1: #F1F1F1;
+  ;
 }

@@ -1,7 +1,13 @@
 {
   "common": {
     "province": "ខេត្ត",
+    "district": "ស្រុក",
     "commune": "ឃុំ"
+  },
+  "generic": {
+    "password_input": {
+      "show_password": "បង្ហាញ"
+    }
   },
   "login": {
     "title": "សូមស្វាគមន៍!",
@@ -9,7 +15,7 @@
     "warning": "គណនេយ្យ ឬលេខសម្ងាត់មិនត្រឹមត្រូវ សូមព្យាយាមម្តងទៀត",
     "email": {
       "label": "អ៊ីមែល",
-      "placeholder": "max@ncdm.gov.kh",
+      "placeholder": "name@example.kh",
       "error": {
         "required": "សូមបំពេញអ៊ីម៉ែល",
         "invalid": "សូមបំពេញអាស័យដ្ឋានអ៊ីម៉ែលដែលត្រឹមត្រូវ"
@@ -35,9 +41,12 @@
     "submit": "ធ្វើបច្ចុប្បន្នភាព"
   },
   "valStatus": {
-    "approved": "របាយការណ៌បានឯកភាពរួច",
-    "notApproved": "របាយការណ៌៍ត្រូវបានបដិសេធ",
-    "onHold": "របាយការណ៍ដែលមិនទាន់ឯកភាព"
+    "approved-normal": "របាយការណ៌បានឯកភាពរួច",
+    "notApproved-normal": "របាយការណ៌៍ត្រូវបានបដិសេធ",
+    "onHold-normal": "របាយការណ៍ដែលមិនទាន់ឯកភាព",
+    "approved-long": "របាយការណ៌បានឯកភាពរួច",
+    "notApproved-long": "របាយការណ៌៍ត្រូវបានបដិសេធ",
+    "onHold-long": "របាយការណ៌បានឯកភាពរួច"
   },
   "navigation": {
     "home": "ទំព័រដើម",
@@ -46,6 +55,7 @@
       "search": "ស្វែងរក"
     },
     "reports": "របាយការណ៍",
+    "charts": "តារាងសង្ខេប",
     "admin": "ទំព័រអ្នកគ្រប់គ្រង",
     "language": {
       "english": "English",
@@ -55,17 +65,21 @@
     "logout": "ចាកចេញ"
   },
   "home": {
-    "table_title": "ព័ត៌មានសង្ខេប",
     "no_report": "គ្មានរបាយការណ៍គ្រោះមហន្តរាយ"
   },
   "validation_search_params": {
+    "location": "ទីតាំង",
     "disaster_type": "ប្រភេទគ្រោះមហន្តរាយ",
     "incident_type": "ឧបទ្ទវហេតុ",
-    "start_date": "ចាប់ពី",
-    "end_date": "រហូតដល់",
     "province": "ខេត្ត",
     "district": "ស្រុក",
-    "commune": "ឃុំ"
+    "commune": "ឃុំ",
+    "all-province": "ខេត្តទាំងអស់",
+    "all-district": "ស្រុកទាំងអស់",
+    "all-commune": "ឃុំទាំងអស់",
+    "date_range": "ចន្លោះកាលបរិច្ឆេទ",
+    "start_date": "ចាប់ពី",
+    "end_date": "រហូតដល់"
   },
   "form_page": {
     "approve": "ឯកភាព",
@@ -91,20 +105,34 @@
     "11": "បាក់អគារ",
     "12": "យុទ្ធភណ្ឌមិនទាន់ផ្ទុះ",
     "99": "ផ្សេងៗ",
+    "100": "ឧប្បត្តិហេតុទាំងអស់។",
     "ALL_INCIDENTS": "ឧប្បត្តិហេតុទាំងអស់។"
   },
   "forms_table": {
     "no_forms": "គ្មានទម្រង់ដែលត្រូវគ្នានឹងប៉ារ៉ាម៉ែត្រស្វែងរករបស់អ្នកទេ។",
     "headers": {
+      "location": "ទីតាំង",
       "province": "ខេត្ត",
       "district": "ស្រុក",
       "commune": "ឃុំ",
       "dis_date": "ការបរិច្ឆេទថ្ងៃកើតហេតុ",
       "dis_type": "ប្រភេទគ្រោះមហន្តរាយ",
+      "flood_number": "ចំនួនលើកទឹកជំនន់",
+      "select": "ជ្រើសរើស",
       "entry_name": "ឈ្មោះរបាយការណ៍",
       "phone": "លេខទូរសព្ឌ័",
       "entry_date": "ការបរិច្ឆេទបញ្ចូលរបាយការណ៍",
       "review_link": "ពិនិត្យ និងឯកភាព"
+    },
+    "batch_edit": {
+      "edit": "កែសម្រួល",
+      "cancel": "បោះបង់",
+      "save": "រក្សាទុក",
+      "warning": "អ្នកអាចកែសម្រួលទម្រង់ជាក្រុមបានតែពីខេត្តដូចគ្នាប៉ុណ្ណោះ",
+      "dialog_title": "កែសម្រួលចំនួនទឹកជំនន់ជាក្រុម",
+      "forms_selected": "ទម្រង់ដែលបានជ្រើសរើស",
+      "open_dialog": "បើកប្រអប់សន្ទនា",
+      "new_flood_number": "ចំនួនទឹកជំនន់ថ្មី"
     }
   },
   "report_page": {
@@ -112,10 +140,29 @@
     "noData": "គ្មានទិន្នន័យ",
     "data": "ទិន្នន័យ",
     "summary": "សង្ខេប",
-    "all_columns": "ជួរឈរទាំងអស់។",
+    "all_columns": "លម្អិត",
     "level": "កម្រិត"
   },
+  "charts_page": {
+    "update": "ធ្វើបច្ចុប្បន្នភាព",
+    "events": "ចំនួនព្រឹត្តិការណ៍",
+    "affected": "ចំនួនមនុស្សដែលរងផលប៉ះពាល់"
+  },
+  "print_footer": {
+    "date": "កាលបរិច្ឆេទ",
+    "prepared_by": "រៀបចំដោយ",
+    "role": "តួនាទី",
+    "signature": "ហត្ថលេខា",
+    "reviewed_by": "ពិនិត្យដោយ",
+    "signature_stamp": "ហត្ថលេខា និងត្រា"
+  },
   "table": {
+    "menu": {
+      "open_filters": "បើកតម្រង",
+      "manage_columns": "គ្រប់គ្រងជួរឈរ",
+      "download_csv": "ទាញយក CSV",
+      "download_json": "ទាញយក JSON"
+    },
     "FLOOD": {
       "floodN": "ចំនួនលើកទឹកជំនន់",
       "column": {
@@ -260,6 +307,7 @@
         "threat_14": "ផ្សេងៗ"
       },
       "groupId": {
+        "EMPTY": " ",
         "victimsAffected": "ចំនួនមនុស្សប៉ះពាល់",
         "totalAffected": "ចំនួនមនុស្សប៉ះពាល់សរុប",
         "deathToll": "ចំនួសស្លាប់សរុប",
@@ -338,23 +386,23 @@
         "14": "ផ្សេងៗ"
       },
       "summary_column": {
-        "NumFamAff": "Number of Families Affected",
-        "NumPeoAff": "Number of People Affected",
-        "NumFeAff": "Number of Women Affected",
-        "NumTDeath": "Total Death Toll",
-        "NumFamEva": "Number of Families Evacuated",
-        "NumPeoEva": "Number of People Evacuated",
-        "NumFeEva": "Number of Women Evacuated",
-        "NumHouAff": "Number of Houses Affected",
-        "NumSchoAff": "Number of Schools Affected",
-        "SamNabAff": "Seedlings Affected (ha)",
-        "SamNabDam": "Seedlings Damaged (ha)",
-        "PaddyAff": "Paddies Affected (ha)",
-        "PaddyDam": "Paddies Damaged (ha)",
-        "RubberRoAff": "Rubber Road affected (m)",
-        "ConcretAff": "Contret Road affected (m)",
-        "RuralRoAff": "Gravel Road affected (m)",
-        "BridgeAff": "Number of Concret Bridges Affected"
+        "NumFamAff": "ចំនួនគ្រួសារដែលរងផលប៉ះពាល់",
+        "NumPeoAff": "ចំនួនមនុស្សដែលរងផលប៉ះពាល់",
+        "NumFeAff": "ចំនួនស្រ្តីដែលរងផលប៉ះពាល់",
+        "NumTDeath": "ចំនួនអ្នកស្លាប់សរុប",
+        "NumFamEva": "ចំនួនគ្រួសារដែលបានជម្លៀស",
+        "NumPeoEva": "ចំនួនមនុស្សដែលបានជម្លៀស",
+        "NumFeEva": "ចំនួនស្រ្តីដែលបានជម្លៀស",
+        "NumHouAff": "ចំនួនផ្ទះដែលរងផលប៉ះពាល់",
+        "NumSchoAff": "ចំនួនសាលាដែលរងផលប៉ះពាល់",
+        "SamNabAff": "ចំនួនសំណាបដែលរងផលប៉ះពាល់ (ហិចតា)",
+        "SamNabDam": "ចំនួនសំណាបដែលខូចខាត (ហិចតា)",
+        "PaddyAff": "ចំនួនស្រែដែលរងផលប៉ះពាល់ (ហិចតា)",
+        "PaddyDam": "ចំនួនស្រែដែលខូចខាត (ហិចតា)",
+        "RubberRoAff": "ចំនួនផ្លូវកៅស៊ូដែលរងផលប៉ះពាល់ (ម៉ែត្រ)",
+        "ConcretAff": "ចំនួនផ្លូវបេតុងដែលរងផលប៉ះពាល់ (ម៉ែត្រ)",
+        "RuralRoAff": "ចំនួនផ្លូវគ្រួសក្រហមដែលរងផលប៉ះពាល់ (ម៉ែត្រ)",
+        "BridgeAff": "ចំនួនស្ពានបេតុងដែលរងផលប៉ះពាល់"
       }
     },
     "DROUGHT": {
@@ -456,6 +504,7 @@
         "TreatOccur_2": "មានការរំលោភបំពានផ្លូវភេទកើតឡើងក្នុងអំឡុងពេលទៅប្រមូលទឹក"
       },
       "groupId": {
+        "EMPTY": " ",
         "victimsAffected": "ចំនួនមនុស្សប៉ះពាល់",
         "noWater": "ចំនួនគ្រួសារខ្វះទឹកស្អាតប្រើប្រាស់ ",
         "deathToll": "ចំនួសស្លាប់សរុប",
@@ -503,20 +552,20 @@
         "sexualAbuse": "មានការរំលោភបំពានផ្លូវភេទកើតឡើងក្នុងអំឡុងពេលទៅប្រមូលទឹក"
       },
       "summary_column": {
-        "NumFamAff": "Number of Families Missing Water",
-        "NumPeoAff": "Number of People Missing Water",
-        "NumFe": "Number of Women Missing Water",
-        "TNumDeath": "Total Death Toll",
-        "FamAgriAff": "Number of families with Affected Plantations",
-        "FarmAff": "Number of Crop/Subsidiary plants Affected (ha)",
-        "FarmDam": "Number of Crop/Subsidiary plants Damaged (ha)",
-        "SamNabAff": "Seedlings Affected (ha)",
-        "SamNabDam": "Seedlings Damaged (ha)",
-        "PaddyAff": "Paddies Affected (ha)",
-        "PaddyDam": "Paddies Damaged (ha)",
-        "CowDeath": "Number of Dead Cows",
-        "LandSize": "Number of irrigated area needing water(ha)",
-        "NumFam": "Number of families needing water for their lands"
+        "NumFamAff": "ចំនួនគ្រួសារដែលខ្វះទឹកស្អាតប្រើប្រាស់",
+        "NumPeoAff": "ចំនួនមនុស្សដែលខ្វះទឹកស្អាតប្រើប្រាស់",
+        "NumFe": "ចំនួនស្រ្តីដែលខ្វះទឹកស្អាតប្រើប្រាស់",
+        "TNumDeath": "ចំនួនអ្នកស្លាប់សរុប",
+        "FamAgriAff": "ចំនួនគ្រួសារដែលរងផលប៉ះពាល់ដំណាំ",
+        "FarmAff": "ចំនួនដំណាំ/ដំណាំរួមផ្សំដែលរងផលប៉ះពាល់ (ហិចតា)",
+        "FarmDam": "ចំនួនដំណាំ/ដំណាំរួមផ្សំដែលខូចខាត (ហិចតា)",
+        "SamNabAff": "ចំនួនសំណាបដែលរងផលប៉ះពាល់ (ហិចតា)",
+        "SamNabDam": "ចំនួនសំណាបដែលខូចខាត (ហិចតា)",
+        "PaddyAff": "ចំនួនស្រែដែលរងផលប៉ះពាល់ (ហិចតា)",
+        "PaddyDam": "ចំនួនស្រែដែលខូចខាត (ហិចតា)",
+        "CowDeath": "ចំនួនគោស្លាប់",
+        "LandSize": "ចំនួនតំបន់ស្រោចស្រពដែលត្រូវការទឹក (ហិចតា)",
+        "NumFam": "ចំនួនគ្រួសារដែលត្រូវការទឹកសម្រាប់ដីរបស់ពួកគេ"
       }
     },
     "INCIDENT": {
@@ -592,6 +641,7 @@
         "FarmAf": "ហិចតា"
       },
       "groupId": {
+        "EMPTY": " ",
         "victimsAffected": "ចំនួនមនុស្សប៉ះពាល់",
         "totalAffected": "ចំនួនមនុស្សប៉ះពាល់សរុប",
         "deathToll": "ចំនួសស្លាប់សរុប",
@@ -618,27 +668,27 @@
         "forestFarm": "ព្រៃឬចម្ការដែលខូចខាត"
       },
       "summary_column": {
-        "NumFamAff": "Number of Families Affected",
-        "NumPeoAff": "Number of People Affected",
-        "NumFeAff": "Number of Women Affected",
-        "NumDeathTo": "Total Death Toll",
-        "ToNumMising": "Total Missing",
-        "ToNumInjure": "Total Injured",
-        "SchAff": "Number of Schools Affected",
-        "SchDam": "Number of Schools Damaged",
-        "HealthAff": "Number of Hospitals Affected",
-        "HealthDam": "Number of Hospitals Damaged",
-        "RivBreakLo": "River Bank Length Affected by Lanslides (m)",
-        "RivBreakWid": "River Bank Width Affected by Lanslides (m)",
-        "NationalRod": "Concrete Road Affected by Lanslides (m)",
-        "RuralRoad": "Gravel Road Affected by Lanslides (m)",
-        "Bridge": "Bridges Affected by Lanslides (number)",
-        "PagoAff": "Number of Pagoda Affected",
-        "PagoDam": "Number of Pagoda Damaged",
-        "BuildingAff": "Number of Administration Building Affected",
-        "BuildingDam": "Number of Administration Building Damaged",
-        "MarketAff": "Number of Markets Affected",
-        "MarketDam": "Number of Markets Damaged"
+        "NumFamAff": "ចំនួនគ្រួសារដែលរងផលប៉ះពាល់",
+        "NumPeoAff": "ចំនួនមនុស្សដែលរងផលប៉ះពាល់",
+        "NumFeAff": "ចំនួនស្រ្តីដែលរងផលប៉ះពាល់",
+        "NumDeathTo": "ចំនួនអ្នកស្លាប់សរុប",
+        "ToNumMising": "ចំនួនបាត់ខ្លួនសរុប",
+        "ToNumInjure": "ចំនួនរងរបួសសរុប",
+        "SchAff": "ចំនួនសាលាដែលរងផលប៉ះពាល់",
+        "SchDam": "ចំនួនសាលាដែលខូចខាត",
+        "HealthAff": "ចំនួនមន្ទីរពេទ្យដែលរងផលប៉ះពាល់",
+        "HealthDam": "ចំនួនមន្ទីរពេទ្យដែលខូចខាត",
+        "RivBreakLo": "ប្រវែងច្រាំងទន្លេដែលរងផលប៉ះពាល់ដោយបាក់ដី (ម៉ែត្រ)",
+        "RivBreakWid": "ទទឹងច្រាំងទន្លេដែលរងផលប៉ះពាល់ដោយបាក់ដី (ម៉ែត្រ)",
+        "NationalRod": "ផ្លូវបេតុងដែលរងផលប៉ះពាល់ដោយបាក់ដី (ម៉ែត្រ)",
+        "RuralRoad": "ផ្លូវគ្រួសក្រហមដែលរងផលប៉ះពាល់ដោយបាក់ដី (ម៉ែត្រ)",
+        "Bridge": "ចំនួនស្ពានដែលរងផលប៉ះពាល់ដោយបាក់ដី (ចំនួន)",
+        "PagoAff": "ចំនួនវត្តអារាមដែលរងផលប៉ះពាល់",
+        "PagoDam": "ចំនួនវត្តអារាមដែលខូចខាត",
+        "BuildingAff": "ចំនួនអគាររដ្ឋបាលដែលរងផលប៉ះពាល់",
+        "BuildingDam": "ចំនួនអគាររដ្ឋបាលដែលខូចខាត",
+        "MarketAff": "ចំនួនទីផ្សារដែលរងផលប៉ះពាល់",
+        "MarketDam": "ចំនួនទីផ្សារដែលខូចខាត"
       }
     },
     "COMMON": {
@@ -725,6 +775,8 @@
     "0506": "ភ្នំស្រួច",
     "0507": "សំរោងទង",
     "0508": "ថ្ពង",
+    "0509": "ឧដុង្គម៉ែជ័យ",
+    "0510": "សាមគ្គីមុនីជ័យ",
     "0601": "បារាយណ៍",
     "0602": "កំពង់ស្វាយ",
     "0603": "ស្ទឹងសែន",
@@ -754,6 +806,8 @@
     "0809": "ពញាឮ",
     "0810": "ស្អាង",
     "0811": "តាខ្មៅ",
+    "0812": "សំពៅពូន",
+    "0813": "អរិយក្សត្រ",
     "0901": "បុទុមសាគរ",
     "0902": "គិរីសាគរ",
     "0903": "កោះកុង",
@@ -767,6 +821,7 @@
     "1004": "សំបូរ",
     "1005": "ស្នួល",
     "1006": "ចិត្របុរី",
+    "1007": "អូរគ្រៀងសែនជ័យ",
     "1101": "កែវសីមា",
     "1102": "កោះញែក",
     "1103": "អូររាំង",
@@ -810,7 +865,7 @@
     "1501": "បាកាន",
     "1502": "កណ្ដៀង",
     "1503": "ក្រគរ",
-    "1504": "ភ្នំក្រវាញ",
+    "1504": "ភ្នំក្រវ៉ាញ",
     "1505": "ពោធិ៍សាត់",
     "1506": "វាលវែង",
     "1507": "តាលោសែនជ័យ",
@@ -835,6 +890,7 @@
     "1712": "ស្រីស្នំ",
     "1713": "ស្វាយលើ",
     "1714": "វ៉ារិន",
+    "1715": "រុនតាឯកតេជោសែន",
     "1801": "ព្រះសីហនុ",
     "1802": "ព្រៃនប់",
     "1803": "ស្ទឹងហាវ",
@@ -1306,7 +1362,7 @@
     "050706": "រលាំងគ្រើល",
     "050707": "សំរោងទង",
     "050708": "សំបូរ",
-    "050709": "សែងដី",
+    "050709": "សែនដី",
     "050710": "ស្គុះ",
     "050711": "តាំងក្រូច",
     "050712": "ធម្មតាអរ",
@@ -1315,11 +1371,26 @@
     "050715": "វល្លិសរ",
     "050801": "អមលាំង",
     "050802": "មនោរម្យ",
-    "050804": "ប្រាំបីមុំ",
+    "050804": "ប្រាំបីមុម",
     "050805": "រុងរឿង",
     "050806": "ទ័ពមាន",
     "050807": "វាលពន់",
     "050808": "យាអង្គ",
+    "050901": "វាំងចាស់",
+    "050902": "វាលពង់",
+    "050903": "ត្រាចទង",
+    "050904": "ព្រះស្រែ",
+    "050905": "ក្សេមក្សាន្ដ",
+    "051001": "ចាន់សែន",
+    "051002": "ជើងរាស់",
+    "051003": "ជំពូព្រឹក្ស",
+    "051004": "ក្រាំងចេក",
+    "051005": "មានជ័យ",
+    "051006": "ព្រៃក្រសាំង",
+    "051007": "យុទ្ធសាមគ្គី",
+    "051008": "ដំណាក់រាំង",
+    "051009": "ពាំងល្វា",
+    "051010": "ភ្នំតូច",
     "060101": "បាក់ស្នា",
     "060102": "បល្ល័ង្គ",
     "060103": "បារាយណ៍",
@@ -1621,6 +1692,22 @@
     "081108": "កោះអន្លង់ចិន",
     "081109": "សិត្បូ",
     "081110": "រកាខ្ពស់",
+    "081201": "ឈើខ្មៅ",
+    "081202": "ព្រែកជ្រៃ",
+    "081203": "ព្រែកស្ដី",
+    "081204": "ជ្រោយតាកែវ",
+    "081205": "សំពៅពូន",
+    "081301": "បាក់ដាវ",
+    "081302": "កោះឧកញ៉ាតី",
+    "081303": "ព្រែកអំពិល",
+    "081304": "ព្រែកលួង",
+    "081305": "ព្រែកតាកូវ",
+    "081306": "ស្វាយជ្រំ",
+    "081307": "អរិយក្សត្រ",
+    "081308": "សារិកាកែវ",
+    "081309": "ពាមឧកញ៉ាអុង",
+    "081310": "ព្រែកក្មេង",
+    "081311": "បារុង",
     "090101": "អណ្ដូងទឹក",
     "090102": "កណ្ដោល",
     "090103": "តានូន",
@@ -1698,6 +1785,11 @@
     "100608": "ថ្មអណ្ដើក",
     "100609": "ថ្មគ្រែ",
     "100610": "ថ្មី",
+    "100701": "ក្បាលដំរី",
+    "100702": "អូរគ្រៀង",
+    "100703": "អូរកណ្តៀរសែនជ័យ",
+    "100704": "រលួសមានជ័យ",
+    "100705": "ស្រែជិះ",
     "110101": "ចុងផ្លាស់",
     "110102": "មេម៉ង់",
     "110103": "ស្រែឈូក",

@@ -21,7 +21,7 @@
     "schema:drop": ". ./.env.rc && typeorm -d datasource.js schema:drop",
     "start:debug": "pnpm start --debug",
     "start:prod": "node dist/main.js",
-    "test": ". ./.env.test.rc && jest * --maxWorkers=2",
+    "test": "TZ=UTC . ./.env.test.rc && jest * --maxWorkers=2",
     "test:circular": "depcruise --validate .dependency-cruiser.js src",
     "test:coverage": "docker compose up -d db-test && pnpm test -- --coverage",
     "test:debug": "NODE_OPTIONS='--inspect-brk' pnpm test",

@@ -1,6 +1,7 @@
 import { UseProvince } from '@auth/user.decorator';
 import { Get } from '@decorators/httpDecorators';
 import { Body, Controller, HttpException, HttpStatus, Param, Patch, Query } from '@nestjs/common';
+import { OriginGuard } from '@utils/originGuard';
 import {
   DisasterDtoType,
   DROUGHT,
@@ -16,6 +17,8 @@ import {
 } from '@wfp-dmp/interfaces';
 
 import { KoboService } from './kobo.service';
+
+const AuthorizedPatchOrigin = /^https:\/\/dmp\.ovio\.org(\/.*)?$/;
 
 @Controller('kobo')
 export class KoboController {
@@ -72,6 +75,7 @@ export class KoboController {
   }
 
   @Patch('form/validationStatus')
+  @OriginGuard(AuthorizedPatchOrigin)
   async patchValidationStatus(
     @Body() body: PatchValidationStatusDto,
   ): Promise<ValidationStatusDto> {
@@ -86,6 +90,7 @@ export class KoboController {
   }
 
   @Patch(`form/${FLOOD}/:id`)
+  @OriginGuard(AuthorizedPatchOrigin)
   async patchFloodForm(
     @Param('id') id: string,
     @Body() body: PatchFloodFormDto,
@@ -96,6 +101,7 @@ export class KoboController {
   }
 
   @Patch(`form/${DROUGHT}/:id`)
+  @OriginGuard(AuthorizedPatchOrigin)
   async patchDroughtForm(
     @Param('id') id: string,
     @Body() body: PatchDroughtFormDto,
@@ -106,6 +112,7 @@ export class KoboController {
   }
 
   @Patch(`form/${INCIDENT}/:id`)
+  @OriginGuard(AuthorizedPatchOrigin)
   async patchIncidentForm(
     @Param('id') id: string,
     @Body() body: PatchIncidentFormDto,

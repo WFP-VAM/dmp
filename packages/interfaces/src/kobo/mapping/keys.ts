@@ -1,4 +1,5 @@
 import { DROUGHT, FLOOD, INCIDENT } from '../constants';
+import { floodSpecificKeys } from './flood';
 
 export enum KoboCommonKeys {
   district = 'district',
@@ -12,6 +13,7 @@ export enum KoboCommonKeys {
   id = 'id',
   validationStatus = 'validationStatus',
   submissionTime = 'submissionTime',
+  location = 'location',
 }
 
 export const koboKeys = {
@@ -27,6 +29,7 @@ export const koboKeys = {
     [KoboCommonKeys.id]: '_id',
     [KoboCommonKeys.validationStatus]: '_validation_status',
     [KoboCommonKeys.submissionTime]: '_submission_time',
+    floodN: floodSpecificKeys.floodN,
   },
   [DROUGHT]: {
     [KoboCommonKeys.district]: 'group_yu9nq00/District',

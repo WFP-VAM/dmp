@@ -1,3 +1,5 @@
+import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
+
 import { AgricultureColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/Agriculture';
 import { EducationNeedsSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/EducationNeeds';
 import { HealthNeedsColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/HealthNeeds';
@@ -8,11 +10,17 @@ import { NumAffected1ColumnSettings } from 'components/FormValidation/FloodFormV
 import { NumAffected2ColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/NumAffected-2';
 import { ShelterNeedsColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/ShelterNeeds';
 import { WaterNeedsColumnSettings } from 'components/FormValidation/FloodFormValidation/tablesConfig/WaterNeeds';
+import { ColumnSetupParams } from 'utils/tableFormatting';
 
 import { ReportFoodNeedsColumnSettings } from './tablesConfig/ReportFoodNeeds';
 import { ReportThreatColumnSettings } from './tablesConfig/ReportThreat';
 
-export const floodReportTablesMapping = [
+export const floodReportTablesMapping: {
+  columns: GridColDef[] | ((detailed: boolean) => GridColDef[]);
+  columnGroup: GridColumnGroupingModel;
+  columnHeaderHeight?: 'large' | 'normal';
+  groupParams: ColumnSetupParams;
+}[] = [
   NumAffected1ColumnSettings,
   NumAffected2ColumnSettings,
   HouseSocialColumnSettings,

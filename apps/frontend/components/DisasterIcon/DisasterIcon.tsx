@@ -1,66 +1,55 @@
-import {
-  faBiohazard,
-  faBomb,
-  faBug,
-  faBuildingCircleXmark,
-  faCarBurst,
-  faCloudBolt,
-  faEllipsis,
-  faFireFlameSimple,
-  faHillRockslide,
-  faHouseFloodWater,
-  faHurricane,
-  faPersonDrowning,
-  faSunPlantWilt,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { SvgIcon } from '@mui/material';
 import { DisasterMapping, IncidentMapping } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
-import { useIntl } from 'react-intl';
+
+import Attack from 'assets/icons/Attack.svg';
+import BuildingFacilityDestroyed from 'assets/icons/Building-facility-destroyed.svg';
+import Car from 'assets/icons/Car.svg';
+import Cyclone from 'assets/icons/Cyclone.svg';
+import Drought from 'assets/icons/Drought.svg';
+import Drowned from 'assets/icons/Drowned.svg';
+import Epidemic from 'assets/icons/Epidemic.svg';
+import Fire from 'assets/icons/Fire.svg';
+import Flood from 'assets/icons/Flood.svg';
+import Insect from 'assets/icons/Insect-infestation.svg';
+import Landslide from 'assets/icons/Landslide-mudslide.svg';
+import MoreOptions from 'assets/icons/More-options.svg';
+import Storm from 'assets/icons/Storm.svg';
 
 // eslint-disable-next-line complexity
 const getIconDefinition = (disTyp: string) => {
   switch (disTyp) {
     case DisasterMapping.flood:
-      return faHouseFloodWater;
+      return <Flood />;
     case DisasterMapping.drought:
-      return faSunPlantWilt;
+      return <Drought />;
     case IncidentMapping.hurricane:
-      return faHurricane;
+      return <Cyclone />;
     case IncidentMapping.fire:
-      return faFireFlameSimple;
+      return <Fire />;
     case IncidentMapping.lightning:
-      return faCloudBolt;
+      return <Storm />;
     case IncidentMapping.epidemics:
-      return faBiohazard;
+      return <Epidemic />;
     case IncidentMapping.shorebreak:
-      return faHillRockslide;
+      return <Landslide />;
     case IncidentMapping.insects:
-      return faBug;
+      return <Insect />;
     case IncidentMapping.traffic_accident:
-      return faCarBurst;
+      return <Car />;
     case IncidentMapping.drowning:
-      return faPersonDrowning;
+      return <Drowned />;
     case IncidentMapping.collapse:
-      return faBuildingCircleXmark;
+      return <BuildingFacilityDestroyed />;
     case IncidentMapping.weapon:
-      return faBomb;
+      return <Attack />;
     default:
-      return faEllipsis;
+      return <MoreOptions style={{ transform: [{ rotate: '90deg' }] }} />;
   }
 };
 
 export const DisasterIcon = ({ disTyp }: { disTyp: string }): JSX.Element => {
-  const intl = useIntl();
   const iconDefinition = useMemo(() => getIconDefinition(disTyp), [disTyp]);
 
-  return (
-    <FontAwesomeIcon
-      icon={iconDefinition}
-      title={intl.formatMessage({
-        id: `disasters.${disTyp}`,
-      })}
-      style={{ height: '20px' }}
-    />
-  );
+  return <SvgIcon>{iconDefinition}</SvgIcon>;
 };
