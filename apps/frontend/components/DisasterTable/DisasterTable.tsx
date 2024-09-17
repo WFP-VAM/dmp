@@ -94,7 +94,12 @@ export const DisasterTable = ({
     return () => obs.disconnect();
   }, []);
 
+  // TODO - Activate column and data filtering
+  // This has implications on the print mechanism as well as the
+  // form EDIT page. We also need to confirm that this is wanted by the users.
+
   // Generate column visibility model and hide empty columns by default.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const generateColumnVisibilityModel = (
     inputColumns: GridColDef[],
     inputData: Record<string, string | number | undefined>[],
@@ -110,17 +115,18 @@ export const DisasterTable = ({
     }, {} as Record<string, boolean>);
   };
 
-  const columnVisibilityModel = generateColumnVisibilityModel(columns, data);
+  const columnVisibilityModel = {}; // generateColumnVisibilityModel(columns, data);
 
-  const nonEmptyData = isEditable
-    ? data
-    : data.filter(row =>
-        columns.some(column => {
-          const value = row[column.field];
+  const nonEmptyData = data;
+  // isEditable
+  //   ? data
+  //   : data.filter(row =>
+  //       columns.some(column => {
+  //         const value = row[column.field];
 
-          return value !== undefined && value !== '';
-        }),
-      );
+  //         return value !== undefined && value !== '';
+  //       }),
+  //     );
 
   const hasGroups = columnGroup.length > 0;
   const withTopCellDef = columnGroup.map(x => ({

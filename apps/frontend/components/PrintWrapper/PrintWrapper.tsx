@@ -8,7 +8,7 @@ const PrintContext = createContext<boolean | undefined>(undefined);
 export const usePrintContext = () => {
   const context = useContext(PrintContext);
   if (context === undefined) {
-    throw new Error('usePrintContext must be used within a PrintProvider');
+    return false;
   }
 
   return context;
