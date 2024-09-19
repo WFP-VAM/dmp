@@ -12,6 +12,16 @@ const colWidth = 8 * 9;
 
 const AgricultureColumns: GridColDef[] = [
   getColumnSetup({
+    field: FloodSpecific.ToNamAgriAff,
+    disaster: FLOOD,
+    width: colWidth + 8 * 2,
+  }),
+  getColumnSetup({
+    field: FloodSpecific.NumFarmCroAff,
+    disaster: FLOOD,
+    width: colWidth + 8 * 2,
+  }),  
+  getColumnSetup({
     field: FloodSpecific.FarmAff,
     disaster: FLOOD,
     width: colWidth + 8 * 2,
@@ -23,6 +33,7 @@ const AgricultureColumns: GridColDef[] = [
   }),
   getColumnSetup({ field: FloodSpecific.SamNabAff, disaster: FLOOD }),
   getColumnSetup({ field: FloodSpecific.SamNabDam, disaster: FLOOD }),
+  getColumnSetup({ field: FloodSpecific.NumFarmPaddyAff, disaster: FLOOD }),
   getColumnSetup({ field: FloodSpecific.PaddyAff, disaster: FLOOD }),
   getColumnSetup({ field: FloodSpecific.PaddyDam, disaster: FLOOD }),
   getColumnSetup({ field: FloodSpecific.CowEva, disaster: FLOOD }),
@@ -38,6 +49,13 @@ const AgricultureColumns: GridColDef[] = [
 
 const AgricultureColumnGroup: GridColumnGroupingModel = [
   {
+    ...getGroupSetup('families', FLOOD),
+    children: [
+      { field: FloodSpecific.ToNamAgriAff },
+      { field: FloodSpecific.NumFarmCroAff },
+    ],
+  },
+  {
     ...getGroupSetup('plantation', FLOOD),
     children: [
       { field: FloodSpecific.FarmAff },
@@ -47,6 +65,7 @@ const AgricultureColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('seedling', FLOOD),
     children: [
+      { field: FloodSpecific.NumFarmPaddyAff },
       { field: FloodSpecific.SamNabAff },
       { field: FloodSpecific.SamNabDam },
     ],
