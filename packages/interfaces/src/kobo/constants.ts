@@ -30,6 +30,7 @@ export const IncidentMapping: MappingTypes = {
   drowning: '10',
   collapse: '11',
   weapon: '12',
+  shipwreck: '13',
   // Hide other incidents from the selection menu.
   // other: '99',
 };
