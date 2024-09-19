@@ -211,6 +211,8 @@
         "NumWareHDam": "Damaged",
         "NumCraftAff": "Affected",
         "NumCraftDam": "Damaged",
+        "integer_ws0la67": "Affected",
+        "integer_da9ns07": "Damaged",
         "ToNamAgriAff": "Affected",
         "NumFarmCroAff": "Affected",
         "FarmAff": "Affected",
