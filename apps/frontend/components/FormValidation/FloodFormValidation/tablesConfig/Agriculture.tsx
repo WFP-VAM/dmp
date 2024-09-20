@@ -20,7 +20,7 @@ const AgricultureColumns: GridColDef[] = [
     field: FloodSpecific.NumFarmCroAff,
     disaster: FLOOD,
     width: colWidth + 8 * 2,
-  }),  
+  }),
   getColumnSetup({
     field: FloodSpecific.FarmAff,
     disaster: FLOOD,
