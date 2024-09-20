@@ -11,7 +11,10 @@ import { DisasterTable, DisasterTableProps } from './DisasterTable';
 
 interface IProps {
   locationParams: AddProvinceLevelReportLocationColumnsParams;
-  disasterTableParams: Pick<DisasterTableProps, 'data' | 'variant'>;
+  disasterTableParams: Pick<
+    DisasterTableProps,
+    'data' | 'variant' | 'isFirstTable'
+  >;
 }
 
 export const CommuneLevelReportTable = ({
@@ -131,6 +134,7 @@ export const CommuneLevelReportTable = ({
       }}
       columnHeaderHeight="large"
       variant={disasterTableParams.variant}
+      isFirstTable={disasterTableParams.isFirstTable}
     />
   );
 };

@@ -7,7 +7,7 @@ import {
   generateFloodCommuneLevelReport,
   generateFloodProvinceLevelReport,
 } from 'utils/aggregate/generateFloodReport';
-import { formatFloodFields } from 'utils/formatRawToForm';
+import { filterFloodReports, formatFloodFields } from 'utils/formatRawToForm';
 
 import { CommuneLevelFloodReport } from './CommuneLevelFloodReport';
 import { ProvinceLevelFloodReport } from './ProvinceLevelFloodReport';
@@ -23,7 +23,9 @@ export const FloodReport = ({
   isAllColumnReport: boolean;
 }) => {
   const report = useMemo(() => {
-    const formattedForms = forms.map(form => formatFloodFields(form));
+    const formattedForms = filterFloodReports(
+      forms.map(form => formatFloodFields(form)),
+    );
 
     return isCommuneLevelReport
       ? generateFloodCommuneLevelReport(formattedForms)
