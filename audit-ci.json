@@ -1,5 +1,8 @@
 {
   "high": true,
   "skip-dev": true,
-  "allowlist": ["*documentation>@docusaurus/core>@docusaurus/mdx-loader>@mdx-js/mdx>remark-parse>trim*"]
+  "allowlist": [
+    "*documentation>@docusaurus/core>@docusaurus/mdx-loader>@mdx-js/mdx>remark-parse>trim*",
+    "GHSA-9wv6-86v2-598j"
+  ]
 }

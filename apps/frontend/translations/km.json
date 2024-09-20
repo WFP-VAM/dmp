@@ -6,7 +6,7 @@
   },
   "generic": {
     "password_input": {
-      "show_password": "Show"
+      "show_password": "បង្ហាញ"
     }
   },
   "login": {
@@ -55,6 +55,7 @@
       "search": "ស្វែងរក"
     },
     "reports": "របាយការណ៍",
+    "charts": "តារាងសង្ខេប",
     "admin": "ទំព័រអ្នកគ្រប់គ្រង",
     "language": {
       "english": "English",
@@ -142,7 +143,26 @@
     "all_columns": "លម្អិត",
     "level": "កម្រិត"
   },
+  "charts_page": {
+    "update": "ធ្វើបច្ចុប្បន្នភាព",
+    "events": "ចំនួនព្រឹត្តិការណ៍",
+    "affected": "ចំនួនមនុស្សដែលរងផលប៉ះពាល់"
+  },
+  "print_footer": {
+    "date": "កាលបរិច្ឆេទ",
+    "prepared_by": "រៀបចំដោយ",
+    "role": "តួនាទី",
+    "signature": "ហត្ថលេខា",
+    "reviewed_by": "ពិនិត្យដោយ",
+    "signature_stamp": "ហត្ថលេខា និងត្រា"
+  },
   "table": {
+    "menu": {
+      "open_filters": "បើកតម្រង",
+      "manage_columns": "គ្រប់គ្រងជួរឈរ",
+      "download_csv": "ទាញយក CSV",
+      "download_json": "ទាញយក JSON"
+    },
     "FLOOD": {
       "floodN": "ចំនួនលើកទឹកជំនន់",
       "column": {

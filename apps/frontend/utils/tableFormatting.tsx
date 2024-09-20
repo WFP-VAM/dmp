@@ -10,7 +10,7 @@ import {
 } from '@mui/x-data-grid';
 import { DisasterType, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 interface GetColumnSetupParams {
   field: string;
@@ -71,6 +71,9 @@ const getLocationColumnSetup = (
     | KoboCommonKeys.commune,
   width = 90,
 ): GridColDef => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const intl = useIntl();
+
   return {
     field,
     width,
@@ -82,6 +85,9 @@ const getLocationColumnSetup = (
         <FormattedMessage id={`forms_table.headers.${params.field}`} />
       </Typography>
     ),
+    valueFormatter: value =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      intl.formatMessage({ id: `${field}.${value as string}` }),
     renderCell: (params: GridRenderCellParams) => (
       <FormattedMessage id={`${field}.${params.value as string}`} />
     ),
@@ -141,6 +147,9 @@ export const addCommuneLevelReportLocationColumns = ({
   columnGroup,
   groupParams,
 }: AddCommuneLevelReportLocationColumnsParams) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const intl = useIntl();
+
   const newColumns: GridColDef[] = [
     {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -153,6 +162,22 @@ export const addCommuneLevelReportLocationColumns = ({
       valueGetter: (_: any, row: any) => {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
         return `${row.province}-${row.district}-${row.commune}`;
+      },
+      valueFormatter: value => {
+        const [province, district, commune] = (value as string)
+          .split('-')
+          .map(x => (x === 'undefined' ? undefined : x));
+
+        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-nullish-coalescing
+        const location = commune || district || province;
+        const key =
+          commune !== undefined
+            ? KoboCommonKeys.commune
+            : district !== undefined
+            ? KoboCommonKeys.district
+            : KoboCommonKeys.province;
+
+        return intl.formatMessage({ id: `${key}.${location as string}` });
       },
       renderHeader: (params: GridColumnHeaderParams) => (
         <Typography variant="body2">

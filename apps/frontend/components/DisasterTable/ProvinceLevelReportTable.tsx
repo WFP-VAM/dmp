@@ -9,7 +9,7 @@ interface IProps {
   locationParams: AddProvinceLevelReportLocationColumnsParams;
   disasterTableParams: Pick<
     DisasterTableProps,
-    'data' | 'variant' | 'columnHeaderHeight'
+    'data' | 'variant' | 'columnHeaderHeight' | 'isFirstTable'
   >;
 }
 

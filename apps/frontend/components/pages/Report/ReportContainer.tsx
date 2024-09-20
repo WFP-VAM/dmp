@@ -1,3 +1,4 @@
+import DownloadIcon from '@mui/icons-material/Download';
 import PrintIcon from '@mui/icons-material/Print';
 import { IconButton, Skeleton, Stack, useTheme } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
@@ -11,6 +12,7 @@ import {
   SearchFormData,
 } from 'components/Filters/SearchFilters';
 import { LabelSwitch } from 'components/LabelSwitch';
+import { PrintFooter } from 'components/PrintFooter';
 import { PrintHeader } from 'components/PrintHeader';
 import { PrintWrapper } from 'components/PrintWrapper';
 import { Report } from 'components/Report/Report';
@@ -26,7 +28,7 @@ const defaultSearchReportData: SearchFormData = {
     commune: [],
   },
   dateRange: {
-    startDate: dayjs().subtract(1, 'month'),
+    startDate: dayjs().subtract(1, 'years'),
     endDate: dayjs(),
   },
 };
@@ -39,6 +41,7 @@ export const ReportContainer = () => {
 
   const [isCommuneLevelReport, setIsCommuneLevelReport] = useState(false);
   const [isAllColumnReport, setIsAllColumnReport] = useState(false);
+  const [isPrinting, setIsPrinting] = useState(false);
 
   const { data: formsData, isLoading } = useGetForms(searchReportData);
 
@@ -49,6 +52,14 @@ export const ReportContainer = () => {
   const printRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
+    onBeforeGetContent: () => {
+      setIsPrinting(true);
+
+      return new Promise<void>(resolve => {
+        setTimeout(resolve, 0);
+      });
+    },
+    onAfterPrint: () => setIsPrinting(false),
   });
 
   return (
@@ -86,18 +97,32 @@ export const ReportContainer = () => {
             </>
           }
         />
-        <IconButton
-          onClick={handlePrint}
-          style={{
-            border: `1px solid ${colors.color3}`,
-            borderRadius: '4px',
-            aspectRatio: 1,
-            height: '2.5rem',
-            color: colors.color3,
-          }}
-        >
-          <PrintIcon />
-        </IconButton>
+        <Stack direction="row" spacing={1}>
+          <IconButton
+            onClick={handlePrint}
+            style={{
+              border: `1px solid ${colors.color3}`,
+              borderRadius: '4px',
+              aspectRatio: 1,
+              height: '2.5rem',
+              color: colors.color3,
+            }}
+          >
+            <DownloadIcon />
+          </IconButton>
+          <IconButton
+            onClick={handlePrint}
+            style={{
+              border: `1px solid ${colors.color3}`,
+              borderRadius: '4px',
+              aspectRatio: 1,
+              height: '2.5rem',
+              color: colors.color3,
+            }}
+          >
+            <PrintIcon />
+          </IconButton>
+        </Stack>
       </Stack>
 
       {isLoading && (
@@ -107,16 +132,19 @@ export const ReportContainer = () => {
         />
       )}
       {!isLoading && (
-        <>
-          <PrintWrapper printRef={printRef}>
-            <PrintHeader searchReportData={searchReportData} />
-            <Report
-              forms={filteredFormsData}
-              isCommuneLevelReport={isCommuneLevelReport}
-              isAllColumnReport={isAllColumnReport}
-            />
-          </PrintWrapper>
-        </>
+        <PrintWrapper
+          key={isPrinting ? 'printing' : 'not-printing'}
+          printRef={printRef}
+          isPrinting={isPrinting}
+        >
+          <PrintHeader searchReportData={searchReportData} />
+          <Report
+            forms={filteredFormsData}
+            isCommuneLevelReport={isCommuneLevelReport}
+            isAllColumnReport={isAllColumnReport}
+          />
+          <PrintFooter />
+        </PrintWrapper>
       )}
     </Stack>
   );
