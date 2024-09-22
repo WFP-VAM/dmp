@@ -26,6 +26,7 @@ export class FloodDto {
   @IsString() @Length(2) readonly 'g2/Province'!: string;
   @IsString() @Length(4) readonly 'g2/District'!: string;
   @IsString() @Length(6) readonly 'g2/Commune'!: string;
+  @IsString() readonly 'g2/village'?: string;
   @IsDateString() readonly 'g2/Date_Dis'!: string;
   @IsNumberString() readonly 'g2/DisTyp'!: string;
   @IsOptional() @IsNumberString() readonly 'g2/flood_n'?: string;

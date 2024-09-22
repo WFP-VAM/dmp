@@ -693,7 +693,8 @@
     "COMMON": {
       "column": {
         "district": "District",
-        "commune": "Commune"
+        "commune": "Commune",
+        "village": "Villages"
       }
     }
   },

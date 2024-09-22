@@ -27,6 +27,7 @@ export class IncidentDto {
   @IsString() @Length(2) readonly 'G2/Province'!: string;
   @IsString() @Length(4) readonly 'G2/District'!: string;
   @IsString() @Length(6) readonly 'G2/Commune'!: string;
+  @IsString() readonly 'G2/Village'?: string;
   @IsOptional() @IsNumberString() readonly 'group_tc1fy38/group_pf1pd97/NumVillAff'?: string;
   @IsOptional() @IsNumberString() readonly 'group_tc1fy38/group_pf1pd97/NumFamAff'?: string;
   @IsOptional() @IsNumberString() readonly 'group_tc1fy38/group_pf1pd97/NumPeoAff'?: string;
