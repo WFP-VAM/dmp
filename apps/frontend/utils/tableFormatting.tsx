@@ -109,6 +109,16 @@ const getLocationCountColumnSetup = (
       <FormattedMessage id={`table.${disaster}.column.${params.field}`} />
     </Typography>
   ),
+  // For villages, we need to count the number of villages in the list
+  ...(field === KoboCommonKeys.village
+    ? {
+        renderCell: (params: GridRenderCellParams) => {
+          const villageList = params.value as string[] | undefined;
+
+          return villageList ? villageList.length : 0;
+        },
+      }
+    : {}),
 });
 
 export const getGroupSetup = (groupId: string, disaster: DisasterType) => ({
@@ -126,7 +136,18 @@ const addGroup = (
   const group: GridColumnGroup | undefined = groupParams
     ? {
         ...getGroupSetup(groupParams.groupId, groupParams.disaster),
-        children: [...children, ...groupParams.additionalChildren],
+        children: [
+          ...children,
+          // TODO - this is a hack to add village to the commune level report without
+          // breaking the grouped menu in detailed commune level report
+          // Only add KoboCommonKeys.village if not already present
+          ...(children.some(
+            child => 'field' in child && child.field === KoboCommonKeys.village,
+          )
+            ? []
+            : [{ field: KoboCommonKeys.village }]),
+          ...groupParams.additionalChildren,
+        ],
       }
     : undefined;
 
@@ -207,6 +228,8 @@ export const addCommuneLevelReportLocationColumns = ({
         );
       },
     },
+    // What to do in detailed commune level report?
+    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 72),
     ...columns,
   ];
 
@@ -240,6 +263,7 @@ export const addProvinceLevelReportLocationColumns = ({
     getLocationColumnSetup(KoboCommonKeys.province, 200),
     getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 72),
     getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 84),
+    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 72),
     ...columns,
   ];
 
@@ -249,6 +273,7 @@ export const addProvinceLevelReportLocationColumns = ({
       { field: KoboCommonKeys.province },
       { field: KoboCommonKeys.district },
       { field: KoboCommonKeys.commune },
+      { field: KoboCommonKeys.village },
     ],
     groupParams,
   );

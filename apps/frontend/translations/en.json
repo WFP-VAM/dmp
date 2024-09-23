@@ -96,6 +96,7 @@
     "10": "Drowning",
     "11": "Collapse",
     "12": "Unexploded Weapon",
+    "13": "Shipwreck",
     "99": "Other Incidents",
     "ALL_INCIDENTS": "All Incidents"
   },
@@ -157,7 +158,7 @@
     "FLOOD": {
       "floodN": "Flood Number",
       "column": {
-        "NumVillAff": "Villages",
+        "NumVillAff": "Villages (Old)",
         "NumFamAff": "Families",
         "NumPeoAff": "Total People",
         "NumFeAff": "Women",
@@ -211,8 +212,11 @@
         "NumWareHDam": "Damaged",
         "NumCraftAff": "Affected",
         "NumCraftDam": "Damaged",
+        "ToNamAgriAff": "Affected",
+        "NumFarmCroAff": "Affected",
         "FarmAff": "Affected",
         "FarmDam": "Damaged",
+        "NumFarmPaddyAff": "Affected",
         "SamNabAff": "Affected",
         "SamNabDam": "Damaged",
         "PaddyAff": "Affected",
@@ -386,6 +390,8 @@
         "NumFeEva": "Women Evacuated",
         "NumHouAff": "Houses Affected",
         "NumSchoAff": "Schools Affected",
+        "ToNamAgriAff": "Total number of households affecting farmland",
+        "NumFarmCroAff": "Number of households affected by mixed crops",
         "SamNabAff": "Seedlings Affected (ha)",
         "SamNabDam": "Seedlings Damaged (ha)",
         "PaddyAff": "Paddies Affected (ha)",
@@ -398,7 +404,7 @@
     },
     "DROUGHT": {
       "column": {
-        "NumVillAff": "Villages",
+        "NumVillAff": "Villages (Old)",
         "NumFamAff": "Families",
         "NumPeoAff": "Total People",
         "NumMe": "Men",
@@ -561,7 +567,7 @@
     },
     "INCIDENT": {
       "column": {
-        "NumVillAff": "Villages",
+        "NumVillAff": "Villages (Old)",
         "NumPeoAff": "Total People",
         "NumFamAff": "Families",
         "NumFeAff": "Women",
@@ -618,6 +624,8 @@
         "StorageDam": "Damaged",
         "CraftAff": "Affected",
         "CraftDam": "Damaged",
+        "integer_ws0la67": "Affected",
+        "integer_da9ns07": "Damaged",
         "CropAff": "Affected",
         "CropDam": "Damaged",
         "SamnabAff": "Affected",
@@ -651,6 +659,7 @@
         "market": "Market (number)",
         "warehouse": "Warehouse (number)",
         "workshop": "Workshop (number)",
+        "factory": "Factory (number)",
         "agricultureForest": "Agriculture and Forest Affected",
         "crop": "Crop/subsidiary plants (ha)",
         "transplanted": "Seedlings ()ha",
@@ -685,7 +694,8 @@
     "COMMON": {
       "column": {
         "district": "District",
-        "commune": "Commune"
+        "commune": "Commune",
+        "village": "Villages"
       }
     }
   },
