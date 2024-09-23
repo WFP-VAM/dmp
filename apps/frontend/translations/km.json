@@ -167,7 +167,7 @@
     "FLOOD": {
       "floodN": "ចំនួនលើកទឹកជំនន់",
       "column": {
-        "NumVillAff": "ភូមិ",
+        "NumVillAff": "ភូមិ (ចាស់)",
         "NumFamAff": "គ្រួសារ",
         "NumPeoAff": "ចំំនួនមនុស្ស",
         "NumFeAff": "ស្រ្តី",
@@ -221,8 +221,11 @@
         "NumWareHDam": "ខូចខាត",
         "NumCraftAff": "ប៉ះពាល់",
         "NumCraftDam": "ខូចខាត",
+        "ToNamAgriAff": "ប៉ះពាល់",
+        "NumFarmCroAff": "ប៉ះពាល់",
         "FarmAff": "ប៉ះពាល់",
         "FarmDam": "ខូចខាត",
+        "NumFarmPaddyAff": "ប៉ះពាល់",
         "SamNabAff": "ប៉ះពាល់",
         "SamNabDam": "ខូចខាត",
         "PaddyAff": "ប៉ះពាល់",
@@ -396,6 +399,8 @@
         "NumFeEva": "ចំនួនស្រ្តីដែលបានជម្លៀស",
         "NumHouAff": "ចំនួនផ្ទះដែលរងផលប៉ះពាល់",
         "NumSchoAff": "ចំនួនសាលាដែលរងផលប៉ះពាល់",
+        "ToNamAgriAff": "ចំនួនគ្រួសារសរុប៉ះពាល់ដីស្រែ/ចម្ការ",
+        "NumFarmCroAff": "ចំនួនគ្រួសារប៉ះពាល់ដំណាំរួមផ្សំ",
         "SamNabAff": "ចំនួនសំណាបដែលរងផលប៉ះពាល់ (ហិចតា)",
         "SamNabDam": "ចំនួនសំណាបដែលខូចខាត (ហិចតា)",
         "PaddyAff": "ចំនួនស្រែដែលរងផលប៉ះពាល់ (ហិចតា)",
@@ -408,7 +413,7 @@
     },
     "DROUGHT": {
       "column": {
-        "NumVillAff": "ភូមិ",
+        "NumVillAff": "ភូមិ (ចាស់)",
         "NumFamAff": "គ្រួសារ",
         "NumPeoAff": "ចំំនួនមនុស្ស",
         "NumMe": "បុរស",
@@ -571,7 +576,7 @@
     },
     "INCIDENT": {
       "column": {
-        "NumVillAff": "ភូមិ",
+        "NumVillAff": "ភូមិ (ចាស់)",
         "NumPeoAff": "ចំំនួនមនុស្ស",
         "NumFamAff": "គ្រួសារ",
         "NumFeAff": "ស្រ្តី",
@@ -628,6 +633,8 @@
         "StorageDam": "ខូចខាត",
         "CraftAff": "ប៉ះពាល់",
         "CraftDam": "ខូចខាត",
+        "integer_ws0la67": "ប៉ះពាល់",
+        "integer_da9ns07": "ខូចខាត",
         "CropAff": "ប៉ះពាល់",
         "CropDam": "ខូចខាត",
         "SamnabAff": "ប៉ះពាល់",
@@ -661,6 +668,7 @@
         "market": "ទីផ្សារ (ចំនួន)",
         "warehouse": "ឃ្លាំងស្តុកទំនិញ (កន្លែង)",
         "workshop": "សិប្បកម្ម/រោងជាង (កន្លែង)",
+        "factory": "រោងចក្រ (កន្លែង)",
         "agricultureForest": "ផលប៉ះពាល់កសិកម្ម និងព្រៃឈើ",
         "crop": "ដំណាំចម្ការ/ដំណាំរួមផ្សំ (ហ.ត)",
         "transplanted": "សំណាប (ហត)",
@@ -695,7 +703,8 @@
     "COMMON": {
       "column": {
         "district": "ស្រុក",
-        "commune": "ឃុំ"
+        "commune": "ឃុំ",
+        "village": "ភូមិ"
       }
     }
   },
