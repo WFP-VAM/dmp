@@ -133,12 +133,13 @@ const addGroup = (
   children: GridColumnNode[],
   groupParams?: ColumnSetupParams,
 ) => {
-  console.log({ children, addChill: groupParams?.additionalChildren });
   const group: GridColumnGroup | undefined = groupParams
     ? {
         ...getGroupSetup(groupParams.groupId, groupParams.disaster),
         children: [
           ...children,
+          // TODO - this is a hack to add village to the commune level report without
+          // breaking the grouped menu in detailed commune level report
           // Only add KoboCommonKeys.village if not already present
           ...(children.some(
             child => 'field' in child && child.field === KoboCommonKeys.village,
