@@ -145,7 +145,7 @@ const addGroup = (
             child => 'field' in child && child.field === KoboCommonKeys.village,
           )
             ? []
-            : [{ field: KoboCommonKeys.village as string } as GridColumnNode]),
+            : [{ field: KoboCommonKeys.village }]),
           ...groupParams.additionalChildren,
         ],
       }
@@ -229,7 +229,7 @@ export const addCommuneLevelReportLocationColumns = ({
       },
     },
     // What to do in detailed commune level report?
-    getLocationCountColumnSetup(KoboCommonKeys.village as string, 'COMMON', 72),
+    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 72),
     ...columns,
   ];
 
@@ -263,7 +263,7 @@ export const addProvinceLevelReportLocationColumns = ({
     getLocationColumnSetup(KoboCommonKeys.province, 200),
     getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 72),
     getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 84),
-    getLocationCountColumnSetup(KoboCommonKeys.village as string, 'COMMON', 72),
+    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 72),
     ...columns,
   ];
 
@@ -273,7 +273,7 @@ export const addProvinceLevelReportLocationColumns = ({
       { field: KoboCommonKeys.province },
       { field: KoboCommonKeys.district },
       { field: KoboCommonKeys.commune },
-      { field: KoboCommonKeys.village as string },
+      { field: KoboCommonKeys.village },
     ],
     groupParams,
   );

@@ -18,7 +18,7 @@ export const formatFormToRaw = (
     district: formValues.region.district[0],
     commune: formValues.region.commune[0],
     // TODO - FIXME: This is just a placeholder for the village field
-    village: 'test',
+    village: formValues.region.village,
     // TODO - FIXME: This is just a placeholder for the location field
     location: formValues.region.commune[0],
     entryName: formValues.interviewer,

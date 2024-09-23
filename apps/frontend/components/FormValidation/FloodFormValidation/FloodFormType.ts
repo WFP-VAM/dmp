@@ -6,6 +6,7 @@ export type FloodFormType = {
     province: string[];
     district: string[];
     commune: string[];
+    village: string;
   };
   interviewer: string;
   disTyp: string;
