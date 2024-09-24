@@ -34,6 +34,8 @@ export class WebhookService {
       throw new Error('telegramNcdmChatId is not defined');
     }
 
+    console.log(form);
+
     const text = generateTelegramMessage(disasterType, form);
 
     await Promise.all([
