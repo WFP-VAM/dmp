@@ -27,22 +27,27 @@ export class WebhookService {
   }
 
   async sendAlerts(disasterType: DisasterType, form: DisasterDtoType) {
-    if (telegramPcdmChatId === undefined) {
-      throw new Error('telegramPcdmChatId is not defined');
+    try {
+      if (telegramPcdmChatId === undefined) {
+        throw new Error('telegramPcdmChatId is not defined');
+      }
+      if (telegramNcdmChatId === undefined) {
+        throw new Error('telegramNcdmChatId is not defined');
+      }
+
+      console.log(JSON.stringify(form));
+
+      const text = generateTelegramMessage(disasterType, form);
+
+      await Promise.all([
+        this.sendTelegramMessage(telegramPcdmChatId, text),
+        this.sendTelegramMessage(telegramNcdmChatId, text),
+      ]);
+
+      return 'sent';
+    } catch (error) {
+      console.error('Error sending alerts:', error);
+      throw new HttpException('Failed to send alerts', HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    if (telegramNcdmChatId === undefined) {
-      throw new Error('telegramNcdmChatId is not defined');
-    }
-
-    console.log(form);
-
-    const text = generateTelegramMessage(disasterType, form);
-
-    await Promise.all([
-      this.sendTelegramMessage(telegramPcdmChatId, text),
-      this.sendTelegramMessage(telegramNcdmChatId, text),
-    ]);
-
-    return 'sent';
   }
 }
