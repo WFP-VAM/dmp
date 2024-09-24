@@ -35,8 +35,6 @@ export class WebhookService {
         throw new Error('telegramNcdmChatId is not defined');
       }
 
-      console.log(JSON.stringify(form));
-
       const text = generateTelegramMessage(disasterType, form);
 
       await Promise.all([
@@ -46,7 +44,8 @@ export class WebhookService {
 
       return 'sent';
     } catch (error) {
-      console.error('Error sending alerts:', error);
+      console.log(JSON.stringify(form));
+      console.error('Error sending alerts:', JSON.stringify(error));
       throw new HttpException('Failed to send alerts', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
