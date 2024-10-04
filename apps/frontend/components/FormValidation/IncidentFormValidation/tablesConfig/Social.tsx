@@ -27,11 +27,11 @@ const SocialColumns: GridColDef[] = [
   getColumnSetup({ field: IncidentSpecific.CraftAff, disaster: INCIDENT }),
   getColumnSetup({ field: IncidentSpecific.CraftDam, disaster: INCIDENT }),
   getColumnSetup({
-    field: IncidentSpecific.integer_ws0la67,
+    field: IncidentSpecific.FactoryAff,
     disaster: INCIDENT,
   }),
   getColumnSetup({
-    field: IncidentSpecific.integer_da9ns07,
+    field: IncidentSpecific.FactoryDam,
     disaster: INCIDENT,
   }),
 ];
@@ -75,8 +75,8 @@ const SocialColumnGroup: GridColumnGroupingModel = [
   {
     ...getGroupSetup('factory', INCIDENT),
     children: [
-      { field: IncidentSpecific.integer_ws0la67 },
-      { field: IncidentSpecific.integer_da9ns07 },
+      { field: IncidentSpecific.FactoryAff },
+      { field: IncidentSpecific.FactoryDam },
     ],
   },
 ];
