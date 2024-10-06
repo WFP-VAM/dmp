@@ -52,7 +52,7 @@ export const CommuneLevelReportTable = ({
             return;
           }
           if (typeof acc[k] === 'number' && typeof x[k] === 'number') {
-            acc[k] += x[k];
+            acc[k] = (acc[k] as number) + (x[k] as number);
           } else if (typeof x[k] === 'number') {
             acc[k] = x[k];
           }
