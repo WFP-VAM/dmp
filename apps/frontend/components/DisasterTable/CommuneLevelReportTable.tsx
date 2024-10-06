@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
