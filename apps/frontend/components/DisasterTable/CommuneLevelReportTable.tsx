@@ -44,7 +44,8 @@ export const CommuneLevelReportTable = ({
       rest.forEach(x => {
         keys.forEach(k => {
           if (k === 'village') {
-            acc[k] = (acc[k] || []).concat(x[k] || []);
+            // eslint-disable-next-line
+            acc[k] = (acc[k] ?? []).concat(x[k] ?? []);
 
             return;
           }
@@ -78,6 +79,7 @@ export const CommuneLevelReportTable = ({
         const first = x[0]; // the sum of the communes are here
         keys.forEach(k => {
           if (k === 'village') {
+            // eslint-disable-next-line
             acc[k] = (acc[k] || []).concat(first[k] || []);
 
             return;
