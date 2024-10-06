@@ -120,6 +120,7 @@ const getLocationCountColumnSetup = (
               ?.map(village =>
                 intl.formatMessage({ id: `${field}.${village}` }),
               )
+              .sort((a, b) => a.localeCompare(b, intl.locale)) // Sort alphabetically
               .join(', ');
 
             return formattedList;
@@ -131,6 +132,7 @@ const getLocationCountColumnSetup = (
               ?.map(village =>
                 intl.formatMessage({ id: `${field}.${village}` }),
               )
+              .sort((a, b) => a.localeCompare(b, intl.locale)) // Sort alphabetically
               .join(', ');
 
             return (
