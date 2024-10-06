@@ -127,7 +127,6 @@ const getLocationCountColumnSetup = (
           },
           renderCell: (params: GridRenderCellParams) => {
             const villageList = params.value as string[] | undefined;
-            const count = villageList?.length ?? 0;
             const formattedList = villageList
               ?.map(village =>
                 intl.formatMessage({ id: `${field}.${village}` }),
@@ -137,7 +136,16 @@ const getLocationCountColumnSetup = (
 
             return (
               <Tooltip title={formattedList} arrow>
-                <div>{count}</div>
+                <div
+                  style={{
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    textAlign: 'left',
+                  }}
+                >
+                  {formattedList}
+                </div>
               </Tooltip>
             );
           },
@@ -254,7 +262,7 @@ export const addCommuneLevelReportLocationColumns = ({
       },
     },
     // What to do in detailed commune level report?
-    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 72),
+    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 300),
     ...columns,
   ];
 
@@ -288,7 +296,7 @@ export const addProvinceLevelReportLocationColumns = ({
     getLocationColumnSetup(KoboCommonKeys.province, 200),
     getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 72),
     getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 84),
-    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 72),
+    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 300),
     ...columns,
   ];
 
