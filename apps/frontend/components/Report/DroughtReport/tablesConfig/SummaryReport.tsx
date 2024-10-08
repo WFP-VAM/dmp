@@ -8,6 +8,13 @@ const defaultColumnWidth = 8 * 14;
 
 const SummaryDroughtReportColumns: GridColDef[] = [
   getColumnSetup({
+    field: DroughtSpecific.NumVillAff,
+    disaster: DROUGHT,
+    width: defaultColumnWidth,
+    opts: { type: 'number' },
+    isSummary: true,
+  }),
+  getColumnSetup({
     field: DroughtSpecific.NumFamAff,
     disaster: DROUGHT,
     width: defaultColumnWidth,

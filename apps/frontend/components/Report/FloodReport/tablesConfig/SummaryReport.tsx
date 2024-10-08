@@ -6,6 +6,13 @@ import { getColumnSetup } from 'utils/tableFormatting';
 const defaultColumnWidth = 8 * 12;
 const SummaryFloodReportColumns: GridColDef[] = [
   getColumnSetup({
+    field: FloodSpecific.NumVillAff,
+    disaster: FLOOD,
+    width: defaultColumnWidth,
+    opts: { type: 'number' },
+    isSummary: true,
+  }),
+  getColumnSetup({
     field: FloodSpecific.NumFamAff,
     disaster: FLOOD,
     width: defaultColumnWidth,

@@ -382,6 +382,7 @@
         "14": "Other"
       },
       "summary_column": {
+        "NumVillAff": "Villages (Old)",
         "NumFamAff": "Families Affected",
         "NumPeoAff": "People Affected",
         "NumFeAff": "Women Affected",
@@ -550,6 +551,7 @@
         "sexualAbuse": "Sexual abuse occurs during water collection"
       },
       "summary_column": {
+        "NumVillAff": "Villages (Old)",
         "NumFamAff": "Families Missing Water",
         "NumPeoAff": "People Missing Water",
         "NumFe": "Women Missing Water",
@@ -669,6 +671,7 @@
         "forestFarm": "Damaged forest or plantation"
       },
       "summary_column": {
+        "NumVillAff": "Villages (Old)",
         "NumFamAff": "Families Affected",
         "NumPeoAff": "People Affected",
         "NumFeAff": "Women Affected",
