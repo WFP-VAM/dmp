@@ -8,6 +8,13 @@ const defaultColumnWidth = 8 * 12;
 
 const SummaryIncidentReportColumns: GridColDef[] = [
   getColumnSetup({
+    field: IncidentSpecific.NumVillAff,
+    disaster: INCIDENT,
+    width: defaultColumnWidth,
+    opts: { type: 'number' },
+    isSummary: true,
+  }),
+  getColumnSetup({
     field: IncidentSpecific.NumFamAff,
     disaster: INCIDENT,
     width: defaultColumnWidth,
