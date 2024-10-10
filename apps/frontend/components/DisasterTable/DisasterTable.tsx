@@ -203,8 +203,7 @@ export const DisasterTable = ({
     zIndex: 1,
   };
 
-  // TODO - Debug why the table is not printing correctly when there are more than 28 rows
-  const rowsPerPage = Math.min(28, Math.floor(20 / scaleFactor));
+  const rowsPerPage = Math.floor(28 / scaleFactor);
   const dataChunks = useMemo(() => {
     return isPrinting ? chunk(nonEmptyData, rowsPerPage) : [nonEmptyData];
   }, [isPrinting, nonEmptyData, rowsPerPage]);
@@ -283,9 +282,7 @@ export const DisasterTable = ({
                   <DataGrid
                     sx={{
                       '@media print': {
-                        transform: `scale(${scaleFactor})`,
-                        transformOrigin: 'top left',
-                        overflow: 'unset',
+                        zoom: scaleFactor,
                       },
                       '& .MuiDataGrid-row.highlight-1': {
                         background: `${colors.color1}`,
