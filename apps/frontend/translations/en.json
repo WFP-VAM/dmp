@@ -158,7 +158,7 @@
     "FLOOD": {
       "floodN": "Flood Number",
       "column": {
-        "NumVillAff": "Villages (Old)",
+        "NumVillAff": "# of Villages Affected",
         "NumFamAff": "Families",
         "NumPeoAff": "Total People",
         "NumFeAff": "Women",
@@ -382,7 +382,7 @@
         "14": "Other"
       },
       "summary_column": {
-        "NumVillAff": "Villages (Old)",
+        "NumVillAff": "# of Villages Affected",
         "NumFamAff": "Families Affected",
         "NumPeoAff": "People Affected",
         "NumFeAff": "Women Affected",
@@ -406,7 +406,7 @@
     },
     "DROUGHT": {
       "column": {
-        "NumVillAff": "Villages (Old)",
+        "NumVillAff": "# of Villages Affected",
         "NumFamAff": "Families",
         "NumPeoAff": "Total People",
         "NumMe": "Men",
@@ -551,7 +551,7 @@
         "sexualAbuse": "Sexual abuse occurs during water collection"
       },
       "summary_column": {
-        "NumVillAff": "Villages (Old)",
+        "NumVillAff": "# of Villages Affected",
         "NumFamAff": "Families Missing Water",
         "NumPeoAff": "People Missing Water",
         "NumFe": "Women Missing Water",
@@ -570,7 +570,7 @@
     },
     "INCIDENT": {
       "column": {
-        "NumVillAff": "Villages (Old)",
+        "NumVillAff": "# of Villages Affected",
         "NumPeoAff": "Total People",
         "NumFamAff": "Families",
         "NumFeAff": "Women",
@@ -671,7 +671,7 @@
         "forestFarm": "Damaged forest or plantation"
       },
       "summary_column": {
-        "NumVillAff": "Villages (Old)",
+        "NumVillAff": "# of Villages Affected",
         "NumFamAff": "Families Affected",
         "NumPeoAff": "People Affected",
         "NumFeAff": "Women Affected",
@@ -699,7 +699,7 @@
       "column": {
         "district": "District",
         "commune": "Commune",
-        "village": "Villages"
+        "village": "Villages Reported"
       }
     }
   },
