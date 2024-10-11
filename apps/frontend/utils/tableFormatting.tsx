@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { Typography } from '@mui/material';
+import { Tooltip, Typography } from '@mui/material';
 import {
   GridColDef,
   GridColumnGroup,
@@ -88,9 +88,6 @@ const getLocationColumnSetup = (
     valueFormatter: value =>
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       intl.formatMessage({ id: `${field}.${value as string}` }),
-    renderCell: (params: GridRenderCellParams) => (
-      <FormattedMessage id={`${field}.${params.value as string}`} />
-    ),
   };
 };
 
@@ -98,28 +95,64 @@ const getLocationCountColumnSetup = (
   field: string,
   disaster: DisasterType | 'COMMON',
   width = 80,
-): GridColDef => ({
-  field,
-  width: width,
-  headerAlign: 'center',
-  disableColumnMenu: true,
-  type: 'number',
-  renderHeader: (params: GridColumnHeaderParams) => (
-    <Typography variant="body2">
-      <FormattedMessage id={`table.${disaster}.column.${params.field}`} />
-    </Typography>
-  ),
-  // For villages, we need to count the number of villages in the list
-  ...(field === KoboCommonKeys.village
-    ? {
-        renderCell: (params: GridRenderCellParams) => {
-          const villageList = params.value as string[] | undefined;
+): GridColDef => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const intl = useIntl();
 
-          return villageList ? villageList.length : 0;
-        },
-      }
-    : {}),
-});
+  return {
+    field,
+    width: width,
+    headerAlign: 'center',
+    disableColumnMenu: true,
+    type: 'number',
+    renderHeader: (params: GridColumnHeaderParams) => (
+      <Typography variant="body2">
+        <FormattedMessage id={`table.${disaster}.column.${params.field}`} />
+      </Typography>
+    ),
+    // For villages, we need to count the number of villages in the list and display
+    // all villages in the tooltip
+    ...(field === KoboCommonKeys.village
+      ? {
+          valueFormatter: value => {
+            const villageList = value as string[] | undefined;
+            const formattedList = villageList
+              ?.map(village =>
+                intl.formatMessage({ id: `${field}.${village}` }),
+              )
+              .sort((a, b) => a.localeCompare(b, intl.locale)) // Sort alphabetically
+              .join(', ');
+
+            return formattedList;
+          },
+          renderCell: (params: GridRenderCellParams) => {
+            const villageList = params.value as string[] | undefined;
+            const formattedList = villageList
+              ?.map(village =>
+                intl.formatMessage({ id: `${field}.${village}` }),
+              )
+              .sort((a, b) => a.localeCompare(b, intl.locale)) // Sort alphabetically
+              .join(', ');
+
+            return (
+              <Tooltip title={formattedList} arrow>
+                <div
+                  style={{
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    textAlign: 'left',
+                  }}
+                >
+                  {formattedList}
+                </div>
+              </Tooltip>
+            );
+          },
+        }
+      : {}),
+  };
+};
 
 export const getGroupSetup = (groupId: string, disaster: DisasterType) => ({
   groupId: groupId,
@@ -229,7 +262,7 @@ export const addCommuneLevelReportLocationColumns = ({
       },
     },
     // What to do in detailed commune level report?
-    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 72),
+    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 300),
     ...columns,
   ];
 
@@ -263,7 +296,7 @@ export const addProvinceLevelReportLocationColumns = ({
     getLocationColumnSetup(KoboCommonKeys.province, 200),
     getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 72),
     getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 84),
-    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 72),
+    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 300),
     ...columns,
   ];
 
