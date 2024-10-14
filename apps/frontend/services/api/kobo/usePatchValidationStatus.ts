@@ -20,14 +20,19 @@ export const usePatchValidationStatus = (
       { arg }: { arg: ValidationStatusValue },
     ) => {
       const url = path.join(relativePath, 'validationStatus');
-      const { data: updatedValidationStatus } =
-        await apiClient.patch<ValidationStatusDto>(url, {
-          disasterType,
-          id,
-          validationStatusValue: arg,
-        });
+      try {
+        const { data: updatedValidationStatus } =
+          await apiClient.patch<ValidationStatusDto>(url, {
+            disasterType,
+            id,
+            validationStatusValue: arg,
+          });
 
-      return updatedValidationStatus;
+        return updatedValidationStatus;
+      } catch (error) {
+        console.error('Error updating validation status:', error);
+        throw error;
+      }
     },
   );
 

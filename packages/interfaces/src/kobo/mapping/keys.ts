@@ -1,9 +1,11 @@
 import { DROUGHT, FLOOD, INCIDENT } from '../constants';
+import { floodSpecificKeys } from './flood';
 
 export enum KoboCommonKeys {
+  province = 'province',
   district = 'district',
   commune = 'commune',
-  province = 'province',
+  village = 'village',
   disasterDate = 'disasterDate',
   entryName = 'entryName',
   phone = 'phone',
@@ -12,6 +14,7 @@ export enum KoboCommonKeys {
   id = 'id',
   validationStatus = 'validationStatus',
   submissionTime = 'submissionTime',
+  location = 'location',
 }
 
 export const koboKeys = {
@@ -19,6 +22,7 @@ export const koboKeys = {
     [KoboCommonKeys.district]: 'g2/District',
     [KoboCommonKeys.commune]: 'g2/Commune',
     [KoboCommonKeys.province]: 'g2/Province',
+    [KoboCommonKeys.village]: 'g2/village',
     [KoboCommonKeys.disasterDate]: 'g2/Date_Dis',
     [KoboCommonKeys.entryName]: 'g1/q_Enum',
     [KoboCommonKeys.phone]: 'g1/q_Phone',
@@ -27,11 +31,13 @@ export const koboKeys = {
     [KoboCommonKeys.id]: '_id',
     [KoboCommonKeys.validationStatus]: '_validation_status',
     [KoboCommonKeys.submissionTime]: '_submission_time',
+    floodN: floodSpecificKeys.floodN,
   },
   [DROUGHT]: {
     [KoboCommonKeys.district]: 'group_yu9nq00/District',
     [KoboCommonKeys.commune]: 'group_yu9nq00/Commune',
     [KoboCommonKeys.province]: 'group_yu9nq00/Province',
+    [KoboCommonKeys.village]: 'group_yu9nq00/Village',
     [KoboCommonKeys.disasterDate]: 'group_yu9nq00/Date_Dis',
     [KoboCommonKeys.entryName]: 'group_ve4vz14/q_Enum',
     [KoboCommonKeys.phone]: 'group_ve4vz14/q_Phone',
@@ -45,6 +51,7 @@ export const koboKeys = {
     [KoboCommonKeys.district]: 'G2/District',
     [KoboCommonKeys.commune]: 'G2/Commune',
     [KoboCommonKeys.province]: 'G2/Province',
+    [KoboCommonKeys.village]: 'G2/Village',
     [KoboCommonKeys.disasterDate]: 'G2/Date_Dis',
     [KoboCommonKeys.entryName]: 'G1/q_Enum',
     [KoboCommonKeys.phone]: 'G1/q_Phone',

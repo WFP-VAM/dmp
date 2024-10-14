@@ -1,149 +1,129 @@
-import {
-  Box,
-  IconButton,
-  Paper,
-  Skeleton,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Card, Stack, Typography, useTheme } from '@mui/material';
 import {
   DisasterDtoType,
   formatCommonFields,
   KoboCommonKeys,
 } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
-import { chain, compact, pick, range, uniq } from 'lodash';
-import Link from 'next/link';
+import { compact, groupBy, map, orderBy, pick, range, uniq } from 'lodash';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { DisasterIcon } from 'components/DisasterIcon';
 import { NUMBER_LAST_DAYS } from 'constant';
+import { useLanguageContext } from 'context';
+import { formatDate, getDateWeek } from 'utils/date';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
-const getDisastersPerDate = (forms: DisasterDtoType[] | undefined) => {
+import HomeTableRow from './HomeTableRow';
+import { DisasterLocation, DisasterPerDate } from './utils';
+
+const getDisastersPerDate = (
+  forms: DisasterDtoType[] | undefined,
+): DisasterPerDate[] => {
   if (forms === undefined || forms.length === 0) {
     return [];
   }
 
   const dateKey = KoboCommonKeys.entryDate;
-  const formattedForms = dropNotApproved(forms).map(form => {
-    return pick(formatCommonFields(form), [dateKey, KoboCommonKeys.disTyp]);
+  const formattedForms: Array<{
+    [KoboCommonKeys.entryDate]: string;
+    [KoboCommonKeys.disTyp]?: string;
+    [KoboCommonKeys.province]?: string;
+    [KoboCommonKeys.district]?: string;
+  }> = dropNotApproved(forms).map(form => {
+    return pick(formatCommonFields(form), [
+      dateKey,
+      KoboCommonKeys.disTyp,
+      KoboCommonKeys.province,
+      KoboCommonKeys.district,
+    ]) as {
+      [KoboCommonKeys.entryDate]: string;
+      [KoboCommonKeys.disTyp]?: string;
+      [KoboCommonKeys.province]?: string;
+      [KoboCommonKeys.district]?: string;
+    };
   });
 
-  // create an array of fake data points so the days without any entries are still displayed
   const lastNDates = range(NUMBER_LAST_DAYS).map(dayDiff => ({
     [dateKey]: dayjs().subtract(dayDiff, 'day').format('YYYY-MM-DD'),
     [KoboCommonKeys.disTyp]: undefined,
   }));
 
-  const disastersPerDate = chain([...formattedForms, ...lastNDates])
-    .groupBy(dateKey)
-    .map((array, keyValue) => {
-      return {
-        [dateKey]: keyValue,
-        disTyps: uniq(compact(array.map(disaster => disaster.disTyp))).sort(),
-      };
-    })
-    .orderBy(dateKey, 'desc')
-    .value();
+  const groupedData = groupBy([...formattedForms, ...lastNDates], dateKey);
+  const disastersPerDate = map(
+    groupedData,
+    (array: typeof formattedForms[0][], keyValue): DisasterPerDate => {
+      const disTypLocations = array.reduce<Record<string, DisasterLocation[]>>(
+        (acc, disaster) => {
+          const disTyp = disaster[KoboCommonKeys.disTyp];
+          if (disTyp != null && disTyp.trim() !== '') {
+            acc[disTyp] = disTyp in acc ? acc[disTyp] : [];
+            acc[disTyp].push({
+              province: disaster[KoboCommonKeys.province] ?? '',
+              district: disaster[KoboCommonKeys.district] ?? '',
+            });
+          }
 
-  return disastersPerDate;
+          return acc;
+        },
+        {},
+      );
+
+      return {
+        entryDate: keyValue,
+        disTyps: uniq(compact(array.map(disaster => disaster.disTyp))).sort(),
+        disTypLocations,
+      } as unknown as DisasterPerDate;
+    },
+    // TODO - explore why this is necessary
+  ) as unknown as DisasterPerDate[];
+
+  return orderBy(disastersPerDate, [dateKey], ['desc']);
 };
+
+interface HomeTableProps {
+  forms?: DisasterDtoType[];
+  isLoading: boolean;
+}
 
 export const HomeTable = ({
   forms,
   isLoading,
-}: {
-  forms?: DisasterDtoType[];
-  isLoading: boolean;
-}): JSX.Element => {
+}: HomeTableProps): JSX.Element => {
+  const theme = useTheme();
   const disastersPerDate = useMemo(() => getDisastersPerDate(forms), [forms]);
+  const { language } = useLanguageContext();
+
+  const firstItemDateString = disastersPerDate[0]?.entryDate as
+    | string
+    | undefined;
+  const firstItemDate =
+    firstItemDateString !== undefined
+      ? new Date(firstItemDateString)
+      : new Date();
+  const monthTranslated = firstItemDate.toLocaleString(language, {
+    month: 'long',
+  });
+  const week = getDateWeek(firstItemDate);
+  const formattedStartDate = formatDate(firstItemDate, 'MM/DD');
+
+  const lastItemDateString = disastersPerDate[NUMBER_LAST_DAYS - 1]
+    ?.entryDate as string | undefined;
+  const formattedEndDate =
+    lastItemDateString !== undefined && formatDate(lastItemDateString, 'MM/DD');
 
   return (
-    <TableContainer component={Paper}>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ minHeight: 80, backgroundColor: '#dddddd' }}
-      >
-        <Typography fontWeight="bold">
-          <FormattedMessage id="home.table_title" />
+    <Card style={{ padding: theme.spacing(3) }}>
+      <Stack gap={theme.spacing(1)}>
+        <Typography fontWeight={600} variant="subtitle2">
+          {monthTranslated} — <FormattedMessage id="week" /> {week} —{' '}
+          {formattedStartDate} - {formattedEndDate}
         </Typography>
-      </Box>
-      <Table>
-        {isLoading ? (
-          <TableBody>
-            {range(NUMBER_LAST_DAYS).map(id => {
-              return (
-                <TableRow key={id}>
-                  <TableCell colSpan={9}>
-                    <Skeleton />
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        ) : (
-          <TableBody>
-            {disastersPerDate.map(disasters => (
-              <TableRow key={disasters.entryDate}>
-                <TableCell sx={{ backgroundColor: '#f5f8ff', width: 150 }}>
-                  <Typography>
-                    {dayjs(disasters.entryDate, 'YYYY-MM-DD').format(
-                      'DD-MM-YYYY',
-                    )}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Box display="flex" flexDirection="row">
-                    {disasters.disTyps.length === 0 ? (
-                      <Typography>
-                        <FormattedMessage id="home.no_report" />
-                      </Typography>
-                    ) : (
-                      disasters.disTyps.map(disTyp => (
-                        <Box key={disTyp} mr={3}>
-                          <Tooltip
-                            title={
-                              <FormattedMessage id={`disasters.${disTyp}`} />
-                            }
-                          >
-                            <IconButton
-                              component={Link}
-                              sx={{
-                                '&:hover': {
-                                  color: '#494949',
-                                },
-                              }}
-                              href={{
-                                pathname: '/forms/search',
-                                query: {
-                                  disTyp,
-                                  startDate: disasters.entryDate,
-                                  endDate: disasters.entryDate,
-                                },
-                              }}
-                            >
-                              <DisasterIcon disTyp={disTyp} />
-                            </IconButton>
-                          </Tooltip>
-                        </Box>
-                      ))
-                    )}
-                  </Box>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        )}
-      </Table>
-    </TableContainer>
+        <HomeTableRow
+          isLoading={isLoading}
+          disastersPerDate={disastersPerDate}
+        />
+      </Stack>
+    </Card>
   );
 };

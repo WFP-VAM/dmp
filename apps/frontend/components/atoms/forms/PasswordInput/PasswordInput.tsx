@@ -16,7 +16,7 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
         type={isPasswordReveled ? 'text' : 'password'}
         ref={ref}
         className={style.paddedInput}
-        icon={
+        endIcon={
           <button
             className={style.revealPassword}
             onClick={() => {

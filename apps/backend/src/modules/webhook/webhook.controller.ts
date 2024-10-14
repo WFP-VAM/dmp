@@ -11,21 +11,21 @@ export class WebhookController {
   constructor(private readonly webhookService: WebhookService) {}
 
   @Post(FLOOD, { isPublic: true })
-  async postFloodWebhook(@Body() body: FloodDto): Promise<string> {
+  async postFloodWebhook(@Body() body: FloodDto & Record<string, string>): Promise<string> {
     const response = await this.webhookService.sendAlerts(FLOOD, body);
 
     return response;
   }
 
   @Post(DROUGHT, { isPublic: true })
-  async postDroughtWebhook(@Body() body: DroughtDto): Promise<string> {
+  async postDroughtWebhook(@Body() body: DroughtDto & Record<string, string>): Promise<string> {
     const response = await this.webhookService.sendAlerts(DROUGHT, body);
 
     return response;
   }
 
   @Post(INCIDENT, { isPublic: true })
-  async postIncidentWebhook(@Body() body: IncidentDto): Promise<string> {
+  async postIncidentWebhook(@Body() body: IncidentDto & Record<string, string>): Promise<string> {
     const response = await this.webhookService.sendAlerts(INCIDENT, body);
 
     return response;

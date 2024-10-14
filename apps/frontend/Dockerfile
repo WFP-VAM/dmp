@@ -2,7 +2,7 @@ FROM node:hydrogen-alpine3.16 AS pnpm-installed
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 ENV PNPM_HOME=/usr/local/.pnpm
 ENV PATH="$PATH:/usr/local/.pnpm"
-RUN corepack enable && corepack prepare pnpm@7.14.2 --activate
+RUN corepack enable && corepack prepare pnpm@9.4.0 --activate
 
 FROM pnpm-installed AS turbo-installed
 RUN apk add --no-cache libc6-compat

@@ -1,67 +1,94 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import { INCIDENT, IncidentSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const SocialColumns: GridColDef[] = [
-  getColumnSetup(IncidentSpecific.PagoAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.PagoDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.BuildingAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.BuildingDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.MarketAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.MarketDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.StorageAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.StorageDam, INCIDENT),
-  getColumnSetup(IncidentSpecific.CraftAff, INCIDENT),
-  getColumnSetup(IncidentSpecific.CraftDam, INCIDENT),
+  getColumnSetup({ field: IncidentSpecific.PagoAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.PagoDam, disaster: INCIDENT }),
+  getColumnSetup({
+    field: IncidentSpecific.BuildingAff,
+    disaster: INCIDENT,
+    width: 8 * 10,
+  }),
+  getColumnSetup({
+    field: IncidentSpecific.BuildingDam,
+    disaster: INCIDENT,
+    width: 8 * 10,
+  }),
+  getColumnSetup({ field: IncidentSpecific.MarketAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.MarketDam, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.StorageAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.StorageDam, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.CraftAff, disaster: INCIDENT }),
+  getColumnSetup({ field: IncidentSpecific.CraftDam, disaster: INCIDENT }),
+  getColumnSetup({
+    field: IncidentSpecific.FactoryAff,
+    disaster: INCIDENT,
+  }),
+  getColumnSetup({
+    field: IncidentSpecific.FactoryDam,
+    disaster: INCIDENT,
+  }),
 ];
 
 const SocialColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('social', INCIDENT),
+    ...getGroupSetup('pagoda', INCIDENT),
     children: [
-      { field: IncidentSpecific.NumVillAff },
-
-      {
-        ...getGroupSetup('pagoda', INCIDENT),
-        children: [
-          { field: IncidentSpecific.PagoAff },
-          { field: IncidentSpecific.PagoDam },
-        ],
-      },
-      {
-        ...getGroupSetup('admin', INCIDENT),
-        children: [
-          { field: IncidentSpecific.BuildingAff },
-          { field: IncidentSpecific.BuildingDam },
-        ],
-      },
-      {
-        ...getGroupSetup('market', INCIDENT),
-        children: [
-          { field: IncidentSpecific.MarketAff },
-          { field: IncidentSpecific.MarketDam },
-        ],
-      },
-      {
-        ...getGroupSetup('warehouse', INCIDENT),
-        children: [
-          { field: IncidentSpecific.StorageAff },
-          { field: IncidentSpecific.StorageDam },
-        ],
-      },
-      {
-        ...getGroupSetup('workshop', INCIDENT),
-        children: [
-          { field: IncidentSpecific.CraftAff },
-          { field: IncidentSpecific.CraftDam },
-        ],
-      },
+      { field: IncidentSpecific.PagoAff },
+      { field: IncidentSpecific.PagoDam },
+    ],
+  },
+  {
+    ...getGroupSetup('admin', INCIDENT),
+    children: [
+      { field: IncidentSpecific.BuildingAff },
+      { field: IncidentSpecific.BuildingDam },
+    ],
+  },
+  {
+    ...getGroupSetup('market', INCIDENT),
+    children: [
+      { field: IncidentSpecific.MarketAff },
+      { field: IncidentSpecific.MarketDam },
+    ],
+  },
+  {
+    ...getGroupSetup('warehouse', INCIDENT),
+    children: [
+      { field: IncidentSpecific.StorageAff },
+      { field: IncidentSpecific.StorageDam },
+    ],
+  },
+  {
+    ...getGroupSetup('workshop', INCIDENT),
+    children: [
+      { field: IncidentSpecific.CraftAff },
+      { field: IncidentSpecific.CraftDam },
+    ],
+  },
+  {
+    ...getGroupSetup('factory', INCIDENT),
+    children: [
+      { field: IncidentSpecific.FactoryAff },
+      { field: IncidentSpecific.FactoryDam },
     ],
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'social',
+  disaster: INCIDENT,
+  additionalChildren: [],
+};
+
 export const SocialColumnSettings = {
   columns: SocialColumns,
   columnGroup: SocialColumnGroup,
+  groupParams,
 };

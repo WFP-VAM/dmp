@@ -14,9 +14,13 @@ export const formatFormToRaw = (
     Record<KoboCommonKeys, string>,
     'id' | 'validationStatus' | 'submissionTime'
   > = {
-    province: formValues.region.province,
-    district: formValues.region.district,
-    commune: formValues.region.commune,
+    province: formValues.region.province[0],
+    district: formValues.region.district[0],
+    commune: formValues.region.commune[0],
+    // TODO - FIXME: This is just a placeholder for the village field
+    village: formValues.region.village,
+    // TODO - FIXME: This is just a placeholder for the location field
+    location: formValues.region.commune[0],
     entryName: formValues.interviewer,
     disTyp: formValues.disTyp,
     phone: formValues.phone,

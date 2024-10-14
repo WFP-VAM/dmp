@@ -126,9 +126,9 @@ describe('KoboController', () => {
       const disTyps = ['1'];
       const startDate = '2023-02-02';
       const endDate = '2023-02-03';
-      const province = '10';
-      const district = '1010';
-      const commune = '10101010';
+      const province = ['10'];
+      const district = ['1010'];
+      const commune = ['10101010'];
 
       const getFormsSpy = jest.spyOn(koboService, 'getForms').mockImplementation(getFormsMock);
 
@@ -157,9 +157,9 @@ describe('KoboController', () => {
       const disTyps = ['3', '4'];
       const startDate = '2023-02-02';
       const endDate = '2023-02-03';
-      const province = '10';
-      const district = '1010';
-      const commune = '10101010';
+      const province = ['10'];
+      const district = ['1010'];
+      const commune = ['10101010'];
 
       const getFormsSpy = jest.spyOn(koboService, 'getForms').mockImplementation(getFormsMock);
 

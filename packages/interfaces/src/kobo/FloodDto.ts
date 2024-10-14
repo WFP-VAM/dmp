@@ -26,6 +26,7 @@ export class FloodDto {
   @IsString() @Length(2) readonly 'g2/Province'!: string;
   @IsString() @Length(4) readonly 'g2/District'!: string;
   @IsString() @Length(6) readonly 'g2/Commune'!: string;
+  @IsString() readonly 'g2/village'?: string;
   @IsDateString() readonly 'g2/Date_Dis'!: string;
   @IsNumberString() readonly 'g2/DisTyp'!: string;
   @IsOptional() @IsNumberString() readonly 'g2/flood_n'?: string;
@@ -85,6 +86,9 @@ export class FloodDto {
   @IsOptional() @IsNumberString() readonly 'g10/g10_8/NumCraftDam'?: string;
   @IsOptional() @IsNumberString() readonly 'g11/g11_1/FarmAff'?: string;
   @IsOptional() @IsNumberString() readonly 'g11/g11_1/FarmDam'?: string;
+  @IsOptional() @IsNumberString() readonly 'g11/g11_1/ToNamAgriAff'?: string;
+  @IsOptional() @IsNumberString() readonly 'g11/g11_1/NumFarmCroAff'?: string;
+  @IsOptional() @IsNumberString() readonly 'g11/g11_2/NumFarmPaddyAff'?: string;
   @IsOptional() @IsNumberString() readonly 'g11/g11_2/SamNabAff'?: string;
   @IsOptional() @IsNumberString() readonly 'g11/g11_2/SamNabDam'?: string;
   @IsOptional() @IsNumberString() readonly 'g11/g11_3/PaddyAff'?: string;
