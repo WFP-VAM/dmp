@@ -19,6 +19,12 @@ import { usePrintContext } from 'components/PrintWrapper/PrintWrapper';
 import { colors } from 'theme/muiTheme';
 import CustomToolMenu from 'utils/CustomToolMenu';
 
+import {
+  CustomAggregationFooter,
+  CustomAggregationFooterProps,
+} from './CustomAggregationFooter';
+import ScrollArrows from './ScrollArrows';
+
 const isLastCovered = (group: GridColumnNode[], field: string): boolean => {
   for (let index = 0; index < group.length; index++) {
     const element = group[index];
@@ -36,7 +42,10 @@ const isLastCovered = (group: GridColumnNode[], field: string): boolean => {
   return false;
 };
 
-import ScrollArrows from './ScrollArrows';
+declare module '@mui/x-data-grid' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface FooterPropsOverrides extends CustomAggregationFooterProps {}
+}
 
 export type DisasterTableVariant = 'open' | 'bordered';
 
@@ -360,7 +369,6 @@ export const DisasterTable = ({
                     showColumnVerticalBorder
                     rows={chunkOfRows}
                     columns={updatedColumns}
-                    hideFooter
                     columnGroupingModel={updatedColumnGroup}
                     isCellEditable={() => isEditable}
                     processRowUpdate={(newRow: GridRowModel) => {
@@ -378,6 +386,15 @@ export const DisasterTable = ({
                     initialState={{
                       columns: {
                         columnVisibilityModel,
+                      },
+                    }}
+                    slots={{
+                      footer: CustomAggregationFooter,
+                    }}
+                    slotProps={{
+                      footer: {
+                        data,
+                        columns,
                       },
                     }}
                   />
