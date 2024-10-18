@@ -18,11 +18,8 @@ import React, { useMemo } from 'react';
 import { usePrintContext } from 'components/PrintWrapper/PrintWrapper';
 import { colors } from 'theme/muiTheme';
 import CustomToolMenu from 'utils/CustomToolMenu';
+import { addAggregatedRow } from 'utils/tableFormatting';
 
-import {
-  CustomAggregationFooter,
-  CustomAggregationFooterProps,
-} from './CustomAggregationFooter';
 import ScrollArrows from './ScrollArrows';
 
 const isLastCovered = (group: GridColumnNode[], field: string): boolean => {
@@ -42,17 +39,12 @@ const isLastCovered = (group: GridColumnNode[], field: string): boolean => {
   return false;
 };
 
-declare module '@mui/x-data-grid' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface FooterPropsOverrides extends CustomAggregationFooterProps {}
-}
-
 export type DisasterTableVariant = 'open' | 'bordered';
 
 export interface DisasterTableProps {
   columns: GridColDef[];
   columnGroup: GridColumnGroupingModel;
-  data: Record<string, string | number | undefined>[];
+  data: Record<string, string | string[] | number | undefined>[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange?: (event: any) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -198,6 +190,12 @@ export const DisasterTable = ({
       ]
     : _updatedColumns;
 
+  const {
+    data: extendedData,
+    columns: extendedColumns,
+    getRowId: extendedGetRowId,
+    getRowClassName: extendedGetRowClassName,
+  } = addAggregatedRow(nonEmptyData, updatedColumns, getRowId, getRowClassName);
   const totalWidth = sum(updatedColumns.map(x => x.width ?? 0)) + 2; // 2px for borders on the sides
   const maxPrintWidth = 1600; // Maximum print width in pixels
   const scaleFactor = Math.min(1, maxPrintWidth / totalWidth);
@@ -214,8 +212,8 @@ export const DisasterTable = ({
 
   const rowsPerPage = Math.floor(28 / scaleFactor);
   const dataChunks = useMemo(() => {
-    return isPrinting ? chunk(nonEmptyData, rowsPerPage) : [nonEmptyData];
-  }, [isPrinting, nonEmptyData, rowsPerPage]);
+    return isPrinting ? chunk(extendedData, rowsPerPage) : [extendedData];
+  }, [isPrinting, extendedData, rowsPerPage]);
 
   return (
     <>
@@ -299,6 +297,9 @@ export const DisasterTable = ({
                       '& .MuiDataGrid-row.highlight-2': {
                         background: `#D0EBF9`,
                       },
+                      '& .MuiDataGrid-row.total-row': {
+                        fontWeight: 700,
+                      },
                       '& .MuiDataGrid-cell.highlighted-cell': {
                         background: '#D0EBF9',
                       },
@@ -367,8 +368,9 @@ export const DisasterTable = ({
                     disableRowSelectionOnClick={!isEditable}
                     showCellVerticalBorder
                     showColumnVerticalBorder
+                    hideFooter
                     rows={chunkOfRows}
-                    columns={updatedColumns}
+                    columns={extendedColumns}
                     columnGroupingModel={updatedColumnGroup}
                     isCellEditable={() => isEditable}
                     processRowUpdate={(newRow: GridRowModel) => {
@@ -376,8 +378,8 @@ export const DisasterTable = ({
 
                       return newRow;
                     }}
-                    getRowId={getRowId}
-                    getRowClassName={getRowClassName}
+                    getRowId={extendedGetRowId}
+                    getRowClassName={extendedGetRowClassName}
                     autoHeight
                     columnHeaderHeight={
                       columnHeaderHeight === 'large' ? 100 : 72
@@ -386,15 +388,6 @@ export const DisasterTable = ({
                     initialState={{
                       columns: {
                         columnVisibilityModel,
-                      },
-                    }}
-                    slots={{
-                      footer: CustomAggregationFooter,
-                    }}
-                    slotProps={{
-                      footer: {
-                        data,
-                        columns,
                       },
                     }}
                   />

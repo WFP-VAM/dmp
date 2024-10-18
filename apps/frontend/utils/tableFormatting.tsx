@@ -6,7 +6,11 @@ import {
   GridColumnGroupingModel,
   GridColumnHeaderParams,
   GridColumnNode,
+  GridComparatorFn,
   GridRenderCellParams,
+  GridRowClassNameParams,
+  GridSortDirection,
+  gridStringOrNumberComparator,
 } from '@mui/x-data-grid';
 import { DisasterType, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import React from 'react';
@@ -85,7 +89,7 @@ const getLocationColumnSetup = (
         <FormattedMessage id={`forms_table.headers.${params.field}`} />
       </Typography>
     ),
-    valueFormatter: value =>
+    valueGetter: value =>
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       intl.formatMessage({ id: `${field}.${value as string}` }),
   };
@@ -343,3 +347,84 @@ export const wrapGroupAsTitle = ({
     },
   ];
 };
+
+export const TOTAL_ROW_ID = 'total-row';
+
+/**
+ * Add an aggregated row with the sum of the values.
+ * It configures the table to keep the total row on top & highlight it
+ * Pass the returned properties to the DataGrid component
+ */
+export const addAggregatedRow = <
+  R extends Record<string, unknown> = Record<
+    string,
+    string | number | undefined
+  >,
+>(
+  data: R[],
+  columns: GridColDef[],
+  getRowId?: (row: R) => string,
+  getRowClassName?: (params: GridRowClassNameParams<R>) => string,
+) => {
+  const aggregatedRow = data.reduce<Record<string, string | number | string[]>>(
+    (acc, row) => {
+      columns.forEach(({ type, field }) => {
+        if (field === KoboCommonKeys.village) {
+          acc[field] = ((acc[field] as string[] | undefined) ?? []).concat(
+            (row[field] as string | undefined) ?? [],
+          );
+        } else if (type === 'number') {
+          acc[field] =
+            ((acc[field] as number | undefined) ?? 0) + Number(row[field] ?? 0);
+        }
+      });
+
+      return acc;
+    },
+    { id: TOTAL_ROW_ID },
+  );
+
+  // Update column add custom comparator to keep total on top & override first column cell
+  const updatedColumns = columns.map((col, i) => ({
+    ...col,
+    getSortComparator: getTotalRowComparatorFactory(col.sortComparator),
+    ...(i === 0 && {
+      renderCell: (params: GridRenderCellParams<R>) =>
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        params.id === TOTAL_ROW_ID
+          ? 'Total'
+          : col.renderCell?.(params) ?? params.value,
+    }),
+  }));
+
+  const updatedGetRowId = (row: R) =>
+    row.id === TOTAL_ROW_ID ? TOTAL_ROW_ID : getRowId?.(row) ?? '';
+  const updatedGetRowClassName = (params: GridRowClassNameParams<R>) =>
+    params.id === TOTAL_ROW_ID ? 'total-row' : getRowClassName?.(params) ?? '';
+
+  return {
+    data: [aggregatedRow, ...data],
+    columns: updatedColumns,
+    getRowId: updatedGetRowId,
+    getRowClassName: updatedGetRowClassName,
+  };
+};
+
+const getTotalRowComparatorFactory =
+  (customComparator?: GridComparatorFn) =>
+  (sortDirection: GridSortDirection): GridComparatorFn =>
+  (v1, v2, param1, param2) => {
+    const modifier = sortDirection === 'desc' ? -1 : 1;
+    if (param1.id === TOTAL_ROW_ID) {
+      return -1;
+    }
+    if (param2.id === TOTAL_ROW_ID) {
+      return 1;
+    }
+
+    if (customComparator) {
+      return modifier * customComparator(v1, v2, param1, param2);
+    }
+
+    return modifier * gridStringOrNumberComparator(v1, v2, param1, param2);
+  };
