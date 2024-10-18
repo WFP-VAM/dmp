@@ -700,7 +700,8 @@
         "district": "District",
         "commune": "Commune",
         "village": "Villages Reported"
-      }
+      },
+      "total": "Total"
     }
   },
   "province": {

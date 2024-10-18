@@ -355,7 +355,7 @@ export const TOTAL_ROW_ID = 'total-row';
  * It configures the table to keep the total row on top & highlight it
  * Pass the returned properties to the DataGrid component
  */
-export const addAggregatedRow = <
+export const useAggregatedRow = <
   R extends Record<string, unknown> = Record<
     string,
     string | number | undefined
@@ -366,6 +366,8 @@ export const addAggregatedRow = <
   getRowId?: (row: R) => string,
   getRowClassName?: (params: GridRowClassNameParams<R>) => string,
 ) => {
+  const intl = useIntl();
+
   const aggregatedRow = data.reduce<Record<string, string | number | string[]>>(
     (acc, row) => {
       columns.forEach(({ type, field }) => {
@@ -392,7 +394,7 @@ export const addAggregatedRow = <
       renderCell: (params: GridRenderCellParams<R>) =>
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         params.id === TOTAL_ROW_ID
-          ? 'Total'
+          ? intl.formatMessage({ id: 'table.COMMON.total' })
           : col.renderCell?.(params) ?? params.value,
     }),
   }));

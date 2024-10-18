@@ -18,7 +18,7 @@ import React, { useMemo } from 'react';
 import { usePrintContext } from 'components/PrintWrapper/PrintWrapper';
 import { colors } from 'theme/muiTheme';
 import CustomToolMenu from 'utils/CustomToolMenu';
-import { addAggregatedRow } from 'utils/tableFormatting';
+import { useAggregatedRow } from 'utils/tableFormatting';
 
 import ScrollArrows from './ScrollArrows';
 
@@ -195,7 +195,8 @@ export const DisasterTable = ({
     columns: extendedColumns,
     getRowId: extendedGetRowId,
     getRowClassName: extendedGetRowClassName,
-  } = addAggregatedRow(nonEmptyData, updatedColumns, getRowId, getRowClassName);
+  } = useAggregatedRow(nonEmptyData, updatedColumns, getRowId, getRowClassName);
+
   const totalWidth = sum(updatedColumns.map(x => x.width ?? 0)) + 2; // 2px for borders on the sides
   const maxPrintWidth = 1600; // Maximum print width in pixels
   const scaleFactor = Math.min(1, maxPrintWidth / totalWidth);
