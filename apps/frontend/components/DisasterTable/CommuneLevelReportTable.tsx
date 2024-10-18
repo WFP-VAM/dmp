@@ -74,7 +74,7 @@ export const CommuneLevelReportTable = ({
       const [head, ...rest] = arr;
       const acc = { ...head[0], district: undefined } as Record<
         string,
-        string | number | undefined
+        string | string[] | number | undefined
       >;
       const keys = Object.keys(acc);
       rest.forEach(x => {
