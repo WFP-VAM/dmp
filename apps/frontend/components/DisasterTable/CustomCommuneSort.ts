@@ -20,7 +20,7 @@ export interface ExtendedGridSortCellParams extends GridSortCellParams {
 }
 
 export const findParentData = (
-  data: Record<string, string | number | undefined>[],
+  data: Record<string, string | string[] | number | undefined>[],
   row: ExtendedGridSortCellParams,
 ): {
   provinceData: number | undefined;
@@ -47,7 +47,7 @@ const isNumber = (
   typeof value === 'number' || value === undefined;
 
 export const createCustomComparator =
-  (summedData: Record<string, string | number | undefined>[]) =>
+  (summedData: Record<string, string | string[] | number | undefined>[]) =>
   (
     v1: number | undefined,
     v2: number | undefined,
