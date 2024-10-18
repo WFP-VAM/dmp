@@ -127,7 +127,7 @@ const getLocationCountColumnSetup = (
               .sort((a, b) => a.localeCompare(b, intl.locale)) // Sort alphabetically
               .join(', ');
 
-            return formattedList;
+            return formattedList ?? '';
           },
           renderCell: (params: GridRenderCellParams) => {
             const villageList = params.value as string[] | undefined;

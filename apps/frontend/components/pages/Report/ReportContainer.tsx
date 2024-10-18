@@ -1,4 +1,3 @@
-import DownloadIcon from '@mui/icons-material/Download';
 import PrintIcon from '@mui/icons-material/Print';
 import { IconButton, Skeleton, Stack, useTheme } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
@@ -98,18 +97,6 @@ export const ReportContainer = () => {
           }
         />
         <Stack direction="row" spacing={1}>
-          <IconButton
-            onClick={handlePrint}
-            style={{
-              border: `1px solid ${colors.color3}`,
-              borderRadius: '4px',
-              aspectRatio: 1,
-              height: '2.5rem',
-              color: colors.color3,
-            }}
-          >
-            <DownloadIcon />
-          </IconButton>
           <IconButton
             onClick={handlePrint}
             style={{
