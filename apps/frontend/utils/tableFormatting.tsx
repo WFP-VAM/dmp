@@ -385,7 +385,11 @@ export const useAggregatedRow = <
     { id: TOTAL_ROW_ID },
   );
 
-  // Update column add custom comparator to keep total on top & override first column cell
+  aggregatedRow[KoboCommonKeys.village] = Array.from(
+    new Set(aggregatedRow[KoboCommonKeys.village] as string[]),
+  );
+
+  // Update column add custofromm comparator to keep total on top & override first column cell
   const updatedColumns = columns.map((col, i) => ({
     ...col,
     getSortComparator: getTotalRowComparatorFactory(col.sortComparator),
