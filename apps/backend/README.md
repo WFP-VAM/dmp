@@ -74,20 +74,7 @@ pnpm migration:run
 
 ## Telegram notifications
 
-To setup the Telegram notifications when a new form is available:
-
-Check first that the telegram secrets `/wfp/dmp/telegram/telegramNcdmChatId`, `/wfp/dmp/telegram/telegramPcdmChatId` and `/wfp/dmp/telegram/telegramBotToken` have been setup in the AWS Secret Manager.
-
-- In Kobo, for each form:
-  - Go to `SETTINGS`
-  - Click on `REST Services` and then on `REGISTER A NEW SERVICE`
-  - Add:
-    - A name
-    - An endpoint URL: `<Environment backend URL>/webhook/<FLOOD or DROUGHT or INCIDENT>`
-    - A custom http Headers `authorization` : `Bearer <dmpWebhookToken from the AWS SecretManager>`
-  - Click on `CREATE`
-
-# Create a bot
+### Create a Telegram bot
 
 - To create a bot follow this [tutorial](https://core.telegram.org/bots/tutorial).
   Keep in a safe place its associated token.
@@ -104,3 +91,21 @@ curl https://api.telegram.org/bot<BOT_TOKEN>/getUpdates
 If you cannot see the chat ids, remove the bot from the channels and add it again in the chats and run the command again
 
 You can now fill out `/wfp/dmp/telegram/telegramNcdmChatId`, `/wfp/dmp/telegram/telegramPcdmChatId` and `/wfp/dmp/telegram/telegramBotToken` in the AWS Secret Manager.
+
+### Kobo Webhook settings
+
+To setup the Telegram notifications when a new form is available:
+
+Check first that the telegram secrets `/wfp/dmp/telegram/telegramNcdmChatId`, `/wfp/dmp/telegram/telegramPcdmChatId` and `/wfp/dmp/telegram/telegramBotToken` have been setup in the AWS Secret Manager.
+
+- In Kobo, for each form:
+  - Go to `SETTINGS`
+  - Click on `REST Services` and then on `REGISTER A NEW SERVICE`
+  - Add:
+    - A name
+    - An endpoint URL: `<Environment backend URL>/webhook/<FLOOD or DROUGHT or INCIDENT>`
+    - A custom http Headers `authorization` : `Bearer <dmpWebhookToken from the AWS SecretManager>`
+  - Click on `CREATE`
+
+![](images/kobo_rest_services.png)
+![](images/kobo_rest_services_webhook.png)

@@ -1,4 +1,4 @@
-import { chain, omit, orderBy } from 'lodash';
+import { groupBy, map, omit, orderBy } from 'lodash';
 
 // Regex to check that a date as the following format: YYYY-MM-DD
 const DATE_PATTERN = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
@@ -26,11 +26,10 @@ export const filterNFlood = (
     } as Record<string, string | undefined>;
   });
 
-  const filteredData: Record<string, string | undefined>[] = chain(
-    dataWithGroupKey,
-  )
-    .groupBy(tmpNFloodKey)
-    .map(array => {
+  const groupedData = groupBy(dataWithGroupKey, tmpNFloodKey);
+  const filteredData: Record<string, string | undefined>[] = map(
+    groupedData,
+    array => {
       const sortedForms = orderBy(
         array,
         [disasterDateKey, 'submissionTime'],
@@ -38,8 +37,8 @@ export const filterNFlood = (
       );
 
       return omit(sortedForms[0], tmpNFloodKey);
-    })
-    .value();
+    },
+  );
 
   return filteredData;
 };

@@ -1,8 +1,9 @@
 #!/bin/sh
 # gen __ENV.js for runtime env var import on client side
 set -e
-scriptname="public/__ENV.js"
 sourcename="$1"
+script_folder="${2:-out}"
+scriptname="$script_folder/__ENV.js"
 
 if [ -z "$sourcename" ]; then
   echo "No environement supplied"

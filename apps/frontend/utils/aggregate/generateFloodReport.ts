@@ -3,8 +3,8 @@ import { omit } from 'lodash';
 
 import { aggregate } from './aggregate';
 import {
-  briefReportCountKeys,
-  detailedReportFirstKeys,
+  communeLeveldReportFirstKeys,
+  provinceLevelReportCountKeys,
 } from './commonReportAggregateKeys';
 import { filterNFlood } from './filterNFlood';
 
@@ -19,8 +19,9 @@ const sumKeys = Object.values(
 
 const countCategoriesKeys = [FloodSpecific.RicePrice];
 const countMultipleChoicesKeys = [FloodSpecific.threat];
+const setAggKeys = [KoboCommonKeys.village];
 
-export const generateFloodDetailedReport = (
+export const generateFloodCommuneLevelReport = (
   data: Record<string, string | undefined>[],
 ) => {
   const filteredData = filterNFlood(
@@ -33,14 +34,15 @@ export const generateFloodDetailedReport = (
   return aggregate({
     data: filteredData,
     groupKey: KoboCommonKeys.commune,
-    firstKeys: detailedReportFirstKeys,
+    firstKeys: communeLeveldReportFirstKeys,
     sumKeys,
     countCategoriesKeys,
     countMultipleChoicesKeys,
+    setAggKeys,
   });
 };
 
-export const generateFloodBriefReport = (
+export const generateFloodProvinceLevelReport = (
   data: Record<string, string | undefined>[],
 ) => {
   const filteredData = filterNFlood(
@@ -54,8 +56,9 @@ export const generateFloodBriefReport = (
     data: filteredData,
     groupKey: KoboCommonKeys.province,
     sumKeys,
-    countKeys: briefReportCountKeys,
+    countKeys: provinceLevelReportCountKeys,
     countCategoriesKeys,
     countMultipleChoicesKeys,
+    setAggKeys,
   });
 };

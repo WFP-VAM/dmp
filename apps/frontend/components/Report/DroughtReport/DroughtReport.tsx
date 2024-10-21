@@ -1,42 +1,42 @@
 import { DroughtDto } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
-import { BriefReportTable } from 'components/DisasterTable/BriefReportTable';
-import { DetailedReportTable } from 'components/DisasterTable/DetailedReportTable';
+import { CommuneLevelReportTable } from 'components/DisasterTable/CommuneLevelReportTable';
+import { ProvinceLevelReportTable } from 'components/DisasterTable/ProvinceLevelReportTable';
 import {
-  generateDroughtBriefReport,
-  generateDroughtDetailedReport,
+  generateDroughtCommuneLevelReport,
+  generateDroughtProvinceLevelReport,
 } from 'utils/aggregate/generateDroughtReport';
 import { formatDroughtFields } from 'utils/formatRawToForm';
 
-import { BriefDroughtReport } from './BriefDroughtReport';
-import { DetailedDroughtReport } from './DetailedDroughtReport';
+import { CommuneLevelDroughtReport } from './CommuneLevelDroughtReport';
+import { ProvinceLevelDroughtReport } from './ProvinceLevelDroughtReport';
 import { SummaryDroughtReportColumnSettings } from './tablesConfig/SummaryReport';
 
 export const DroughtReport = ({
   forms,
-  isDetailedReport,
+  isCommuneLevelReport,
   isAllColumnReport,
 }: {
   forms: DroughtDto[];
-  isDetailedReport: boolean;
+  isCommuneLevelReport: boolean;
   isAllColumnReport: boolean;
 }) => {
   const report = useMemo(() => {
     const formattedForms = forms.map(form => formatDroughtFields(form));
 
-    return isDetailedReport
-      ? generateDroughtDetailedReport(formattedForms)
-      : generateDroughtBriefReport(formattedForms);
-  }, [forms, isDetailedReport]);
+    return isCommuneLevelReport
+      ? generateDroughtCommuneLevelReport(formattedForms)
+      : generateDroughtProvinceLevelReport(formattedForms);
+  }, [forms, isCommuneLevelReport]);
 
   if (isAllColumnReport) {
     return (
       <>
-        {isDetailedReport ? (
-          <DetailedDroughtReport report={report} />
+        {isCommuneLevelReport ? (
+          <CommuneLevelDroughtReport report={report} />
         ) : (
-          <BriefDroughtReport report={report} />
+          <ProvinceLevelDroughtReport report={report} />
         )}
       </>
     );
@@ -44,19 +44,27 @@ export const DroughtReport = ({
 
   return (
     <>
-      {isDetailedReport ? (
-        <DetailedReportTable
-          columns={SummaryDroughtReportColumnSettings.columns}
-          columnGroup={SummaryDroughtReportColumnSettings.columnGroup}
-          data={report}
-          rotateHeader={true}
+      {isCommuneLevelReport ? (
+        <CommuneLevelReportTable
+          locationParams={{
+            columns: SummaryDroughtReportColumnSettings.columns,
+            columnGroup: SummaryDroughtReportColumnSettings.columnGroup,
+          }}
+          disasterTableParams={{
+            data: report,
+            variant: 'bordered',
+          }}
         />
       ) : (
-        <BriefReportTable
-          columns={SummaryDroughtReportColumnSettings.columns}
-          columnGroup={SummaryDroughtReportColumnSettings.columnGroup}
-          data={report}
-          rotateHeader={true}
+        <ProvinceLevelReportTable
+          locationParams={{
+            columns: SummaryDroughtReportColumnSettings.columns,
+            columnGroup: SummaryDroughtReportColumnSettings.columnGroup,
+          }}
+          disasterTableParams={{
+            data: report,
+            variant: 'bordered',
+          }}
         />
       )}
     </>

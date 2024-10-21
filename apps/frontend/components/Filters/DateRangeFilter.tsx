@@ -1,12 +1,13 @@
-import { Box } from '@mui/material';
+import { CalendarMonth } from '@mui/icons-material';
+import { InputAdornment, Stack, useTheme } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
-import React from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 
 export interface DateRange {
-  startDate: Dayjs;
-  endDate: Dayjs;
+  startDate?: Dayjs;
+  endDate?: Dayjs;
 }
 
 interface IProps {
@@ -16,17 +17,28 @@ interface IProps {
 
 export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
   const intl = useIntl();
+  const theme = useTheme();
+  const [startOpen, setStartOpen] = useState(false);
+  const [endOpen, setEndOpen] = useState(false);
 
   return (
-    <Box display="flex" justifyContent="left">
+    <Stack direction="row" gap={theme.spacing(1)}>
       <DatePicker
-        label={intl.formatMessage({
-          id: 'validation_search_params.start_date',
-        })}
+        sx={{
+          width: 140,
+          backgroundColor: 'white',
+        }}
+        label={
+          value.startDate
+            ? undefined
+            : intl.formatMessage({
+                id: 'validation_search_params.start_date',
+              })
+        }
         maxDate={dayjs(new Date())}
         value={value.startDate}
         onChange={newStartValue => {
-          if ((newStartValue as Dayjs) > value.endDate) {
+          if (value.endDate && (newStartValue as Dayjs) > value.endDate) {
             onChange({
               ...value,
               startDate: newStartValue as Dayjs,
@@ -36,17 +48,48 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
             onChange({ ...value, startDate: newStartValue as Dayjs });
           }
         }}
-        sx={{ mr: 3 }}
+        open={startOpen}
+        onOpen={() => setStartOpen(true)}
+        onClose={() => setStartOpen(false)}
+        slotProps={{
+          inputAdornment: {
+            sx: {
+              display: 'none',
+            },
+          },
+          textField: {
+            InputProps: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CalendarMonth />
+                </InputAdornment>
+              ),
+              onClick: () => setStartOpen(true), // Open calendar on click
+              sx: {
+                cursor: 'pointer',
+                height: '2.5rem',
+              },
+            },
+          },
+        }}
       />
 
       <DatePicker
-        label={intl.formatMessage({
-          id: 'validation_search_params.end_date',
-        })}
+        sx={{
+          width: 140,
+          backgroundColor: 'white',
+        }}
+        label={
+          value.endDate
+            ? undefined
+            : intl.formatMessage({
+                id: 'validation_search_params.end_date',
+              })
+        }
         maxDate={dayjs(new Date())}
         value={value.endDate}
         onChange={newEndValue => {
-          if ((newEndValue as Dayjs) < value.startDate) {
+          if (value.startDate && (newEndValue as Dayjs) < value.startDate) {
             onChange({
               ...value,
               startDate: newEndValue as Dayjs,
@@ -56,7 +99,31 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
             onChange({ ...value, endDate: newEndValue as Dayjs });
           }
         }}
+        open={endOpen}
+        onOpen={() => setEndOpen(true)}
+        onClose={() => setEndOpen(false)}
+        slotProps={{
+          inputAdornment: {
+            sx: {
+              display: 'none',
+            },
+          },
+          textField: {
+            InputProps: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CalendarMonth />
+                </InputAdornment>
+              ),
+              onClick: () => setEndOpen(true), // Open calendar on click
+              sx: {
+                cursor: 'pointer',
+                height: '2.5rem',
+              },
+            },
+          },
+        }}
       />
-    </Box>
+    </Stack>
   );
 };

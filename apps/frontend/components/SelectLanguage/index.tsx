@@ -1,14 +1,17 @@
-import LanguageIcon from '@mui/icons-material/Language';
+import { faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   FormControl,
   MenuItem,
   Select,
   SelectChangeEvent,
+  Typography,
 } from '@mui/material';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { useLanguageContext } from 'context';
+import { colors } from 'theme/muiTheme';
 
 const SelectLanguage = (): JSX.Element => {
   const { language, setLanguage } = useLanguageContext();
@@ -18,22 +21,38 @@ const SelectLanguage = (): JSX.Element => {
   };
 
   return (
-    <FormControl sx={{ padding: 4 }}>
+    <FormControl sx={{ padding: 0 }}>
       <Select
+        disableUnderline
+        variant="standard"
         value={language}
         onChange={handleLanguageChange}
-        startAdornment={<LanguageIcon sx={{ marginRight: 1 }} />}
+        startAdornment={
+          <FontAwesomeIcon
+            icon={faGlobe}
+            style={{ marginRight: '-1rem', color: colors.color3 }}
+          />
+        }
+        renderValue={v => <Typography>{v.toUpperCase()}</Typography>}
+        IconComponent={() => null}
+        inputProps={{
+          sx: { padding: '0 !important' },
+        }}
+        style={{
+          width: '3rem',
+          textAlign: 'right',
+        }}
       >
         <MenuItem value="en">
           <FormattedMessage
             id="navigation.language.english"
-            defaultMessage="English"
+            defaultMessage="EN"
           />
         </MenuItem>
         <MenuItem value="km">
           <FormattedMessage
             id="navigation.language.khmer"
-            defaultMessage="ភាសាខ្មែរ"
+            defaultMessage="KM"
           />
         </MenuItem>
       </Select>

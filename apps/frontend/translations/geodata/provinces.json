@@ -1,0 +1,713 @@
+[
+  {
+    "id": "01",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "បន្ទាយមានជ័យ",
+    "name_en": "Banteay Meanchey",
+    "name_latin": "Banteay Meanchey",
+    "name_ungegn": "Bântéay Méanchoăy",
+    "geodata": {
+      "lat": "13.7989147",
+      "long": "102.8862666",
+      "bounding_box": ["13.3579351", "14.2502283", "102.3338282", "103.4427283"]
+    },
+    "iso3166_2": "KH-1",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Banteay_Meanchey_province"
+    },
+    "full_name_km": "ខេត្តបន្ទាយមានជ័យ",
+    "full_name_en": "Banteay Meanchey Province",
+    "full_name_latin": "Khaet Banteay Meanchey",
+    "full_name_ungegn": "Khétt Bântéay Méanchoăy",
+    "address_km": "ខេត្តបន្ទាយមានជ័យ",
+    "address_latin": "Khaet Banteay Meanchey",
+    "address_en": "Banteay Meanchey Province"
+  },
+  {
+    "id": "02",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "បាត់ដំបង",
+    "name_en": "Battambang",
+    "name_latin": "Battambang",
+    "name_ungegn": "Bătdâmbâng",
+    "geodata": {
+      "lat": "12.9256791",
+      "long": "103.23171364274523",
+      "bounding_box": ["12.3711193", "13.4793632", "102.3450807", "103.9011713"]
+    },
+    "iso3166_2": "KH-2",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Battambang_province"
+    },
+    "full_name_km": "ខេត្តបាត់ដំបង",
+    "full_name_en": "Battambang Province",
+    "full_name_latin": "Khaet Battambang",
+    "full_name_ungegn": "Khétt Bătdâmbâng",
+    "address_km": "ខេត្តបាត់ដំបង",
+    "address_latin": "Khaet Battambang",
+    "address_en": "Battambang Province"
+  },
+  {
+    "id": "03",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "កំពង់ចាម",
+    "name_en": "Kampong Cham",
+    "name_latin": "Kampong Cham",
+    "name_ungegn": "Kâmpóng Cham",
+    "geodata": {
+      "lat": "12.1174857",
+      "long": "105.20800220742942",
+      "bounding_box": ["11.7342165", "12.5014623", "104.8198072", "105.7759428"]
+    },
+    "iso3166_2": "KH-3",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Kampong_Cham_province"
+    },
+    "full_name_km": "ខេត្តកំពង់ចាម",
+    "full_name_en": "Kampong Cham Province",
+    "full_name_latin": "Khaet Kampong Cham",
+    "full_name_ungegn": "Khétt Kâmpóng Cham",
+    "address_km": "ខេត្តកំពង់ចាម",
+    "address_latin": "Khaet Kampong Cham",
+    "address_en": "Kampong Cham Province"
+  },
+  {
+    "id": "04",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "កំពង់ឆ្នាំង",
+    "name_en": "Kampong Chhnang",
+    "name_latin": "Kampong Chhnang",
+    "name_ungegn": "Kâmpóng Chhnăng",
+    "geodata": {
+      "lat": "12.1382025",
+      "long": "104.3354098",
+      "bounding_box": ["11.7344035", "12.6074435", "104.1710946", "104.9019904"]
+    },
+    "iso3166_2": "KH-4",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Kampong_Chhnang_province"
+    },
+    "full_name_km": "ខេត្តកំពង់ឆ្នាំង",
+    "full_name_en": "Kampong Chhnang Province",
+    "full_name_latin": "Khaet Kampong Chhnang",
+    "full_name_ungegn": "Khétt Kâmpóng Chhnăng",
+    "address_km": "ខេត្តកំពង់ឆ្នាំង",
+    "address_latin": "Khaet Kampong Chhnang",
+    "address_en": "Kampong Chhnang Province"
+  },
+  {
+    "id": "05",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "កំពង់ស្ពឺ",
+    "name_en": "Kampong Speu",
+    "name_latin": "Kampong Speu",
+    "name_ungegn": "Kâmpóng Spœ",
+    "geodata": {
+      "lat": "11.57753675",
+      "long": "104.27140233242656",
+      "bounding_box": ["11.0779221", "12.0768453", "103.7729787", "104.7925761"]
+    },
+    "iso3166_2": "KH-5",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Kampong_Speu_province"
+    },
+    "full_name_km": "ខេត្តកំពង់ស្ពឺ",
+    "full_name_en": "Kampong Speu Province",
+    "full_name_latin": "Khaet Kampong Speu",
+    "full_name_ungegn": "Khétt Kâmpóng Spœ",
+    "address_km": "ខេត្តកំពង់ស្ពឺ",
+    "address_latin": "Khaet Kampong Speu",
+    "address_en": "Kampong Speu Province"
+  },
+  {
+    "id": "06",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "កំពង់ធំ",
+    "name_en": "Kampong Thom",
+    "name_latin": "Kampong Thom",
+    "name_ungegn": "Kâmpóng Thum",
+    "geodata": {
+      "lat": "12.6687923",
+      "long": "104.8879197",
+      "bounding_box": ["12.1886895", "13.4495556", "104.1734824", "105.7348383"]
+    },
+    "iso3166_2": "KH-6",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Kampong_Thom_province"
+    },
+    "full_name_km": "ខេត្តកំពង់ធំ",
+    "full_name_en": "Kampong Thom Province",
+    "full_name_latin": "Khaet Kampong Thom",
+    "full_name_ungegn": "Khétt Kâmpóng Thum",
+    "address_km": "ខេត្តកំពង់ធំ",
+    "address_latin": "Khaet Kampong Thom",
+    "address_en": "Kampong Thom Province"
+  },
+  {
+    "id": "07",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "កំពត",
+    "name_en": "Kampot",
+    "name_latin": "Kampot",
+    "name_ungegn": null,
+    "geodata": {
+      "lat": "10.6314754",
+      "long": "104.132637",
+      "bounding_box": ["10.3536198", "11.1722266", "103.8390342", "104.727076"]
+    },
+    "iso3166_2": "KH-7",
+    "links": { "wikipedia": "https://en.wikipedia.org/wiki/Kampot_province" },
+    "full_name_km": "ខេត្តកំពត",
+    "full_name_en": "Kampot Province",
+    "full_name_latin": "Khaet Kampot",
+    "full_name_ungegn": null,
+    "address_km": "ខេត្តកំពត",
+    "address_latin": "Khaet Kampot",
+    "address_en": "Kampot Province"
+  },
+  {
+    "id": "08",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "កណ្តាល",
+    "name_en": "Kandal",
+    "name_latin": "Kandal",
+    "name_ungegn": "Kândal",
+    "geodata": {
+      "lat": "11.396262499999999",
+      "long": "105.02078685074581",
+      "bounding_box": ["10.8964776", "11.8943134", "104.6562154", "105.2971605"]
+    },
+    "iso3166_2": "KH-8",
+    "links": { "wikipedia": "https://en.wikipedia.org/wiki/Kandal_province" },
+    "full_name_km": "ខេត្តកណ្តាល",
+    "full_name_en": "Kandal Province",
+    "full_name_latin": "Khaet Kandal",
+    "full_name_ungegn": "Khétt Kândal",
+    "address_km": "ខេត្តកណ្តាល",
+    "address_latin": "Khaet Kandal",
+    "address_en": "Kandal Province"
+  },
+  {
+    "id": "09",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "កោះកុង",
+    "name_en": "Koh Kong",
+    "name_latin": "Koh Kong",
+    "name_ungegn": "Kaôh Kŏng",
+    "geodata": {
+      "lat": "11.6813417",
+      "long": "103.0258043",
+      "bounding_box": ["10.6542293", "12.116263", "102.5849839", "104.0645553"]
+    },
+    "iso3166_2": "KH-9",
+    "links": { "wikipedia": "https://en.wikipedia.org/wiki/Koh_Kong_province" },
+    "full_name_km": "ខេត្តកោះកុង",
+    "full_name_en": "Koh Kong Province",
+    "full_name_latin": "Khaet Koh Kong",
+    "full_name_ungegn": "Khétt Kaôh Kŏng",
+    "address_km": "ខេត្តកោះកុង",
+    "address_latin": "Khaet Koh Kong",
+    "address_en": "Koh Kong Province"
+  },
+  {
+    "id": "10",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "ក្រចេះ",
+    "name_en": "Kratié",
+    "name_latin": "Kratié",
+    "name_ungegn": "Krâchéh",
+    "geodata": {
+      "lat": "12.678301699999999",
+      "long": "106.05817329824376",
+      "bounding_box": ["11.9494318", "13.4073182", "105.5871802", "106.8019914"]
+    },
+    "iso3166_2": "KH-10",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Krati%C3%A9_province"
+    },
+    "full_name_km": "ខេត្តក្រចេះ",
+    "full_name_en": "Kratié Province",
+    "full_name_latin": "Khaet Kratié",
+    "full_name_ungegn": "Khétt Krâchéh",
+    "address_km": "ខេត្តក្រចេះ",
+    "address_latin": "Khaet Kratié",
+    "address_en": "Kratié Province"
+  },
+  {
+    "id": "11",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "មណ្ឌលគិរី",
+    "name_en": "Mondulkiri",
+    "name_latin": "Mondulkiri",
+    "name_ungegn": "Môndôlkĭri",
+    "geodata": {
+      "lat": "12.7396454",
+      "long": "107.00882593208544",
+      "bounding_box": ["12.0614615", "13.4175148", "106.3385777", "107.6033126"]
+    },
+    "iso3166_2": "KH-11",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Mondulkiri_province"
+    },
+    "full_name_km": "ខេត្តមណ្ឌលគិរី",
+    "full_name_en": "Mondulkiri Province",
+    "full_name_latin": "Khaet Mondulkiri",
+    "full_name_ungegn": "Khétt Môndôlkĭri",
+    "address_km": "ខេត្តមណ្ឌលគិរី",
+    "address_latin": "Khaet Mondulkiri",
+    "address_en": "Mondulkiri Province"
+  },
+  {
+    "id": "12",
+    "administrative_unit": {
+      "name_km": "រាជធានី",
+      "name_latin": "Reach Theani",
+      "name_en": "Capital",
+      "name_ungegn": "Réachthéani"
+    },
+    "name_km": "ភ្នំពេញ",
+    "name_en": "Phnom Penh",
+    "name_latin": "Phnom Penh",
+    "name_ungegn": "Phnum Pénh",
+    "geodata": {
+      "lat": "11.5730391",
+      "long": "104.857807",
+      "bounding_box": ["11.4200852", "11.7349524", "104.7204046", "105.0440261"]
+    },
+    "iso3166_2": "KH-12",
+    "links": { "wikipedia": "https://en.wikipedia.org/wiki/Phnom_Penh" },
+    "full_name_km": "រាជធានីភ្នំពេញ",
+    "full_name_en": "Phnom Penh Capital",
+    "full_name_latin": "Reach Theani Phnom Penh",
+    "full_name_ungegn": "Réachthéani Phnum Pénh",
+    "address_km": "រាជធានីភ្នំពេញ",
+    "address_latin": "Reach Theani Phnom Penh",
+    "address_en": "Phnom Penh Capital"
+  },
+  {
+    "id": "13",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "ព្រះវិហារ",
+    "name_en": "Preah Vihear",
+    "name_latin": "Preah Vihear",
+    "name_ungegn": "Preăh Vĭhar",
+    "geodata": {
+      "lat": "13.746298150000001",
+      "long": "104.97403002709669",
+      "bounding_box": ["13.0553454", "14.4374188", "104.3579998", "105.8992487"]
+    },
+    "iso3166_2": "KH-13",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Preah_Vihear_province"
+    },
+    "full_name_km": "ខេត្តព្រះវិហារ",
+    "full_name_en": "Preah Vihear Province",
+    "full_name_latin": "Khaet Preah Vihear",
+    "full_name_ungegn": "Khétt Preăh Vĭhar",
+    "address_km": "ខេត្តព្រះវិហារ",
+    "address_latin": "Khaet Preah Vihear",
+    "address_en": "Preah Vihear Province"
+  },
+  {
+    "id": "14",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "ព្រៃវែង",
+    "name_en": "Prey Veng",
+    "name_latin": "Prey Veng",
+    "name_ungegn": "Preý Vŭng",
+    "geodata": {
+      "lat": "11.365959700000001",
+      "long": "105.45572772976189",
+      "bounding_box": ["10.8598854", "11.8712687", "105.1039948", "105.8091078"]
+    },
+    "iso3166_2": "KH-14",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Prey_Veng_province"
+    },
+    "full_name_km": "ខេត្តព្រៃវែង",
+    "full_name_en": "Prey Veng Province",
+    "full_name_latin": "Khaet Prey Veng",
+    "full_name_ungegn": "Khétt Preý Vŭng",
+    "address_km": "ខេត្តព្រៃវែង",
+    "address_latin": "Khaet Prey Veng",
+    "address_en": "Prey Veng Province"
+  },
+  {
+    "id": "15",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "ពោធិ៍សាត់",
+    "name_en": "Pursat",
+    "name_latin": "Pursat",
+    "name_ungegn": "Poŭthĭsăt",
+    "geodata": {
+      "lat": "12.4662592",
+      "long": "103.7426829518918",
+      "bounding_box": ["11.8432598", "13.0891438", "102.70351", "104.3951534"]
+    },
+    "iso3166_2": "KH-15",
+    "links": { "wikipedia": "https://en.wikipedia.org/wiki/Pursat_province" },
+    "full_name_km": "ខេត្តពោធិ៍សាត់",
+    "full_name_en": "Pursat Province",
+    "full_name_latin": "Khaet Pursat",
+    "full_name_ungegn": "Khétt Poŭthĭsăt",
+    "address_km": "ខេត្តពោធិ៍សាត់",
+    "address_latin": "Khaet Pursat",
+    "address_en": "Pursat Province"
+  },
+  {
+    "id": "16",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "រតនគិរី",
+    "name_en": "Ratanakiri",
+    "name_latin": "Ratanakiri",
+    "name_ungegn": "Rôtânôkĭri",
+    "geodata": {
+      "lat": "13.9311155",
+      "long": "107.03914990288844",
+      "bounding_box": ["13.1721622", "14.6904224", "106.5301893", "107.6276788"]
+    },
+    "iso3166_2": "KH-16",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Ratanakiri_province"
+    },
+    "full_name_km": "ខេត្តរតនគិរី",
+    "full_name_en": "Ratanakiri Province",
+    "full_name_latin": "Khaet Ratanakiri",
+    "full_name_ungegn": "Khétt Rôtânôkĭri",
+    "address_km": "ខេត្តរតនគិរី",
+    "address_latin": "Khaet Ratanakiri",
+    "address_en": "Ratanakiri Province"
+  },
+  {
+    "id": "17",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "សៀមរាប",
+    "name_en": "Siem Reap",
+    "name_latin": "Siem Reap",
+    "name_ungegn": "Siĕm Réab",
+    "geodata": {
+      "lat": "13.314962",
+      "long": "103.805433",
+      "bounding_box": ["12.7720495", "13.9718578", "103.3892306", "104.6832474"]
+    },
+    "iso3166_2": "KH-17",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Siem_Reap_province"
+    },
+    "full_name_km": "ខេត្តសៀមរាប",
+    "full_name_en": "Siem Reap Province",
+    "full_name_latin": "Khaet Siem Reap",
+    "full_name_ungegn": "Khétt Siĕm Réab",
+    "address_km": "ខេត្តសៀមរាប",
+    "address_latin": "Khaet Siem Reap",
+    "address_en": "Siem Reap Province"
+  },
+  {
+    "id": "18",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "ព្រះសីហនុ",
+    "name_en": "Preah Sihanouk",
+    "name_latin": "Preah Sihanouk",
+    "name_ungegn": "Preăh Seihânŭ",
+    "geodata": {
+      "lat": "10.50614075",
+      "long": "103.26205644863938",
+      "bounding_box": ["9.4110961", "11.436044", "102.6295604", "104.0772547"]
+    },
+    "iso3166_2": "KH-18",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Preah_Sihanouk_province"
+    },
+    "full_name_km": "ខេត្តព្រះសីហនុ",
+    "full_name_en": "Preah Sihanouk Province",
+    "full_name_latin": "Khaet Preah Sihanouk",
+    "full_name_ungegn": "Khétt Preăh Seihânŭ",
+    "address_km": "ខេត្តព្រះសីហនុ",
+    "address_latin": "Khaet Preah Sihanouk",
+    "address_en": "Preah Sihanouk Province"
+  },
+  {
+    "id": "19",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "ស្ទឹងត្រែង",
+    "name_en": "Stung Treng",
+    "name_latin": "Stung Treng",
+    "name_ungegn": "Stœ̆ng Trêng",
+    "geodata": {
+      "lat": "13.852468",
+      "long": "106.0889848986395",
+      "bounding_box": ["13.1137001", "14.5919671", "105.5194671", "106.7891813"]
+    },
+    "iso3166_2": "KH-19",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Stung_Treng_province"
+    },
+    "full_name_km": "ខេត្តស្ទឹងត្រែង",
+    "full_name_en": "Stung Treng Province",
+    "full_name_latin": "Khaet Stung Treng",
+    "full_name_ungegn": "Khétt Stœ̆ng Trêng",
+    "address_km": "ខេត្តស្ទឹងត្រែង",
+    "address_latin": "Khaet Stung Treng",
+    "address_en": "Stung Treng Province"
+  },
+  {
+    "id": "20",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "ស្វាយរៀង",
+    "name_en": "Svay Rieng",
+    "name_latin": "Svay Rieng",
+    "name_ungegn": "Svay Riĕng",
+    "geodata": {
+      "lat": "11.1942275",
+      "long": "105.7973275083619",
+      "bounding_box": ["10.7889074", "11.5996145", "105.5796471", "106.206119"]
+    },
+    "iso3166_2": "KH-20",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Svay_Rieng_province"
+    },
+    "full_name_km": "ខេត្តស្វាយរៀង",
+    "full_name_en": "Svay Rieng Province",
+    "full_name_latin": "Khaet Svay Rieng",
+    "full_name_ungegn": "Khétt Svay Riĕng",
+    "address_km": "ខេត្តស្វាយរៀង",
+    "address_latin": "Khaet Svay Rieng",
+    "address_en": "Svay Rieng Province"
+  },
+  {
+    "id": "21",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "តាកែវ",
+    "name_en": "Takéo",
+    "name_latin": "Takéo",
+    "name_ungegn": null,
+    "geodata": {
+      "lat": "10.93539205",
+      "long": "104.78988300047047",
+      "bounding_box": ["10.5187794", "11.3530403", "104.4101661", "105.0983022"]
+    },
+    "iso3166_2": "KH-21",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Tak%C3%A9o_province"
+    },
+    "full_name_km": "ខេត្តតាកែវ",
+    "full_name_en": "Takéo Province",
+    "full_name_latin": "Khaet Takéo",
+    "full_name_ungegn": null,
+    "address_km": "ខេត្តតាកែវ",
+    "address_latin": "Khaet Takéo",
+    "address_en": "Takéo Province"
+  },
+  {
+    "id": "22",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "ឧត្តរមានជ័យ",
+    "name_en": "Oddar Meanchey",
+    "name_latin": "Oddar Meanchey",
+    "name_ungegn": "Ŏttâr Méanchoăy",
+    "geodata": {
+      "lat": "14.1585631",
+      "long": "103.78279595655918",
+      "bounding_box": ["13.8769057", "14.4403696", "103.0318699", "104.5085773"]
+    },
+    "iso3166_2": "KH-22",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Oddar_Meanchey_province"
+    },
+    "full_name_km": "ខេត្តឧត្តរមានជ័យ",
+    "full_name_en": "Oddar Meanchey Province",
+    "full_name_latin": "Khaet Oddar Meanchey",
+    "full_name_ungegn": "Khétt Ŏttâr Méanchoăy",
+    "address_km": "ខេត្តឧត្តរមានជ័យ",
+    "address_latin": "Khaet Oddar Meanchey",
+    "address_en": "Oddar Meanchey Province"
+  },
+  {
+    "id": "23",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "កែប",
+    "name_en": "Kep",
+    "name_latin": "Kep",
+    "name_ungegn": "Kêb",
+    "geodata": {
+      "lat": "10.402153949999999",
+      "long": "104.26506181616313",
+      "bounding_box": ["10.1548084", "10.5908859", "104.0710119", "104.4259394"]
+    },
+    "iso3166_2": "KH-23",
+    "links": { "wikipedia": "https://en.wikipedia.org/wiki/Kep_province" },
+    "full_name_km": "ខេត្តកែប",
+    "full_name_en": "Kep Province",
+    "full_name_latin": "Khaet Kep",
+    "full_name_ungegn": "Khétt Kêb",
+    "address_km": "ខេត្តកែប",
+    "address_latin": "Khaet Kep",
+    "address_en": "Kep Province"
+  },
+  {
+    "id": "24",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "ប៉ៃលិន",
+    "name_en": "Pailin",
+    "name_latin": "Pailin",
+    "name_ungegn": "Pailĭn",
+    "geodata": {
+      "lat": "12.89053285",
+      "long": "102.62946042446026",
+      "bounding_box": ["12.663855", "13.1166697", "102.485444", "102.7533088"]
+    },
+    "iso3166_2": "KH-24",
+    "links": { "wikipedia": "https://en.wikipedia.org/wiki/Pailin_province" },
+    "full_name_km": "ខេត្តប៉ៃលិន",
+    "full_name_en": "Pailin Province",
+    "full_name_latin": "Khaet Pailin",
+    "full_name_ungegn": "Khétt Pailĭn",
+    "address_km": "ខេត្តប៉ៃលិន",
+    "address_latin": "Khaet Pailin",
+    "address_en": "Pailin Province"
+  },
+  {
+    "id": "25",
+    "administrative_unit": {
+      "name_km": "ខេត្ត",
+      "name_latin": "Khaet",
+      "name_en": "Province",
+      "name_ungegn": "Khétt"
+    },
+    "name_km": "ត្បូងឃ្មុំ",
+    "name_en": "Tboung Khmum",
+    "name_latin": "Tboung Khmum",
+    "name_ungegn": null,
+    "geodata": {
+      "lat": "11.950072599999999",
+      "long": "105.824571891073",
+      "bounding_box": ["11.5995257", "12.3005412", "105.408445", "106.4674381"]
+    },
+    "iso3166_2": "KH-25",
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Tboung_Khmum_province"
+    },
+    "full_name_km": "ខេត្តត្បូងឃ្មុំ",
+    "full_name_en": "Tboung Khmum Province",
+    "full_name_latin": "Khaet Tboung Khmum",
+    "full_name_ungegn": null,
+    "address_km": "ខេត្តត្បូងឃ្មុំ",
+    "address_latin": "Khaet Tboung Khmum",
+    "address_en": "Tboung Khmum Province"
+  }
+]
