@@ -118,28 +118,21 @@ const getLocationCountColumnSetup = (
     // all villages in the tooltip
     ...(field === KoboCommonKeys.village
       ? {
-          valueFormatter: value => {
+          valueGetter: value => {
             const villageList = value as string[] | undefined;
             const formattedList = villageList
               ?.map(village =>
                 intl.formatMessage({ id: `${field}.${village}` }),
               )
-              .sort((a, b) => a.localeCompare(b, intl.locale)) // Sort alphabetically
-              .join(', ');
+              .sort((a, b) => a.localeCompare(b, intl.locale)); // Sort alphabetically
 
-            return formattedList ?? '';
+            return formattedList ?? [];
           },
           renderCell: (params: GridRenderCellParams) => {
-            const villageList = params.value as string[] | undefined;
-            const formattedList = villageList
-              ?.map(village =>
-                intl.formatMessage({ id: `${field}.${village}` }),
-              )
-              .sort((a, b) => a.localeCompare(b, intl.locale)) // Sort alphabetically
-              .join(', ');
+            const displayLabel = (params.value as string[]).join(', ');
 
             return (
-              <Tooltip title={formattedList} arrow>
+              <Tooltip title={displayLabel} arrow>
                 <div
                   style={{
                     overflow: 'hidden',
@@ -148,10 +141,16 @@ const getLocationCountColumnSetup = (
                     textAlign: 'left',
                   }}
                 >
-                  {formattedList}
+                  {displayLabel}
                 </div>
               </Tooltip>
             );
+          },
+          sortComparator: (v1, v2) => {
+            const v1List = v1 as string[];
+            const v2List = v2 as string[];
+
+            return v1List.length - v2List.length;
           },
         }
       : {}),
