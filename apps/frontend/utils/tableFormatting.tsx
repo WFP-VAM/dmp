@@ -89,9 +89,9 @@ const getLocationColumnSetup = (
         <FormattedMessage id={`forms_table.headers.${params.field}`} />
       </Typography>
     ),
-    valueGetter: value =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      intl.formatMessage({ id: `${field}.${value as string}` }),
+    valueGetter: (value: string | string[] | number | undefined) =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/strict-boolean-expressions
+      value && intl.formatMessage({ id: `${field}.${value as string}` }),
   };
 };
 

@@ -148,7 +148,9 @@ export const CommuneLevelReportTable = ({
       columnHeaderHeight="large"
       variant={disasterTableParams.variant}
       isFirstTable={disasterTableParams.isFirstTable}
-      aggregateRowFilter={row =>
+      // Filter out the rows that have been aggregated already.
+      // We check if the commune and district are undefined to only keep the province rows.
+      aggregateRowFilter={(row: { commune?: string; district?: string }) =>
         row.commune === undefined && row.district === undefined
       }
     />
