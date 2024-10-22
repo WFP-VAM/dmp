@@ -407,7 +407,7 @@ export const useAggregatedRow = <
     );
   }
 
-  // Update column add custofromm comparator to keep total on top & override first column cell
+  // Update column add custom sort to keep total on top & override first column cell
   const updatedColumns = columns.map((col, i) => ({
     ...col,
     getSortComparator: getTotalRowComparatorFactory(col.sortComparator),
