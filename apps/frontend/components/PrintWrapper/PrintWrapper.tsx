@@ -1,5 +1,18 @@
 import { Box, GlobalStyles } from '@mui/material';
-import { MutableRefObject, ReactNode } from 'react';
+import { createContext, MutableRefObject, ReactNode, useContext } from 'react';
+
+// Create the context
+const PrintContext = createContext<boolean | undefined>(undefined);
+
+// Create a custom hook to use the context
+export const usePrintContext = () => {
+  const context = useContext(PrintContext);
+  if (context === undefined) {
+    return false;
+  }
+
+  return context;
+};
 
 const printStyles = (
   <GlobalStyles
@@ -7,11 +20,11 @@ const printStyles = (
       '@media print': {
         'html, body': {
           fontSize: '0.9em',
+          background: 'white !important',
         },
       },
       '@page': {
         size: 'A4 landscape',
-        margin: '50px !important',
       },
     }}
   />
@@ -19,13 +32,20 @@ const printStyles = (
 
 interface Props {
   printRef: MutableRefObject<null>;
+  isPrinting?: boolean;
   children: ReactNode;
 }
-export const PrintWrapper = ({ printRef, children }: Props): JSX.Element => {
+export const PrintWrapper = ({
+  printRef,
+  isPrinting,
+  children,
+}: Props): JSX.Element => {
   return (
-    <Box ref={printRef}>
-      {printStyles}
-      {children}
-    </Box>
+    <PrintContext.Provider value={isPrinting}>
+      <Box ref={printRef}>
+        {printStyles}
+        {children}
+      </Box>
+    </PrintContext.Provider>
   );
 };

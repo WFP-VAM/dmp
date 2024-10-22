@@ -22,9 +22,9 @@ export const FormSearch = () => {
       disTyp === undefined ? DisasterMapping['flood'] : (disTyp as string),
     ],
     region: {
-      province: '',
-      district: '',
-      commune: '',
+      province: [],
+      district: [],
+      commune: [],
     },
     dateRange: {
       startDate:
@@ -51,7 +51,11 @@ export const FormSearch = () => {
           />
         }
       />
-      <TableDisplay isLoading={isLoading} forms={formData} />
+      <TableDisplay
+        isLoading={isLoading}
+        forms={formData}
+        isFlood={searchFormData.disTyps[0] === DisasterMapping['flood']}
+      />
     </Box>
   );
 };

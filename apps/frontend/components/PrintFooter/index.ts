@@ -1,0 +1,1 @@
+export { PrintFooter } from './PrintFooter';

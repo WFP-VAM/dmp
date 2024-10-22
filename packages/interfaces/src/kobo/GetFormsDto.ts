@@ -7,7 +7,7 @@ export class GetFormsDto {
   readonly disTyps?: string[];
   @IsDateString() readonly startDate!: string;
   @IsDateString() readonly endDate!: string;
-  @IsOptional() @IsString() readonly province?: string;
-  @IsOptional() @IsString() readonly district?: string;
-  @IsOptional() @IsString() readonly commune?: string;
+  @IsOptional() @IsArray() @IsString({ each: true }) readonly province?: string | string[];
+  @IsOptional() @IsArray() @IsString({ each: true }) readonly district?: string | string[];
+  @IsOptional() @IsArray() @IsString({ each: true }) readonly commune?: string | string[];
 }

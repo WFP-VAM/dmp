@@ -2,6 +2,7 @@
 
 export enum FloodSpecific {
   floodN = 'floodN',
+  ToNamAgriAff = 'ToNamAgriAff',
   NumVillAff = 'NumVillAff',
   NumFamAff = 'NumFamAff',
   NumPeoAff = 'NumPeoAff',
@@ -127,6 +128,8 @@ export enum FloodSpecific {
   NumActShop = 'NumActShop',
   NumNoActShop = 'NumNoActShop',
   RicePrice = 'RicePrice',
+  NumFarmCroAff = 'NumFarmCroAff',
+  NumFarmPaddyAff = 'NumFarmPaddyAff',
   threat = 'threat',
   other = 'other',
 }
@@ -189,8 +192,11 @@ export const floodSpecificKeys = {
   [FloodSpecific.NumCraftDam]: 'g10/g10_8/NumCraftDam',
   [FloodSpecific.FarmAff]: 'g11/g11_1/FarmAff',
   [FloodSpecific.FarmDam]: 'g11/g11_1/FarmDam',
+  [FloodSpecific.NumFarmCroAff]: 'g11/g11_1/NumFarmCroAff',
+  [FloodSpecific.ToNamAgriAff]: 'g11/g11_1/ToNamAgriAff',
   [FloodSpecific.SamNabAff]: 'g11/g11_2/SamNabAff',
   [FloodSpecific.SamNabDam]: 'g11/g11_2/SamNabDam',
+  [FloodSpecific.NumFarmPaddyAff]: 'g11/g11_2/NumFarmPaddyAff',
   [FloodSpecific.PaddyAff]: 'g11/g11_3/PaddyAff',
   [FloodSpecific.PaddyDam]: 'g11/g11_3/PaddyDam',
   [FloodSpecific.CowEva]: 'g11/g11_4/CowEva',

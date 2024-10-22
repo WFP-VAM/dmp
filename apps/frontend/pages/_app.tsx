@@ -58,7 +58,12 @@ const MyApp = ({
                       .then(response => response.data),
                 }}
               >
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  dateFormats={{
+                    keyboardDate: 'DD/MM/YYYY',
+                  }}
+                >
                   <AuthProvider>
                     {Component.requireAuth ?? false ? (
                       <AuthGuard>

@@ -1,16 +1,18 @@
-import { ReactNode } from 'react';
-
 import { NavBar } from 'components/NavBar';
 
-import { Layout } from './Layout';
+import { Layout, LayoutProps } from './Layout';
 
-interface Props {
-  children: ReactNode;
+interface LayoutWithNavProps {
+  layoutProps?: LayoutProps;
 }
-export const LayoutWithNav = ({ children }: Props): JSX.Element => {
+
+export const LayoutWithNav = ({
+  children,
+  layoutProps = {},
+}: React.PropsWithChildren<LayoutWithNavProps>): JSX.Element => {
   return (
     <NavBar>
-      <Layout>{children}</Layout>
+      <Layout {...layoutProps}>{children}</Layout>
     </NavBar>
   );
 };

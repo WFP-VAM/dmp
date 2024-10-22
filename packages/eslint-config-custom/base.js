@@ -9,7 +9,7 @@ module.exports = {
     curly: ['error', 'all'],
     eqeqeq: ['error', 'smart'],
     complexity: ['error', 8],
-    'max-lines': ['error', 200],
+    'max-lines': ['error', 250],
     'max-depth': ['error', 3],
     'max-params': ['error', 4],
     'no-shadow': [

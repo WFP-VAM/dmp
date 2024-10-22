@@ -24,6 +24,8 @@ export class DroughtDto {
   @IsString() @Length(2) readonly 'group_yu9nq00/Province'!: string;
   @IsString() @Length(4) readonly 'group_yu9nq00/District'!: string;
   @IsString() @Length(6) readonly 'group_yu9nq00/Commune'!: string;
+  // NOTE - This field does not exist in KOBO yet.
+  @IsString() readonly 'group_yu9nq00/Village'?: string;
   @IsDateString() readonly 'group_yu9nq00/Date_Dis': string;
   @IsNumberString() readonly 'group_yu9nq00/DisTyp'!: string;
   @IsOptional() @IsNumberString() readonly 'group_dg01m69/NumVillAff'?: string;

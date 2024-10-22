@@ -1,56 +1,102 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import { DROUGHT, DroughtSpecific } from '@wfp-dmp/interfaces';
 
-import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
+import {
+  ColumnSetupParams,
+  getColumnSetup,
+  getGroupSetup,
+} from 'utils/tableFormatting';
 
 const WaterHouseholdColumns: GridColDef[] = [
-  getColumnSetup(DroughtSpecific.NuVilNedHep, DROUGHT),
-  getColumnSetup(DroughtSpecific.TNuFamNeHo2, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumPeople, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumMen, DROUGHT, 60),
-  getColumnSetup(DroughtSpecific.NumWomen, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumKids, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumElder, DROUGHT, 70),
-  getColumnSetup(DroughtSpecific.NumDis, DROUGHT),
-  getColumnSetup(DroughtSpecific.NumWatTank, DROUGHT, 110),
-  getColumnSetup(DroughtSpecific.NuStorageFam, DROUGHT, 110),
-  getColumnSetup(DroughtSpecific.NumWateTank, DROUGHT, 110),
-  getColumnSetup(DroughtSpecific.NumFilter, DROUGHT, 90),
-  getColumnSetup(DroughtSpecific.NumWatePur, DROUGHT, 100),
+  getColumnSetup({ field: DroughtSpecific.NuVilNedHep, disaster: DROUGHT }),
+  getColumnSetup({ field: DroughtSpecific.TNuFamNeHo2, disaster: DROUGHT }),
+  getColumnSetup({
+    field: DroughtSpecific.NumPeople,
+    disaster: DROUGHT,
+    width: 70,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NumMen,
+    disaster: DROUGHT,
+    width: 60,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NumWomen,
+    disaster: DROUGHT,
+    width: 70,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NumKids,
+    disaster: DROUGHT,
+    width: 70,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NumElder,
+    disaster: DROUGHT,
+    width: 70,
+  }),
+  getColumnSetup({ field: DroughtSpecific.NumDis, disaster: DROUGHT }),
+  getColumnSetup({
+    field: DroughtSpecific.NumWatTank,
+    disaster: DROUGHT,
+    width: 8 * 16,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NuStorageFam,
+    disaster: DROUGHT,
+    width: 8 * 19,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NumWateTank,
+    disaster: DROUGHT,
+    width: 8 * 10,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NumFilter,
+    disaster: DROUGHT,
+    width: 8 * 12,
+  }),
+  getColumnSetup({
+    field: DroughtSpecific.NumWatePur,
+    disaster: DROUGHT,
+    width: 8 * 14,
+  }),
 ];
 
 const WaterHouseholdColumnGroup: GridColumnGroupingModel = [
   {
-    ...getGroupSetup('waterHousehold', DROUGHT),
+    ...getGroupSetup('waterPeople', DROUGHT),
     children: [
-      {
-        ...getGroupSetup('waterPeople', DROUGHT),
-        children: [
-          { field: DroughtSpecific.NuVilNedHep },
-          { field: DroughtSpecific.TNuFamNeHo2 },
-          { field: DroughtSpecific.NumPeople },
-          { field: DroughtSpecific.NumMen },
-          { field: DroughtSpecific.NumWomen },
-          { field: DroughtSpecific.NumKids },
-          { field: DroughtSpecific.NumElder },
-          { field: DroughtSpecific.NumDis },
-        ],
-      },
-      {
-        ...getGroupSetup('waterConsumable', DROUGHT),
-        children: [
-          { field: DroughtSpecific.NumWatTank },
-          { field: DroughtSpecific.NuStorageFam },
-          { field: DroughtSpecific.NumWateTank },
-          { field: DroughtSpecific.NumFilter },
-          { field: DroughtSpecific.NumWatePur },
-        ],
-      },
+      { field: DroughtSpecific.NuVilNedHep },
+      { field: DroughtSpecific.TNuFamNeHo2 },
+      { field: DroughtSpecific.NumPeople },
+      { field: DroughtSpecific.NumMen },
+      { field: DroughtSpecific.NumWomen },
+      { field: DroughtSpecific.NumKids },
+      { field: DroughtSpecific.NumElder },
+      { field: DroughtSpecific.NumDis },
+    ],
+  },
+  {
+    ...getGroupSetup('waterConsumable', DROUGHT),
+    children: [
+      { field: DroughtSpecific.NumWatTank },
+      { field: DroughtSpecific.NuStorageFam },
+      { field: DroughtSpecific.NumWateTank },
+      { field: DroughtSpecific.NumFilter },
+      { field: DroughtSpecific.NumWatePur },
     ],
   },
 ];
 
+const groupParams: ColumnSetupParams = {
+  groupId: 'waterHousehold',
+  disaster: DROUGHT,
+  additionalChildren: [],
+};
+
 export const WaterHouseholdColumnSettings = {
   columns: WaterHouseholdColumns,
   columnGroup: WaterHouseholdColumnGroup,
+  groupParams,
 };
