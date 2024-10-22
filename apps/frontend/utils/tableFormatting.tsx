@@ -376,30 +376,36 @@ export const useAggregatedRow = <
 }: UseAggregatedRowParams<R>) => {
   const intl = useIntl();
 
-  const aggregatedRow = data
-    .filter(rowFilter)
-    .reduce<Record<string, string | number | string[]>>(
-      (acc, row) => {
-        columns.forEach(({ type, field }) => {
-          if (field === KoboCommonKeys.village) {
-            acc[field] = ((acc[field] as string[] | undefined) ?? []).concat(
-              (row[field] as string | undefined) ?? [],
-            );
-          } else if (type === 'number') {
-            acc[field] =
-              ((acc[field] as number | undefined) ?? 0) +
-              Number(row[field] ?? 0);
-          }
-        });
+  const filteredData = data.filter(rowFilter);
 
-        return acc;
-      },
-      { id: TOTAL_ROW_ID },
+  // Only create aggregatedRow if there's more than one row
+  const aggregatedRow =
+    filteredData.length > 1
+      ? filteredData.reduce<Record<string, string | number | string[]>>(
+          (acc, row) => {
+            columns.forEach(({ type, field }) => {
+              if (field === KoboCommonKeys.village) {
+                acc[field] = (
+                  (acc[field] as string[] | undefined) ?? []
+                ).concat((row[field] as string | undefined) ?? []);
+              } else if (type === 'number') {
+                acc[field] =
+                  ((acc[field] as number | undefined) ?? 0) +
+                  Number(row[field] ?? 0);
+              }
+            });
+
+            return acc;
+          },
+          { id: TOTAL_ROW_ID },
+        )
+      : null;
+
+  if (aggregatedRow) {
+    aggregatedRow[KoboCommonKeys.village] = Array.from(
+      new Set(aggregatedRow[KoboCommonKeys.village] as string[]),
     );
-
-  aggregatedRow[KoboCommonKeys.village] = Array.from(
-    new Set(aggregatedRow[KoboCommonKeys.village] as string[]),
-  );
+  }
 
   // Update column add custofromm comparator to keep total on top & override first column cell
   const updatedColumns = columns.map((col, i) => ({
@@ -420,7 +426,7 @@ export const useAggregatedRow = <
     params.id === TOTAL_ROW_ID ? 'total-row' : getRowClassName?.(params) ?? '';
 
   return {
-    data: [aggregatedRow, ...data],
+    data: aggregatedRow ? [aggregatedRow, ...data] : data,
     columns: updatedColumns,
     getRowId: updatedGetRowId,
     getRowClassName: updatedGetRowClassName,
