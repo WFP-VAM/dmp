@@ -39,7 +39,7 @@ export const CommuneLevelReportTable = ({
       const [head, ...rest] = arr;
       const acc = { ...head, commune: undefined } as Record<
         string,
-        string | number | undefined
+        string | string[] | number | undefined
       >;
       const keys = Object.keys(acc);
       rest.forEach(x => {
@@ -74,7 +74,7 @@ export const CommuneLevelReportTable = ({
       const [head, ...rest] = arr;
       const acc = { ...head[0], district: undefined } as Record<
         string,
-        string | number | undefined
+        string | string[] | number | undefined
       >;
       const keys = Object.keys(acc);
       rest.forEach(x => {
@@ -148,6 +148,11 @@ export const CommuneLevelReportTable = ({
       columnHeaderHeight="large"
       variant={disasterTableParams.variant}
       isFirstTable={disasterTableParams.isFirstTable}
+      // Filter out the rows that have been aggregated already.
+      // We check if the commune and district are undefined to only keep the province rows.
+      aggregateRowFilter={(row: { commune?: string; district?: string }) =>
+        row.commune === undefined && row.district === undefined
+      }
     />
   );
 };

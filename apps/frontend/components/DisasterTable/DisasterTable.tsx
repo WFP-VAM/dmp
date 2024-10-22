@@ -18,6 +18,9 @@ import React, { useMemo } from 'react';
 import { usePrintContext } from 'components/PrintWrapper/PrintWrapper';
 import { colors } from 'theme/muiTheme';
 import CustomToolMenu from 'utils/CustomToolMenu';
+import { useAggregatedRow } from 'utils/tableFormatting';
+
+import ScrollArrows from './ScrollArrows';
 
 const isLastCovered = (group: GridColumnNode[], field: string): boolean => {
   for (let index = 0; index < group.length; index++) {
@@ -36,14 +39,12 @@ const isLastCovered = (group: GridColumnNode[], field: string): boolean => {
   return false;
 };
 
-import ScrollArrows from './ScrollArrows';
-
 export type DisasterTableVariant = 'open' | 'bordered';
 
 export interface DisasterTableProps {
   columns: GridColDef[];
   columnGroup: GridColumnGroupingModel;
-  data: Record<string, string | number | undefined>[];
+  data: Record<string, string | string[] | number | undefined>[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange?: (event: any) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,6 +54,9 @@ export interface DisasterTableProps {
   variant: DisasterTableVariant;
   getRowClassName?: DataGridProps['getRowClassName'];
   isFirstTable?: boolean;
+  aggregateRowFilter?: (
+    row: Record<string, string | string[] | number | undefined>,
+  ) => boolean;
 }
 
 export const DisasterTable = ({
@@ -66,6 +70,7 @@ export const DisasterTable = ({
   columnHeaderHeight = 'large',
   getRowClassName,
   isFirstTable = true,
+  aggregateRowFilter,
 }: DisasterTableProps): JSX.Element => {
   const theme = useTheme();
   const outerRef = React.useRef<HTMLDivElement>(null);
@@ -189,6 +194,19 @@ export const DisasterTable = ({
       ]
     : _updatedColumns;
 
+  const {
+    data: extendedData,
+    columns: extendedColumns,
+    getRowId: extendedGetRowId,
+    getRowClassName: extendedGetRowClassName,
+  } = useAggregatedRow({
+    data: nonEmptyData,
+    columns: updatedColumns,
+    getRowId,
+    getRowClassName,
+    rowFilter: aggregateRowFilter,
+  });
+
   const totalWidth = sum(updatedColumns.map(x => x.width ?? 0)) + 2; // 2px for borders on the sides
   const maxPrintWidth = 1600; // Maximum print width in pixels
   const scaleFactor = Math.min(1, maxPrintWidth / totalWidth);
@@ -205,8 +223,8 @@ export const DisasterTable = ({
 
   const rowsPerPage = Math.floor(28 / scaleFactor);
   const dataChunks = useMemo(() => {
-    return isPrinting ? chunk(nonEmptyData, rowsPerPage) : [nonEmptyData];
-  }, [isPrinting, nonEmptyData, rowsPerPage]);
+    return isPrinting ? chunk(extendedData, rowsPerPage) : [extendedData];
+  }, [isPrinting, extendedData, rowsPerPage]);
 
   return (
     <>
@@ -290,6 +308,9 @@ export const DisasterTable = ({
                       '& .MuiDataGrid-row.highlight-2': {
                         background: `#D0EBF9`,
                       },
+                      '& .MuiDataGrid-row.total-row': {
+                        fontWeight: 700,
+                      },
                       '& .MuiDataGrid-cell.highlighted-cell': {
                         background: '#D0EBF9',
                       },
@@ -358,9 +379,9 @@ export const DisasterTable = ({
                     disableRowSelectionOnClick={!isEditable}
                     showCellVerticalBorder
                     showColumnVerticalBorder
-                    rows={chunkOfRows}
-                    columns={updatedColumns}
                     hideFooter
+                    rows={chunkOfRows}
+                    columns={extendedColumns}
                     columnGroupingModel={updatedColumnGroup}
                     isCellEditable={() => isEditable}
                     processRowUpdate={(newRow: GridRowModel) => {
@@ -368,8 +389,8 @@ export const DisasterTable = ({
 
                       return newRow;
                     }}
-                    getRowId={getRowId}
-                    getRowClassName={getRowClassName}
+                    getRowId={extendedGetRowId}
+                    getRowClassName={extendedGetRowClassName}
                     autoHeight
                     columnHeaderHeight={
                       columnHeaderHeight === 'large' ? 100 : 72
