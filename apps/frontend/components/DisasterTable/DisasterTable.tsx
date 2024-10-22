@@ -54,6 +54,9 @@ export interface DisasterTableProps {
   variant: DisasterTableVariant;
   getRowClassName?: DataGridProps['getRowClassName'];
   isFirstTable?: boolean;
+  aggregateRowFilter?: (
+    row: Record<string, string | string[] | number | undefined>,
+  ) => boolean;
 }
 
 export const DisasterTable = ({
@@ -67,6 +70,7 @@ export const DisasterTable = ({
   columnHeaderHeight = 'large',
   getRowClassName,
   isFirstTable = true,
+  aggregateRowFilter,
 }: DisasterTableProps): JSX.Element => {
   const theme = useTheme();
   const outerRef = React.useRef<HTMLDivElement>(null);
@@ -195,7 +199,13 @@ export const DisasterTable = ({
     columns: extendedColumns,
     getRowId: extendedGetRowId,
     getRowClassName: extendedGetRowClassName,
-  } = useAggregatedRow(nonEmptyData, updatedColumns, getRowId, getRowClassName);
+  } = useAggregatedRow({
+    data: nonEmptyData,
+    columns: updatedColumns,
+    getRowId,
+    getRowClassName,
+    rowFilter: aggregateRowFilter,
+  });
 
   const totalWidth = sum(updatedColumns.map(x => x.width ?? 0)) + 2; // 2px for borders on the sides
   const maxPrintWidth = 1600; // Maximum print width in pixels

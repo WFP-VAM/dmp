@@ -148,6 +148,9 @@ export const CommuneLevelReportTable = ({
       columnHeaderHeight="large"
       variant={disasterTableParams.variant}
       isFirstTable={disasterTableParams.isFirstTable}
+      aggregateRowFilter={row =>
+        row.commune === undefined && row.district === undefined
+      }
     />
   );
 };

@@ -349,6 +349,14 @@ export const wrapGroupAsTitle = ({
 
 export const TOTAL_ROW_ID = 'total-row';
 
+type UseAggregatedRowParams<R extends Record<string, unknown>> = {
+  data: R[];
+  columns: GridColDef[];
+  getRowId?: (row: R) => string;
+  getRowClassName?: (params: GridRowClassNameParams<R>) => string;
+  rowFilter?: (row: R) => boolean;
+};
+
 /**
  * Add an aggregated row with the sum of the values.
  * It configures the table to keep the total row on top & highlight it
@@ -359,31 +367,35 @@ export const useAggregatedRow = <
     string,
     string | number | undefined
   >,
->(
-  data: R[],
-  columns: GridColDef[],
-  getRowId?: (row: R) => string,
-  getRowClassName?: (params: GridRowClassNameParams<R>) => string,
-) => {
+>({
+  data,
+  columns,
+  getRowId,
+  getRowClassName,
+  rowFilter = () => true,
+}: UseAggregatedRowParams<R>) => {
   const intl = useIntl();
 
-  const aggregatedRow = data.reduce<Record<string, string | number | string[]>>(
-    (acc, row) => {
-      columns.forEach(({ type, field }) => {
-        if (field === KoboCommonKeys.village) {
-          acc[field] = ((acc[field] as string[] | undefined) ?? []).concat(
-            (row[field] as string | undefined) ?? [],
-          );
-        } else if (type === 'number') {
-          acc[field] =
-            ((acc[field] as number | undefined) ?? 0) + Number(row[field] ?? 0);
-        }
-      });
+  const aggregatedRow = data
+    .filter(rowFilter)
+    .reduce<Record<string, string | number | string[]>>(
+      (acc, row) => {
+        columns.forEach(({ type, field }) => {
+          if (field === KoboCommonKeys.village) {
+            acc[field] = ((acc[field] as string[] | undefined) ?? []).concat(
+              (row[field] as string | undefined) ?? [],
+            );
+          } else if (type === 'number') {
+            acc[field] =
+              ((acc[field] as number | undefined) ?? 0) +
+              Number(row[field] ?? 0);
+          }
+        });
 
-      return acc;
-    },
-    { id: TOTAL_ROW_ID },
-  );
+        return acc;
+      },
+      { id: TOTAL_ROW_ID },
+    );
 
   aggregatedRow[KoboCommonKeys.village] = Array.from(
     new Set(aggregatedRow[KoboCommonKeys.village] as string[]),
