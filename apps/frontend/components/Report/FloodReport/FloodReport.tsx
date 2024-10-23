@@ -23,9 +23,12 @@ export const FloodReport = ({
   isAllColumnReport: boolean;
 }) => {
   const report = useMemo(() => {
+    console.log({ forms });
     const formattedForms = filterFloodReports(
       forms.map(form => formatFloodFields(form)),
     );
+
+    console.log({ formattedForms });
 
     return isCommuneLevelReport
       ? generateFloodCommuneLevelReport(formattedForms)

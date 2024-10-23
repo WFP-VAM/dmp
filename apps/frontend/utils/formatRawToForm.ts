@@ -41,6 +41,7 @@ export const filterFloodReports = (
 ): ReturnType<typeof formatFloodFields>[] => {
   const groupedReports = floodData.reduce((acc, report) => {
     const key = `${report.floodN ?? 0}_${report.commune}`;
+    console.log({ key });
     if (!(key in acc)) {
       acc[key] = [];
     }
@@ -57,7 +58,7 @@ export const filterFloodReports = (
     // Sort by submission time and return the latest report
     return reports.sort(
       (a, b) =>
-        dayjs(b.submissionTime).valueOf() - dayjs(a.submissionTime).valueOf(),
+        dayjs(b.disasterDate).valueOf() - dayjs(a.disasterDate).valueOf(),
     )[0];
   });
 };
