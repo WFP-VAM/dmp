@@ -30,8 +30,8 @@ export const formatIncidentFields = (form: IncidentDto) => ({
  *
  * This function groups flood reports by a combination of floodN and commune.
  * For each group with multiple reports, it selects the most recent one based on
- * the submission time. This helps to eliminate duplicate reports and ensure
- * that only the latest information for each unique flood event is retained.
+ * the disaster date and submission time. This helps to eliminate duplicate reports
+ * and ensure that only the latest information for each unique flood event is retained.
  *
  * @param floodData - An array of formatted flood reports
  * @returns An array of filtered and deduplicated flood reports
@@ -54,10 +54,18 @@ export const filterFloodReports = (
       return reports[0];
     }
 
-    // Sort by submission time and return the latest report
-    return reports.sort(
-      (a, b) =>
-        dayjs(b.submissionTime).valueOf() - dayjs(a.submissionTime).valueOf(),
-    )[0];
+    // Sort by disasterDate first, then by submissionTime, and return the first report
+    return reports.sort((a, b) => {
+      const disasterDateDiff =
+        dayjs(b.disasterDate).valueOf() - dayjs(a.disasterDate).valueOf();
+      if (disasterDateDiff !== 0) {
+        return disasterDateDiff;
+      }
+
+      // If disasterDate is the same, sort by submissionTime
+      return (
+        dayjs(b.submissionTime).valueOf() - dayjs(a.submissionTime).valueOf()
+      );
+    })[0];
   });
 };

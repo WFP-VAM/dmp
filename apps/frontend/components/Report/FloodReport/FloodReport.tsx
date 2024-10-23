@@ -23,9 +23,13 @@ export const FloodReport = ({
   isAllColumnReport: boolean;
 }) => {
   const report = useMemo(() => {
+    // eslint-disable-next-line no-console
+    console.log({ forms });
     const formattedForms = filterFloodReports(
       forms.map(form => formatFloodFields(form)),
     );
+    // eslint-disable-next-line no-console
+    console.log({ filteredForms: formattedForms });
 
     return isCommuneLevelReport
       ? generateFloodCommuneLevelReport(formattedForms)

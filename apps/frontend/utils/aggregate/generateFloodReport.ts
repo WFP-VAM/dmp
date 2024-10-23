@@ -6,7 +6,6 @@ import {
   communeLeveldReportFirstKeys,
   provinceLevelReportCountKeys,
 } from './commonReportAggregateKeys';
-import { filterNFlood } from './filterNFlood';
 
 const sumKeys = Object.values(
   omit(FloodSpecific, [
@@ -24,15 +23,8 @@ const setAggKeys = [KoboCommonKeys.village];
 export const generateFloodCommuneLevelReport = (
   data: Record<string, string | undefined>[],
 ) => {
-  const filteredData = filterNFlood(
-    data,
-    KoboCommonKeys.commune,
-    KoboCommonKeys.disasterDate,
-    FloodSpecific.floodN,
-  );
-
   return aggregate({
-    data: filteredData,
+    data: data,
     groupKey: KoboCommonKeys.commune,
     firstKeys: communeLeveldReportFirstKeys,
     sumKeys,
@@ -45,15 +37,8 @@ export const generateFloodCommuneLevelReport = (
 export const generateFloodProvinceLevelReport = (
   data: Record<string, string | undefined>[],
 ) => {
-  const filteredData = filterNFlood(
-    data,
-    KoboCommonKeys.commune,
-    KoboCommonKeys.disasterDate,
-    FloodSpecific.floodN,
-  );
-
   return aggregate({
-    data: filteredData,
+    data: data,
     groupKey: KoboCommonKeys.province,
     sumKeys,
     countKeys: provinceLevelReportCountKeys,
