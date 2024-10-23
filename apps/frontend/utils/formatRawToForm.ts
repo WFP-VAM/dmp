@@ -55,10 +55,18 @@ export const filterFloodReports = (
       return reports[0];
     }
 
-    // Sort by submission time and return the latest report
-    return reports.sort(
-      (a, b) =>
-        dayjs(b.disasterDate).valueOf() - dayjs(a.disasterDate).valueOf(),
-    )[0];
+    // Sort by disasterDate first, then by submissionTime, and return the first report
+    return reports.sort((a, b) => {
+      const disasterDateDiff =
+        dayjs(b.disasterDate).valueOf() - dayjs(a.disasterDate).valueOf();
+      if (disasterDateDiff !== 0) {
+        return disasterDateDiff;
+      }
+
+      // If disasterDate is the same, sort by submissionTime
+      return (
+        dayjs(b.submissionTime).valueOf() - dayjs(a.submissionTime).valueOf()
+      );
+    })[0];
   });
 };
