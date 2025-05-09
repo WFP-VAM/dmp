@@ -39,23 +39,46 @@ export const generateTelegramMessage = (disasterType: DisasterType, form: Disast
   }
 
   const commonFields = formatCommonFields(form);
-  const text = `${get(Mapping, ['province', commonFields.province]) as string}, ${
-    get(Mapping, ['district', commonFields.district]) as string
-  }, ${get(Mapping, ['commune', commonFields.commune]) as string}
   
-    __${get(Mapping, ['disasters', commonFields.disTyp], startCase(disasterType)) as string}__ 
-    កាលបរិច្ឆេទ គ្រោះមហន្តរាយ: ${commonFields.disasterDate}
-    កាលបរិច្ឆេទ បញ្ចូលរបាយការណ៍: ${commonFields.entryDate}
+  // Get metric values
+  const affectedCount = getKeyMatchValue(form, metricsMapping.affected);
+  const deadCount = getKeyMatchValue(form, metricsMapping.dead);
+  const injuredCount = getKeyMatchValue(form, metricsMapping.injured);
+  const housesCount = getKeyMatchValue(form, metricsMapping.houses);
   
-    ចំនួនសរុប: ${getKeyMatchValue(form, metricsMapping.affected)}
-    ចំនួនស្លាប់: ${getKeyMatchValue(form, metricsMapping.dead)}
-    ចំនួនអ្នកកករសរុប: ${getKeyMatchValue(form, metricsMapping.injured)}
-    ទីកន្លែងផ្សព្វផ្សាយ: ${getKeyMatchValue(form, metricsMapping.houses)}
+  // Format location
+  const province = get(Mapping, ['province', commonFields.province]) as string;
+  const district = get(Mapping, ['district', commonFields.district]) as string;
+  const commune = get(Mapping, ['commune', commonFields.commune]) as string;
+  const location = `${province}, ${district}, ${commune}`;
   
-    
-    ទិន្នន័យបឋមបានរាយការណ៍ _${commonFields.entryName}_
-    DCDM បានបញ្ជូនទិន្នន័យថ្មីនៅក្នុងប្រព័ន្ធ។ សូមពិនិត្យ និងអនុម័ត. សូមអរគុណ !
-    [ភ្ជាប់ទៅគេហទំព័រ](${new URL(commonFields.approvalLink, frontendUrl).toString()})`;
+  // Format disaster type
+  const disasterName = get(Mapping, ['disasters', commonFields.disTyp], startCase(disasterType)) as string;
+  
+  // Build message with conditional sections
+  let text = `${location}\n\n__${disasterName}__\nកាលបរិច្ឆេទ គ្រោះមហន្តរាយ: ${commonFields.disasterDate}\nកាលបរិច្ឆេទ បញ្ចូលរបាយការណ៍: ${commonFields.entryDate}\n`;
+  
+  // Only add metrics that have values
+  if (affectedCount > 0) {
+    text += `\nចំនួនសរុប: ${affectedCount}`;
+  }
+  
+  if (deadCount > 0) {
+    text += `\nចំនួនស្លាប់: ${deadCount}`;
+  }
+  
+  if (injuredCount > 0) {
+    text += `\nចំនួនអ្នកកករសរុប: ${injuredCount}`;
+  }
+  
+  if (housesCount > 0) {
+    text += `\nទីកន្លែងផ្សព្វផ្សាយ: ${housesCount}`;
+  }
+  
+  // Add footer information with new district notification format
+  text += `\n\n${district}បានបញ្ជូនទិន្នន័យទៅក្នុងប្រព័ន្ធរួចហើយ`;
+  text += `\nសូមចូលពិនិត្យ និងឯកភាព។ សូមអរគុណ`;
+  text += `\n[ភ្ជាប់ទៅគេហទំព័រ](${new URL(commonFields.approvalLink, frontendUrl).toString()})`;
 
   return text;
 };
