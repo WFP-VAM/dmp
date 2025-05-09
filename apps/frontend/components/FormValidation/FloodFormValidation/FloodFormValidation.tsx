@@ -41,6 +41,7 @@ export const FloodFormValidation = ({
         province: [formattedForm.province],
         district: [formattedForm.district],
         commune: [formattedForm.commune],
+        village: formattedForm.village,
       },
       interviewer: formattedForm.entryName,
       disTyp: formattedForm.disTyp,

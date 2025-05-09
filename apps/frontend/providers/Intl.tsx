@@ -2,15 +2,25 @@ import { IntlProvider } from 'react-intl';
 
 import { useLanguageContext } from 'context';
 import { flattenMessages } from 'services/intl';
+import communes from 'translations/communes.json';
 import en from 'translations/en.json';
 import km from 'translations/km.json';
+import villages from 'translations/villages.json';
 
 export const loadLocaleData = (locale: string) => {
   switch (locale) {
     case 'km':
-      return flattenMessages(km);
+      return flattenMessages({
+        ...km,
+        commune: communes['km'],
+        village: villages['km'],
+      });
     case 'en':
-      return flattenMessages(en);
+      return flattenMessages({
+        ...en,
+        commune: communes['en'],
+        village: villages['en'],
+      });
   }
 };
 

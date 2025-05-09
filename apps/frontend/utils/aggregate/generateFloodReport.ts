@@ -19,6 +19,7 @@ const sumKeys = Object.values(
 
 const countCategoriesKeys = [FloodSpecific.RicePrice];
 const countMultipleChoicesKeys = [FloodSpecific.threat];
+const setAggKeys = [KoboCommonKeys.village];
 
 export const generateFloodCommuneLevelReport = (
   data: Record<string, string | undefined>[],
@@ -37,6 +38,7 @@ export const generateFloodCommuneLevelReport = (
     sumKeys,
     countCategoriesKeys,
     countMultipleChoicesKeys,
+    setAggKeys,
   });
 };
 
@@ -57,5 +59,6 @@ export const generateFloodProvinceLevelReport = (
     countKeys: provinceLevelReportCountKeys,
     countCategoriesKeys,
     countMultipleChoicesKeys,
+    setAggKeys,
   });
 };

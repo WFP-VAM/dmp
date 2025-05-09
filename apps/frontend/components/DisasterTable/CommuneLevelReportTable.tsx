@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
@@ -38,17 +39,22 @@ export const CommuneLevelReportTable = ({
       const [head, ...rest] = arr;
       const acc = { ...head, commune: undefined } as Record<
         string,
-        string | number | undefined
+        string | string[] | number | undefined
       >;
       const keys = Object.keys(acc);
       rest.forEach(x => {
         keys.forEach(k => {
-          const accNumber = typeof acc[k] === 'number';
-          const xNumber = typeof x[k] === 'number';
-          if (accNumber || xNumber) {
-            // @ts-expect-error acc[k] can't be undefined since we check if it is a number above
-            if (accNumber && xNumber) acc[k] += x[k];
-            if (!accNumber && xNumber) acc[k] = x[k];
+          if (k === 'village') {
+            // @ts-ignore
+            // eslint-disable-next-line
+            acc[k] = (acc[k] ?? []).concat(x[k] ?? []);
+
+            return;
+          }
+          if (typeof acc[k] === 'number' && typeof x[k] === 'number') {
+            acc[k] = (acc[k] as number) + (x[k] as number);
+          } else if (typeof x[k] === 'number') {
+            acc[k] = x[k];
           }
         });
       });
@@ -68,18 +74,25 @@ export const CommuneLevelReportTable = ({
       const [head, ...rest] = arr;
       const acc = { ...head[0], district: undefined } as Record<
         string,
-        string | number | undefined
+        string | string[] | number | undefined
       >;
       const keys = Object.keys(acc);
       rest.forEach(x => {
         const first = x[0]; // the sum of the communes are here
         keys.forEach(k => {
+          if (k === 'village') {
+            // @ts-ignore
+            // eslint-disable-next-line
+            acc[k] = (acc[k] || []).concat(first[k] || []);
+
+            return;
+          }
           const accNumber = typeof acc[k] === 'number';
           const xNumber = typeof first[k] === 'number';
-          if (accNumber || xNumber) {
-            // @ts-expect-error acc[k] can't be undefined since we check if it is a number above
-            if (accNumber && xNumber) acc[k] += first[k];
-            if (!accNumber && xNumber) acc[k] = first[k];
+          if (xNumber) {
+            acc[k] = accNumber
+              ? (acc[k] as number) + (first[k] as number)
+              : first[k];
           }
         });
       });
@@ -135,6 +148,11 @@ export const CommuneLevelReportTable = ({
       columnHeaderHeight="large"
       variant={disasterTableParams.variant}
       isFirstTable={disasterTableParams.isFirstTable}
+      // Filter out the rows that have been aggregated already.
+      // We check if the commune and district are undefined to only keep the province rows.
+      aggregateRowFilter={(row: { commune?: string; district?: string }) =>
+        row.commune === undefined && row.district === undefined
+      }
     />
   );
 };

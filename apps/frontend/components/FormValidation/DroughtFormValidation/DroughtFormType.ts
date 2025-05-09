@@ -6,6 +6,7 @@ export type DroughtFormType = {
     province: string[];
     district: string[];
     commune: string[];
+    village: string;
   };
   interviewer: string;
   disTyp: string;
