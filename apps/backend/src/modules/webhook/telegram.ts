@@ -3,7 +3,7 @@ import { get, startCase } from 'lodash';
 
 // TODO - avoid duplication of translated data
 import Mapping from './mapping.json';
-// Refactor not to use ALLOWED_HOST
+// Refactor not to use ALLOWED_HOST once deployed
 const frontendUrl = process.env.ALLOWED_HOST;
 
 // TODO - confirm fields with Roth.
@@ -39,10 +39,9 @@ export const generateTelegramMessage = (disasterType: DisasterType, form: Disast
   }
 
   const commonFields = formatCommonFields(form);
-  const text = `ទិន្នន័យបឋមបានរាយការណ៍ _${commonFields.entryName}_
-    ${get(Mapping, ['province', commonFields.province]) as string}
-    ${get(Mapping, ['district', commonFields.district]) as string}
-    ${get(Mapping, ['commune', commonFields.commune]) as string}
+  const text = `${get(Mapping, ['province', commonFields.province]) as string}, ${
+    get(Mapping, ['district', commonFields.district]) as string
+  }, ${get(Mapping, ['commune', commonFields.commune]) as string}
   
     __${get(Mapping, ['disasters', commonFields.disTyp], startCase(disasterType)) as string}__ 
     កាលបរិច្ឆេទ គ្រោះមហន្តរាយ: ${commonFields.disasterDate}
@@ -54,6 +53,7 @@ export const generateTelegramMessage = (disasterType: DisasterType, form: Disast
     ទីកន្លែងផ្សព្វផ្សាយ: ${getKeyMatchValue(form, metricsMapping.houses)}
   
     
+    ទិន្នន័យបឋមបានរាយការណ៍ _${commonFields.entryName}_
     DCDM បានបញ្ជូនទិន្នន័យថ្មីនៅក្នុងប្រព័ន្ធ។ សូមពិនិត្យ និងអនុម័ត. សូមអរគុណ !
     [ភ្ជាប់ទៅគេហទំព័រ](${new URL(commonFields.approvalLink, frontendUrl).toString()})`;
 
