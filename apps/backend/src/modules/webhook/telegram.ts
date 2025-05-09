@@ -18,6 +18,16 @@ import Mapping from './mapping.json';
 const frontendUrl = process.env.ALLOWED_HOST;
 
 /**
+ * Converts a raw form value to a number if it's valid and greater than 0
+ * @param rawValue The raw value from the form
+ * @returns The converted number if valid and > 0, otherwise 0
+ */
+const getValidNumber = (rawValue: unknown): number => {
+  const numValue = typeof rawValue === 'string' ? parseFloat(rawValue) : rawValue;
+  return !isNaN(Number(numValue)) && Number(numValue) > 0 ? Number(numValue) : 0;
+};
+
+/**
  * Maps form data to enum values based on disaster type
  * @param form The disaster data
  * @param disasterType The type of disaster
@@ -26,41 +36,17 @@ const frontendUrl = process.env.ALLOWED_HOST;
 const formatFormValues = (form: DisasterDtoType, disasterType: DisasterType): Record<string, number> => {
   const values: Record<string, number> = {};
   
-  // Extract values based on the disaster type
-  if (disasterType === FLOOD) {
-    for (const [enumKey, formKey] of Object.entries(floodSpecificKeys)) {
-      const rawValue = form[formKey as keyof typeof form];
-      const numValue = typeof rawValue === 'string' ? parseFloat(rawValue) : rawValue;
-      
-      if (!isNaN(Number(numValue)) && Number(numValue) > 0) {
-        values[enumKey] = Number(numValue);
-      } else {
-        values[enumKey] = 0;
-      }
-    }
-  } else if (disasterType === DROUGHT) {
-    for (const [enumKey, formKey] of Object.entries(droughtSpecificKeys)) {
-      const rawValue = form[formKey as keyof typeof form];
-      const numValue = typeof rawValue === 'string' ? parseFloat(rawValue) : rawValue;
-      
-      if (!isNaN(Number(numValue)) && Number(numValue) > 0) {
-        values[enumKey] = Number(numValue);
-      } else {
-        values[enumKey] = 0;
-      }
-    }
-  } else {
-    // INCIDENT
-    for (const [enumKey, formKey] of Object.entries(incidentSpecificKeys)) {
-      const rawValue = form[formKey as keyof typeof form];
-      const numValue = typeof rawValue === 'string' ? parseFloat(rawValue) : rawValue;
-      
-      if (!isNaN(Number(numValue)) && Number(numValue) > 0) {
-        values[enumKey] = Number(numValue);
-      } else {
-        values[enumKey] = 0;
-      }
-    }
+  // Determine which mapping to use based on disaster type
+  const mapping = disasterType === FLOOD 
+    ? floodSpecificKeys 
+    : disasterType === DROUGHT 
+      ? droughtSpecificKeys 
+      : incidentSpecificKeys;
+  
+  // Process all fields using the appropriate mapping
+  for (const [enumKey, formKey] of Object.entries(mapping)) {
+    const rawValue = form[formKey as keyof typeof form];
+    values[enumKey] = getValidNumber(rawValue);
   }
   
   return values;
