@@ -1,4 +1,16 @@
-import { DisasterDtoType, DisasterType, formatCommonFields, FLOOD, DROUGHT, FloodSpecific, IncidentSpecific, DroughtSpecific } from '@wfp-dmp/interfaces';
+import {
+  DisasterDtoType,
+  DisasterType,
+  formatCommonFields,
+  FLOOD,
+  DROUGHT,
+  FloodSpecific,
+  IncidentSpecific,
+  DroughtSpecific,
+  floodSpecificKeys,
+  droughtSpecificKeys,
+  incidentSpecificKeys,
+} from '@wfp-dmp/interfaces';
 import { get, startCase } from 'lodash';
 // TODO - avoid duplication of translated data
 import Mapping from './mapping.json';
@@ -6,18 +18,52 @@ import Mapping from './mapping.json';
 const frontendUrl = process.env.ALLOWED_HOST;
 
 /**
- * Gets a non-zero value for a field if it exists in the form
+ * Maps form data to enum values based on disaster type
  * @param form The disaster data
- * @param key The field key to look for
- * @returns The value if found and non-zero, otherwise 0
+ * @param disasterType The type of disaster
+ * @returns Record of enum keys to values
  */
-const getNonZeroValue = (form: DisasterDtoType, key: string): number => {
-  for (const [fieldKey, value] of Object.entries(form)) {
-    if (fieldKey.includes(key) && typeof value === 'number' && value > 0) {
-      return value;
+const formatFormValues = (form: DisasterDtoType, disasterType: DisasterType): Record<string, number> => {
+  const values: Record<string, number> = {};
+  
+  // Extract values based on the disaster type
+  if (disasterType === FLOOD) {
+    for (const [enumKey, formKey] of Object.entries(floodSpecificKeys)) {
+      const rawValue = form[formKey as keyof typeof form];
+      const numValue = typeof rawValue === 'string' ? parseFloat(rawValue) : rawValue;
+      
+      if (!isNaN(Number(numValue)) && Number(numValue) > 0) {
+        values[enumKey] = Number(numValue);
+      } else {
+        values[enumKey] = 0;
+      }
+    }
+  } else if (disasterType === DROUGHT) {
+    for (const [enumKey, formKey] of Object.entries(droughtSpecificKeys)) {
+      const rawValue = form[formKey as keyof typeof form];
+      const numValue = typeof rawValue === 'string' ? parseFloat(rawValue) : rawValue;
+      
+      if (!isNaN(Number(numValue)) && Number(numValue) > 0) {
+        values[enumKey] = Number(numValue);
+      } else {
+        values[enumKey] = 0;
+      }
+    }
+  } else {
+    // INCIDENT
+    for (const [enumKey, formKey] of Object.entries(incidentSpecificKeys)) {
+      const rawValue = form[formKey as keyof typeof form];
+      const numValue = typeof rawValue === 'string' ? parseFloat(rawValue) : rawValue;
+      
+      if (!isNaN(Number(numValue)) && Number(numValue) > 0) {
+        values[enumKey] = Number(numValue);
+      } else {
+        values[enumKey] = 0;
+      }
     }
   }
-  return 0;
+  
+  return values;
 };
 
 // Structure for message section templates
@@ -46,21 +92,14 @@ export const generateTelegramMessage = (disasterType: DisasterType, form: Disast
   let text = `${location}\n`;
   text += `- មានករណី${disasterName}: ថ្ងៃកើតហេតុ ${commonFields.disasterDate}\n`;
   text += `- ថ្ងៃបញ្ចូលរបាយការណ៍: ${commonFields.entryDate}\n`;
-  // Extract all potentially needed values from the form
-  const valueKeys = [
-    ...Object.values(FloodSpecific),
-    ...Object.values(DroughtSpecific), 
-    ...Object.values(IncidentSpecific)
-  ];
   
-  const values: Record<string, number> = Object.fromEntries(
-    valueKeys.map(key => [key, getNonZeroValue(form, key)])
-  );
+  // Get the formatted values based on disaster type
+  const values = formatFormValues(form, disasterType);
   
   // Shared message sections for all disaster types
   const commonSections: MessageSection[] = [
     {
-      format: (v) => `- ប៉ះពាល់: ${v[FloodSpecific.NumFamAff]} គ្រួសារ និងមនុស្ស ${v[FloodSpecific.NumPeoAff]} នាក់`,
+      format: (v) => `- ប៉ះពាល់: ${v[FloodSpecific.NumFamAff]} គ្រួសារ និងមនុស្ស  ${v[FloodSpecific.NumPeoAff]} នាក់`,
       condition: (v) => v[FloodSpecific.NumFamAff] > 0 || v[FloodSpecific.NumPeoAff] > 0
     }
   ];

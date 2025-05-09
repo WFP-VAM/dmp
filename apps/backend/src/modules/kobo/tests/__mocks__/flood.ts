@@ -15,6 +15,7 @@ export const floodMock: FloodDto = {
   'g2/Date_Dis': '2023-03-09',
   'g2/DisTyp': '1',
   'g2/flood_n': '1',
+  'g3/g3_1/g3_2/NumPeoAff': '36',
   'g15/g15_2/NumStu': '1',
   __version__: 'version',
   'meta/instanceID': 'uuid',
