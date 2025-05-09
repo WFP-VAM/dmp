@@ -20,7 +20,7 @@ describe('Telegram message generation', () => {
 
   it('should generate telegram message for flood disaster', () => {
     const message = generateTelegramMessage(FLOOD, floodMock as FloodDto);
-    console.warn('Flood Telegram Message:', message);
+    console.warn('Flood Telegram Message: \n\n', message);
     
     expect(message).toContain('កាលបរិច្ឆេទ គ្រោះមហន្តរាយ');
     expect(message).toContain('ចំនួនសរុប');
@@ -29,7 +29,7 @@ describe('Telegram message generation', () => {
 
   it('should generate telegram message for drought disaster', () => {
     const message = generateTelegramMessage(DROUGHT, droughtMock as DroughtDto);
-    console.warn('Drought Telegram Message:', message);
+    console.warn('Drought Telegram Message: \n\n', message);
     
     expect(message).toContain('កាលបរិច្ឆេទ គ្រោះមហន្តរាយ');
     expect(message).toContain('ចំនួនសរុប');
@@ -38,7 +38,7 @@ describe('Telegram message generation', () => {
 
   it('should generate telegram message for incident disaster', () => {
     const message = generateTelegramMessage(INCIDENT, incidentMock as IncidentDto);
-    console.warn('Incident Telegram Message:', message);
+    console.warn('Incident Telegram Message: \n\n', message);
     
     expect(message).toContain('កាលបរិច្ឆេទ គ្រោះមហន្តរាយ');
     expect(message).toContain('ចំនួនសរុប');
