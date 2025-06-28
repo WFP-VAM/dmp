@@ -14,6 +14,7 @@ export const droughtMock: DroughtDto = {
   'group_yu9nq00/Commune': '100402',
   'group_yu9nq00/Date_Dis': '2023-03-01',
   'group_yu9nq00/DisTyp': '2',
+  'group_dg01m69/group_kx2wb92/NumPeoAff': '36',
   'group_wi2jc00/PeoNoFod': '12',
   __version__: 'id',
   'meta/instanceID': 'uuid',
