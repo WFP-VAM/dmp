@@ -51,6 +51,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.province]: form[keys.province],
       [KoboCommonKeys.district]: form[keys.district],
       [KoboCommonKeys.commune]: form[keys.commune],
+      [KoboCommonKeys.village]: form[keys.village],
       [KoboCommonKeys.disasterDate]: form[keys.disasterDate],
       [KoboCommonKeys.disTyp]: form[keys.disTyp],
       [KoboCommonKeys.entryName]: form[keys.entryName],
@@ -61,6 +62,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
         form[keys.validationStatus].uid ?? ValidationStatusValue.onHold
       ).toString(),
       [KoboCommonKeys.submissionTime]: form[keys.submissionTime],
+      floodN: form[keys.floodN],
       approvalLink: path.join('/form', FLOOD, form[keys.id].toString()),
     };
   } else if (isDrought(form)) {
@@ -70,6 +72,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.province]: form[keys.province],
       [KoboCommonKeys.district]: form[keys.district],
       [KoboCommonKeys.commune]: form[keys.commune],
+      [KoboCommonKeys.village]: form[keys.village],
       [KoboCommonKeys.disasterDate]: form[keys.disasterDate],
       [KoboCommonKeys.disTyp]: form[keys.disTyp],
       [KoboCommonKeys.entryName]: form[keys.entryName],
@@ -89,6 +92,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.province]: form[keys.province],
       [KoboCommonKeys.district]: form[keys.district],
       [KoboCommonKeys.commune]: form[keys.commune],
+      [KoboCommonKeys.village]: form[keys.village],
       [KoboCommonKeys.disasterDate]: form[keys.disasterDate],
       [KoboCommonKeys.disTyp]: form[keys.disTyp],
       [KoboCommonKeys.entryName]: form[keys.entryName],

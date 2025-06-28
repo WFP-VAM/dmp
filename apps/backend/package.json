@@ -21,7 +21,7 @@
     "schema:drop": ". ./.env.rc && typeorm -d datasource.js schema:drop",
     "start:debug": "pnpm start --debug",
     "start:prod": "node dist/main.js",
-    "test": ". ./.env.test.rc && jest * --maxWorkers=2",
+    "test": "TZ=UTC . ./.env.test.rc && jest * --maxWorkers=2",
     "test:circular": "depcruise --validate .dependency-cruiser.js src",
     "test:coverage": "docker compose up -d db-test && pnpm test -- --coverage",
     "test:debug": "NODE_OPTIONS='--inspect-brk' pnpm test",
@@ -54,7 +54,7 @@
     "cli-color": "2.0.3",
     "connect-typeorm": "^2.0.0",
     "cookie-parser": "1.4.6",
-    "express": "4.18.1",
+    "express": "4.20.0",
     "express-formidable": "1.2.0",
     "express-session": "1.17.3",
     "jsonwebtoken": "9.0.0",
@@ -97,7 +97,7 @@
     "ts-loader": "9.3.1",
     "tsconfig": "workspace:*",
     "typescript": "4.7.4",
-    "webpack": "5.74.0"
+    "webpack": "5.94.0"
   },
   "engines": {
     "node": "^18.12.1"

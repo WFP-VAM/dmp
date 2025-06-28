@@ -1,11 +1,13 @@
 import { incidentSpecificKeys } from '@wfp-dmp/interfaces';
 import { Dayjs } from 'dayjs';
+import { FieldValues } from 'react-hook-form';
 
-export type IncidentFormType = {
+export interface IncidentFormType extends FieldValues {
   region: {
-    province: string;
-    district: string;
-    commune: string;
+    province: string[];
+    district: string[];
+    commune: string[];
+    village: string;
   };
   interviewer: string;
   disTyp: string;
@@ -13,4 +15,4 @@ export type IncidentFormType = {
   reportDate: Dayjs;
   incidentDate: Dayjs;
   specific: Record<keyof typeof incidentSpecificKeys, string | undefined>;
-};
+}

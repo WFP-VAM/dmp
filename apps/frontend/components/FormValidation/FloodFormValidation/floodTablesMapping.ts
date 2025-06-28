@@ -1,4 +1,7 @@
+import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 import { IntlShape } from 'react-intl';
+
+import { ColumnSetupParams } from 'utils/tableFormatting';
 
 import { AgricultureColumnSettings } from './tablesConfig/Agriculture';
 import { EducationNeedsSettings } from './tablesConfig/EducationNeeds';
@@ -12,7 +15,13 @@ import { NumAffected2ColumnSettings } from './tablesConfig/NumAffected-2';
 import { ShelterNeedsColumnSettings } from './tablesConfig/ShelterNeeds';
 import { WaterNeedsColumnSettings } from './tablesConfig/WaterNeeds';
 
-export const getFloodTablesMapping = (intl: IntlShape) => [
+export const getFloodTablesMapping = (
+  intl: IntlShape,
+): {
+  columns: GridColDef[] | ((detailed: boolean) => GridColDef[]);
+  columnGroup: GridColumnGroupingModel;
+  groupParams?: ColumnSetupParams;
+}[] => [
   NumAffected1ColumnSettings,
   NumAffected2ColumnSettings,
   HouseSocialColumnSettings,

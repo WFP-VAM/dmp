@@ -6,95 +6,120 @@ import { getColumnSetup, getGroupSetup } from 'utils/tableFormatting';
 
 const DefenseSecurityColumns = (intl: IntlShape): GridColDef[] => {
   return [
-    getColumnSetup(DroughtSpecific.NuKidColWat, DROUGHT, 150, {
-      type: 'singleSelect',
-      valueOptions: [
-        {
-          value: '1',
-          label: intl.formatMessage({
-            id: 'table.DROUGHT.dropdowns.yes',
-          }),
-        },
-        {
-          value: '2',
-          label: intl.formatMessage({
-            id: 'table.DROUGHT.dropdowns.no',
-          }),
-        },
-        { value: '', label: '' },
-      ],
+    getColumnSetup({
+      field: DroughtSpecific.NuKidColWat,
+      disaster: DROUGHT,
+      width: 150,
+      opts: {
+        type: 'singleSelect',
+        valueOptions: [
+          {
+            value: '1',
+            label: intl.formatMessage({
+              id: 'table.DROUGHT.dropdowns.yes',
+            }),
+          },
+          {
+            value: '2',
+            label: intl.formatMessage({
+              id: 'table.DROUGHT.dropdowns.no',
+            }),
+          },
+          { value: '', label: '' },
+        ],
+      },
     }),
-    getColumnSetup(DroughtSpecific.IfYes, DROUGHT, 120, {
-      type: 'singleSelect',
-      valueOptions: [
-        {
-          value: '1',
-          label: intl.formatMessage({
-            id: 'table.DROUGHT.dropdowns.smallIncrease',
-          }),
-        },
-        {
-          value: '2',
-          label: intl.formatMessage({
-            id: 'table.DROUGHT.dropdowns.bigIncrease',
-          }),
-        },
-        { value: '', label: '' },
-      ],
+    getColumnSetup({
+      field: DroughtSpecific.IfYes,
+      disaster: DROUGHT,
+      width: 120,
+      opts: {
+        type: 'singleSelect',
+        valueOptions: [
+          {
+            value: '1',
+            label: intl.formatMessage({
+              id: 'table.DROUGHT.dropdowns.smallIncrease',
+            }),
+          },
+          {
+            value: '2',
+            label: intl.formatMessage({
+              id: 'table.DROUGHT.dropdowns.bigIncrease',
+            }),
+          },
+          { value: '', label: '' },
+        ],
+      },
     }),
-    getColumnSetup(DroughtSpecific.NuWoCollWat, DROUGHT, 150, {
-      type: 'singleSelect',
-      valueOptions: [
-        {
-          value: '1',
-          label: intl.formatMessage({
-            id: 'table.DROUGHT.dropdowns.yes',
-          }),
-        },
-        {
-          value: '2',
-          label: intl.formatMessage({
-            id: 'table.DROUGHT.dropdowns.no',
-          }),
-        },
-        { value: '', label: '' },
-      ],
+    getColumnSetup({
+      field: DroughtSpecific.NuWoCollWat,
+      disaster: DROUGHT,
+      width: 150,
+      opts: {
+        type: 'singleSelect',
+        valueOptions: [
+          {
+            value: '1',
+            label: intl.formatMessage({
+              id: 'table.DROUGHT.dropdowns.yes',
+            }),
+          },
+          {
+            value: '2',
+            label: intl.formatMessage({
+              id: 'table.DROUGHT.dropdowns.no',
+            }),
+          },
+          { value: '', label: '' },
+        ],
+      },
     }),
-    getColumnSetup(DroughtSpecific.Yes, DROUGHT, 120, {
-      type: 'singleSelect',
-      valueOptions: [
-        {
-          value: '1',
-          label: intl.formatMessage({
-            id: 'table.DROUGHT.dropdowns.smallIncrease',
-          }),
-        },
-        {
-          value: '2',
-          label: intl.formatMessage({
-            id: 'table.DROUGHT.dropdowns.bigIncrease',
-          }),
-        },
-        { value: '', label: '' },
-      ],
+    getColumnSetup({
+      field: DroughtSpecific.Yes,
+      disaster: DROUGHT,
+      width: 120,
+      opts: {
+        type: 'singleSelect',
+        valueOptions: [
+          {
+            value: '1',
+            label: intl.formatMessage({
+              id: 'table.DROUGHT.dropdowns.smallIncrease',
+            }),
+          },
+          {
+            value: '2',
+            label: intl.formatMessage({
+              id: 'table.DROUGHT.dropdowns.bigIncrease',
+            }),
+          },
+          { value: '', label: '' },
+        ],
+      },
     }),
-    getColumnSetup(DroughtSpecific.TreatOccur, DROUGHT, 120, {
-      type: 'singleSelect',
-      valueOptions: [
-        {
-          value: '1',
-          label: intl.formatMessage({
-            id: 'table.DROUGHT.dropdowns.waterDispute',
-          }),
-        },
-        {
-          value: '2',
-          label: intl.formatMessage({
-            id: 'table.DROUGHT.dropdowns.sexualAbuse',
-          }),
-        },
-        { value: '', label: '' },
-      ],
+    getColumnSetup({
+      field: DroughtSpecific.TreatOccur,
+      disaster: DROUGHT,
+      width: 120,
+      opts: {
+        type: 'singleSelect',
+        valueOptions: [
+          {
+            value: '1',
+            label: intl.formatMessage({
+              id: 'table.DROUGHT.dropdowns.waterDispute',
+            }),
+          },
+          {
+            value: '2',
+            label: intl.formatMessage({
+              id: 'table.DROUGHT.dropdowns.sexualAbuse',
+            }),
+          },
+          { value: '', label: '' },
+        ],
+      },
     }),
   ];
 };

@@ -39,6 +39,13 @@ const nextConfig = {
   // experimental, however will be released the default in Nextjs 12.2.0
   swcMinify: true,
   images: { unoptimized: true },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"]
+    });
+    return config;
+  },
 
   headers: async () => [
     {
@@ -47,6 +54,9 @@ const nextConfig = {
       headers: securityHeaders,
     },
   ],
+
+  // Add the output configuration
+  output: 'export',
 };
 
 const withBundleAnalyzer = nextBundleAnalyzer({

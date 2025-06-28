@@ -1,25 +1,27 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import LocationOnIcon from '@mui/icons-material/FmdGoodOutlined';
+import { FormControl, InputAdornment, Stack, useTheme } from '@mui/material';
 import { communes, districts, provinces } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useAuth } from 'context/auth';
 
-const getDistrictsFilteredByProvince = (provinceValue: string) => {
+import MultiSelect from './MultiSelect';
+
+const getDistrictsFilteredByProvince = (provinceValue: string[]) => {
   return districts.filter((district: string) => {
-    return district.startsWith(provinceValue);
+    return provinceValue.find(x => district.startsWith(x));
   });
 };
-const getCommunesFilteredByDistrict = (districtValue: string) => {
+const getCommunesFilteredByDistrict = (districtValue: string[]) => {
   return communes.filter((commune: string) => {
-    return commune.startsWith(districtValue);
+    return districtValue.find(x => commune.startsWith(x));
   });
 };
 
 export interface Region {
-  province: string;
-  district: string;
-  commune: string;
+  province: string[];
+  district: string[];
+  commune: string[];
   disabled?: boolean;
 }
 
@@ -27,14 +29,17 @@ interface Props {
   value: Region;
   onChange: (regionValues: Region) => void;
   disableAll?: boolean;
+  disableMulti?: boolean;
 }
 
 export const RegionFilters = ({
   value,
   onChange,
   disableAll,
+  disableMulti,
 }: Props): JSX.Element => {
   const { user } = useAuth();
+  const theme = useTheme();
   const allowedProvinces = useMemo(() => {
     if (user === undefined) {
       return [];
@@ -50,7 +55,6 @@ export const RegionFilters = ({
     }
   }, [user]);
 
-  const intl = useIntl();
   const districtsFiltered = useMemo(
     () => getDistrictsFilteredByProvince(value.province),
     [value.province],
@@ -61,84 +65,74 @@ export const RegionFilters = ({
     [value.district],
   );
 
-  const selectInputStyles = { mr: 3, minWidth: 200 };
+  const startAdornment = (
+    <InputAdornment position="start">
+      <LocationOnIcon
+        sx={{
+          color: disableMulti ?? false ? 'grey' : 'black',
+          minWidth: '20px',
+          marginLeft: -1,
+          marginRight: -2,
+        }}
+      />
+    </InputAdornment>
+  );
 
   return (
-    <Box display="flex" flexDirection="row" justifyContent="left" margin={2}>
+    <Stack direction="row" gap={theme.spacing(1)} height="100%">
       <FormControl>
-        <InputLabel>
-          <FormattedMessage id="validation_search_params.province" />
-        </InputLabel>
-        <Select
-          disabled={disableAll === true || user === undefined ? true : false}
+        <MultiSelect
           value={value.province}
-          onChange={e => {
-            onChange({ province: e.target.value, district: '', commune: '' });
+          options={allowedProvinces}
+          onChange={v => {
+            onChange({ province: v, district: [], commune: [] });
           }}
-          sx={selectInputStyles}
-          label={intl.formatMessage({
-            id: 'validation_search_params.province',
-          })}
-        >
-          {allowedProvinces.map(provinceNumber => {
-            return (
-              <MenuItem value={provinceNumber} key={provinceNumber}>
-                <FormattedMessage id={`province.${provinceNumber}`} />
-              </MenuItem>
-            );
-          })}
-        </Select>
+          placeholder="common.province"
+          allSelectedText="validation_search_params.all-province"
+          formatPrefix="province"
+          disableMulti={disableMulti}
+          selectProps={{
+            disabled: disableAll === true || user === undefined ? true : false,
+            startAdornment,
+          }}
+        />
       </FormControl>
 
       <FormControl>
-        <InputLabel>
-          <FormattedMessage id="validation_search_params.district" />
-        </InputLabel>
-        <Select
-          disabled={disableAll === true || value.province === '' ? true : false}
+        <MultiSelect
           value={value.district}
-          onChange={e => {
-            onChange({ ...value, district: e.target.value, commune: '' });
+          options={districtsFiltered}
+          onChange={v => {
+            onChange({ ...value, district: v, commune: [] });
           }}
-          sx={selectInputStyles}
-          label={intl.formatMessage({
-            id: 'validation_search_params.district',
-          })}
-        >
-          {districtsFiltered.map(districtNumber => {
-            return (
-              <MenuItem value={districtNumber} key={districtNumber}>
-                <FormattedMessage id={`district.${districtNumber}`} />
-              </MenuItem>
-            );
-          })}
-        </Select>
+          placeholder="common.district"
+          allSelectedText="validation_search_params.all-district"
+          formatPrefix="district"
+          disableMulti={disableMulti}
+          selectProps={{
+            disabled: disableAll === true || value.province.length === 0,
+            startAdornment,
+          }}
+        />
       </FormControl>
 
       <FormControl>
-        <InputLabel>
-          <FormattedMessage id="validation_search_params.commune" />
-        </InputLabel>
-        <Select
-          disabled={disableAll === true || value.district === '' ? true : false}
+        <MultiSelect
           value={value.commune}
-          onChange={e => {
-            onChange({ ...value, commune: e.target.value });
+          options={communesFiltered}
+          onChange={v => {
+            onChange({ ...value, commune: v });
           }}
-          sx={selectInputStyles}
-          label={intl.formatMessage({
-            id: 'validation_search_params.commune',
-          })}
-        >
-          {communesFiltered.map(communeNumber => {
-            return (
-              <MenuItem value={communeNumber} key={communeNumber}>
-                <FormattedMessage id={`commune.${communeNumber}`} />
-              </MenuItem>
-            );
-          })}
-        </Select>
+          placeholder="common.commune"
+          allSelectedText="validation_search_params.all-commune"
+          formatPrefix="commune"
+          disableMulti={disableMulti}
+          selectProps={{
+            disabled: disableAll === true || value.district.length === 0,
+            startAdornment,
+          }}
+        />
       </FormControl>
-    </Box>
+    </Stack>
   );
 };

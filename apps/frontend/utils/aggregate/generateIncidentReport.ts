@@ -2,30 +2,30 @@ import { IncidentSpecific, KoboCommonKeys } from '@wfp-dmp/interfaces';
 
 import { aggregate } from './aggregate';
 import {
-  briefReportCountKeys,
-  detailedReportFirstKeys,
+  communeLeveldReportFirstKeys,
+  provinceLevelReportCountKeys,
 } from './commonReportAggregateKeys';
 
 const sumKeys = Object.values(IncidentSpecific);
 
-export const generateIncidentDetailedReport = (
+export const generateIncidentCommuneLevelReport = (
   data: Record<string, string | undefined>[],
 ) => {
   return aggregate({
     data,
     groupKey: KoboCommonKeys.commune,
-    firstKeys: detailedReportFirstKeys,
+    firstKeys: communeLeveldReportFirstKeys,
     sumKeys,
   });
 };
 
-export const generateIncidentBriefReport = (
+export const generateIncidentProvinceLevelReport = (
   data: Record<string, string | undefined>[],
 ) => {
   return aggregate({
     data,
     groupKey: KoboCommonKeys.province,
-    countKeys: briefReportCountKeys,
+    countKeys: provinceLevelReportCountKeys,
     sumKeys,
   });
 };

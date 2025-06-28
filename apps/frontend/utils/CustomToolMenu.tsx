@@ -1,0 +1,131 @@
+import {
+  FileDownload,
+  FilterList,
+  MoreVert,
+  ViewColumn,
+} from '@mui/icons-material';
+import {
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  MenuProps,
+  useTheme,
+} from '@mui/material';
+import { GridPreferencePanelsValue, useGridApiContext } from '@mui/x-data-grid';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import * as XLSX from 'xlsx';
+
+import { colors } from 'theme/muiTheme';
+
+interface CustomToolMenuProps {
+  withBorder?: boolean;
+}
+
+const CustomToolMenu = ({ withBorder = true }: CustomToolMenuProps) => {
+  const apiRef = useGridApiContext();
+  const theme = useTheme();
+  const [anchorEl, setAnchorEl] = React.useState<MenuProps['anchorEl']>(null);
+
+  const handleOpenMenu: React.MouseEventHandler<HTMLButtonElement> = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleOpenFilterMenu = () => {
+    apiRef.current.showFilterPanel();
+    handleCloseMenu();
+  };
+
+  const handleOpenColumnMenu = () => {
+    apiRef.current.showPreferences(GridPreferencePanelsValue.columns);
+    handleCloseMenu();
+  };
+
+  const handleDownloadCSV = () => {
+    apiRef.current.exportDataAsCsv({
+      fileName: 'Report Data',
+      allColumns: true,
+    });
+    handleCloseMenu();
+  };
+
+  const handleDownloadExcel = () => {
+    const csvString = apiRef.current.getDataAsCsv({ allColumns: true });
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    const workbook = XLSX.read(csvString, { type: 'string' });
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    XLSX.writeFile(workbook, 'Report Data.xlsx');
+    handleCloseMenu();
+  };
+
+  const borderStyles = withBorder
+    ? { border: `1px solid ${colors.gray}`, borderRadius: '4px' }
+    : {};
+
+  return (
+    <>
+      <IconButton
+        sx={{
+          '@media print': {
+            display: 'none',
+          },
+        }}
+        onClick={handleOpenMenu}
+        style={{
+          ...borderStyles,
+          padding: theme.spacing(0.5),
+          marginRight: theme.spacing(2),
+          color: 'black',
+        }}
+      >
+        <MoreVert />
+      </IconButton>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+      >
+        <MenuItem onClick={handleOpenFilterMenu}>
+          <ListItemIcon>
+            <FilterList fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="table.menu.open_filters" />
+          </ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleOpenColumnMenu}>
+          <ListItemIcon>
+            <ViewColumn fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="table.menu.manage_columns" />
+          </ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleDownloadCSV}>
+          <ListItemIcon>
+            <FileDownload fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="table.menu.download_csv" />
+          </ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleDownloadExcel}>
+          <ListItemIcon>
+            <FileDownload fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="table.menu.download_json" />
+          </ListItemText>
+        </MenuItem>
+      </Menu>
+    </>
+  );
+};
+
+export default CustomToolMenu;

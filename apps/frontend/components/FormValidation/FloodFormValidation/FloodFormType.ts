@@ -3,9 +3,10 @@ import { Dayjs } from 'dayjs';
 
 export type FloodFormType = {
   region: {
-    province: string;
-    district: string;
-    commune: string;
+    province: string[];
+    district: string[];
+    commune: string[];
+    village: string;
   };
   interviewer: string;
   disTyp: string;
