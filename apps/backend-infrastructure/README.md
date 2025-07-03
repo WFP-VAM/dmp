@@ -19,7 +19,7 @@ The backend is deployed on AWS thanks to the CDK.
 
 To deploy the backend:
 
-- Set `/wfp/dmp/kobo/token`, `/wfp/dmp/kobo/floodAssetId`, `/wfp/dmp/kobo/incidentAssetId`, `/wfp/dmp/kobo/droughtAssetId`, `/wfp/dmp/telegram/telegramNcdmChatId`, `/wfp/dmp/telegram/telegramPcdmChatId` and `/wfp/dmp/telegram/telegramBotToken` in the AWS Secret Manager.
+- Set `/${applicationName}/kobo/token`, `/${applicationName}/kobo/floodAssetId`, `/${applicationName}/kobo/incidentAssetId`, `/${applicationName}/kobo/droughtAssetId`, `/${applicationName}/telegram/telegramNcdmChatId`, `/${applicationName}/telegram/telegramPcdmChatId` and `/${applicationName}/telegram/telegramBotToken` in the AWS Secret Manager.
 
 - Set `CDK_DEFAULT_REGION`, `CDK_DEFAULT_ACCOUNT`, `ALLOWED_HOST` as environment variables.
 
@@ -36,3 +36,18 @@ To deploy the backend:
   - <domain-name> is the main domain name to use
 
 For more information check [here](https://www.notion.so/m33/Kobo-Deployment-52c5bacbf4214eb9ac2156ac94de032e)
+
+## Deployment CI
+Set all necessary secrets and variables. Here are some examples
+
+### Secrets:
+ALLOWED_HOST=staging.dmp.ovio.org
+APPLICATION_NAME=test
+AWS_ACCOUNT=246724672
+AWS_ROLE_ARN
+DOMAIN_NAME=staging-api.dmp.ovio.org
+
+### Variables
+AWS_REGION=us-east-1
+
+**Note:** `${applicationName}` should match the value you use for the `applicationName` context (e.g., `staging-dmp`, `production-dmp`). This ensures secrets are namespaced per environment.

@@ -82,25 +82,25 @@ export class ECSService extends NestedStack {
     const koboToken = Secret.fromSecretNameV2(
       this,
       'koboToken',
-      '/wfp/dmp/kobo/token',
+      `/${applicationName}/kobo/token`,
     );
 
     const floodAssetId = Secret.fromSecretNameV2(
       this,
       'koboFloodAssetId',
-      '/wfp/dmp/kobo/floodAssetId',
+      `/${applicationName}/kobo/floodAssetId`,
     );
 
     const incidentAssetId = Secret.fromSecretNameV2(
       this,
       'koboIncidentAssetId',
-      '/wfp/dmp/kobo/incidentAssetId',
+      `/${applicationName}/kobo/incidentAssetId`,
     );
 
     const droughtAssetId = Secret.fromSecretNameV2(
       this,
       'koboDroughtAssetId',
-      '/wfp/dmp/kobo/droughtAssetId',
+      `/${applicationName}/kobo/droughtAssetId`,
     );
 
     const webhookToken = new Secret(this, 'webhookToken', {
@@ -110,19 +110,19 @@ export class ECSService extends NestedStack {
     const telegramBotToken = Secret.fromSecretNameV2(
       this,
       'telegramBotToken',
-      '/wfp/dmp/telegram/telegramBotToken',
+      `/${applicationName}/telegram/telegramBotToken`,
     );
 
     const telegramPcdmChatId = Secret.fromSecretNameV2(
       this,
       'telegramPcdmChatId',
-      '/wfp/dmp/telegram/telegramPcdmChatId',
+      `/${applicationName}/telegram/telegramPcdmChatId`,
     );
 
     const telegramNcdmChatId = Secret.fromSecretNameV2(
       this,
       'telegramNcdmChatId',
-      '/wfp/dmp/telegram/telegramNcdmChatId',
+      `/${applicationName}/telegram/telegramNcdmChatId`,
     );
 
     const cluster = new Cluster(this, `${applicationName}Cluster`, { vpc });
