@@ -13,7 +13,7 @@
     "backend-infrastructure": "bin/backend-infrastructure.js"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.63.2",
+    "aws-cdk-lib": "2.179.0",
     "constructs": "^10.0.0",
     "source-map-support": "^0.5.21"
   },
@@ -21,7 +21,7 @@
     "@babel/core": "7.23.3",
     "@types/jest": "^29.4.0",
     "@types/node": "18.11.18",
-    "aws-cdk": "2.63.2",
+    "aws-cdk": "2.179.0",
     "eslint-config-custom": "workspace:*",
     "jest": "^29.4.1",
     "ts-jest": "^29.0.5",

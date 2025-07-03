@@ -33,7 +33,7 @@ class Database extends NestedStack {
     super(scope, id, props);
     const { vpc, applicationName, dbName } = props;
     this.dbName = dbName;
-    const dbSecurityGroup = new SecurityGroup(this, 'DBClusterSecurityGroup', {
+    const dbSecurityGroup = new SecurityGroup(this, `${applicationName}DBClusterSecurityGroup`, {
       vpc,
     });
 
@@ -53,7 +53,7 @@ class Database extends NestedStack {
       secretName: `${dbName}-credentials`,
       generateSecretString: {
         secretStringTemplate: JSON.stringify({
-          username: applicationName,
+          username: applicationName.replace(/-/g, '_'),
         }),
         excludePunctuation: true,
         includeSpace: false,
@@ -61,9 +61,9 @@ class Database extends NestedStack {
       },
     });
 
-    this.dbCluster = new DatabaseCluster(this, 'DbCluster', {
+    this.dbCluster = new DatabaseCluster(this, `${applicationName}DbCluster`, {
       engine: DatabaseClusterEngine.auroraPostgres({
-        version: AuroraPostgresEngineVersion.VER_14_5,
+        version: AuroraPostgresEngineVersion.VER_15_4,
       }),
       instances: 1,
 

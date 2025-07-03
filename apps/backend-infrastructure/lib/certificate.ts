@@ -10,6 +10,7 @@ import { Construct } from 'constructs';
 export interface CertificateProps extends NestedStackProps {
   hostedZoneDomainName: string;
   domainName: string;
+  applicationName: string;
 }
 
 export class Certificate extends NestedStack {
@@ -18,7 +19,7 @@ export class Certificate extends NestedStack {
   constructor(scope: Construct, id: string, props: CertificateProps) {
     super(scope, id, props);
 
-    const { hostedZoneDomainName, domainName } = props;
+    const { hostedZoneDomainName, domainName, applicationName } = props;
 
     const hostedZone = aws_route53.HostedZone.fromLookup(this, 'hosted-zone', {
       domainName: hostedZoneDomainName,
@@ -26,7 +27,7 @@ export class Certificate extends NestedStack {
 
     this.certificate = new aws_certificatemanager.Certificate(
       this,
-      'api-certificate',
+      `${applicationName}ApiCertificate`,
       {
         domainName,
         validation:

@@ -72,11 +72,11 @@ export class ECSService extends NestedStack {
     });
 
     const adminjsCookieSecret = new Secret(this, 'adminjsCookieSecret', {
-      secretName: 'dmpAdminjsCookieSecret',
+      secretName: `${applicationName}AdminjsCookieSecret`,
     });
 
     const adminjsSessionSecret = new Secret(this, 'adminjsSessionSecret', {
-      secretName: 'dmpAdminjsSessionSecret',
+      secretName: `${applicationName}AdminjsSessionSecret`,
     });
 
     const koboToken = Secret.fromSecretNameV2(
@@ -104,7 +104,7 @@ export class ECSService extends NestedStack {
     );
 
     const webhookToken = new Secret(this, 'webhookToken', {
-      secretName: 'dmpWebhookToken',
+      secretName: `${applicationName}WebhookToken`,
     });
 
     const telegramBotToken = Secret.fromSecretNameV2(
@@ -125,10 +125,10 @@ export class ECSService extends NestedStack {
       '/wfp/dmp/telegram/telegramNcdmChatId',
     );
 
-    const cluster = new Cluster(this, 'Cluster', { vpc });
+    const cluster = new Cluster(this, `${applicationName}Cluster`, { vpc });
     const loadBalancedService = new ApplicationLoadBalancedFargateService(
       this,
-      'FargateService',
+      `${applicationName}FargateService`,
       {
         cluster,
         desiredCount: 1,
