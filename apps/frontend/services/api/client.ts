@@ -37,7 +37,7 @@ apiClient.interceptors.request.use(
 
     return {
       ...config,
-      headers: Object.assign(config.headers ?? {}, {
+      headers: Object.assign(config.headers, {
         Authorization: `Bearer ${getAccessToken() as string}`,
       }),
     };
