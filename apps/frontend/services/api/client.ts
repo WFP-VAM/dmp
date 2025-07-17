@@ -29,7 +29,7 @@ apiClient.interceptors.request.use(
   async config => {
     const access = getAccessToken();
     if (access === null) {
-      return new CustomError('authentication', 'no-token');
+      throw new CustomError('authentication', 'no-token');
     }
     if (isTokenExpired(jwtDecode(access))) {
       await refreshToken();
