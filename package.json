@@ -46,7 +46,7 @@
       "@babel/core>json5": "2.2.2",
       "adminjs>flat": "5.0.2",
       "body-parser": "1.20.3",
-      "path-to-regexp": ">=0.1.12",
+      "path-to-regexp": "0.1.12",
       "path-to-regexp@3.2.0": "3.3.0",
       "path-to-regexp@6.2.2": "6.3.0",
       "rollup": "^3.29.5",

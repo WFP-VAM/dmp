@@ -34,7 +34,7 @@
     "@adminjs/nestjs": "5.1.0",
     "@adminjs/passwords": "^3.0.1",
     "@adminjs/typeorm": "4.0.0",
-    "@nestjs/axios": "^4.0.0",
+    "@nestjs/axios": "^2.0.0",
     "@nestjs/common": "9.0.11",
     "@nestjs/config": "2.2.0",
     "@nestjs/core": "9.0.11",
