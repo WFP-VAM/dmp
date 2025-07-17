@@ -1805,6 +1805,7 @@ packages:
   '@mui/base@5.0.0-beta.40':
     resolution: {integrity: sha512-I/lGHztkCzvwlXpjD2+SNmvNQvB4227xBXhISPjEaJUXGImOQ9f3D2Yj/T3KasSI/h0MLWy74X0J6clhPmsRbQ==}
     engines: {node: '>=12.0.0'}
+    deprecated: This package has been replaced by @base-ui-components/react
     peerDependencies:
       '@types/react': ^17.0.0 || ^18.0.0
       react: ^17.0.0 || ^18.0.0
@@ -3100,6 +3101,7 @@ packages:
 
   acorn-import-assertions@1.9.0:
     resolution: {integrity: sha512-cmMwop9x+8KFhxvKrKfPYmN6/pKTYYHBqLa0DfvVZcKMJWNyWLnaqND7dx/qn66R7ewM1UX5XMaDVP5wlVTaVA==}
+    deprecated: package has been renamed to acorn-import-attributes
     peerDependencies:
       acorn: ^8
 
@@ -3517,8 +3519,16 @@ packages:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
 
+  call-bind-apply-helpers@1.0.2:
+    resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
+    engines: {node: '>= 0.4'}
+
   call-bind@1.0.7:
     resolution: {integrity: sha512-GHTSNSYICQ7scH7sZ+M2rFopRoLh8t2bLSW6BbgrtLsahOIB5iyAVJf9GjWK3cYTDaMj4XdBpM1cA6pIS0Kv2w==}
+    engines: {node: '>= 0.4'}
+
+  call-bound@1.0.4:
+    resolution: {integrity: sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg==}
     engines: {node: '>= 0.4'}
 
   callsites@3.1.0:
@@ -4161,6 +4171,10 @@ packages:
     resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
 
+  dunder-proto@1.0.1:
+    resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
+    engines: {node: '>= 0.4'}
+
   duplexer@0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
 
@@ -4231,6 +4245,10 @@ packages:
     resolution: {integrity: sha512-jxayLKShrEqqzJ0eumQbVhTYQM27CfT1T35+gCgDFoL82JLsXqTJ76zv6A0YLOgEnLUMvLzsDsGIrl8NFpT2gQ==}
     engines: {node: '>= 0.4'}
 
+  es-define-property@1.0.1:
+    resolution: {integrity: sha512-e3nRfgfUZ4rNGL232gUgX06QNyyez04KdjFrF+LTRoOXmrOgFKDg4BCdsjW8EnT69eqdYGmRpJwiPVYNrCaW3g==}
+    engines: {node: '>= 0.4'}
+
   es-errors@1.3.0:
     resolution: {integrity: sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==}
     engines: {node: '>= 0.4'}
@@ -4250,6 +4268,10 @@ packages:
 
   es-object-atoms@1.0.0:
     resolution: {integrity: sha512-MZ4iQ6JwHOBQjahnjwaC1ZtIBH+2ohjamzAO3oaHcXYup7qxjF2fixyH+Q71voWHeOkI2q/TnJao/KfXYIZWbw==}
+    engines: {node: '>= 0.4'}
+
+  es-object-atoms@1.1.1:
+    resolution: {integrity: sha512-FGgH2h8zKNim9ljj7dankFPcICIK9Cp5bm+c2gQSYePhpaG5+esrLODihIorn+Pe6FGJzWhXQotPv73jTaldXA==}
     engines: {node: '>= 0.4'}
 
   es-set-tostringtag@2.0.3:
@@ -4533,11 +4555,13 @@ packages:
   eslint@8.26.0:
     resolution: {integrity: sha512-kzJkpaw1Bfwheq4VXUezFriD1GxszX6dUekM7Z3aC2o4hju+tsR/XyTC3RcoSD7jmy9VkPU3+N6YjVU2e96Oyg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   eslint@8.29.0:
     resolution: {integrity: sha512-isQ4EEiyUjZFbEKvEGJKKGBwXtvXX+zJbkVKCgTuB9t/+jUBcy8avhkEwWJecI15BkRkOYmvIM5ynbhRjEkoeg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   esniff@2.0.1:
@@ -4756,6 +4780,7 @@ packages:
 
   formidable@2.1.2:
     resolution: {integrity: sha512-CM3GuJ57US06mlpQ47YcunuUZ9jpm8Vx+P2CGt2j7HpgkKZO/DJYQ0Bobim8G6PFQmK5lOqOOdUXboU+h73A4g==}
+    deprecated: 'ACTION REQUIRED: SWITCH TO v3 - v1 and v2 are VULNERABLE! v1 is DEPRECATED FOR OVER 2 YEARS! Use formidable@latest or try formidable-mini for fresh projects'
 
   forwarded@0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
@@ -4829,9 +4854,17 @@ packages:
     resolution: {integrity: sha512-5uYhsJH8VJBTv7oslg4BznJYhDoRI6waYCxMmCdnTrcCrHA/fCFKoTFz2JKKE0HdDFUF7/oQuhzumXJK7paBRQ==}
     engines: {node: '>= 0.4'}
 
+  get-intrinsic@1.3.0:
+    resolution: {integrity: sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ==}
+    engines: {node: '>= 0.4'}
+
   get-package-type@0.1.0:
     resolution: {integrity: sha512-pjzuKtY64GYfWizNAJ0fr9VqttZkNiK2iS430LtIHzjBEr6bX8Am2zm4sW4Ro5wjWW5cAlRL1qAMTcXbjNAO2Q==}
     engines: {node: '>=8.0.0'}
+
+  get-proto@1.0.1:
+    resolution: {integrity: sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==}
+    engines: {node: '>= 0.4'}
 
   get-stream@5.2.0:
     resolution: {integrity: sha512-nBF+F1rAZVCu/p7rjzgA+Yb4lfYXrpl7a6VmJrU8wF9I1CKvP/QwPNZHnOlwbTkY6dvtFIzFMSyQXbLoTQPRpA==}
@@ -4923,6 +4956,10 @@ packages:
   gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
 
+  gopd@1.2.0:
+    resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
+    engines: {node: '>= 0.4'}
+
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
@@ -4965,6 +5002,10 @@ packages:
 
   has-symbols@1.0.3:
     resolution: {integrity: sha512-l3LCuF6MgDNwTDKkdYGEihYjt5pRPbEg46rtlmnSPlUbgmB8LOIrKJbYYFBSbnPaJexMKtiPO8hmeRjRz2Td+A==}
+    engines: {node: '>= 0.4'}
+
+  has-symbols@1.1.0:
+    resolution: {integrity: sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ==}
     engines: {node: '>= 0.4'}
 
   has-tostringtag@1.0.2:
@@ -5719,6 +5760,7 @@ packages:
 
   lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
 
   lodash.isplainobject@4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
@@ -5842,6 +5884,10 @@ packages:
   markdown-it@14.1.0:
     resolution: {integrity: sha512-a54IwgWPaeBCAAsv13YgmALOF1elABB08FxO9i+r4VFk5Vl4pKokRPeX8u5TCgSsPi6ec1otfLjdOpVcgbpshg==}
     hasBin: true
+
+  math-intrinsics@1.1.0:
+    resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
+    engines: {node: '>= 0.4'}
 
   mathml-tag-names@2.1.3:
     resolution: {integrity: sha512-APMBEanjybaPzUrfqU0IMU5I0AswKMH7k8OTLs0vvV4KZpExkTkY87nR/zpbuTPj+gARop7aGUbl11pnDfW6xg==}
@@ -6111,6 +6157,10 @@ packages:
     resolution: {integrity: sha512-IRZSRuzJiynemAXPYtPe5BoI/RESNYR7TYm50MC5Mqbd3Jmw5y790sErYw3V6SryFJD64b74qQQs9wn5Bg/k3g==}
     engines: {node: '>= 0.4'}
 
+  object-inspect@1.13.4:
+    resolution: {integrity: sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew==}
+    engines: {node: '>= 0.4'}
+
   object-is@1.1.6:
     resolution: {integrity: sha512-F8cZ+KfGlSGi09lJT7/Nd6KJZ9ygtvYC0/UYYLI9nmQKLMnydpB9yvbv9K1uSkEu7FU9vYPmVwLg328tX+ot3Q==}
     engines: {node: '>= 0.4'}
@@ -6282,9 +6332,6 @@ packages:
 
   path-to-regexp@3.3.0:
     resolution: {integrity: sha512-qyCH421YQPS2WFDxDjftfc1ZR5WKQzVzqsp4n9M2kQhVOo/ByahFoUNJfl58kOcEGfQ//7weFTDhm+ss8Ecxgw==}
-
-  path-to-regexp@6.3.0:
-    resolution: {integrity: sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ==}
 
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
@@ -7023,8 +7070,24 @@ packages:
   shortcss@0.1.3:
     resolution: {integrity: sha512-MIOoTd99CIGTrAuGiMUx9VZrnrZmWzEHuKbGM/w+ia/w98cezhlN9w4aQOVSxswdoqkUnWrMw3tThOi3sevZAg==}
 
+  side-channel-list@1.0.0:
+    resolution: {integrity: sha512-FCLHtRD/gnpCiCHEiJLOwdmFP+wzCmDEkc9y7NsYxeF4u7Btsn1ZuwgwJGxImImHicJArLP4R0yX4c2KCrMrTA==}
+    engines: {node: '>= 0.4'}
+
+  side-channel-map@1.0.1:
+    resolution: {integrity: sha512-VCjCNfgMsby3tTdo02nbjtM/ewra6jPHmpThenkTYh8pG9ucZ/1P8So4u4FGBek/BjpOVsDCMoLA/iuBKIFXRA==}
+    engines: {node: '>= 0.4'}
+
+  side-channel-weakmap@1.0.2:
+    resolution: {integrity: sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==}
+    engines: {node: '>= 0.4'}
+
   side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
+    engines: {node: '>= 0.4'}
+
+  side-channel@1.1.0:
+    resolution: {integrity: sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw==}
     engines: {node: '>= 0.4'}
 
   signal-exit@3.0.7:
@@ -7269,11 +7332,12 @@ packages:
   superagent@8.1.2:
     resolution: {integrity: sha512-6WTxW1EB6yCxV5VFOIPQruWGHqc3yI7hEmZK6h+pyk69Lk/Ut7rLUY6W/ONF2MjBuGjvmMiIpsrVJ2vjrHlslA==}
     engines: {node: '>=6.4.0 <13 || >=14'}
-    deprecated: Please upgrade to v9.0.0+ as we have fixed a public vulnerability with formidable dependency. Note that v9.0.0+ requires Node.js v14.18.0+. See https://github.com/ladjs/superagent/pull/1800 for insight. This project is supported and maintained by the team at Forward Email @ https://forwardemail.net
+    deprecated: Please upgrade to superagent v10.2.2+, see release notes at https://github.com/forwardemail/superagent/releases/tag/v10.2.2 - maintenance is supported by Forward Email @ https://forwardemail.net
 
   supertest@6.2.4:
     resolution: {integrity: sha512-M8xVnCNv+q2T2WXVzxDECvL2695Uv2uUj2O0utxsld/HRyJvOU8W9f1gvsYxSNU4wmIe0/L/ItnpU4iKq0emDA==}
     engines: {node: '>=6.4.0'}
+    deprecated: Please upgrade to supertest v7.1.3+, see release notes at https://github.com/forwardemail/supertest/releases/tag/v7.1.3 - maintenance is supported by Forward Email @ https://forwardemail.net
 
   supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
@@ -8136,7 +8200,7 @@ snapshots:
       express: 4.20.0
       express-formidable: 1.2.0
       express-session: 1.17.3
-      path-to-regexp: 6.3.0
+      path-to-regexp: 0.1.12
       tslib: 2.8.1
 
   '@adminjs/nestjs@5.1.0(@nestjs/common@9.0.11(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6))(@nestjs/core@9.0.11(@nestjs/common@9.0.11(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6))(@nestjs/platform-express@9.0.11)(reflect-metadata@0.1.13)(rxjs@7.5.6))(adminjs@6.7.5(@types/babel__core@7.20.5)(@types/react-dom@18.0.6))(rxjs@7.5.6)':
@@ -12082,6 +12146,11 @@ snapshots:
 
   bytes@3.1.2: {}
 
+  call-bind-apply-helpers@1.0.2:
+    dependencies:
+      es-errors: 1.3.0
+      function-bind: 1.1.2
+
   call-bind@1.0.7:
     dependencies:
       es-define-property: 1.0.0
@@ -12089,6 +12158,11 @@ snapshots:
       function-bind: 1.1.2
       get-intrinsic: 1.2.4
       set-function-length: 1.2.2
+
+  call-bound@1.0.4:
+    dependencies:
+      call-bind-apply-helpers: 1.0.2
+      get-intrinsic: 1.3.0
 
   callsites@3.1.0: {}
 
@@ -12643,7 +12717,7 @@ snapshots:
       object-keys: 1.1.1
       object.assign: 4.1.5
       regexp.prototype.flags: 1.5.2
-      side-channel: 1.0.6
+      side-channel: 1.1.0
       which-boxed-primitive: 1.0.2
       which-collection: 1.0.2
       which-typed-array: 1.1.15
@@ -12814,6 +12888,12 @@ snapshots:
 
   dotenv@16.4.5: {}
 
+  dunder-proto@1.0.1:
+    dependencies:
+      call-bind-apply-helpers: 1.0.2
+      es-errors: 1.3.0
+      gopd: 1.2.0
+
   duplexer@0.1.2: {}
 
   eastasianwidth@0.2.0: {}
@@ -12918,6 +12998,8 @@ snapshots:
     dependencies:
       get-intrinsic: 1.2.4
 
+  es-define-property@1.0.1: {}
+
   es-errors@1.3.0: {}
 
   es-get-iterator@1.1.3:
@@ -12954,6 +13036,10 @@ snapshots:
   es-module-lexer@1.5.4: {}
 
   es-object-atoms@1.0.0:
+    dependencies:
+      es-errors: 1.3.0
+
+  es-object-atoms@1.1.1:
     dependencies:
       es-errors: 1.3.0
 
@@ -13912,7 +13998,25 @@ snapshots:
       has-symbols: 1.0.3
       hasown: 2.0.2
 
+  get-intrinsic@1.3.0:
+    dependencies:
+      call-bind-apply-helpers: 1.0.2
+      es-define-property: 1.0.1
+      es-errors: 1.3.0
+      es-object-atoms: 1.1.1
+      function-bind: 1.1.2
+      get-proto: 1.0.1
+      gopd: 1.2.0
+      has-symbols: 1.1.0
+      hasown: 2.0.2
+      math-intrinsics: 1.1.0
+
   get-package-type@0.1.0: {}
+
+  get-proto@1.0.1:
+    dependencies:
+      dunder-proto: 1.0.1
+      es-object-atoms: 1.1.1
 
   get-stream@5.2.0:
     dependencies:
@@ -14035,6 +14139,8 @@ snapshots:
     dependencies:
       get-intrinsic: 1.2.4
 
+  gopd@1.2.0: {}
+
   graceful-fs@4.2.11: {}
 
   grapheme-splitter@1.0.4: {}
@@ -14069,6 +14175,8 @@ snapshots:
   has-proto@1.0.3: {}
 
   has-symbols@1.0.3: {}
+
+  has-symbols@1.1.0: {}
 
   has-tostringtag@1.0.2:
     dependencies:
@@ -14222,7 +14330,7 @@ snapshots:
     dependencies:
       es-errors: 1.3.0
       hasown: 2.0.2
-      side-channel: 1.0.6
+      side-channel: 1.1.0
 
   interpret@1.4.0: {}
 
@@ -15420,6 +15528,8 @@ snapshots:
       punycode.js: 2.3.1
       uc.micro: 2.1.0
 
+  math-intrinsics@1.1.0: {}
+
   mathml-tag-names@2.1.3: {}
 
   mdn-data@2.0.28: {}
@@ -15693,6 +15803,8 @@ snapshots:
 
   object-inspect@1.13.2: {}
 
+  object-inspect@1.13.4: {}
+
   object-is@1.1.6:
     dependencies:
       call-bind: 1.0.7
@@ -15869,8 +15981,6 @@ snapshots:
   path-to-regexp@0.1.12: {}
 
   path-to-regexp@3.3.0: {}
-
-  path-to-regexp@6.3.0: {}
 
   path-type@4.0.0: {}
 
@@ -16134,11 +16244,11 @@ snapshots:
 
   qs@6.10.3:
     dependencies:
-      side-channel: 1.0.6
+      side-channel: 1.1.0
 
   qs@6.11.0:
     dependencies:
-      side-channel: 1.0.6
+      side-channel: 1.1.0
 
   qs@6.12.1:
     dependencies:
@@ -16146,7 +16256,7 @@ snapshots:
 
   qs@6.13.0:
     dependencies:
-      side-channel: 1.0.6
+      side-channel: 1.1.0
 
   querystringify@2.2.0: {}
 
@@ -16675,12 +16785,40 @@ snapshots:
     dependencies:
       css-shorthand-properties: 1.1.1
 
+  side-channel-list@1.0.0:
+    dependencies:
+      es-errors: 1.3.0
+      object-inspect: 1.13.4
+
+  side-channel-map@1.0.1:
+    dependencies:
+      call-bound: 1.0.4
+      es-errors: 1.3.0
+      get-intrinsic: 1.3.0
+      object-inspect: 1.13.4
+
+  side-channel-weakmap@1.0.2:
+    dependencies:
+      call-bound: 1.0.4
+      es-errors: 1.3.0
+      get-intrinsic: 1.3.0
+      object-inspect: 1.13.4
+      side-channel-map: 1.0.1
+
   side-channel@1.0.6:
     dependencies:
       call-bind: 1.0.7
       es-errors: 1.3.0
       get-intrinsic: 1.2.4
       object-inspect: 1.13.2
+
+  side-channel@1.1.0:
+    dependencies:
+      es-errors: 1.3.0
+      object-inspect: 1.13.4
+      side-channel-list: 1.0.0
+      side-channel-map: 1.0.1
+      side-channel-weakmap: 1.0.2
 
   signal-exit@3.0.7: {}
 
