@@ -5,18 +5,7 @@ import winston from 'winston';
 
 import { nodeStorage } from './async-local-storage';
 
-interface TransformableInfo {
-  level: string;
-  message: string;
-  [key: string]: unknown;
-}
 type Message = string | Record<string, unknown>;
-
-interface LogContent {
-  traceId?: string;
-  message: Message;
-  level: string;
-}
 
 const LOG_LEVEL_TO_COLOR: Record<string, clc.Format> = {
   error: clc.red,
@@ -31,6 +20,7 @@ const addTraceId = winston.format((info) => {
   if (traceId !== undefined) {
     info.traceId = traceId;
   }
+
   return info;
 })();
 
@@ -38,6 +28,7 @@ const handleObjectMessage = winston.format((info) => {
   if (typeof info.message === 'object' && info.message !== null) {
     info = { ...info, ...info.message };
   }
+
   return info;
 })();
 
