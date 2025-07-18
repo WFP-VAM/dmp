@@ -26,31 +26,20 @@ const LOG_LEVEL_TO_COLOR: Record<string, clc.Format> = {
   debug: clc.magentaBright,
 };
 
-const addTraceId = {
-  transform: (logContent: TransformableInfo) => {
-    const traceId = nodeStorage.getStore()?.traceId;
-    const result = logContent;
+const addTraceId = winston.format((info) => {
+  const traceId = nodeStorage.getStore()?.traceId;
+  if (traceId !== undefined) {
+    info.traceId = traceId;
+  }
+  return info;
+})();
 
-    if (traceId !== undefined) {
-      result.traceId = traceId;
-    }
-
-    return result;
-  },
-};
-
-const isObjectMessage = (message: Message): message is Record<string, unknown> =>
-  message instanceof Object;
-
-const handleObjectMessage = {
-  transform: (logContent: LogContent): TransformableInfo => {
-    if (isObjectMessage(logContent.message)) {
-      logContent = { ...logContent, ...logContent.message };
-    }
-
-    return logContent as TransformableInfo;
-  },
-};
+const handleObjectMessage = winston.format((info) => {
+  if (typeof info.message === 'object' && info.message !== null) {
+    info = { ...info, ...info.message };
+  }
+  return info;
+})();
 
 const formatter = [Environment.Development, Environment.Test].includes(
   process.env.NODE_ENV as Environment,
