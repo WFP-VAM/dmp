@@ -13,7 +13,7 @@ overrides:
   path-to-regexp@6.2.2: 6.3.0
   rollup: ^3.29.5
   xml2js: 0.5.0
-  axios: '>=1.6.8'
+  axios: '>=1.8.2'
   multer: '>=2.0.2'
 
 importers:
@@ -94,7 +94,7 @@ importers:
         version: 4.0.0(adminjs@6.7.5(@types/babel__core@7.20.5)(@types/react-dom@18.0.6))(typeorm@0.3.9(pg@8.8.0)(ts-node@10.9.1(@types/node@16.11.59)(typescript@4.7.4)))
       '@nestjs/axios':
         specifier: ^2.0.0
-        version: 2.0.0(@nestjs/common@9.0.11(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6))(axios@1.6.8)(reflect-metadata@0.1.13)(rxjs@7.5.6)
+        version: 2.0.0(@nestjs/common@9.0.11(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6))(axios@1.10.0)(reflect-metadata@0.1.13)(rxjs@7.5.6)
       '@nestjs/common':
         specifier: 9.0.11
         version: 9.0.11(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6)
@@ -132,8 +132,8 @@ importers:
         specifier: 6.7.5
         version: 6.7.5(@types/babel__core@7.20.5)(@types/react-dom@18.0.6)
       axios:
-        specifier: '>=1.6.8'
-        version: 1.6.8
+        specifier: '>=1.8.2'
+        version: 1.10.0
       bcrypt:
         specifier: 5.1.0
         version: 5.1.0
@@ -362,11 +362,11 @@ importers:
         specifier: workspace:*
         version: link:../../packages/interfaces
       axios:
-        specifier: '>=1.6.8'
-        version: 1.6.8
+        specifier: '>=1.8.2'
+        version: 1.10.0
       axios-auth-refresh:
         specifier: 3.3.6
-        version: 3.3.6(axios@1.6.8)
+        version: 3.3.6(axios@1.10.0)
       chart.js:
         specifier: ^4.4.3
         version: 4.4.3
@@ -1979,7 +1979,7 @@ packages:
     resolution: {integrity: sha512-F6oceoQLEn031uun8NiommeMkRIojQqVryxQy/mK7fx0CI0KbgkJL3SloCQcsOD+agoEnqKJKXZpEvL6FNswJg==}
     peerDependencies:
       '@nestjs/common': ^7.0.0 || ^8.0.0 || ^9.0.0
-      axios: '>=1.6.8'
+      axios: '>=1.8.2'
       reflect-metadata: ^0.1.12
       rxjs: ^6.0.0 || ^7.0.0
 
@@ -3382,10 +3382,10 @@ packages:
   axios-auth-refresh@3.3.6:
     resolution: {integrity: sha512-2CeBUce/SxIfFxow5/n8vApJ97yYF6qoV4gh1UrswT7aEOnlOdBLxxyhOI4IaxGs6BY0l8YujU2jlc4aCmK17Q==}
     peerDependencies:
-      axios: '>=1.6.8'
+      axios: '>=1.8.2'
 
-  axios@1.6.8:
-    resolution: {integrity: sha512-v/ZHtJDU39mDpyBoFVkETcd/uNdxrWRrg3bKpOKzXFA6Bvqopts6ALSMU3y6ijYxbw2B+wPrIv46egTzJXCLGQ==}
+  axios@1.10.0:
+    resolution: {integrity: sha512-/1xYAC4MP/HEG+3duIhFr4ZQXR4sQXOIe+o6sdqzeykGLx6Upp/1p8MHqhINOvGeP7xyNHe7tsiJByc4SSVUxw==}
 
   axobject-query@2.2.0:
     resolution: {integrity: sha512-Td525n+iPOOyUQIeBfcASuG6uJsDOITl7Mds5gFyerkWiX7qhUTdYUBlSgNMyVqtSJqwpt1kXGLdUt6SykLMRA==}
@@ -10168,10 +10168,10 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@nestjs/axios@2.0.0(@nestjs/common@9.0.11(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6))(axios@1.6.8)(reflect-metadata@0.1.13)(rxjs@7.5.6)':
+  '@nestjs/axios@2.0.0(@nestjs/common@9.0.11(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6))(axios@1.10.0)(reflect-metadata@0.1.13)(rxjs@7.5.6)':
     dependencies:
       '@nestjs/common': 9.0.11(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6)
-      axios: 1.6.8
+      axios: 1.10.0
       reflect-metadata: 0.1.13
       rxjs: 7.5.6
 
@@ -11642,7 +11642,7 @@ snapshots:
       '@rollup/plugin-replace': 2.4.2(rollup@3.29.5)
       '@types/babel-core': 6.25.10
       '@types/react': 18.0.19
-      axios: 1.6.8
+      axios: 1.10.0
       babel-plugin-styled-components: 1.13.3(styled-components@5.3.11(react-dom@18.2.0(react@18.2.0))(react-is@18.3.1)(react@18.2.0))(supports-color@5.5.0)
       commander: 5.1.0
       flat: 5.0.2
@@ -11908,11 +11908,11 @@ snapshots:
 
   axe-core@4.4.1: {}
 
-  axios-auth-refresh@3.3.6(axios@1.6.8):
+  axios-auth-refresh@3.3.6(axios@1.10.0):
     dependencies:
-      axios: 1.6.8
+      axios: 1.10.0
 
-  axios@1.6.8:
+  axios@1.10.0:
     dependencies:
       follow-redirects: 1.15.9
       form-data: 4.0.4
