@@ -13,7 +13,9 @@ if (DEFAULT_ACCOUNT === undefined) throw 'Missing CDK_DEFAULT_ACCOUNT env';
 const app = new cdk.App();
 const applicationName = app.node.tryGetContext('applicationName') as string;
 
-console.log(`Deploying ${applicationName} to: ${DEFAULT_REGION} (${DEFAULT_ACCOUNT})`);
+console.log(
+  `Deploying ${applicationName} to: ${DEFAULT_REGION} (${DEFAULT_ACCOUNT})`
+);
 
 new NestStack(app, `${applicationName}NestStack`, {
   stackName: `${applicationName}NestStack`,
