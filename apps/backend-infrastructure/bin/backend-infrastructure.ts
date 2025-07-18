@@ -4,7 +4,7 @@ import 'source-map-support/register';
 
 import { NestStack } from '../lib/nestStack';
 
-const DEFAULT_REGION = "eu-west-2" // process.env.CDK_DEFAULT_REGION;
+const DEFAULT_REGION = 'eu-west-2'; // process.env.CDK_DEFAULT_REGION;
 const DEFAULT_ACCOUNT = process.env.CDK_DEFAULT_ACCOUNT;
 
 console.log('DEFAULT_REGION', DEFAULT_REGION);

@@ -33,9 +33,13 @@ class Database extends NestedStack {
     super(scope, id, props);
     const { vpc, applicationName, dbName } = props;
     this.dbName = dbName;
-    const dbSecurityGroup = new SecurityGroup(this, `${applicationName}DBClusterSecurityGroup`, {
-      vpc,
-    });
+    const dbSecurityGroup = new SecurityGroup(
+      this,
+      `${applicationName}DBClusterSecurityGroup`,
+      {
+        vpc,
+      },
+    );
 
     vpc.privateSubnets.forEach(privateSubnet => {
       dbSecurityGroup.addIngressRule(
