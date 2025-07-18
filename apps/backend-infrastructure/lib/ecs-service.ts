@@ -57,7 +57,7 @@ export class ECSService extends NestedStack {
     });
 
     const superadminUsername = new Secret(this, 'superadminUser', {
-      secretName: 'Superadmin-Username',
+      secretName: `${applicationName}/SuperadminUsername`,
       generateSecretString: {
         excludeUppercase: true,
         excludePunctuation: true,
@@ -65,18 +65,18 @@ export class ECSService extends NestedStack {
       },
     });
     const superadminPassword = new Secret(this, 'superadminPassword', {
-      secretName: 'Superadmin-Password',
+      secretName: `${applicationName}/SuperadminPassword`,
       generateSecretString: {
         passwordLength: 12,
       },
     });
 
     const adminjsCookieSecret = new Secret(this, 'adminjsCookieSecret', {
-      secretName: `${applicationName}AdminjsCookieSecret`,
+      secretName: `${applicationName}/AdminjsCookieSecret`,
     });
 
     const adminjsSessionSecret = new Secret(this, 'adminjsSessionSecret', {
-      secretName: `${applicationName}AdminjsSessionSecret`,
+      secretName: `${applicationName}/AdminjsSessionSecret`,
     });
 
     const koboToken = Secret.fromSecretNameV2(
@@ -104,7 +104,7 @@ export class ECSService extends NestedStack {
     );
 
     const webhookToken = new Secret(this, 'webhookToken', {
-      secretName: `${applicationName}WebhookToken`,
+      secretName: `${applicationName}/kobo/WebhookToken`,
     });
 
     const telegramBotToken = Secret.fromSecretNameV2(
