@@ -14,7 +14,7 @@ const app = new cdk.App();
 const applicationName = app.node.tryGetContext('applicationName') as string;
 
 console.log(
-  `Deploying ${applicationName} to: ${DEFAULT_REGION} (${DEFAULT_ACCOUNT})`
+  `Deploying ${applicationName} to: ${DEFAULT_REGION} (${DEFAULT_ACCOUNT})`,
 );
 
 new NestStack(app, `${applicationName}NestStack`, {
