@@ -92,7 +92,7 @@ If you cannot see the chat ids, remove the bot from the channels and add it agai
 
 You can now fill out `/${applicationName}/telegram/telegramNcdmChatId`, `/${applicationName}/telegram/telegramPcdmChatId` and `/${applicationName}/telegram/telegramBotToken` in the AWS Secret Manager.
 
-**Note:** `${applicationName}` should match the value you use for the `applicationName` context (e.g., `staging-dmp`, `production-dmp`). This ensures secrets are namespaced per environment.
+**Note:** `${applicationName}` should match the value you use for the `applicationName` context (e.g., `stagingdmp`, `dmp`). This ensures secrets are namespaced per environment.
 
 ### Kobo Webhook settings
 
