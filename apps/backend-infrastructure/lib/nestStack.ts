@@ -22,7 +22,7 @@ class NestStack extends Stack {
       'hostedZoneDomainName',
     ) as string;
 
-    const DB_NAME = `${applicationName}db`
+    const DB_NAME = `${applicationName}db`;
 
     const vpc = new NestVpc(this, NestVpc.name, {});
 
