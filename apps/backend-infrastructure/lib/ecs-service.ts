@@ -125,10 +125,10 @@ export class ECSService extends NestedStack {
       `${applicationName}/telegram/telegramNcdmChatId`,
     );
 
-    const cluster = new Cluster(this, `${applicationName}Cluster`, { vpc });
+    const cluster = new Cluster(this, 'Cluster', { vpc });
     const loadBalancedService = new ApplicationLoadBalancedFargateService(
       this,
-      `${applicationName}FargateService`,
+      'FargateService',
       {
         cluster,
         desiredCount: 1,

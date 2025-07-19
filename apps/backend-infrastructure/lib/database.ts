@@ -35,7 +35,7 @@ class Database extends NestedStack {
     this.dbName = dbName;
     const dbSecurityGroup = new SecurityGroup(
       this,
-      `${applicationName}DBClusterSecurityGroup`,
+      'DBClusterSecurityGroup',
       {
         vpc,
       },
@@ -65,7 +65,7 @@ class Database extends NestedStack {
       },
     });
 
-    this.dbCluster = new DatabaseCluster(this, `${applicationName}DbCluster`, {
+    this.dbCluster = new DatabaseCluster(this, 'DbCluster', {
       engine: DatabaseClusterEngine.auroraPostgres({
         version: AuroraPostgresEngineVersion.VER_15_4,
       }),

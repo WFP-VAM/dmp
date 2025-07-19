@@ -18,14 +18,14 @@ export class Route53Record extends NestedStack {
   constructor(scope: Construct, id: string, props: Route53RecordProps) {
     super(scope, id, props);
 
-    const { loadBalancer, hostedZoneDomainName, applicationName } = props;
+    const { loadBalancer, hostedZoneDomainName } = props;
 
     const hostedZone = aws_route53.HostedZone.fromLookup(this, 'hosted-zone', {
       domainName: hostedZoneDomainName,
     });
 
     // Add recordName for sub domains
-    new aws_route53.ARecord(this, `${applicationName}ARecord`, {
+    new aws_route53.ARecord(this, `ARecord`, {
       zone: hostedZone,
       target: aws_route53.RecordTarget.fromAlias(
         new aws_route53_targets.LoadBalancerTarget(loadBalancer),
@@ -33,7 +33,7 @@ export class Route53Record extends NestedStack {
       ttl: Duration.minutes(1),
     });
     // Add recordName for sub domains
-    new aws_route53.AaaaRecord(this, `${applicationName}AaaaRecord`, {
+    new aws_route53.AaaaRecord(this, `AaaaRecord`, {
       zone: hostedZone,
       target: aws_route53.RecordTarget.fromAlias(
         new aws_route53_targets.LoadBalancerTarget(loadBalancer),
