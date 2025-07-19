@@ -8,6 +8,7 @@ import { Route53Record } from './route53-record';
 import { NestVpc } from './vpc';
 
 const ALLOWED_HOST = process.env.ALLOWED_HOST ?? '';
+
 if (ALLOWED_HOST === '') throw 'Missing ALLOWED_HOST env';
 
 class NestStack extends Stack {
@@ -21,6 +22,8 @@ class NestStack extends Stack {
       'hostedZoneDomainName',
     ) as string;
 
+    const DB_NAME = `${applicationName}db`
+
     const vpc = new NestVpc(this, NestVpc.name, {});
 
     // To update if we want some sub domains
@@ -29,7 +32,7 @@ class NestStack extends Stack {
     const database = new Database(this, Database.name, {
       applicationName,
       vpc: vpc.vpc,
-      dbName: `${applicationName}db`,
+      dbName: DB_NAME,
     });
 
     const certificate = new Certificate(this, Certificate.name, {
@@ -41,7 +44,7 @@ class NestStack extends Stack {
       certificate: certificate.certificate,
       dbHostname: database.dbCluster.clusterEndpoint.hostname.toString(),
       dbPort: database.dbCluster.clusterEndpoint.port.toString(),
-      dbName: `${applicationName}db`,
+      dbName: DB_NAME,
       dbSecret: database.dbSecret,
       vpc: vpc.vpc,
       applicationName,
