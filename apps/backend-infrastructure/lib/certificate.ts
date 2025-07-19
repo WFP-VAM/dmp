@@ -10,7 +10,6 @@ import { Construct } from 'constructs';
 export interface CertificateProps extends NestedStackProps {
   hostedZoneDomainName: string;
   domainName: string;
-  applicationName: string;
 }
 
 export class Certificate extends NestedStack {
