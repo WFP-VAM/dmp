@@ -21,9 +21,7 @@ class NestStack extends Stack {
       'hostedZoneDomainName',
     ) as string;
 
-    const vpc = new NestVpc(this, NestVpc.name, {
-      applicationName,
-    });
+    const vpc = new NestVpc(this, NestVpc.name, {});
 
     // To update if we want some sub domains
     const domainName = hostedZoneDomainName;
@@ -37,7 +35,6 @@ class NestStack extends Stack {
     const certificate = new Certificate(this, Certificate.name, {
       hostedZoneDomainName,
       domainName,
-      applicationName,
     });
 
     const ecsServiceStack = new ECSService(this, ECSService.name, {
