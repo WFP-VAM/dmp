@@ -5,7 +5,7 @@ import { Construct } from 'constructs';
 export class NestVpc extends NestedStack {
   public readonly vpc: IVpc;
 
-  constructor(scope: Construct, id: string, props: StackProps) {
+  constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
     this.vpc = new Vpc(this, 'VPC', {
