@@ -12,8 +12,8 @@ const bootstrap = async () => {
 
   if (typeof process.env.ALLOWED_HOST === 'string') {
     // Enable CORS for ALLOWED_HOST and PR test sites.
-    const allowedHost = process.env.ALLOWED_HOST.startsWith('http') 
-      ? process.env.ALLOWED_HOST 
+    const allowedHost = process.env.ALLOWED_HOST.startsWith('http')
+      ? process.env.ALLOWED_HOST
       : `https://${process.env.ALLOWED_HOST}`;
     const allowedOrigins = [allowedHost, /https:\/\/wfp-dmp-[0-9]+.surge\.sh$/];
     app.enableCors({ credentials: true, origin: allowedOrigins });
