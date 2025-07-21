@@ -330,6 +330,12 @@ importers:
       '@emotion/styled':
         specifier: ^11.10.6
         version: 11.10.6(@emotion/react@11.10.6(@types/react@18.0.19)(react@18.2.0))(@types/react@18.0.19)(react@18.2.0)
+      '@formatjs/intl-datetimeformat':
+        specifier: ^6.18.0
+        version: 6.18.0
+      '@formatjs/intl-numberformat':
+        specifier: ^8.15.4
+        version: 8.15.4
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.4.0
         version: 6.4.0
@@ -1608,8 +1614,14 @@ packages:
   '@formatjs/icu-skeleton-parser@1.8.14':
     resolution: {integrity: sha512-i4q4V4qslThK4Ig8SxyD76cp3+QJ3sAqr7f6q9VVfeGtxG9OhiAk3y9XF6Q41OymsKzsGQ6OQQoJNY4/lI8TcQ==}
 
+  '@formatjs/intl-datetimeformat@6.18.0':
+    resolution: {integrity: sha512-x0/TGT5N3B8rC8hR8fcmaZXX/u+fef5u6+Tcm9o2/8fkBizM09gBI2eK7UM6/+p0ZBdwaKeQT/hxM5CK7Kdh1A==}
+
   '@formatjs/intl-localematcher@0.6.1':
     resolution: {integrity: sha512-ePEgLgVCqi2BBFnTMWPfIghu6FkbZnnBVhO2sSxvLfrdFw7wCHAHiDoM2h4NRgjbaY7+B7HgOLZGkK187pZTZg==}
+
+  '@formatjs/intl-numberformat@8.15.4':
+    resolution: {integrity: sha512-Y7ObFiSY5XC2v19H6nXwQ9zRMvPcBQP+rva26u8Z1ZfUTiMVtYAJ5dtAITILFJ9IPgcjUZY1gZLmJCmu0uLIhg==}
 
   '@formatjs/intl@3.1.6':
     resolution: {integrity: sha512-tDkXnA4qpIFcDWac8CyVJq6oW8DR7W44QDUBsfXWIIJD/FYYen0QoH46W7XsVMFfPOVKkvbufjboZrrWbEfmww==}
@@ -9566,8 +9578,22 @@ snapshots:
       '@formatjs/ecma402-abstract': 2.3.4
       tslib: 2.8.1
 
+  '@formatjs/intl-datetimeformat@6.18.0':
+    dependencies:
+      '@formatjs/ecma402-abstract': 2.3.4
+      '@formatjs/intl-localematcher': 0.6.1
+      decimal.js: 10.6.0
+      tslib: 2.8.1
+
   '@formatjs/intl-localematcher@0.6.1':
     dependencies:
+      tslib: 2.8.1
+
+  '@formatjs/intl-numberformat@8.15.4':
+    dependencies:
+      '@formatjs/ecma402-abstract': 2.3.4
+      '@formatjs/intl-localematcher': 0.6.1
+      decimal.js: 10.6.0
       tslib: 2.8.1
 
   '@formatjs/intl@3.1.6(typescript@4.7.4)':

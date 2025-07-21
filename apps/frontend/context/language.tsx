@@ -5,6 +5,8 @@ import {
   useEffect,
   useState,
 } from 'react';
+import '@formatjs/intl-numberformat/locale-data/km';
+import '@formatjs/intl-datetimeformat/locale-data/km';
 
 type LanguageContext = {
   language: string;
