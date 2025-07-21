@@ -4,13 +4,12 @@ import {
   formatCommonFields,
   KoboCommonKeys,
 } from '@wfp-dmp/interfaces';
+import { NUMBER_LAST_DAYS } from 'constant';
+import { useLanguageContext } from 'context';
 import dayjs from 'dayjs';
 import { compact, groupBy, map, orderBy, pick, range, uniq } from 'lodash';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import { NUMBER_LAST_DAYS } from 'constant';
-import { useLanguageContext } from 'context';
 import { formatDate, getDateWeek } from 'utils/date';
 import { dropNotApproved } from 'utils/dropNotApproved';
 
@@ -94,30 +93,32 @@ export const HomeTable = ({
   const disastersPerDate = useMemo(() => getDisastersPerDate(forms), [forms]);
   const { language } = useLanguageContext();
 
-  const firstItemDateString = disastersPerDate[0]?.entryDate as
+  const mostRecentDateString = disastersPerDate[0]?.entryDate as
     | string
     | undefined;
-  const firstItemDate =
-    firstItemDateString !== undefined
-      ? new Date(firstItemDateString)
+  const mostRecentDate =
+    mostRecentDateString !== undefined
+      ? new Date(mostRecentDateString)
       : new Date();
-  const monthTranslated = firstItemDate.toLocaleString(language, {
+  const monthTranslated = mostRecentDate.toLocaleString(language, {
     month: 'long',
   });
-  const week = getDateWeek(firstItemDate);
-  const formattedStartDate = formatDate(firstItemDate, 'MM/DD');
 
-  const lastItemDateString = disastersPerDate[NUMBER_LAST_DAYS - 1]
+  const week = getDateWeek(mostRecentDate);
+  const formattedMostRecentDate = formatDate(mostRecentDate, 'MM/DD');
+
+  const earliestDateString = disastersPerDate[NUMBER_LAST_DAYS - 1]
     ?.entryDate as string | undefined;
-  const formattedEndDate =
-    lastItemDateString !== undefined && formatDate(lastItemDateString, 'MM/DD');
+  const formattedEarliestDate =
+    earliestDateString !== undefined && formatDate(earliestDateString, 'MM/DD');
 
   return (
     <Card style={{ padding: theme.spacing(3) }}>
       <Stack gap={theme.spacing(1)}>
         <Typography fontWeight={600} fontSize="1rem" variant="subtitle2">
-          {monthTranslated} — <FormattedMessage id="home.week" /> {week} —{' '}
-          {formattedStartDate} - {formattedEndDate}
+          {monthTranslated} — <FormattedMessage id="home.week" /> {week}
+          {formattedEarliestDate !== false &&
+            ` — ${formattedEarliestDate} - ${formattedMostRecentDate}`}
         </Typography>
         <HomeTableRow
           isLoading={isLoading}
