@@ -42,7 +42,14 @@ jobs:
           CDK_DEFAULT_REGION: ${{ vars.AWS_REGION }}
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
           ALLOWED_HOST: ${{ secrets.ALLOWED_HOST }}
-        run: cd apps/backend-infrastructure && pnpm cdk deploy --context applicationName="${{ secrets.APPLICATION_NAME }}" --context hostedZoneDomainName="${{ secrets.DOMAIN_NAME }}"
+          AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+        run: |
+          echo "CDK_DEFAULT_ACCOUNT: $CDK_DEFAULT_ACCOUNT"
+          echo "AWS_ROLE_ARN: $AWS_ROLE_ARN"
+          cd apps/backend-infrastructure
+          pnpm cdk deploy \
+            --context applicationName="${{ secrets.APPLICATION_NAME }}" \
+            --context hostedZoneDomainName="${{ secrets.DOMAIN_NAME }}"
 
   deploy_staging_surge:
     runs-on: ubuntu-latest
@@ -68,7 +75,7 @@ jobs:
           cd apps/frontend
           ./gen_env.sh staging
       - name: Deploy on surge
-        uses: dswistowski/surge-sh-action@v1
+        uses: dswistowski/surge-sh-action@v1.1.0
         with:
           domain: ${{ env.surge_url }}
           project: 'apps/frontend/out/.'

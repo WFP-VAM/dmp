@@ -113,7 +113,7 @@ jobs:
           cd out
           cp index.html 200.html
       - name: Deploy on surge
-        uses: dswistowski/surge-sh-action@v1
+        uses: dswistowski/surge-sh-action@v1.1.0
         with:
           domain: ${{ env.surge_url }}
           project: 'apps/frontend/out/.'

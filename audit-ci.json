@@ -2,7 +2,11 @@
   "high": true,
   "skip-dev": true,
   "allowlist": [
-    "*documentation>@docusaurus/core>@docusaurus/mdx-loader>@mdx-js/mdx>remark-parse>trim*",
-    "GHSA-9wv6-86v2-598j"
+    "GHSA-jr5f-v2jv-69x6"
+  ],
+  "_info": "axios >0.27.2 is breaking our nested params in kobo.service.ts",
+  "allowlistPaths": [
+    "apps/backend > @adminjs/express@5.0.1 > adminjs@6.7.5 > axios@0.27.2",
+    "apps/backend > @nestjs/axios@2.0.0 > axios@0.27.2"
   ]
 }
