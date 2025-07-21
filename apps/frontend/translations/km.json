@@ -65,7 +65,8 @@
     "logout": "ចាកចេញ"
   },
   "home": {
-    "no_report": "គ្មានរបាយការណ៍គ្រោះមហន្តរាយ"
+    "no_report": "គ្មានរបាយការណ៍គ្រោះមហន្តរាយ",
+    "week": "សប្តាហ៍"
   },
   "validation_search_params": {
     "location": "ទីតាំង",
