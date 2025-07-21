@@ -115,7 +115,7 @@ export const HomeTable = ({
   return (
     <Card style={{ padding: theme.spacing(3) }}>
       <Stack gap={theme.spacing(1)}>
-        <Typography fontWeight={600} variant="subtitle2">
+        <Typography fontWeight={600} fontSize="1rem" variant="subtitle2">
           {monthTranslated} — <FormattedMessage id="home.week" /> {week} —{' '}
           {formattedStartDate} - {formattedEndDate}
         </Typography>
