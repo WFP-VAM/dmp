@@ -5,7 +5,12 @@ import {
   useEffect,
   useState,
 } from 'react';
+// Import polyfills for Intl.NumberFormat and Intl.DateTimeFormat
+import '@formatjs/intl-numberformat/polyfill-force';
+import '@formatjs/intl-numberformat/locale-data/en';
 import '@formatjs/intl-numberformat/locale-data/km';
+import '@formatjs/intl-datetimeformat/polyfill-force';
+import '@formatjs/intl-datetimeformat/locale-data/en';
 import '@formatjs/intl-datetimeformat/locale-data/km';
 
 type LanguageContext = {
