@@ -4,6 +4,11 @@
     "district": "District / Krong",
     "commune": "Commune"
   },
+  "generic": {
+    "password_input": {
+      "show_password": "Show password"
+    }
+  },
   "login": {
     "title": "Welcome!",
     "error": "An error has occurred. Please try again.",

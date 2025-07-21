@@ -25,7 +25,7 @@ export class Route53Record extends NestedStack {
     });
 
     // Add recordName for sub domains
-    new aws_route53.ARecord(this, 'a-dns-record', {
+    new aws_route53.ARecord(this, `ARecord`, {
       zone: hostedZone,
       target: aws_route53.RecordTarget.fromAlias(
         new aws_route53_targets.LoadBalancerTarget(loadBalancer),
@@ -33,7 +33,7 @@ export class Route53Record extends NestedStack {
       ttl: Duration.minutes(1),
     });
     // Add recordName for sub domains
-    new aws_route53.AaaaRecord(this, 'aaaa-dns-record', {
+    new aws_route53.AaaaRecord(this, `AaaaRecord`, {
       zone: hostedZone,
       target: aws_route53.RecordTarget.fromAlias(
         new aws_route53_targets.LoadBalancerTarget(loadBalancer),

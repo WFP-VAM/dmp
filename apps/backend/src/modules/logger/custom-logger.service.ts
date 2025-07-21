@@ -5,18 +5,7 @@ import winston from 'winston';
 
 import { nodeStorage } from './async-local-storage';
 
-interface TransformableInfo {
-  level: string;
-  message: string;
-  [key: string]: unknown;
-}
 type Message = string | Record<string, unknown>;
-
-interface LogContent {
-  traceId?: string;
-  message: Message;
-  level: string;
-}
 
 const LOG_LEVEL_TO_COLOR: Record<string, clc.Format> = {
   error: clc.red,
@@ -26,31 +15,22 @@ const LOG_LEVEL_TO_COLOR: Record<string, clc.Format> = {
   debug: clc.magentaBright,
 };
 
-const addTraceId = {
-  transform: (logContent: TransformableInfo) => {
-    const traceId = nodeStorage.getStore()?.traceId;
-    const result = logContent;
+const addTraceId = winston.format((info) => {
+  const traceId = nodeStorage.getStore()?.traceId;
+  if (traceId !== undefined) {
+    info.traceId = traceId;
+  }
 
-    if (traceId !== undefined) {
-      result.traceId = traceId;
-    }
+  return info;
+})();
 
-    return result;
-  },
-};
+const handleObjectMessage = winston.format((info) => {
+  if (typeof info.message === 'object' && info.message !== null) {
+    info = { ...info, ...info.message };
+  }
 
-const isObjectMessage = (message: Message): message is Record<string, unknown> =>
-  message instanceof Object;
-
-const handleObjectMessage = {
-  transform: (logContent: LogContent): TransformableInfo => {
-    if (isObjectMessage(logContent.message)) {
-      logContent = { ...logContent, ...logContent.message };
-    }
-
-    return logContent as TransformableInfo;
-  },
-};
+  return info;
+})();
 
 const formatter = [Environment.Development, Environment.Test].includes(
   process.env.NODE_ENV as Environment,
