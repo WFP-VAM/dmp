@@ -62,7 +62,8 @@
     "logout": "Log out"
   },
   "home": {
-    "no_report": "No disaster report"
+    "no_report": "No disaster report",
+    "week": "week"
   },
   "validation_search_params": {
     "location": "Location",
