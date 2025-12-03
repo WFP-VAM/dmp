@@ -1,11 +1,11 @@
 import {
-  BaseSelectProps,
   Checkbox,
   FormControl,
   ListItemText,
   MenuItem,
   Select,
   SelectChangeEvent,
+  SelectProps,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -32,7 +32,7 @@ interface MultiSelectProps {
   width?: number;
   selectProps?: Partial<
     Omit<
-      BaseSelectProps,
+      SelectProps,
       | 'MenuProps'
       | 'renderValue'
       | 'displayEmpty'
