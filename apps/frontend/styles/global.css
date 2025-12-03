@@ -10,12 +10,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&display=swap');
 
-@font-face {
-  font-family: 'Khmer OS Siemreap';
-  src: url('/fonts/Khmer\ OS\ Siemreap\ Regular.ttf') format('truetype');
-  unicode-range: U+1780-17FF; /* Khmer Unicode range */
-}
-
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -59,7 +53,7 @@ h1 {
 p,
 span,
 div {
-  font-family: 'Khmer OS Siemreap', 'Roboto', sans-serif;
+  font-family: 'Battambang', 'Roboto', sans-serif;
 }
 
 /*
