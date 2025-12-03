@@ -120,7 +120,11 @@ export const DisasterTable = ({
     }, {} as Record<string, boolean>);
   };
 
-  const columnVisibilityModel = {}; // generateColumnVisibilityModel(columns, data);
+  // Use state to track column visibility so it persists when user hides/shows columns
+  // Initialize with all columns visible (empty object means all visible in DataGrid)
+  const [columnVisibilityModel, setColumnVisibilityModel] = React.useState<
+    Record<string, boolean>
+  >({});
 
   const nonEmptyData = data;
   // isEditable
@@ -396,10 +400,9 @@ export const DisasterTable = ({
                       columnHeaderHeight === 'large' ? 100 : 72
                     }
                     disableVirtualization
-                    initialState={{
-                      columns: {
-                        columnVisibilityModel,
-                      },
+                    columnVisibilityModel={columnVisibilityModel}
+                    onColumnVisibilityModelChange={newModel => {
+                      setColumnVisibilityModel(newModel);
                     }}
                   />
                 </Box>
