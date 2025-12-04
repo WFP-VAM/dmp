@@ -11,18 +11,19 @@ import { colors } from 'theme/muiTheme';
 
 import { ValidationIndicator } from './ValidationIndicator';
 
+// Feature flag: if true, cancel navigates away; if false, cancel resets form and stays on page
+const SHOULD_NAVIGATE_ON_CANCEL = false;
+
 interface FormValidationFooterProps {
   isEditMode: boolean;
   status: ValidationStatusValue | undefined;
   setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>;
-  setShouldReset: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FormValidationFooter = ({
   isEditMode,
   status,
   setIsEditMode,
-  setShouldReset,
 }: FormValidationFooterProps) => {
   const theme = useTheme();
   const router = useRouter();
@@ -88,10 +89,16 @@ const FormValidationFooter = ({
           )}
           {isEditMode && (
             <Button
+              type="button"
               sx={editButtonStyles}
               onClick={() => {
-                setIsEditMode(false);
-                setShouldReset(true);
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                if (SHOULD_NAVIGATE_ON_CANCEL) {
+                  void router.push('/forms/search');
+                } else {
+                  setIsEditMode(false);
+                  void router.replace(router.asPath);
+                }
               }}
               disabled={isMutating}
               startIcon={<Close />}

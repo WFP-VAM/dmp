@@ -120,7 +120,6 @@ export const FloodFormValidation = ({
         <FormValidationFooter
           isEditMode={isEditMode}
           setIsEditMode={setIsEditMode}
-          setShouldReset={setShouldReset}
           status={validationForm._validation_status.uid}
         />
       </Stack>
