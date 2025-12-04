@@ -94,7 +94,7 @@ const MultiSelect = ({
     <FormControl sx={{ m: 0, width, backgroundColor: 'white' }}>
       <Select
         disabled={disabled}
-        sx={{ height: '2.5rem' }}
+        sx={{ minHeight: '2.5rem' }}
         multiple
         value={value}
         onChange={handleChange}

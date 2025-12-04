@@ -82,10 +82,13 @@ const FormValidationHeader = ({
                 disabled={!isEditMode}
                 value={value}
                 onChange={onChange}
-                sx={{ width: 140, backgroundColor: 'white' }}
+                sx={{ width: 150, backgroundColor: 'white' }}
                 slotProps={{
                   inputAdornment: {
                     position: 'start',
+                    sx: {
+                      marginRight: '0px',
+                    },
                   },
                 }}
               />
@@ -104,10 +107,13 @@ const FormValidationHeader = ({
                 disabled={!isEditMode}
                 value={value}
                 onChange={onChange}
-                sx={{ width: 140, backgroundColor: 'white' }}
+                sx={{ width: 150, backgroundColor: 'white' }}
                 slotProps={{
                   inputAdornment: {
                     position: 'start',
+                    sx: {
+                      marginRight: '0px',
+                    },
                   },
                 }}
               />
