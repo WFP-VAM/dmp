@@ -71,7 +71,7 @@ const FormValidationHeader = ({
           />
         </Stack>
         <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
-          <Typography maxWidth="3rem" color={colors.gray2}>
+          <Typography maxWidth="5rem" color={colors.gray2}>
             <FormattedMessage id="forms_table.headers.entry_date" />
           </Typography>
           <Controller
@@ -96,7 +96,7 @@ const FormValidationHeader = ({
           />
         </Stack>
         <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
-          <Typography maxWidth="4rem" color={colors.gray2}>
+          <Typography maxWidth="5rem" color={colors.gray2}>
             <FormattedMessage id="forms_table.headers.dis_date" />
           </Typography>
           <Controller
