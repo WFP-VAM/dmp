@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
-import { DROUGHT, FLOOD, INCIDENT, koboKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, koboKeys } from '@wfp-dmp/interfaces';
 
 import { AssetId } from '../constants';
 import { KoboService } from '../kobo.service';
@@ -50,7 +50,9 @@ describe('KoboService - nested params', () => {
 
     expect(httpService.axiosRef.get).toHaveBeenCalledTimes(1);
 
-    const [url, config] = (httpService.axiosRef.get as jest.Mock).mock.calls[0];
+    const firstCall = (httpService.axiosRef.get as jest.Mock).mock.calls[0] as [unknown, unknown];
+    const url = firstCall[0];
+    const config = firstCall[1];
 
     expect(url).toBe(`assets/${AssetId[FLOOD]}/data.json`);
 
@@ -67,5 +69,3 @@ describe('KoboService - nested params', () => {
     });
   });
 });
-
-
