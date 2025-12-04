@@ -170,21 +170,24 @@ export const DisasterTable = ({
     : [];
 
   // Make location columns non-hideable
-  const _updatedColumns = columns.map(column => {
-    if (
-      ['province', 'district', 'commune', 'location'].includes(column.field)
-    ) {
-      return {
-        ...column,
-        hideable: false,
-      };
-    }
+  const updatedColumns = useMemo(() => {
+    const _updatedColumns = columns.map(column => {
+      if (
+        ['province', 'district', 'commune', 'location'].includes(column.field)
+      ) {
+        return {
+          ...column,
+          hideable: false,
+        };
+      }
 
-    return column;
-  });
-  const [columnsHead, ...columnsRest] = _updatedColumns;
-  const updatedColumns = !hasGroups
-    ? [
+      return column;
+    });
+
+    if (!hasGroups) {
+      const [columnsHead, ...columnsRest] = _updatedColumns;
+
+      return [
         {
           ...columnsHead,
           renderHeader: (params: GridColumnHeaderParams) => (
@@ -195,8 +198,11 @@ export const DisasterTable = ({
           ),
         },
         ...columnsRest,
-      ]
-    : _updatedColumns;
+      ];
+    }
+
+    return _updatedColumns;
+  }, [columns, hasGroups]);
 
   const {
     data: extendedData,
@@ -218,9 +224,11 @@ export const DisasterTable = ({
       if (Object.keys(columnVisibilityModel).length === 0) {
         return true;
       }
+
       // Check if column is visible (defaults to true if not in model)
-      return columnVisibilityModel[column.field] !== false;
+      return columnVisibilityModel[column.field];
     });
+
     return sum(visibleColumns.map(x => x.width ?? 0)) + 2; // 2px for borders on the sides
   }, [updatedColumns, columnVisibilityModel]);
   const maxPrintWidth = 1600; // Maximum print width in pixels
