@@ -211,7 +211,18 @@ export const DisasterTable = ({
     rowFilter: aggregateRowFilter,
   });
 
-  const totalWidth = sum(updatedColumns.map(x => x.width ?? 0)) + 2; // 2px for borders on the sides
+  // Calculate width based on visible columns only
+  const totalWidth = useMemo(() => {
+    const visibleColumns = updatedColumns.filter(column => {
+      // If columnVisibilityModel is empty, all columns are visible
+      if (Object.keys(columnVisibilityModel).length === 0) {
+        return true;
+      }
+      // Check if column is visible (defaults to true if not in model)
+      return columnVisibilityModel[column.field] !== false;
+    });
+    return sum(visibleColumns.map(x => x.width ?? 0)) + 2; // 2px for borders on the sides
+  }, [updatedColumns, columnVisibilityModel]);
   const maxPrintWidth = 1600; // Maximum print width in pixels
   const scaleFactor = Math.min(1, maxPrintWidth / totalWidth);
 
@@ -300,7 +311,7 @@ export const DisasterTable = ({
                     }}
                   />
                 )}
-                <Box width={totalWidth}>
+                <Box sx={{ width: totalWidth, maxWidth: totalWidth }}>
                   <DataGrid
                     sx={{
                       '@media print': {

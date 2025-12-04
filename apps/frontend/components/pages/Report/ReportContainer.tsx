@@ -120,7 +120,6 @@ export const ReportContainer = () => {
       )}
       {!isLoading && (
         <PrintWrapper
-          key={isPrinting ? 'printing' : 'not-printing'}
           printRef={printRef}
           isPrinting={isPrinting}
         >
