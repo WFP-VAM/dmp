@@ -3,14 +3,21 @@
   "skip-dev": true,
   "allowlist": [
     "GHSA-95jq-xph2-cx9h",
-    "GHSA-vghf-hv5q-vc2g"
+    "GHSA-vghf-hv5q-vc2g",
+    "GHSA-4hjh-wcwx-xvwj",
+    "GHSA-jr5f-v2jv-69x6"
   ],
-  "_info": "linkifyjs and validator are transitive dependencies that cannot be easily updated.",
+  "_info": "linkifyjs, axios (transitive via adminjs) and validator are transitive dependencies that cannot be easily updated for now.",
   "allowlistPaths": [
     "apps/backend > @adminjs/express@5.0.1 > adminjs@6.7.5 > @adminjs/design-system@3.1.8 > @tiptap/extension-link@2.0.0-beta.217 > linkifyjs@3.0.5",
     "apps/backend > @adminjs/nestjs@5.1.0 > adminjs@6.7.5 > @adminjs/design-system@3.1.8 > @tiptap/extension-link@2.0.0-beta.217 > linkifyjs@3.0.5",
     "apps/backend > @adminjs/passwords@3.0.1 > adminjs@6.7.5 > @adminjs/design-system@3.1.8 > @tiptap/extension-link@2.0.0-beta.217 > linkifyjs@3.0.5",
     "apps/backend > @adminjs/typeorm@4.0.0 > adminjs@6.7.5 > @adminjs/design-system@3.1.8 > @tiptap/extension-link@2.0.0-beta.217 > linkifyjs@3.0.5",
-    "apps/backend > adminjs@6.7.5 > @adminjs/design-system@3.1.8 > @tiptap/extension-link@2.0.0-beta.217 > linkifyjs@3.0.5"
+    "apps/backend > adminjs@6.7.5 > @adminjs/design-system@3.1.8 > @tiptap/extension-link@2.0.0-beta.217 > linkifyjs@3.0.5",
+    "apps/backend > @adminjs/express@5.0.1 > adminjs@6.7.5 > axios@0.27.2",
+    "apps/backend > @adminjs/nestjs@5.1.0 > adminjs@6.7.5 > axios@0.27.2",
+    "apps/backend > @adminjs/passwords@3.0.1 > adminjs@6.7.5 > axios@0.27.2",
+    "apps/backend > @adminjs/typeorm@4.0.0 > adminjs@6.7.5 > axios@0.27.2",
+    "apps/backend > adminjs@6.7.5 > axios@0.27.2"
   ]
 }
