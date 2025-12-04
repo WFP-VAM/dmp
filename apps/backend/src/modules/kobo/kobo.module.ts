@@ -1,5 +1,6 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
+import * as qs from 'qs';
 
 import { KoboController } from './kobo.controller';
 import { KoboService } from './kobo.service';
@@ -13,6 +14,7 @@ if (koboToken === undefined) {
     HttpModule.register({
       headers: { authorization: `Token ${koboToken}` },
       baseURL: 'https://kobo.humanitarianresponse.info/api/v2/',
+      paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'brackets' }),
     }),
   ],
   controllers: [KoboController],
