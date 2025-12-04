@@ -4,6 +4,11 @@
     "district": "District / Krong",
     "commune": "Commune"
   },
+  "generic": {
+    "password_input": {
+      "show_password": "Show password"
+    }
+  },
   "login": {
     "title": "Welcome!",
     "error": "An error has occurred. Please try again.",
@@ -57,7 +62,8 @@
     "logout": "Log out"
   },
   "home": {
-    "no_report": "No disaster report"
+    "no_report": "No disaster report",
+    "week": "week"
   },
   "validation_search_params": {
     "location": "Location",

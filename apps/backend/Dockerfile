@@ -1,4 +1,4 @@
-FROM node:hydrogen-alpine3.20 AS pnpm-installed
+FROM --platform=linux/amd64 node:hydrogen-alpine3.20 AS pnpm-installed
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 ENV PNPM_HOME=/usr/local/.pnpm
 ENV PATH="$PATH:/usr/local/.pnpm"
@@ -35,7 +35,7 @@ RUN HUSKY=0 pnpm install && \
   rm -rf **/src **/.turbo node_modules **/node_modules && \
   pnpm install --production
 
-FROM pnpm-installed as runner
+FROM --platform=linux/amd64 pnpm-installed as runner
 RUN apk add --no-cache dumb-init
 
 WORKDIR /app
