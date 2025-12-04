@@ -97,6 +97,7 @@ const FormValidationFooter = ({
                   void router.push('/forms/search');
                 } else {
                   setIsEditMode(false);
+                  // Reload current page to reset form to original values
                   void router.replace(router.asPath);
                 }
               }}
