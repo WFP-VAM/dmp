@@ -80,8 +80,6 @@ export const DisasterTable = ({
 
   const { scrollWidth, offsetWidth, scrollLeft } = outerRef.current ?? {};
 
-
-
   // TODO - Activate column and data filtering
   // This has implications on the print mechanism as well as the
   // form EDIT page. We also need to confirm that this is wanted by the users.
@@ -212,7 +210,8 @@ export const DisasterTable = ({
       // If the field is not in the model, default to true (visible)
       // If the field is in the model, use its value
       const visibility = columnVisibilityModel[column.field];
-      return visibility !== false; // Only hide if explicitly set to false
+
+      return visibility; // Only hide if explicitly set to false
     });
 
     return sum(visibleColumns.map(x => x.width ?? 0)) + 2; // 2px for borders on the sides
@@ -236,7 +235,7 @@ export const DisasterTable = ({
 
     return () => obs.disconnect();
   }, [totalWidth, columnVisibilityModel]);
-  
+
   const maxPrintWidth = 1600; // Maximum print width in pixels
   const scaleFactor = Math.min(1, maxPrintWidth / totalWidth);
 
