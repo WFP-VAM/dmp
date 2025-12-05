@@ -11,6 +11,8 @@
     "lint:style": "stylelint './**/*.module.css'",
     "lint:style:fix": "stylelint --fix './**/*.module.css'",
     "postinstall": "test -f .env.local || (test -f .env.sample && cp .env.sample .env.local || echo -e \"\\e[33mNo env file initialized\\e[0m\")",
+    "serve:export": "pnpm build && cd out && cp index.html 200.html && npx serve -p 3000",
+    "serve:export:local": "./gen_env.sh local public && pnpm build && cd out && cp index.html 200.html && npx serve -p 3000",
     "start": "next start",
     "test": "jest",
     "test:circular": "pnpm depcruise --validate .dependency-cruiser.js pages --ignore-known",
@@ -76,6 +78,6 @@
     "typescript": "4.7.4"
   },
   "engines": {
-    "node": "^18.12.1"
+    "node": "^20.19.15"
   }
 }
