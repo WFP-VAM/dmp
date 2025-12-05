@@ -30,7 +30,6 @@ export type NextApplicationPage<P = unknown, IP = unknown> = NextPage<P, IP> & {
   requireAuth?: boolean;
 };
 
-
 const MyApp = ({
   Component,
   pageProps,
