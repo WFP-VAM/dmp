@@ -4,7 +4,6 @@ import 'styles/tableFormatting.css';
 import { ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Inter } from '@next/font/google';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import React from 'react';
@@ -31,8 +30,6 @@ export type NextApplicationPage<P = unknown, IP = unknown> = NextPage<P, IP> & {
   requireAuth?: boolean;
 };
 
-// https://nextjs.org/docs/basic-features/font-optimization
-const inter = Inter({ subsets: ['latin'] });
 
 const MyApp = ({
   Component,
@@ -40,11 +37,6 @@ const MyApp = ({
 }: AppProps & { Component: NextApplicationPage }): JSX.Element => {
   return (
     <>
-      <style jsx global>{`
-        html {
-          font-family: ${inter.style.fontFamily};
-        }
-      `}</style>
       <ThemeProvider theme={muiTheme}>
         <ErrorBoundary FallbackComponent={AppCrashFallback}>
           <LanguageWrapper>
