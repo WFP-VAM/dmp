@@ -10,4 +10,3 @@ const FormPage: NextApplicationPage = () => (
 
 FormPage.requireAuth = true;
 export default FormPage;
-
