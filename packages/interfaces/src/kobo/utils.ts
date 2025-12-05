@@ -1,5 +1,3 @@
-import * as path from 'path';
-
 import { DroughtDto } from './DroughtDto';
 import { FloodDto } from './FloodDto';
 import { IncidentDto } from './IncidentDto';
