@@ -110,6 +110,7 @@ jobs:
         run: |
           cd apps/frontend
           ./gen_env.sh staging
+          pnpm next export
           cd out
           cp index.html 200.html
       - name: Deploy on surge
