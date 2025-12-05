@@ -7,10 +7,10 @@ import { useGetForm } from 'services/api/kobo/useGetForm';
 
 export const FormValidationContainer = (): JSX.Element => {
   const router = useRouter();
-  const { disasterType, id } = router.query;
+  const { disaster, formId } = router.query;
   const { data: form, isLoading } = useGetForm(
-    disasterType as DisasterType,
-    id as string,
+    disaster as DisasterType,
+    formId as string,
   );
 
   return isLoading || form === undefined ? (

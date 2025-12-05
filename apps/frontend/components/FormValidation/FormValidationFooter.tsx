@@ -27,7 +27,7 @@ const FormValidationFooter = ({
 }: FormValidationFooterProps) => {
   const theme = useTheme();
   const router = useRouter();
-  const { disasterType, id } = router.query;
+  const { disaster: disasterType, formId: id } = router.query;
 
   const { trigger, isMutating } = usePatchValidationStatus(
     disasterType as DisasterType,

@@ -29,7 +29,7 @@ export const IncidentFormValidation = ({
 }): JSX.Element => {
   const theme = useTheme();
   const router = useRouter();
-  const { disasterType, id } = router.query;
+  const { disaster: disasterType, formId: id } = router.query;
 
   const formattedForm = useMemo(
     () => formatIncidentFields(validationForm),
