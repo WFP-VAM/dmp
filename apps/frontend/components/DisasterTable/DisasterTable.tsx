@@ -211,7 +211,8 @@ export const DisasterTable = ({
       // If the field is in the model, use its value
       const visibility = columnVisibilityModel[column.field];
 
-      return visibility; // Only hide if explicitly set to false
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+      return visibility !== false; // Only hide if explicitly set to false
     });
 
     return sum(visibleColumns.map(x => x.width ?? 0)) + 2; // 2px for borders on the sides
