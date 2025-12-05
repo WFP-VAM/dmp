@@ -80,24 +80,7 @@ export const DisasterTable = ({
 
   const { scrollWidth, offsetWidth, scrollLeft } = outerRef.current ?? {};
 
-  React.useEffect(() => {
-    if (!outerRef.current) {
-      return;
-    }
 
-    const obs = new ResizeObserver(() => {
-      const { scrollWidth: scroll, offsetWidth: offset } =
-        outerRef.current ?? {};
-      const overflow =
-        scroll !== undefined && offset !== undefined && scroll > offset;
-
-      setHasOverflow(overflow);
-    });
-
-    obs.observe(outerRef.current);
-
-    return () => obs.disconnect();
-  }, []);
 
   // TODO - Activate column and data filtering
   // This has implications on the print mechanism as well as the
@@ -225,12 +208,35 @@ export const DisasterTable = ({
         return true;
       }
 
-      // Check if column is visible (defaults to true if not in model)
-      return columnVisibilityModel[column.field];
+      // Check if column is visible
+      // If the field is not in the model, default to true (visible)
+      // If the field is in the model, use its value
+      const visibility = columnVisibilityModel[column.field];
+      return visibility !== false; // Only hide if explicitly set to false
     });
 
     return sum(visibleColumns.map(x => x.width ?? 0)) + 2; // 2px for borders on the sides
   }, [updatedColumns, columnVisibilityModel]);
+
+  React.useEffect(() => {
+    if (!outerRef.current) {
+      return;
+    }
+
+    const obs = new ResizeObserver(() => {
+      const { scrollWidth: scroll, offsetWidth: offset } =
+        outerRef.current ?? {};
+      const overflow =
+        scroll !== undefined && offset !== undefined && scroll > offset;
+
+      setHasOverflow(overflow);
+    });
+
+    obs.observe(outerRef.current);
+
+    return () => obs.disconnect();
+  }, [totalWidth, columnVisibilityModel]);
+  
   const maxPrintWidth = 1600; // Maximum print width in pixels
   const scaleFactor = Math.min(1, maxPrintWidth / totalWidth);
 
@@ -319,7 +325,7 @@ export const DisasterTable = ({
                     }}
                   />
                 )}
-                <Box sx={{ width: totalWidth, maxWidth: totalWidth }}>
+                <Box sx={{ width: totalWidth, minWidth: totalWidth }}>
                   <DataGrid
                     sx={{
                       '@media print': {
