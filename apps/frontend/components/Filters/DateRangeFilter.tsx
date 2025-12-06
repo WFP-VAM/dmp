@@ -68,6 +68,7 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
               sx: {
                 cursor: 'pointer',
                 height: '2.5rem',
+                padding: '8px',
               },
             },
           },
@@ -119,6 +120,7 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
               sx: {
                 cursor: 'pointer',
                 height: '2.5rem',
+                padding: '8px',
               },
             },
           },

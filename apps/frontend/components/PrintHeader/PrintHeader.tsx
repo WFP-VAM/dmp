@@ -70,7 +70,7 @@ export const PrintHeader = ({ searchReportData }: IProps): JSX.Element => {
         .filter(x => x.shouldShow)
         .map(x => (
           <Typography key={x.title}>
-            <Typography component="span" variant="h1" fontWeight="bold">
+            <Typography component="span" fontWeight="bold">
               <FormattedMessage id={x.title} />
             </Typography>
 
