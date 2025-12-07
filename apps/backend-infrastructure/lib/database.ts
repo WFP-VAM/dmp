@@ -53,7 +53,7 @@ class Database extends NestedStack {
       secretName: `${dbName}-credentials`,
       generateSecretString: {
         secretStringTemplate: JSON.stringify({
-          username: applicationName.replace(/-/g, '_'),
+          username: applicationName,
         }),
         excludePunctuation: true,
         includeSpace: false,
