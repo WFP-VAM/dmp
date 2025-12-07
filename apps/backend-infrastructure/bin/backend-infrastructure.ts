@@ -20,20 +20,20 @@ function sanitizeApplicationName(name: string): string {
   if (!name) {
     throw new Error('applicationName context is required');
   }
-  
+
   // Remove all non-alphanumeric characters
   let sanitized = name.replace(/[^a-zA-Z0-9]/g, '').substring(0, 60);
-  
+
   // If empty after sanitization, use default
   if (!sanitized) {
     sanitized = 'app';
   }
-  
+
   // Ensure it starts with a letter (required for RDS and other AWS resources)
   const sanitizedName = /^[a-zA-Z]/.test(sanitized)
     ? sanitized
     : `app${sanitized}`;
-  
+
   return sanitizedName;
 }
 
