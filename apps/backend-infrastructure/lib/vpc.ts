@@ -10,6 +10,7 @@ export class NestVpc extends NestedStack {
 
     this.vpc = new Vpc(this, 'VPC', {
       ipAddresses: IpAddresses.cidr('10.0.0.0/24'),
+      natGateways: 1, // Use single shared NAT gateway to reduce EIP usage
       subnetConfiguration: [
         { name: 'public-subnet', subnetType: SubnetType.PUBLIC },
         {
