@@ -21,14 +21,8 @@ const bootstrap = async () => {
       /https:\/\/staging-wfp-dmp.surge\.sh$/,
     ];
     // and ovio.org sites (allows any subdomain prefix like staging.dmp.ovio.org, demo.dmp.ovio.org)
-    const ovioSites = [
-      /https:\/\/([a-zA-Z0-9-]+\.)?dmp\.ovio\.org$/,
-    ];
-    const allowedOrigins = [
-      allowedHost,
-      ...surgePreviewSites,
-      ...ovioSites,
-    ];
+    const ovioSites = [/https:\/\/([a-zA-Z0-9-]+\.)?dmp\.ovio\.org$/];
+    const allowedOrigins = [allowedHost, ...surgePreviewSites, ...ovioSites];
     app.enableCors({ credentials: true, origin: allowedOrigins });
   }
 
