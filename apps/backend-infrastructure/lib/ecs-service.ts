@@ -15,6 +15,8 @@ import { ApplicationLoadBalancedFargateService } from 'aws-cdk-lib/aws-ecs-patte
 import { IApplicationLoadBalancer } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import { PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { ISecret, Secret } from 'aws-cdk-lib/aws-secretsmanager';
+import { Stack, ArnFormat } from 'aws-cdk-lib';
+import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import path = require('path');
 
@@ -188,9 +190,26 @@ export class ECSService extends NestedStack {
       '20',
     );
 
+    // For secrets referenced by name (fromSecretNameV2), we need the full ARN with suffix
+    // Secrets Manager ARNs have format: arn:aws:secretsmanager:region:account:secret:name-6RandomChars
+    // Since we can't know the suffix ahead of time, use the secret's ARN property
+    // If that's not available, construct ARN and let CDK handle the wildcard token
+    const stack = Stack.of(this);
+    // Try to use the secret's ARN, fallback to constructing it with wildcard
+    const nestSecretArn = nestSecret.secretArn || 
+      cdk.Stack.of(this).formatArn({
+        service: 'secretsmanager',
+        resource: 'secret',
+        resourceName: `${applicationName}-nest-secret`,
+        arnFormat: ArnFormat.COLON_RESOURCE_NAME,
+      });
+
     const policyStatement = new PolicyStatement({
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      resources: [dbSecret.secretFullArn!, nestSecret.secretFullArn!],
+      resources: [
+        dbSecret.secretFullArn!,
+        nestSecretArn,
+      ],
       actions: ['secretsmanager:GetSecretValue'],
     });
 
