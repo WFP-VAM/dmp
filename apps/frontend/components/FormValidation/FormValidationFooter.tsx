@@ -8,6 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import Button from 'components/Button';
 import { usePatchValidationStatus } from 'services/api/kobo/usePatchValidationStatus';
 import { colors } from 'theme/muiTheme';
+import { reloadPage } from 'utils/reloadPage';
 
 import { ValidationIndicator } from './ValidationIndicator';
 
@@ -98,7 +99,7 @@ const FormValidationFooter = ({
                 } else {
                   setIsEditMode(false);
                   // Reload current page to reset form to original values
-                  void router.replace(router.asPath);
+                  reloadPage(router);
                 }
               }}
               disabled={isMutating}
