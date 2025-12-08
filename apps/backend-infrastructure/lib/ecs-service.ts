@@ -15,6 +15,7 @@ import { ApplicationLoadBalancedFargateService } from 'aws-cdk-lib/aws-ecs-patte
 import { IApplicationLoadBalancer } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import { PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { ISecret, Secret } from 'aws-cdk-lib/aws-secretsmanager';
+import { Stack } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import path = require('path');
 
@@ -188,9 +189,14 @@ export class ECSService extends NestedStack {
       '20',
     );
 
+    // Use secretArn from the ISecret interface
+    // For secrets referenced by name, we need to use the ARN format
     const policyStatement = new PolicyStatement({
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      resources: [dbSecret.secretFullArn!, nestSecret.secretFullArn!],
+      resources: [
+        dbSecret.secretFullArn!,
+        nestSecret.secretArn,
+      ],
       actions: ['secretsmanager:GetSecretValue'],
     });
 
