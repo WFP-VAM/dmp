@@ -192,17 +192,16 @@ export class ECSService extends NestedStack {
 
     // For secrets referenced by name (fromSecretNameV2), we need the full ARN with suffix
     // Secrets Manager ARNs have format: arn:aws:secretsmanager:region:account:secret:name-6RandomChars
-    // Since we can't know the suffix ahead of time, use the secret's ARN property
-    // If that's not available, construct ARN and let CDK handle the wildcard token
+    // Since we can't know the suffix ahead of time, use a wildcard pattern
     const stack = Stack.of(this);
-    // Try to use the secret's ARN, fallback to constructing it with wildcard
-    const nestSecretArn = nestSecret.secretArn || 
-      cdk.Stack.of(this).formatArn({
-        service: 'secretsmanager',
-        resource: 'secret',
-        resourceName: `${applicationName}-nest-secret`,
-        arnFormat: ArnFormat.COLON_RESOURCE_NAME,
-      });
+    // Construct ARN with wildcard to match any suffix
+    // IAM policies use * for wildcards, so we need: arn:aws:secretsmanager:region:account:secret:name-*
+    const nestSecretArn = cdk.Stack.of(this).formatArn({
+      service: 'secretsmanager',
+      resource: 'secret',
+      resourceName: `${applicationName}-nest-secret-*`,
+      arnFormat: ArnFormat.COLON_RESOURCE_NAME,
+    });
 
     const policyStatement = new PolicyStatement({
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
