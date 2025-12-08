@@ -30,17 +30,17 @@ export const AuthGuard = ({ children }: AuthGuardProps) => {
   useEffect(() => {
     // Only redirect to login if it's not a network error
     // Network errors mean the backend is down, so login won't work either
-    if (isLoading === false && user === undefined && isNetworkError === false) {
+    if (!isLoading && user === undefined && !isNetworkError) {
       void router.push(`${Pages.Login}${redirectUrl}`);
     }
   }, [isLoading, router, user, redirectUrl, isNetworkError]);
 
-  if (isLoading === true) {
+  if (isLoading) {
     return <FullPageLoader />;
   }
 
   // Show error message if backend is down
-  if (isNetworkError === true) {
+  if (isNetworkError) {
     return (
       <Box
         sx={{

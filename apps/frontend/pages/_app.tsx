@@ -4,7 +4,7 @@ import 'styles/tableFormatting.css';
 import { ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import axios, { AxiosError } from 'axios';
+import { AxiosError, isAxiosError } from 'axios';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import React from 'react';
@@ -48,6 +48,7 @@ const MyApp = ({
                     apiClient
                       .get<unknown>(resource)
                       .then(response => response.data),
+                  // eslint-disable-next-line max-params
                   onErrorRetry: (
                     error: unknown,
                     _key: string,
@@ -56,14 +57,17 @@ const MyApp = ({
                     { retryCount }: { retryCount: number },
                   ) => {
                     // Don't retry on network errors (backend down, connection refused, etc.)
-                    if (axios.isAxiosError(error)) {
+                    if (isAxiosError(error)) {
                       const axiosError = error as AxiosError;
                       // Network errors (ECONNREFUSED, ETIMEDOUT, etc.) have no response
                       if (!axiosError.response) {
                         return; // Stop retrying
                       }
                       // Don't retry on 4xx errors (client errors)
-                      if (axiosError.response.status >= 400 && axiosError.response.status < 500) {
+                      if (
+                        axiosError.response.status >= 400 &&
+                        axiosError.response.status < 500
+                      ) {
                         return; // Stop retrying
                       }
                     }
