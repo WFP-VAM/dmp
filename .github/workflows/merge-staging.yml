@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main
+      - staging
 
 name: 🚀 Deploy staging
 concurrency: deploy_staging
