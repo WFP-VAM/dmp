@@ -8,17 +8,7 @@
   -- This global css transgress basic stylelint rules about selectivity and hardcoded values
 */
 
-@font-face {
-  font-family: 'Khmer OS Muol light';
-  src: url('/fonts/Khmer\ OS\ Muol\ Light\ Regular.ttf') format('truetype');
-  unicode-range: U+1780-17FF; /* Khmer Unicode range */
-}
-
-@font-face {
-  font-family: 'Khmer OS Siemreap';
-  src: url('/fonts/Khmer\ OS\ Siemreap\ Regular.ttf') format('truetype');
-  unicode-range: U+1780-17FF; /* Khmer Unicode range */
-}
+@import url('https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&display=swap');
 
 /*
   1. Use a more-intuitive box-sizing model.
@@ -42,7 +32,7 @@
 html,
 body {
   height: 100%;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Battambang', 'Roboto', sans-serif;
   background-color: #f9f7f7;
 }
 
@@ -53,17 +43,17 @@ body {
 */
 body {
   line-height: 1.5;
-  font-family: 'Khmer OS Muol light', 'Roboto', sans-serif;
+  font-family: 'Battambang', 'Roboto', sans-serif;
 }
 
 h1 {
-  font-family: 'Khmer OS Muol light', 'Roboto', sans-serif;
+  font-family: 'Battambang', 'Roboto', sans-serif;
 }
 
 p,
 span,
 div {
-  font-family: 'Khmer OS Siemreap', 'Roboto', sans-serif;
+  font-family: 'Battambang', 'Roboto', sans-serif;
 }
 
 /*

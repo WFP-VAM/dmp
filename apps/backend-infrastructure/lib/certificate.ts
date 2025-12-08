@@ -26,7 +26,7 @@ export class Certificate extends NestedStack {
 
     this.certificate = new aws_certificatemanager.Certificate(
       this,
-      'api-certificate',
+      'ApiCertificate',
       {
         domainName,
         validation:

@@ -40,8 +40,12 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   useEffect(() => {
-    if (error instanceof CustomError && error.name === 'authentication') {
-      void router.push(router.asPath);
+    if (
+      error instanceof CustomError &&
+      error.name === 'authentication' &&
+      router.pathname !== '/login'
+    ) {
+      void router.push('/login');
     }
   }, [error, router]);
 

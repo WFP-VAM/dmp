@@ -18,6 +18,9 @@ import React, { useMemo } from 'react';
 import { usePrintContext } from 'components/PrintWrapper/PrintWrapper';
 import { colors } from 'theme/muiTheme';
 import CustomToolMenu from 'utils/CustomToolMenu';
+import { useAggregatedRow } from 'utils/tableFormatting';
+
+import ScrollArrows from './ScrollArrows';
 
 const isLastCovered = (group: GridColumnNode[], field: string): boolean => {
   for (let index = 0; index < group.length; index++) {
@@ -36,14 +39,12 @@ const isLastCovered = (group: GridColumnNode[], field: string): boolean => {
   return false;
 };
 
-import ScrollArrows from './ScrollArrows';
-
 export type DisasterTableVariant = 'open' | 'bordered';
 
 export interface DisasterTableProps {
   columns: GridColDef[];
   columnGroup: GridColumnGroupingModel;
-  data: Record<string, string | number | undefined>[];
+  data: Record<string, string | string[] | number | undefined>[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange?: (event: any) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,6 +54,9 @@ export interface DisasterTableProps {
   variant: DisasterTableVariant;
   getRowClassName?: DataGridProps['getRowClassName'];
   isFirstTable?: boolean;
+  aggregateRowFilter?: (
+    row: Record<string, string | string[] | number | undefined>,
+  ) => boolean;
 }
 
 export const DisasterTable = ({
@@ -66,6 +70,7 @@ export const DisasterTable = ({
   columnHeaderHeight = 'large',
   getRowClassName,
   isFirstTable = true,
+  aggregateRowFilter,
 }: DisasterTableProps): JSX.Element => {
   const theme = useTheme();
   const outerRef = React.useRef<HTMLDivElement>(null);
@@ -74,25 +79,6 @@ export const DisasterTable = ({
   const isPrinting = usePrintContext();
 
   const { scrollWidth, offsetWidth, scrollLeft } = outerRef.current ?? {};
-
-  React.useEffect(() => {
-    if (!outerRef.current) {
-      return;
-    }
-
-    const obs = new ResizeObserver(() => {
-      const { scrollWidth: scroll, offsetWidth: offset } =
-        outerRef.current ?? {};
-      const overflow =
-        scroll !== undefined && offset !== undefined && scroll > offset;
-
-      setHasOverflow(overflow);
-    });
-
-    obs.observe(outerRef.current);
-
-    return () => obs.disconnect();
-  }, []);
 
   // TODO - Activate column and data filtering
   // This has implications on the print mechanism as well as the
@@ -115,7 +101,11 @@ export const DisasterTable = ({
     }, {} as Record<string, boolean>);
   };
 
-  const columnVisibilityModel = {}; // generateColumnVisibilityModel(columns, data);
+  // Use state to track column visibility so it persists when user hides/shows columns
+  // Initialize with all columns visible (empty object means all visible in DataGrid)
+  const [columnVisibilityModel, setColumnVisibilityModel] = React.useState<
+    Record<string, boolean>
+  >({});
 
   const nonEmptyData = data;
   // isEditable
@@ -161,21 +151,24 @@ export const DisasterTable = ({
     : [];
 
   // Make location columns non-hideable
-  const _updatedColumns = columns.map(column => {
-    if (
-      ['province', 'district', 'commune', 'location'].includes(column.field)
-    ) {
-      return {
-        ...column,
-        hideable: false,
-      };
-    }
+  const updatedColumns = useMemo(() => {
+    const _updatedColumns = columns.map(column => {
+      if (
+        ['province', 'district', 'commune', 'location'].includes(column.field)
+      ) {
+        return {
+          ...column,
+          hideable: false,
+        };
+      }
 
-    return column;
-  });
-  const [columnsHead, ...columnsRest] = _updatedColumns;
-  const updatedColumns = !hasGroups
-    ? [
+      return column;
+    });
+
+    if (!hasGroups) {
+      const [columnsHead, ...columnsRest] = _updatedColumns;
+
+      return [
         {
           ...columnsHead,
           renderHeader: (params: GridColumnHeaderParams) => (
@@ -186,10 +179,64 @@ export const DisasterTable = ({
           ),
         },
         ...columnsRest,
-      ]
-    : _updatedColumns;
+      ];
+    }
 
-  const totalWidth = sum(updatedColumns.map(x => x.width ?? 0));
+    return _updatedColumns;
+  }, [columns, hasGroups]);
+
+  const {
+    data: extendedData,
+    columns: extendedColumns,
+    getRowId: extendedGetRowId,
+    getRowClassName: extendedGetRowClassName,
+  } = useAggregatedRow({
+    data: nonEmptyData,
+    columns: updatedColumns,
+    getRowId,
+    getRowClassName,
+    rowFilter: aggregateRowFilter,
+  });
+
+  // Calculate width based on visible columns only
+  const totalWidth = useMemo(() => {
+    const visibleColumns = updatedColumns.filter(column => {
+      // If columnVisibilityModel is empty, all columns are visible
+      if (Object.keys(columnVisibilityModel).length === 0) {
+        return true;
+      }
+
+      // Check if column is visible
+      // If the field is not in the model, default to true (visible)
+      // If the field is in the model, use its value
+      const visibility = columnVisibilityModel[column.field];
+
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+      return visibility !== false; // Only hide if explicitly set to false
+    });
+
+    return sum(visibleColumns.map(x => x.width ?? 0)) + 2; // 2px for borders on the sides
+  }, [updatedColumns, columnVisibilityModel]);
+
+  React.useEffect(() => {
+    if (!outerRef.current) {
+      return;
+    }
+
+    const obs = new ResizeObserver(() => {
+      const { scrollWidth: scroll, offsetWidth: offset } =
+        outerRef.current ?? {};
+      const overflow =
+        scroll !== undefined && offset !== undefined && scroll > offset;
+
+      setHasOverflow(overflow);
+    });
+
+    obs.observe(outerRef.current);
+
+    return () => obs.disconnect();
+  }, [totalWidth, columnVisibilityModel]);
+
   const maxPrintWidth = 1600; // Maximum print width in pixels
   const scaleFactor = Math.min(1, maxPrintWidth / totalWidth);
 
@@ -203,11 +250,10 @@ export const DisasterTable = ({
     zIndex: 1,
   };
 
-  // TODO - Debug why the table is not printing correctly when there are more than 28 rows
-  const rowsPerPage = Math.min(28, Math.floor(20 / scaleFactor));
+  const rowsPerPage = Math.floor(28 / scaleFactor);
   const dataChunks = useMemo(() => {
-    return isPrinting ? chunk(nonEmptyData, rowsPerPage) : [nonEmptyData];
-  }, [isPrinting, nonEmptyData, rowsPerPage]);
+    return isPrinting ? chunk(extendedData, rowsPerPage) : [extendedData];
+  }, [isPrinting, extendedData, rowsPerPage]);
 
   return (
     <>
@@ -279,19 +325,20 @@ export const DisasterTable = ({
                     }}
                   />
                 )}
-                <Box width={totalWidth}>
+                <Box sx={{ width: totalWidth, minWidth: totalWidth }}>
                   <DataGrid
                     sx={{
                       '@media print': {
-                        transform: `scale(${scaleFactor})`,
-                        transformOrigin: 'top left',
-                        overflow: 'unset',
+                        zoom: scaleFactor,
                       },
                       '& .MuiDataGrid-row.highlight-1': {
                         background: `${colors.color1}`,
                       },
                       '& .MuiDataGrid-row.highlight-2': {
                         background: `#D0EBF9`,
+                      },
+                      '& .MuiDataGrid-row.total-row': {
+                        fontWeight: 700,
                       },
                       '& .MuiDataGrid-cell.highlighted-cell': {
                         background: '#D0EBF9',
@@ -361,9 +408,9 @@ export const DisasterTable = ({
                     disableRowSelectionOnClick={!isEditable}
                     showCellVerticalBorder
                     showColumnVerticalBorder
-                    rows={chunkOfRows}
-                    columns={updatedColumns}
                     hideFooter
+                    rows={chunkOfRows}
+                    columns={extendedColumns}
                     columnGroupingModel={updatedColumnGroup}
                     isCellEditable={() => isEditable}
                     processRowUpdate={(newRow: GridRowModel) => {
@@ -371,17 +418,16 @@ export const DisasterTable = ({
 
                       return newRow;
                     }}
-                    getRowId={getRowId}
-                    getRowClassName={getRowClassName}
+                    getRowId={extendedGetRowId}
+                    getRowClassName={extendedGetRowClassName}
                     autoHeight
                     columnHeaderHeight={
                       columnHeaderHeight === 'large' ? 100 : 72
                     }
                     disableVirtualization
-                    initialState={{
-                      columns: {
-                        columnVisibilityModel,
-                      },
+                    columnVisibilityModel={columnVisibilityModel}
+                    onColumnVisibilityModelChange={newModel => {
+                      setColumnVisibilityModel(newModel);
                     }}
                   />
                 </Box>

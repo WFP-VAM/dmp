@@ -8,8 +8,9 @@ export class NestVpc extends NestedStack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    this.vpc = new Vpc(this, 'NestVPC', {
+    this.vpc = new Vpc(this, 'VPC', {
       ipAddresses: IpAddresses.cidr('10.0.0.0/24'),
+      natGateways: 1, // Use single shared NAT gateway to reduce EIP usage
       subnetConfiguration: [
         { name: 'public-subnet', subnetType: SubnetType.PUBLIC },
         {

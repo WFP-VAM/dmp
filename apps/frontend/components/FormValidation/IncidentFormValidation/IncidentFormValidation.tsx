@@ -29,7 +29,7 @@ export const IncidentFormValidation = ({
 }): JSX.Element => {
   const theme = useTheme();
   const router = useRouter();
-  const { disasterType, id } = router.query;
+  const { disaster: disasterType, formId: id } = router.query;
 
   const formattedForm = useMemo(
     () => formatIncidentFields(validationForm),
@@ -41,6 +41,7 @@ export const IncidentFormValidation = ({
         province: [formattedForm.province],
         district: [formattedForm.district],
         commune: [formattedForm.commune],
+        village: formattedForm.village,
       },
       interviewer: formattedForm.entryName,
       disTyp: formattedForm.disTyp,
@@ -109,7 +110,6 @@ export const IncidentFormValidation = ({
         <FormValidationFooter
           isEditMode={isEditMode}
           setIsEditMode={setIsEditMode}
-          setShouldReset={setShouldReset}
           status={validationForm._validation_status.uid}
         />
       </Stack>

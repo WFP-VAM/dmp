@@ -1,11 +1,11 @@
 import {
-  BaseSelectProps,
   Checkbox,
   FormControl,
   ListItemText,
   MenuItem,
   Select,
   SelectChangeEvent,
+  SelectProps,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -32,7 +32,7 @@ interface MultiSelectProps {
   width?: number;
   selectProps?: Partial<
     Omit<
-      BaseSelectProps,
+      SelectProps,
       | 'MenuProps'
       | 'renderValue'
       | 'displayEmpty'
@@ -94,7 +94,7 @@ const MultiSelect = ({
     <FormControl sx={{ m: 0, width, backgroundColor: 'white' }}>
       <Select
         disabled={disabled}
-        sx={{ height: '2.5rem' }}
+        sx={{ minHeight: '2.5rem' }}
         multiple
         value={value}
         onChange={handleChange}

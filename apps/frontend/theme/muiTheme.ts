@@ -13,6 +13,9 @@ export const colors = {
 };
 
 export const muiThemeObject: ThemeOptions = {
+  typography: {
+    fontFamily: "'Battambang', 'Roboto', sans-serif",
+  },
   palette: {
     primary: {
       main: colors.color3,

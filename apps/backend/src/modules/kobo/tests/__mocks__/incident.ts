@@ -15,6 +15,7 @@ export const incidentMock: IncidentDto = {
   'G2/Province': '05',
   'G2/District': '0503',
   'G2/Commune': '050303',
+  'group_tc1fy38/group_pf1pd97/NumPeoAff': '36',
   'group_tc1fy38/group_th37h10/ToNumMising': '1',
   'group_tc1fy38/group_th37h10/NumMeMising': '1',
   'group_tc1fy38/group_th37h10/NumFeMising': '1',

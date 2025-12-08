@@ -1,4 +1,3 @@
-import DownloadIcon from '@mui/icons-material/Download';
 import PrintIcon from '@mui/icons-material/Print';
 import { IconButton, Skeleton, Stack, useTheme } from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
@@ -108,18 +107,6 @@ export const ReportContainer = () => {
               color: colors.color3,
             }}
           >
-            <DownloadIcon />
-          </IconButton>
-          <IconButton
-            onClick={handlePrint}
-            style={{
-              border: `1px solid ${colors.color3}`,
-              borderRadius: '4px',
-              aspectRatio: 1,
-              height: '2.5rem',
-              color: colors.color3,
-            }}
-          >
             <PrintIcon />
           </IconButton>
         </Stack>
@@ -132,11 +119,7 @@ export const ReportContainer = () => {
         />
       )}
       {!isLoading && (
-        <PrintWrapper
-          key={isPrinting ? 'printing' : 'not-printing'}
-          printRef={printRef}
-          isPrinting={isPrinting}
-        >
+        <PrintWrapper printRef={printRef} isPrinting={isPrinting}>
           <PrintHeader searchReportData={searchReportData} />
           <Report
             forms={filteredFormsData}

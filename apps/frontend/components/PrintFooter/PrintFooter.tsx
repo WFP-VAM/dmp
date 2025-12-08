@@ -28,9 +28,7 @@ export const PrintFooter = (): JSX.Element => {
           display: 'flex',
           flexDirection: 'column',
           padding: '2rem',
-          // TODO - adjust when the first page bug is fixed.
-          // See max number of rows in DisasterTable.tsx
-          marginTop: '-14rem',
+          pageBreakInside: 'avoid',
         },
         '@media screen': {
           display: 'none',

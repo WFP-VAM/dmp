@@ -1,12 +1,16 @@
 /* eslint-disable max-lines */
-import { Typography } from '@mui/material';
+import { Tooltip, Typography } from '@mui/material';
 import {
   GridColDef,
   GridColumnGroup,
   GridColumnGroupingModel,
   GridColumnHeaderParams,
   GridColumnNode,
+  GridComparatorFn,
   GridRenderCellParams,
+  GridRowClassNameParams,
+  GridSortDirection,
+  gridStringOrNumberComparator,
 } from '@mui/x-data-grid';
 import { DisasterType, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import React from 'react';
@@ -85,12 +89,9 @@ const getLocationColumnSetup = (
         <FormattedMessage id={`forms_table.headers.${params.field}`} />
       </Typography>
     ),
-    valueFormatter: value =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      intl.formatMessage({ id: `${field}.${value as string}` }),
-    renderCell: (params: GridRenderCellParams) => (
-      <FormattedMessage id={`${field}.${params.value as string}`} />
-    ),
+    valueGetter: (value: string | string[] | number | undefined) =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/strict-boolean-expressions
+      value && intl.formatMessage({ id: `${field}.${value as string}` }),
   };
 };
 
@@ -98,18 +99,63 @@ const getLocationCountColumnSetup = (
   field: string,
   disaster: DisasterType | 'COMMON',
   width = 80,
-): GridColDef => ({
-  field,
-  width: width,
-  headerAlign: 'center',
-  disableColumnMenu: true,
-  type: 'number',
-  renderHeader: (params: GridColumnHeaderParams) => (
-    <Typography variant="body2">
-      <FormattedMessage id={`table.${disaster}.column.${params.field}`} />
-    </Typography>
-  ),
-});
+): GridColDef => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const intl = useIntl();
+
+  return {
+    field,
+    width: width,
+    headerAlign: 'center',
+    disableColumnMenu: true,
+    type: 'number',
+    renderHeader: (params: GridColumnHeaderParams) => (
+      <Typography variant="body2">
+        <FormattedMessage id={`table.${disaster}.column.${params.field}`} />
+      </Typography>
+    ),
+    // For villages, we need to count the number of villages in the list and display
+    // all villages in the tooltip
+    ...(field === KoboCommonKeys.village
+      ? {
+          valueGetter: value => {
+            const villageList = value as string[] | undefined;
+            const formattedList = villageList
+              ?.map(village =>
+                intl.formatMessage({ id: `${field}.${village}` }),
+              )
+              .sort((a, b) => a.localeCompare(b, intl.locale)); // Sort alphabetically
+
+            return formattedList ?? [];
+          },
+          renderCell: (params: GridRenderCellParams) => {
+            const displayLabel = (params.value as string[]).join(', ');
+
+            return (
+              <Tooltip title={displayLabel} arrow>
+                <div
+                  style={{
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    textAlign: 'left',
+                  }}
+                >
+                  {displayLabel}
+                </div>
+              </Tooltip>
+            );
+          },
+          sortComparator: (v1, v2) => {
+            const v1List = v1 as string[];
+            const v2List = v2 as string[];
+
+            return v1List.length - v2List.length;
+          },
+        }
+      : {}),
+  };
+};
 
 export const getGroupSetup = (groupId: string, disaster: DisasterType) => ({
   groupId: groupId,
@@ -126,7 +172,18 @@ const addGroup = (
   const group: GridColumnGroup | undefined = groupParams
     ? {
         ...getGroupSetup(groupParams.groupId, groupParams.disaster),
-        children: [...children, ...groupParams.additionalChildren],
+        children: [
+          ...children,
+          // TODO - this is a hack to add village to the commune level report without
+          // breaking the grouped menu in detailed commune level report
+          // Only add KoboCommonKeys.village if not already present
+          ...(children.some(
+            child => 'field' in child && child.field === KoboCommonKeys.village,
+          )
+            ? []
+            : [{ field: KoboCommonKeys.village }]),
+          ...groupParams.additionalChildren,
+        ],
       }
     : undefined;
 
@@ -207,6 +264,8 @@ export const addCommuneLevelReportLocationColumns = ({
         );
       },
     },
+    // What to do in detailed commune level report?
+    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 300),
     ...columns,
   ];
 
@@ -240,6 +299,7 @@ export const addProvinceLevelReportLocationColumns = ({
     getLocationColumnSetup(KoboCommonKeys.province, 200),
     getLocationCountColumnSetup(KoboCommonKeys.district, 'COMMON', 72),
     getLocationCountColumnSetup(KoboCommonKeys.commune, 'COMMON', 84),
+    getLocationCountColumnSetup(KoboCommonKeys.village, 'COMMON', 300),
     ...columns,
   ];
 
@@ -249,6 +309,7 @@ export const addProvinceLevelReportLocationColumns = ({
       { field: KoboCommonKeys.province },
       { field: KoboCommonKeys.district },
       { field: KoboCommonKeys.commune },
+      { field: KoboCommonKeys.village },
     ],
     groupParams,
   );
@@ -285,3 +346,108 @@ export const wrapGroupAsTitle = ({
     },
   ];
 };
+
+export const TOTAL_ROW_ID = 'total-row';
+
+type UseAggregatedRowParams<R extends Record<string, unknown>> = {
+  data: R[];
+  columns: GridColDef[];
+  getRowId?: (row: R) => string;
+  getRowClassName?: (params: GridRowClassNameParams<R>) => string;
+  rowFilter?: (row: R) => boolean;
+};
+
+/**
+ * Add an aggregated row with the sum of the values.
+ * It configures the table to keep the total row on top & highlight it
+ * Pass the returned properties to the DataGrid component
+ */
+export const useAggregatedRow = <
+  R extends Record<string, unknown> = Record<
+    string,
+    string | number | undefined
+  >,
+>({
+  data,
+  columns,
+  getRowId,
+  getRowClassName,
+  rowFilter = () => true,
+}: UseAggregatedRowParams<R>) => {
+  const intl = useIntl();
+
+  const filteredData = data.filter(rowFilter);
+
+  // Only create aggregatedRow if there's more than one row
+  const aggregatedRow =
+    filteredData.length > 1
+      ? filteredData.reduce<Record<string, string | number | string[]>>(
+          (acc, row) => {
+            columns.forEach(({ type, field }) => {
+              if (field === KoboCommonKeys.village) {
+                acc[field] = (
+                  (acc[field] as string[] | undefined) ?? []
+                ).concat((row[field] as string | undefined) ?? []);
+              } else if (type === 'number') {
+                acc[field] =
+                  ((acc[field] as number | undefined) ?? 0) +
+                  Number(row[field] ?? 0);
+              }
+            });
+
+            return acc;
+          },
+          { id: TOTAL_ROW_ID },
+        )
+      : null;
+
+  if (aggregatedRow) {
+    aggregatedRow[KoboCommonKeys.village] = Array.from(
+      new Set(aggregatedRow[KoboCommonKeys.village] as string[]),
+    );
+  }
+
+  // Update column add custom sort to keep total on top & override first column cell
+  const updatedColumns = columns.map((col, i) => ({
+    ...col,
+    getSortComparator: getTotalRowComparatorFactory(col.sortComparator),
+    ...(i === 0 && {
+      renderCell: (params: GridRenderCellParams<R>) =>
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        params.id === TOTAL_ROW_ID
+          ? intl.formatMessage({ id: 'table.COMMON.total' })
+          : col.renderCell?.(params) ?? params.value,
+    }),
+  }));
+
+  const updatedGetRowId = (row: R) =>
+    row.id === TOTAL_ROW_ID ? TOTAL_ROW_ID : getRowId?.(row) ?? '';
+  const updatedGetRowClassName = (params: GridRowClassNameParams<R>) =>
+    params.id === TOTAL_ROW_ID ? 'total-row' : getRowClassName?.(params) ?? '';
+
+  return {
+    data: aggregatedRow ? [aggregatedRow, ...data] : data,
+    columns: updatedColumns,
+    getRowId: updatedGetRowId,
+    getRowClassName: updatedGetRowClassName,
+  };
+};
+
+const getTotalRowComparatorFactory =
+  (customComparator?: GridComparatorFn) =>
+  (sortDirection: GridSortDirection): GridComparatorFn =>
+  (v1, v2, param1, param2) => {
+    const modifier = sortDirection === 'desc' ? -1 : 1;
+    if (param1.id === TOTAL_ROW_ID) {
+      return -1;
+    }
+    if (param2.id === TOTAL_ROW_ID) {
+      return 1;
+    }
+
+    if (customComparator) {
+      return modifier * customComparator(v1, v2, param1, param2);
+    }
+
+    return modifier * gridStringOrNumberComparator(v1, v2, param1, param2);
+  };

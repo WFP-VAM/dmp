@@ -6,7 +6,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 80vh;
+  height: 100%;
   background-color: var(--background-color-main);
 }
 
@@ -37,11 +38,13 @@
   margin-bottom: 1rem;
 }
 
+/* stylelint-disable declaration-no-important */
 .enSubtitle {
-  font-size: 0.875rem;
-  color: var(--color_primary_3);
-  margin-bottom: 1rem;
+  font-size: 0.875rem !important;
+  color: var(--color_primary_3) !important;
+  margin-bottom: 1rem !important;
 }
+/* stylelint-enable declaration-no-important */
 
 .title {
   font-size: 1.5rem;

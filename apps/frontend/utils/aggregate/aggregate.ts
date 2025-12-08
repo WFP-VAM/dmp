@@ -4,6 +4,7 @@ import { countAgg } from './countAgg';
 import { countCategoriesAgg } from './countCategoriesAgg';
 import { countMultipleChoicesAgg } from './countMultipleChoicesAgg';
 import { firstAgg } from './firstAgg';
+import { getUniqueValuesSet } from './setAgg';
 import { sumAgg } from './sumAgg';
 
 interface IProps {
@@ -14,6 +15,7 @@ interface IProps {
   countKeys?: string[];
   countCategoriesKeys?: string[];
   countMultipleChoicesKeys?: string[];
+  setAggKeys?: string[];
 }
 
 export const aggregate = ({
@@ -24,6 +26,7 @@ export const aggregate = ({
   countKeys = [],
   countCategoriesKeys = [],
   countMultipleChoicesKeys = [],
+  setAggKeys = [],
 }: IProps) => {
   const groupedData = groupBy(data, groupKey);
   const aggregatedData = map(groupedData, (array, keyValue) => {
@@ -37,6 +40,8 @@ export const aggregate = ({
       countMultipleChoicesAgg(key, array),
     );
 
+    const setAggValues = setAggKeys.map(key => getUniqueValuesSet(key, array));
+
     return assign(
       { [groupKey]: keyValue },
       ...firstValues,
@@ -44,6 +49,7 @@ export const aggregate = ({
       ...countValues,
       ...countCategoriesValues,
       ...countMultipleChoicesValues,
+      ...setAggValues,
     ) as Record<string, string | number | undefined>;
   });
 

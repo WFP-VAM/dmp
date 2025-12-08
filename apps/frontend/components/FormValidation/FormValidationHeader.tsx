@@ -71,7 +71,7 @@ const FormValidationHeader = ({
           />
         </Stack>
         <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
-          <Typography maxWidth="3rem" color={colors.gray2}>
+          <Typography maxWidth="5rem" color={colors.gray2}>
             <FormattedMessage id="forms_table.headers.entry_date" />
           </Typography>
           <Controller
@@ -82,10 +82,13 @@ const FormValidationHeader = ({
                 disabled={!isEditMode}
                 value={value}
                 onChange={onChange}
-                sx={{ width: 140, backgroundColor: 'white' }}
+                sx={{ width: 150, backgroundColor: 'white' }}
                 slotProps={{
                   inputAdornment: {
                     position: 'start',
+                    sx: {
+                      marginRight: '0px',
+                    },
                   },
                 }}
               />
@@ -93,7 +96,7 @@ const FormValidationHeader = ({
           />
         </Stack>
         <Stack direction="row" gap={theme.spacing(1)} alignItems="center">
-          <Typography maxWidth="4rem" color={colors.gray2}>
+          <Typography maxWidth="5rem" color={colors.gray2}>
             <FormattedMessage id="forms_table.headers.dis_date" />
           </Typography>
           <Controller
@@ -104,10 +107,13 @@ const FormValidationHeader = ({
                 disabled={!isEditMode}
                 value={value}
                 onChange={onChange}
-                sx={{ width: 140, backgroundColor: 'white' }}
+                sx={{ width: 150, backgroundColor: 'white' }}
                 slotProps={{
                   inputAdornment: {
                     position: 'start',
+                    sx: {
+                      marginRight: '0px',
+                    },
                   },
                 }}
               />

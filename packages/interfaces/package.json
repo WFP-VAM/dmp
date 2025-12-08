@@ -16,7 +16,7 @@
     "test:type": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@nestjs/common": "9.0.11",
+    "@nestjs/common": "10.4.16",
     "@nestjs/mapped-types": "1.1.0",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.0",
@@ -24,14 +24,14 @@
   },
   "devDependencies": {
     "@types/jest": "29.0.3",
-    "@types/node": "^18.15.11",
+    "@types/node": "^22.0.0",
     "dependency-cruiser": "11.15.0",
     "dependency-cruiser-config-custom": "workspace:*",
     "eslint-config-custom": "workspace:*",
     "jest": "29.0.3",
-    "ts-jest": "28.0.8",
+    "ts-jest": "^29.2.0",
     "tsconfig": "workspace:*",
-    "typescript": "4.7.4"
+    "typescript": "^5.7.0"
   },
   "keywords": []
 }
