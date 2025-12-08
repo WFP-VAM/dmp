@@ -77,6 +77,8 @@ export const FloodFormValidation = ({
         if (status === 201) {
           reset(data);
           setIsEditMode(false);
+          // Reload current page to refresh form data and prevent navigation issues
+          void router.replace(router.asPath);
         }
       } catch (error) {
         setShouldReset(true);

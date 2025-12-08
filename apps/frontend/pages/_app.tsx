@@ -4,11 +4,12 @@ import 'styles/tableFormatting.css';
 import { ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import axios, { AxiosError } from 'axios';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { SWRConfig } from 'swr';
+import { SWRConfig, SWRConfiguration } from 'swr';
 
 import { AppCrashFallback, ErrorBoundary } from 'components';
 import { AuthGuard } from 'components/AuthGuard/AuthGuard';
@@ -47,6 +48,32 @@ const MyApp = ({
                     apiClient
                       .get<unknown>(resource)
                       .then(response => response.data),
+                  onErrorRetry: (
+                    error: unknown,
+                    _key: string,
+                    _config: SWRConfiguration,
+                    revalidate: (options?: { retryCount?: number }) => void,
+                    { retryCount }: { retryCount: number },
+                  ) => {
+                    // Don't retry on network errors (backend down, connection refused, etc.)
+                    if (axios.isAxiosError(error)) {
+                      const axiosError = error as AxiosError;
+                      // Network errors (ECONNREFUSED, ETIMEDOUT, etc.) have no response
+                      if (!axiosError.response) {
+                        return; // Stop retrying
+                      }
+                      // Don't retry on 4xx errors (client errors)
+                      if (axiosError.response.status >= 400 && axiosError.response.status < 500) {
+                        return; // Stop retrying
+                      }
+                    }
+                    // Retry up to 3 times for other errors (5xx, etc.)
+                    if (retryCount >= 3) {
+                      return; // Stop retrying after 3 attempts
+                    }
+                    // Default retry behavior for other errors
+                    setTimeout(() => revalidate({ retryCount }), 5000);
+                  },
                 }}
               >
                 <LocalizationProvider
