@@ -16,8 +16,8 @@ const rawApplicationName = app.node.tryGetContext('applicationName') as string;
 // Sanitize applicationName to be safe for all AWS resource names
 // - RDS database names must begin with a letter and contain only alphanumeric characters
 // - CloudFormation stack names can have hyphens, but we sanitize for consistency
-function sanitizeApplicationName(name: string): string {
-  if (!name) {
+const sanitizeApplicationName = (name: string): string => {
+  if (name === '') {
     throw new Error('applicationName context is required');
   }
 
@@ -25,7 +25,7 @@ function sanitizeApplicationName(name: string): string {
   let sanitized = name.replace(/[^a-zA-Z0-9]/g, '').substring(0, 60);
 
   // If empty after sanitization, use default
-  if (!sanitized) {
+  if (sanitized === '') {
     sanitized = 'app';
   }
 
@@ -35,7 +35,7 @@ function sanitizeApplicationName(name: string): string {
     : `app${sanitized}`;
 
   return sanitizedName;
-}
+};
 
 const applicationName = sanitizeApplicationName(rawApplicationName);
 
