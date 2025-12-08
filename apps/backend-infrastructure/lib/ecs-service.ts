@@ -46,15 +46,13 @@ export class ECSService extends NestedStack {
       allowedHost,
     } = props;
 
-    const nestSecret = new Secret(this, 'nestSecret', {
-      secretName: `${applicationName}-nest-secret`,
-
-      generateSecretString: {
-        secretStringTemplate: JSON.stringify({}),
-        generateStringKey: 'NestKey',
-        excludePunctuation: true,
-      },
-    });
+    // Use existing secret if it exists, otherwise create new one
+    // For production, the secret wfpdmp-nest-secret already exists from previous deployment
+    const nestSecret = Secret.fromSecretNameV2(
+      this,
+      'nestSecret',
+      `${applicationName}-nest-secret`,
+    );
 
     const superadminUsername = new Secret(this, 'superadminUser', {
       secretName: `${applicationName}/SuperadminUsername`,
