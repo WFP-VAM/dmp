@@ -43,7 +43,7 @@ apiClient.interceptors.request.use(
     if (access === null) {
       return config;
     }
-    
+
     // Validate and decode token safely
     let decodedToken: JwtPayload;
     try {
@@ -52,7 +52,7 @@ apiClient.interceptors.request.use(
       // Invalid token format - skip adding Authorization header
       return config;
     }
-    
+
     if (isTokenExpired(decodedToken)) {
       // Wait for any ongoing refresh to complete
       if (refreshPromise) {
