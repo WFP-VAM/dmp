@@ -104,7 +104,7 @@ const refreshToken = async (): Promise<void> => {
   isRefreshing = true;
   const options: AxiosAuthRefreshRequestConfig = { skipAuthRefresh: true };
 
-  refreshPromise = (async () => {
+  refreshPromise = (async (): Promise<void> => {
     try {
       const response = await apiClient.post<unknown>(
         ApiRoutes.refresh,
@@ -112,12 +112,7 @@ const refreshToken = async (): Promise<void> => {
         options,
       );
       setAccessToken(getAccessFromResponse(response));
-      isRefreshing = false;
-      refreshPromise = null;
     } catch (error) {
-      isRefreshing = false;
-      refreshPromise = null;
-
       // If refresh fails, clear auth state to prevent loops with stale cookies
       // This handles:
       // - Invalid/expired refresh token cookie
@@ -128,11 +123,15 @@ const refreshToken = async (): Promise<void> => {
       // For network errors, throw a network error (not auth error)
       // This allows SWR to handle it properly (no retry)
       if (isNetworkError(error)) {
-        return Promise.reject(error);
+        throw error;
       }
 
       // For auth errors (invalid token), throw auth error
-      return Promise.reject(new CustomError('authentication', 'invalid-token'));
+      throw new CustomError('authentication', 'invalid-token');
+    } finally {
+      // Always reset state after promise resolves/rejects
+      isRefreshing = false;
+      refreshPromise = null;
     }
   })();
 
