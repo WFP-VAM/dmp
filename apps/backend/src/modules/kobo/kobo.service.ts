@@ -99,9 +99,7 @@ export class KoboService {
                 : district,
             }),
             ...(commune !== undefined && {
-              [koboKeys[disasterType].commune]: Array.isArray(commune)
-                ? { $in: commune }
-                : commune,
+              [koboKeys[disasterType].commune]: Array.isArray(commune) ? { $in: commune } : commune,
             }),
             [koboKeys[disasterType].entryDate]: { $gte: startDate, $lte: endDate },
             [koboKeys[disasterType].disTyp]: { $in: disTyps },
