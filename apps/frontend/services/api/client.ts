@@ -2,7 +2,7 @@ import axios from 'axios';
 import createAuthRefreshInterceptor, {
   AxiosAuthRefreshRequestConfig,
 } from 'axios-auth-refresh';
-import jwtDecode from 'jwt-decode';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
 
 import { env } from 'services/env';
 import { CustomError } from 'services/errors/custom-error';
@@ -38,10 +38,22 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
   async config => {
     const access = getAccessToken();
+    // If there's no token, skip adding Authorization header
+    // The request will proceed and server will return 401, which SWR can handle
     if (access === null) {
-      throw new CustomError('authentication', 'no-token');
+      return config;
     }
-    if (isTokenExpired(jwtDecode(access))) {
+    
+    // Validate and decode token safely
+    let decodedToken: JwtPayload;
+    try {
+      decodedToken = jwtDecode<JwtPayload>(access);
+    } catch {
+      // Invalid token format - skip adding Authorization header
+      return config;
+    }
+    
+    if (isTokenExpired(decodedToken)) {
       // Wait for any ongoing refresh to complete
       if (refreshPromise) {
         await refreshPromise;
@@ -51,8 +63,9 @@ apiClient.interceptors.request.use(
     }
 
     const updatedAccess = getAccessToken();
+    // If token is still null after refresh attempt, skip adding header
     if (updatedAccess === null) {
-      throw new CustomError('authentication', 'no-token');
+      return config;
     }
 
     return {
