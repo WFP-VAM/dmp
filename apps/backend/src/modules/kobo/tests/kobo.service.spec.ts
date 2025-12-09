@@ -56,15 +56,18 @@ describe('KoboService - nested params', () => {
 
     expect(url).toBe(`assets/${AssetId[FLOOD]}/data.json`);
 
+    // paramsSerializer will automatically JSON stringify the query object
+    const expectedQueryObj = {
+      [koboKeys[FLOOD].province]: { $in: province },
+      [koboKeys[FLOOD].district]: { $in: district },
+      [koboKeys[FLOOD].commune]: { $in: commune },
+      [koboKeys[FLOOD].entryDate]: { $gte: startDate, $lte: endDate },
+      [koboKeys[FLOOD].disTyp]: { $in: disTyps },
+    };
+
     expect(config).toMatchObject({
       params: {
-        query: {
-          [koboKeys[FLOOD].province]: { $in: province },
-          [koboKeys[FLOOD].district]: { $in: district },
-          [koboKeys[FLOOD].commune]: { $in: commune },
-          [koboKeys[FLOOD].entryDate]: { $gte: startDate, $lte: endDate },
-          [koboKeys[FLOOD].disTyp]: { $in: disTyps },
-        },
+        query: expectedQueryObj,
       },
     });
   });
