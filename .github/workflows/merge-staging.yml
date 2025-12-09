@@ -62,7 +62,7 @@ jobs:
         id: setup-node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version-file: '.nvmrc'
           cache: 'pnpm'
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
