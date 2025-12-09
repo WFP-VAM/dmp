@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -91,6 +92,7 @@ const isLinkWithSubMenu = (link: NavLink): link is LinkWithSubMenu => {
 
 const NavBarButtons = () => {
   const intl = useIntl();
+  const router = useRouter();
   const path = usePathname();
   const theme = useTheme();
   const { user } = useAuth();
@@ -224,7 +226,7 @@ const NavBarButtons = () => {
       >
         <Button
           className="logout"
-          onClick={() => void logout()}
+          onClick={() => void logout(router)}
           startIcon={<Logout fontSize="large" style={{ minWidth: '1.5rem' }} />}
         >
           <Typography>
