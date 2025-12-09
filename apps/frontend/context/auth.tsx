@@ -40,6 +40,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   useEffect(() => {
+    // Handle authentication errors - redirect to login
     if (
       error instanceof CustomError &&
       error.name === 'authentication' &&
@@ -47,6 +48,9 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     ) {
       void router.push('/login');
     }
+    // Network errors (backend down) are handled by SWR's onErrorRetry
+    // which will stop retrying, allowing isLoading to become false
+    // The error will be available in the context for components to handle
   }, [error, router]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -63,7 +63,7 @@ class Database extends NestedStack {
 
     this.dbCluster = new DatabaseCluster(this, 'DbCluster', {
       engine: DatabaseClusterEngine.auroraPostgres({
-        version: AuroraPostgresEngineVersion.VER_16_9,
+        version: AuroraPostgresEngineVersion.VER_15_12,
       }),
       instances: 1,
 

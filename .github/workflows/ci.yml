@@ -75,7 +75,6 @@ jobs:
         run: pnpm run security --level 2
 
   frontend_build_and_deploy:
-    needs: test
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     env:
@@ -105,7 +104,7 @@ jobs:
       - name: Build Interfaces & Frontend
         run: pnpm turbo build
         env:
-          NEXT_PUBLIC_API_BASE_URL: https://api-dmp.ovio.org
+          NEXT_PUBLIC_API_BASE_URL: https://staging-api.dmp.ovio.org
       - name: Export to static HTML
         run: |
           cd apps/frontend
