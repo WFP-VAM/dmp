@@ -48,13 +48,16 @@ export class KoboService {
     province: string | undefined,
   ): Promise<QueryResponse<T>> {
     const startDate = substractDaysToDate(new Date(), numDays);
+
     const { data } = await this.httpService.axiosRef.get<QueryResponse<T>>(
       `assets/${AssetId[disasterType]}/data.json`,
       {
         params: {
           query: {
             [koboKeys[disasterType].entryDate]: { $gte: formatDateToStringDate(startDate) },
-            [koboKeys[disasterType].province]: province,
+            ...(province !== undefined && {
+              [koboKeys[disasterType].province]: province,
+            }),
           },
         },
       },
@@ -85,13 +88,19 @@ export class KoboService {
       {
         params: {
           query: {
-            [koboKeys[disasterType].province]: Array.isArray(province)
-              ? { $in: province }
-              : province,
-            [koboKeys[disasterType].district]: Array.isArray(district)
-              ? { $in: district }
-              : district,
-            [koboKeys[disasterType].commune]: Array.isArray(commune) ? { $in: commune } : commune,
+            ...(province !== undefined && {
+              [koboKeys[disasterType].province]: Array.isArray(province)
+                ? { $in: province }
+                : province,
+            }),
+            ...(district !== undefined && {
+              [koboKeys[disasterType].district]: Array.isArray(district)
+                ? { $in: district }
+                : district,
+            }),
+            ...(commune !== undefined && {
+              [koboKeys[disasterType].commune]: Array.isArray(commune) ? { $in: commune } : commune,
+            }),
             [koboKeys[disasterType].entryDate]: { $gte: startDate, $lte: endDate },
             [koboKeys[disasterType].disTyp]: { $in: disTyps },
           },
@@ -111,9 +120,11 @@ export class KoboService {
       `assets/${AssetId[disasterType]}/data/${id}.json`,
       {
         params: {
-          query: {
-            [koboKeys[disasterType].province]: province,
-          },
+          ...(province !== undefined && {
+            query: {
+              [koboKeys[disasterType].province]: province,
+            },
+          }),
         },
       },
     );
