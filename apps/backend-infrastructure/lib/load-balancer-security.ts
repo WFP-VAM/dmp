@@ -62,9 +62,12 @@ export class LoadBalancerSecurity extends NestedStack {
       // Fallback: use CfnLoadBalancer attributes if interface doesn't support logAccessLogs
       const defaultChild = loadBalancer.node.defaultChild;
       if (defaultChild instanceof aws_elasticloadbalancingv2.CfnLoadBalancer) {
-        const existingAttributes = defaultChild.loadBalancerAttributes ?? [];
+        const existingAttributes = defaultChild.loadBalancerAttributes;
+        const attributesArray = Array.isArray(existingAttributes)
+          ? existingAttributes
+          : [];
         defaultChild.loadBalancerAttributes = [
-          ...existingAttributes,
+          ...attributesArray,
           {
             key: 'access_logs.s3.enabled',
             value: 'true',
