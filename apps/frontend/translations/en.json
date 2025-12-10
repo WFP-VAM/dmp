@@ -77,7 +77,8 @@
     "all-commune": "All communes",
     "date_range": "Date range",
     "start_date": "From",
-    "end_date": "To"
+    "end_date": "To",
+    "filters_changed": "Filters have changed. Click to update results."
   },
   "form_page": {
     "approve": "Approve Report",
