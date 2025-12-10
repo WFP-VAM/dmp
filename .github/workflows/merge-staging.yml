@@ -32,6 +32,21 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Build CDK infrastructure
+        run: |
+          cd apps/backend-infrastructure
+          pnpm build
+      - name: Validate CDK synthesis (dry run)
+        run: |
+          cd apps/backend-infrastructure
+          pnpm cdk synth \
+            --context applicationName="${{ secrets.APPLICATION_NAME }}" \
+            --context hostedZoneDomainName="${{ secrets.DOMAIN_NAME }}" \
+            --quiet || (echo "CDK synthesis failed! Aborting deployment." && exit 1)
+        env:
+          CDK_DEFAULT_REGION: ${{ vars.AWS_REGION }}
+          CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+          ALLOWED_HOST: ${{ secrets.ALLOWED_HOST }}
       - name: Configure AWS Credentials (Authentication)
         uses: aws-actions/configure-aws-credentials@v4
         with:

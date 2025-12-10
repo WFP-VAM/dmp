@@ -74,6 +74,40 @@ jobs:
       - name: Check for vulnerable dependencies
         run: pnpm run security --level 2
 
+  cdk-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.4.0
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build CDK infrastructure
+        run: |
+          cd apps/backend-infrastructure
+          pnpm build
+      - name: Validate CDK synthesis (dry run)
+        run: |
+          cd apps/backend-infrastructure
+          # Test with sample values - this validates the CloudFormation templates can be generated
+          # without actually deploying or needing AWS credentials
+          pnpm cdk synth \
+            --context applicationName="test-app" \
+            --context hostedZoneDomainName="test.example.com" \
+            --quiet || (echo "CDK synthesis failed!" && exit 1)
+        env:
+          CDK_DEFAULT_REGION: us-east-1
+          CDK_DEFAULT_ACCOUNT: 123456789012
+          ALLOWED_HOST: test.example.com
+
   frontend_build_and_deploy:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
