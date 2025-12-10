@@ -60,11 +60,11 @@ export class LoadBalancerSecurity extends NestedStack {
       loadBalancer.logAccessLogs(albLogsBucket, `${applicationName}-alb-logs`);
     } else {
       // Fallback: use CfnLoadBalancer attributes if interface doesn't support logAccessLogs
-      const cfnLoadBalancer = loadBalancer.node
-        .defaultChild as aws_elasticloadbalancingv2.CfnLoadBalancer;
-      if (cfnLoadBalancer) {
-        cfnLoadBalancer.loadBalancerAttributes = [
-          ...(cfnLoadBalancer.loadBalancerAttributes || []),
+      const defaultChild = loadBalancer.node.defaultChild;
+      if (defaultChild instanceof aws_elasticloadbalancingv2.CfnLoadBalancer) {
+        const existingAttributes = defaultChild.loadBalancerAttributes ?? [];
+        defaultChild.loadBalancerAttributes = [
+          ...existingAttributes,
           {
             key: 'access_logs.s3.enabled',
             value: 'true',
