@@ -54,7 +54,8 @@ export const DisasterFilter = ({
     } else if (newValue === DROUGHT) {
       onChange([DisasterMapping.drought]);
     } else {
-      onChange(incidents);
+      // Default to "All incidents" when selecting "Other incidents"
+      onChange(incidentsKeys);
     }
   };
 

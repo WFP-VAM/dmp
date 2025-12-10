@@ -50,6 +50,7 @@ export const FormSearch = () => {
             defaultMessage="Search"
           />
         }
+        autoSubmitOnDisasterChange={true}
       />
       <TableDisplay
         isLoading={isLoading}
