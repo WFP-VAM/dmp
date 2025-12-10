@@ -6,19 +6,15 @@ import {
   Stack,
 } from 'aws-cdk-lib';
 import {
-  IApplicationLoadBalancer,
   ApplicationLoadBalancer,
+  IApplicationLoadBalancer,
 } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
-import {
-  PolicyStatement,
-  ServicePrincipal,
-  Effect,
-} from 'aws-cdk-lib/aws-iam';
+import { Effect, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Bucket, BucketEncryption } from 'aws-cdk-lib/aws-s3';
 import {
+  CfnLoggingConfiguration,
   CfnWebACL,
   CfnWebACLAssociation,
-  CfnLoggingConfiguration,
 } from 'aws-cdk-lib/aws-wafv2';
 import { Construct } from 'constructs';
 
@@ -28,11 +24,7 @@ export interface LoadBalancerSecurityProps extends NestedStackProps {
 }
 
 export class LoadBalancerSecurity extends NestedStack {
-  constructor(
-    scope: Construct,
-    id: string,
-    props: LoadBalancerSecurityProps,
-  ) {
+  constructor(scope: Construct, id: string, props: LoadBalancerSecurityProps) {
     super(scope, id, props);
 
     const { loadBalancer, applicationName } = props;
@@ -44,7 +36,9 @@ export class LoadBalancerSecurity extends NestedStack {
 
     // Create S3 bucket for ALB access logs
     const albLogsBucket = new Bucket(this, 'AlbLogsBucket', {
-      bucketName: `${applicationName.toLowerCase()}-alb-access-logs-${stack.account}-${stack.region}`,
+      bucketName: `${applicationName.toLowerCase()}-alb-access-logs-${
+        stack.account
+      }-${stack.region}`,
       encryption: BucketEncryption.S3_MANAGED,
       removalPolicy: RemovalPolicy.RETAIN,
       autoDeleteObjects: false,
@@ -55,9 +49,7 @@ export class LoadBalancerSecurity extends NestedStack {
       new PolicyStatement({
         sid: 'AllowELBServiceToWriteLogs',
         effect: Effect.ALLOW,
-        principals: [
-          new ServicePrincipal('logdelivery.elb.amazonaws.com'),
-        ],
+        principals: [new ServicePrincipal('logdelivery.elb.amazonaws.com')],
         actions: ['s3:PutObject'],
         resources: [`${albLogsBucket.bucketArn}/*`],
       }),
@@ -68,8 +60,8 @@ export class LoadBalancerSecurity extends NestedStack {
       loadBalancer.logAccessLogs(albLogsBucket, `${applicationName}-alb-logs`);
     } else {
       // Fallback: use CfnLoadBalancer attributes if interface doesn't support logAccessLogs
-      const cfnLoadBalancer =
-        loadBalancer.node.defaultChild as aws_elasticloadbalancingv2.CfnLoadBalancer;
+      const cfnLoadBalancer = loadBalancer.node
+        .defaultChild as aws_elasticloadbalancingv2.CfnLoadBalancer;
       if (cfnLoadBalancer) {
         cfnLoadBalancer.loadBalancerAttributes = [
           ...(cfnLoadBalancer.loadBalancerAttributes || []),
@@ -189,7 +181,9 @@ export class LoadBalancerSecurity extends NestedStack {
 
     // Create S3 bucket for WAF logs
     const wafLogsBucket = new Bucket(this, 'WafLogsBucket', {
-      bucketName: `${applicationName.toLowerCase()}-waf-logs-${stack.account}-${stack.region}`,
+      bucketName: `${applicationName.toLowerCase()}-waf-logs-${stack.account}-${
+        stack.region
+      }`,
       encryption: BucketEncryption.S3_MANAGED,
       removalPolicy: RemovalPolicy.RETAIN,
       autoDeleteObjects: false,
@@ -200,9 +194,7 @@ export class LoadBalancerSecurity extends NestedStack {
       new PolicyStatement({
         sid: 'AllowWAFServiceToWriteLogs',
         effect: Effect.ALLOW,
-        principals: [
-          new ServicePrincipal('delivery.logs.amazonaws.com'),
-        ],
+        principals: [new ServicePrincipal('delivery.logs.amazonaws.com')],
         actions: ['s3:PutObject'],
         resources: [`${wafLogsBucket.bucketArn}/*`],
         conditions: {
@@ -220,4 +212,3 @@ export class LoadBalancerSecurity extends NestedStack {
     });
   }
 }
-
