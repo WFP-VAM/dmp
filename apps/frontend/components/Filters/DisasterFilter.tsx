@@ -41,9 +41,6 @@ export const DisasterFilter = ({
     value.length === 0 ? INCIDENT : computeDisasterTypeFromDistTyps(value);
 
   const [disasterType, setDisasterType] = useState<string>(disTyp);
-  const [incidents, setIncidents] = useState<string[]>(
-    disTyp === INCIDENT ? value : [],
-  );
 
   const onDisasterTypeChange = (event: SelectChangeEvent) => {
     const newValue = event.target.value;
@@ -57,11 +54,6 @@ export const DisasterFilter = ({
       // Default to "All incidents" when selecting "Other incidents"
       onChange(incidentsKeys);
     }
-  };
-
-  const onIncidentsChange = (newValue: string[]) => {
-    setIncidents(newValue);
-    onChange(newValue);
   };
 
   return (
@@ -97,9 +89,7 @@ export const DisasterFilter = ({
             value={value}
             disabled={disabled}
             options={incidentsKeys}
-            onChange={v => {
-              onIncidentsChange(v);
-            }}
+            onChange={onChange}
             placeholder="validation_search_params.incident_type"
             allSelectedText="disasters.ALL_INCIDENTS"
             formatPrefix="disasters"

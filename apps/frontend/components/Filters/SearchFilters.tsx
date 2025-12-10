@@ -11,15 +11,59 @@ import {
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { DateRange, DateRangeFilter } from './DateRangeFilter';
+import { DateRangeFilter } from './DateRangeFilter';
 import { DisasterFilter } from './DisasterFilter';
-import { Region, RegionFilters } from './RegionFilters';
+import { RegionFilters } from './RegionFilters';
+import { isFormDataEqual } from './searchFormUtils';
+import { SearchFormData } from './types';
 
-export interface SearchFormData {
-  disTyps: string[];
-  dateRange: DateRange;
-  region: Region;
+export type { SearchFormData };
+
+interface SubmitButtonProps {
+  isDirty: boolean;
+  submitButtonContent: JSX.Element;
+  hideDisasterFilter: boolean;
+  intl: ReturnType<typeof useIntl>;
 }
+
+const SubmitButton = ({
+  isDirty,
+  submitButtonContent,
+  hideDisasterFilter,
+  intl,
+}: SubmitButtonProps): JSX.Element => (
+  <Button
+    sx={{
+      color: isDirty ? 'white' : 'black',
+      padding: 1,
+      height: '2.5rem',
+      ml: hideDisasterFilter ? 0 : 2,
+      backgroundColor: isDirty
+        ? 'var(--color_buttons_2, #d32f2f)'
+        : 'var(--color_buttons_1)',
+      '&:hover': {
+        backgroundColor: isDirty
+          ? 'var(--color_buttons_2, #d32f2f)'
+          : 'var(--color_buttons_1)',
+        opacity: isDirty ? 0.9 : 0.7,
+      },
+      transition: 'all 0.2s ease-in-out',
+      boxShadow: isDirty ? '0 2px 8px rgba(211, 47, 47, 0.3)' : 'none',
+    }}
+    type="submit"
+    title={
+      isDirty
+        ? intl.formatMessage({
+            id: 'validation_search_params.filters_changed',
+            defaultMessage: 'Filters have changed. Click to update results.',
+          })
+        : undefined
+    }
+  >
+    {submitButtonContent}
+    {<EastIcon style={{ marginLeft: 6, marginBottom: 2 }} />}
+  </Button>
+);
 
 interface SearchFiltersProps {
   initSearchFormData: SearchFormData;
@@ -33,61 +77,6 @@ interface SearchFiltersProps {
    */
   autoSubmitOnDisasterChange?: boolean;
 }
-
-/**
- * Compare arrays of strings (sorted for comparison)
- */
-const areStringArraysEqual = (a: string[], b: string[]): boolean => {
-  return JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
-};
-
-/**
- * Compare date ranges (handling dayjs objects)
- */
-const areDateRangesEqual = (
-  a: SearchFormData['dateRange'],
-  b: SearchFormData['dateRange'],
-): boolean => {
-  const aStart = a.startDate?.toISOString();
-  const bStart = b.startDate?.toISOString();
-  const aEnd = a.endDate?.toISOString();
-  const bEnd = b.endDate?.toISOString();
-
-  return aStart === bStart && aEnd === bEnd;
-};
-
-/**
- * Compare regions
- */
-const areRegionsEqual = (
-  a: SearchFormData['region'],
-  b: SearchFormData['region'],
-): boolean => {
-  return (
-    areStringArraysEqual(a.province, b.province) &&
-    areStringArraysEqual(a.district, b.district) &&
-    areStringArraysEqual(a.commune, b.commune)
-  );
-};
-
-/**
- * Deep comparison helper for SearchFormData
- * Handles dayjs objects by comparing their ISO strings
- */
-const isFormDataEqual = (a: SearchFormData, b: SearchFormData): boolean => {
-  // Compare disaster types (sort arrays to handle order differences)
-  if (!areStringArraysEqual(a.disTyps, b.disTyps)) {
-    return false;
-  }
-
-  // Compare date range
-  if (!areDateRangesEqual(a.dateRange, b.dateRange)) {
-    return false;
-  }
-
-  // Compare region
-  return areRegionsEqual(a.region, b.region);
-};
 
 export const SearchFilters = ({
   initSearchFormData,
@@ -139,7 +128,7 @@ export const SearchFilters = ({
   }, [watchedValues, getValues]);
 
   // Auto-submit on disaster type change if enabled
-  useEffect(() => {
+  const handleAutoSubmit = useCallback(() => {
     if (!autoSubmitOnDisasterChange || hideDisasterFilter) {
       return;
     }
@@ -150,14 +139,11 @@ export const SearchFilters = ({
       previousDisasterTypeRef.current.sort(),
     );
 
-    // Only auto-submit when disaster type specifically changes
     if (currentDisasterTypes !== previousDisasterTypes) {
       previousDisasterTypeRef.current = currentValues.disTyps;
-      // Trigger form submission
       void handleSubmit(submitHandler)();
     }
   }, [
-    watchedValues,
     autoSubmitOnDisasterChange,
     hideDisasterFilter,
     getValues,
@@ -165,39 +151,9 @@ export const SearchFilters = ({
     submitHandler,
   ]);
 
-  const SubmitButton = (
-    <Button
-      sx={{
-        color: isDirty ? 'white' : 'black',
-        padding: 1,
-        height: '2.5rem',
-        ml: hideDisasterFilter ? 0 : 2,
-        backgroundColor: isDirty
-          ? 'var(--color_buttons_2, #d32f2f)'
-          : 'var(--color_buttons_1)',
-        '&:hover': {
-          backgroundColor: isDirty
-            ? 'var(--color_buttons_2, #d32f2f)'
-            : 'var(--color_buttons_1)',
-          opacity: isDirty ? 0.9 : 0.7,
-        },
-        transition: 'all 0.2s ease-in-out',
-        boxShadow: isDirty ? '0 2px 8px rgba(211, 47, 47, 0.3)' : 'none',
-      }}
-      type="submit"
-      title={
-        isDirty
-          ? intl.formatMessage({
-              id: 'validation_search_params.filters_changed',
-              defaultMessage: 'Filters have changed. Click to update results.',
-            })
-          : undefined
-      }
-    >
-      {submitButtonContent}
-      {<EastIcon style={{ marginLeft: 6, marginBottom: 2 }} />}
-    </Button>
-  );
+  useEffect(() => {
+    handleAutoSubmit();
+  }, [watchedValues, handleAutoSubmit]);
 
   return (
     <form
@@ -235,7 +191,14 @@ export const SearchFilters = ({
               )}
             />
           </Stack>
-          {hideDisasterFilter && SubmitButton}
+          {hideDisasterFilter && (
+            <SubmitButton
+              isDirty={isDirty}
+              submitButtonContent={submitButtonContent}
+              hideDisasterFilter={hideDisasterFilter}
+              intl={intl}
+            />
+          )}
         </Stack>
         <Stack
           direction="row"
@@ -254,7 +217,12 @@ export const SearchFilters = ({
                 />
                 {extraFilters}
               </Stack>
-              {SubmitButton}
+              <SubmitButton
+                isDirty={isDirty}
+                submitButtonContent={submitButtonContent}
+                hideDisasterFilter={hideDisasterFilter}
+                intl={intl}
+              />
             </>
           )}
         </Stack>
