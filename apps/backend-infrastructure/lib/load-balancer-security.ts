@@ -4,6 +4,7 @@ import {
   IApplicationLoadBalancer,
 } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import { Effect, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
+import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { Bucket, BucketEncryption } from 'aws-cdk-lib/aws-s3';
 import {
   CfnLoggingConfiguration,
@@ -158,27 +159,25 @@ export class LoadBalancerSecurity extends Construct {
     // WAF Logging Configuration
     // ============================================
 
-    // Create S3 bucket for WAF logs
-    // Note: Using auto-generated bucket name to avoid conflicts with existing buckets
-    // from previous failed deployments
-    const wafLogsBucket = new Bucket(this, 'WafLogsBucket', {
-      encryption: BucketEncryption.S3_MANAGED,
+    // Create CloudWatch Logs group for WAF logs
+    // Using CloudWatch Logs instead of S3 because WAF S3 logging has ARN format issues
+    // CloudWatch Logs is simpler, more reliable, and integrates better with AWS services
+    const wafLogGroup = new LogGroup(this, 'WafLogGroup', {
+      logGroupName: `/aws/waf/${applicationName}`,
+      retention: RetentionDays.ONE_MONTH,
       removalPolicy: RemovalPolicy.RETAIN,
-      autoDeleteObjects: false,
     });
 
-    // Grant WAF service permission to write to the bucket
-    // WAF requires specific bucket policy with account ID validation
-    wafLogsBucket.addToResourcePolicy(
+    // Grant WAF service permission to write to the log group
+    wafLogGroup.addToResourcePolicy(
       new PolicyStatement({
         sid: 'AllowWAFServiceToWriteLogs',
         effect: Effect.ALLOW,
         principals: [new ServicePrincipal('delivery.logs.amazonaws.com')],
-        actions: ['s3:PutObject'],
-        resources: [`${wafLogsBucket.bucketArn}/*`],
+        actions: ['logs:CreateLogStream', 'logs:PutLogEvents'],
+        resources: [wafLogGroup.logGroupArn],
         conditions: {
           StringEquals: {
-            's3:x-amz-acl': 'bucket-owner-full-control',
             'aws:SourceAccount': stack.account,
           },
           ArnLike: {
@@ -188,13 +187,10 @@ export class LoadBalancerSecurity extends Construct {
       }),
     );
 
-    // Enable WAF logging to S3
-    // Important: WAF logging to S3 requires the bucket ARN WITHOUT a prefix
-    // The prefix is optional and WAF will create logs with a default structure
-    // Format: arn:aws:s3:::bucket-name (no trailing slash or prefix)
+    // Enable WAF logging to CloudWatch Logs
     new CfnLoggingConfiguration(this, 'WafLoggingConfiguration', {
       resourceArn: webAcl.attrArn,
-      logDestinationConfigs: [`arn:aws:s3:::${wafLogsBucket.bucketName}`],
+      logDestinationConfigs: [wafLogGroup.logGroupArn],
     });
   }
 }
