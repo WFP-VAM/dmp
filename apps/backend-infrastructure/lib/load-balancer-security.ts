@@ -1,9 +1,4 @@
-import {
-  NestedStack,
-  NestedStackProps,
-  RemovalPolicy,
-  Stack,
-} from 'aws-cdk-lib';
+import { RemovalPolicy, Stack } from 'aws-cdk-lib';
 import {
   ApplicationLoadBalancer,
   IApplicationLoadBalancer,
@@ -17,14 +12,14 @@ import {
 } from 'aws-cdk-lib/aws-wafv2';
 import { Construct } from 'constructs';
 
-export interface LoadBalancerSecurityProps extends NestedStackProps {
+export interface LoadBalancerSecurityProps {
   loadBalancer: IApplicationLoadBalancer;
   applicationName: string;
 }
 
-export class LoadBalancerSecurity extends NestedStack {
+export class LoadBalancerSecurity extends Construct {
   constructor(scope: Construct, id: string, props: LoadBalancerSecurityProps) {
-    super(scope, id, props);
+    super(scope, id);
 
     const { loadBalancer, applicationName } = props;
     const stack = Stack.of(this);
