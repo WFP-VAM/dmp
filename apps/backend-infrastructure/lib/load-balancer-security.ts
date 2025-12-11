@@ -41,15 +41,15 @@ export class LoadBalancerSecurity extends Construct {
     } else {
       // Fallback: if for some reason we don't have ApplicationLoadBalancer,
       // manually configure bucket policy and log a warning
-    albLogsBucket.addToResourcePolicy(
-      new PolicyStatement({
-        sid: 'AllowELBServiceToWriteLogs',
-        effect: Effect.ALLOW,
-        principals: [new ServicePrincipal('logdelivery.elb.amazonaws.com')],
-        actions: ['s3:PutObject'],
-        resources: [`${albLogsBucket.bucketArn}/*`],
-      }),
-    );
+      albLogsBucket.addToResourcePolicy(
+        new PolicyStatement({
+          sid: 'AllowELBServiceToWriteLogs',
+          effect: Effect.ALLOW,
+          principals: [new ServicePrincipal('logdelivery.elb.amazonaws.com')],
+          actions: ['s3:PutObject'],
+          resources: [`${albLogsBucket.bucketArn}/*`],
+        }),
+      );
       console.warn(
         'Load balancer is not an ApplicationLoadBalancer instance. Access logs may not be configured.',
       );
