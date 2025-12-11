@@ -1,11 +1,15 @@
-import { RemovalPolicy } from 'aws-cdk-lib';
+import { RemovalPolicy, Stack } from 'aws-cdk-lib';
 import {
   ApplicationLoadBalancer,
   IApplicationLoadBalancer,
 } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import { Effect, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Bucket, BucketEncryption } from 'aws-cdk-lib/aws-s3';
-import { CfnWebACL, CfnWebACLAssociation } from 'aws-cdk-lib/aws-wafv2';
+import {
+  CfnLoggingConfiguration,
+  CfnWebACL,
+  CfnWebACLAssociation,
+} from 'aws-cdk-lib/aws-wafv2';
 import { Construct } from 'constructs';
 
 export interface LoadBalancerSecurityProps {
@@ -18,6 +22,7 @@ export class LoadBalancerSecurity extends Construct {
     super(scope, id);
 
     const { loadBalancer, applicationName } = props;
+    const stack = Stack.of(this);
 
     // ============================================
     // ALB Access Logs Configuration
@@ -163,6 +168,7 @@ export class LoadBalancerSecurity extends Construct {
     });
 
     // Grant WAF service permission to write to the bucket
+    // WAF requires specific bucket policy with account ID validation
     wafLogsBucket.addToResourcePolicy(
       new PolicyStatement({
         sid: 'AllowWAFServiceToWriteLogs',
@@ -173,19 +179,24 @@ export class LoadBalancerSecurity extends Construct {
         conditions: {
           StringEquals: {
             's3:x-amz-acl': 'bucket-owner-full-control',
+            'aws:SourceAccount': stack.account,
+          },
+          ArnLike: {
+            'aws:SourceArn': `arn:aws:logs:${stack.region}:${stack.account}:*`,
           },
         },
       }),
     );
 
-    // Enable WAF logging
-    // Note: WAF logging to S3 requires the bucket ARN in a specific format
-    // Using Fn::Join to ensure proper ARN format: arn:aws:s3:::bucket-name/prefix
-    // Temporarily using CloudWatch Logs format as workaround - will need to verify S3 format
-    // For now, commenting out to unblock deployment - can be re-enabled once format is verified
-    // new CfnLoggingConfiguration(this, 'WafLoggingConfiguration', {
-    //   resourceArn: webAcl.attrArn,
-    //   logDestinationConfigs: [wafLogsBucket.bucketArn],
-    // });
+    // Enable WAF logging to S3
+    // Important: Use bucketName instead of bucketArn to avoid CloudFormation token resolution issues
+    // WAF expects the ARN format: arn:aws:s3:::bucket-name/prefix
+    // Using Fn::Join to construct the ARN ensures proper format
+    new CfnLoggingConfiguration(this, 'WafLoggingConfiguration', {
+      resourceArn: webAcl.attrArn,
+      logDestinationConfigs: [
+        `arn:aws:s3:::${wafLogsBucket.bucketName}/${applicationName}-waf-logs`,
+      ],
+    });
   }
 }
