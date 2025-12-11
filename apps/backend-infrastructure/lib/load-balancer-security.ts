@@ -38,26 +38,24 @@ export class LoadBalancerSecurity extends Construct {
       autoDeleteObjects: false,
     });
 
-    // Grant ELB service permission to write to the bucket
-    albLogsBucket.addToResourcePolicy(
-      new PolicyStatement({
-        sid: 'AllowELBServiceToWriteLogs',
-        effect: Effect.ALLOW,
-        principals: [new ServicePrincipal('logdelivery.elb.amazonaws.com')],
-        actions: ['s3:PutObject'],
-        resources: [`${albLogsBucket.bucketArn}/*`],
-      }),
-    );
-
     // Enable access logging on the Application Load Balancer
     // ApplicationLoadBalancedFargateService always creates an ApplicationLoadBalancer,
     // so logAccessLogs should always be available
+    // Note: logAccessLogs() automatically configures the bucket policy for ELB service
     if (loadBalancer instanceof ApplicationLoadBalancer) {
       loadBalancer.logAccessLogs(albLogsBucket, `${applicationName}-alb-logs`);
     } else {
       // Fallback: if for some reason we don't have ApplicationLoadBalancer,
-      // log a warning but don't modify CfnLoadBalancer attributes directly
-      // as this can cause CloudFormation update conflicts
+      // manually configure bucket policy and log a warning
+      albLogsBucket.addToResourcePolicy(
+        new PolicyStatement({
+          sid: 'AllowELBServiceToWriteLogs',
+          effect: Effect.ALLOW,
+          principals: [new ServicePrincipal('logdelivery.elb.amazonaws.com')],
+          actions: ['s3:PutObject'],
+          resources: [`${albLogsBucket.bucketArn}/*`],
+        }),
+      );
       console.warn(
         'Load balancer is not an ApplicationLoadBalancer instance. Access logs may not be configured.',
       );
@@ -188,9 +186,12 @@ export class LoadBalancerSecurity extends Construct {
     );
 
     // Enable WAF logging
+    // WAF logging requires the full S3 ARN with a prefix (not just bucket ARN)
     new CfnLoggingConfiguration(this, 'WafLoggingConfiguration', {
       resourceArn: webAcl.attrArn,
-      logDestinationConfigs: [wafLogsBucket.bucketArn],
+      logDestinationConfigs: [
+        `${wafLogsBucket.bucketArn}/${applicationName}-waf-logs`,
+      ],
     });
   }
 }
