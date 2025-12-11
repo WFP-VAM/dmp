@@ -6,7 +6,7 @@
     "cdk": "cdk",
     "lint": "eslint --cache './**/*.ts' --ignore-pattern '**/*.d.ts' --max-warnings 0",
     "lint:fix": "pnpm lint --fix",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "watch": "tsc -w"
   },
   "bin": {
