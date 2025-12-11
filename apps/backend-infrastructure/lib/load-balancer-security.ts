@@ -1,4 +1,4 @@
-import { RemovalPolicy, Stack } from 'aws-cdk-lib';
+import { RemovalPolicy } from 'aws-cdk-lib';
 import {
   ApplicationLoadBalancer,
   IApplicationLoadBalancer,
@@ -22,17 +22,15 @@ export class LoadBalancerSecurity extends Construct {
     super(scope, id);
 
     const { loadBalancer, applicationName } = props;
-    const stack = Stack.of(this);
 
     // ============================================
     // ALB Access Logs Configuration
     // ============================================
 
     // Create S3 bucket for ALB access logs
+    // Note: Using auto-generated bucket name to avoid conflicts with existing buckets
+    // from previous failed deployments
     const albLogsBucket = new Bucket(this, 'AlbLogsBucket', {
-      bucketName: `${applicationName.toLowerCase()}-alb-access-logs-${
-        stack.account
-      }-${stack.region}`,
       encryption: BucketEncryption.S3_MANAGED,
       removalPolicy: RemovalPolicy.RETAIN,
       autoDeleteObjects: false,
@@ -160,10 +158,9 @@ export class LoadBalancerSecurity extends Construct {
     // ============================================
 
     // Create S3 bucket for WAF logs
+    // Note: Using auto-generated bucket name to avoid conflicts with existing buckets
+    // from previous failed deployments
     const wafLogsBucket = new Bucket(this, 'WafLogsBucket', {
-      bucketName: `${applicationName.toLowerCase()}-waf-logs-${stack.account}-${
-        stack.region
-      }`,
       encryption: BucketEncryption.S3_MANAGED,
       removalPolicy: RemovalPolicy.RETAIN,
       autoDeleteObjects: false,
