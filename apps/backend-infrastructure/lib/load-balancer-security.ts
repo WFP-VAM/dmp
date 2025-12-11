@@ -1,5 +1,4 @@
 import {
-  aws_elasticloadbalancingv2,
   NestedStack,
   NestedStackProps,
   RemovalPolicy,
@@ -56,32 +55,17 @@ export class LoadBalancerSecurity extends NestedStack {
     );
 
     // Enable access logging on the Application Load Balancer
+    // ApplicationLoadBalancedFargateService always creates an ApplicationLoadBalancer,
+    // so logAccessLogs should always be available
     if (loadBalancer instanceof ApplicationLoadBalancer) {
       loadBalancer.logAccessLogs(albLogsBucket, `${applicationName}-alb-logs`);
     } else {
-      // Fallback: use CfnLoadBalancer attributes if interface doesn't support logAccessLogs
-      const defaultChild = loadBalancer.node.defaultChild;
-      if (defaultChild instanceof aws_elasticloadbalancingv2.CfnLoadBalancer) {
-        const existingAttributes = defaultChild.loadBalancerAttributes;
-        const attributesArray = Array.isArray(existingAttributes)
-          ? existingAttributes
-          : [];
-        defaultChild.loadBalancerAttributes = [
-          ...attributesArray,
-          {
-            key: 'access_logs.s3.enabled',
-            value: 'true',
-          },
-          {
-            key: 'access_logs.s3.bucket',
-            value: albLogsBucket.bucketName,
-          },
-          {
-            key: 'access_logs.s3.prefix',
-            value: `${applicationName}-alb-logs`,
-          },
-        ];
-      }
+      // Fallback: if for some reason we don't have ApplicationLoadBalancer,
+      // log a warning but don't modify CfnLoadBalancer attributes directly
+      // as this can cause CloudFormation update conflicts
+      console.warn(
+        'Load balancer is not an ApplicationLoadBalancer instance. Access logs may not be configured.',
+      );
     }
 
     // ============================================
