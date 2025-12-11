@@ -188,9 +188,14 @@ export class LoadBalancerSecurity extends Construct {
     );
 
     // Enable WAF logging to CloudWatch Logs
+    // WAF requires the log group ARN without the :* suffix
+    // logGroupArn returns arn:aws:logs:region:account:log-group:name:*
+    // We need: arn:aws:logs:region:account:log-group:name
     new CfnLoggingConfiguration(this, 'WafLoggingConfiguration', {
       resourceArn: webAcl.attrArn,
-      logDestinationConfigs: [wafLogGroup.logGroupArn],
+      logDestinationConfigs: [
+        `arn:aws:logs:${stack.region}:${stack.account}:log-group:${wafLogGroup.logGroupName}`,
+      ],
     });
   }
 }
