@@ -183,12 +183,10 @@ export class LoadBalancerSecurity extends Construct {
     );
 
     // Enable WAF logging
-    // WAF logging requires the full S3 ARN with a prefix (not just bucket ARN)
+    // WAF logging requires just the bucket ARN (prefix is optional and configured via S3 bucket)
     new CfnLoggingConfiguration(this, 'WafLoggingConfiguration', {
       resourceArn: webAcl.attrArn,
-      logDestinationConfigs: [
-        `${wafLogsBucket.bucketArn}/${applicationName}-waf-logs`,
-      ],
+      logDestinationConfigs: [wafLogsBucket.bucketArn],
     });
   }
 }
