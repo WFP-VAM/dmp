@@ -65,23 +65,20 @@ class Database extends NestedStack {
       engine: DatabaseClusterEngine.auroraPostgres({
         version: AuroraPostgresEngineVersion.VER_15_12,
       }),
-      instances: 1,
-
       credentials: Credentials.fromPassword(
         this.dbSecret.secretValueFromJson('username').unsafeUnwrap(),
         this.dbSecret.secretValueFromJson('password'),
       ),
       defaultDatabaseName: this.dbName,
-
-      instanceProps: {
-        vpc: vpc,
+      writer: {
         instanceType: new InstanceType('serverless'),
         autoMinorVersionUpgrade: true,
-        securityGroups: [dbSecurityGroup],
-        vpcSubnets: vpc.selectSubnets({
-          subnetType: SubnetType.PRIVATE_ISOLATED,
-        }),
       },
+      vpc: vpc,
+      securityGroups: [dbSecurityGroup],
+      vpcSubnets: vpc.selectSubnets({
+        subnetType: SubnetType.PRIVATE_ISOLATED,
+      }),
       port: 5432,
     });
 
