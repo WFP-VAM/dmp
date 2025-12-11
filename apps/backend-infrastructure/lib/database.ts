@@ -1,6 +1,5 @@
 import { Aspects, NestedStack, NestedStackProps } from 'aws-cdk-lib';
 import {
-  InstanceType,
   IVpc,
   Peer,
   Port,
@@ -10,6 +9,7 @@ import {
 import {
   AuroraPostgresEngineVersion,
   CfnDBCluster,
+  ClusterInstance,
   Credentials,
   DatabaseCluster,
   DatabaseClusterEngine,
@@ -70,10 +70,9 @@ class Database extends NestedStack {
         this.dbSecret.secretValueFromJson('password'),
       ),
       defaultDatabaseName: this.dbName,
-      writer: {
-        instanceType: new InstanceType('serverless'),
+      writer: ClusterInstance.serverlessV2('Writer', {
         autoMinorVersionUpgrade: true,
-      },
+      }),
       vpc: vpc,
       securityGroups: [dbSecurityGroup],
       vpcSubnets: vpc.selectSubnets({
