@@ -1,4 +1,4 @@
-import { Fn, RemovalPolicy, Stack } from 'aws-cdk-lib';
+import { RemovalPolicy, Stack } from 'aws-cdk-lib';
 import {
   ApplicationLoadBalancer,
   IApplicationLoadBalancer,
@@ -162,8 +162,9 @@ export class LoadBalancerSecurity extends Construct {
     // Create CloudWatch Logs group for WAF logs
     // Using CloudWatch Logs instead of S3 because WAF S3 logging has ARN format issues
     // CloudWatch Logs is simpler, more reliable, and integrates better with AWS services
-    // Using auto-generated name to avoid conflicts with existing log groups
+    // Using a simple, fixed name format that WAF accepts
     const wafLogGroup = new LogGroup(this, 'WafLogGroup', {
+      logGroupName: `/aws/waf/${applicationName}-webacl`,
       retention: RetentionDays.ONE_MONTH,
       removalPolicy: RemovalPolicy.RETAIN,
     });
@@ -189,24 +190,12 @@ export class LoadBalancerSecurity extends Construct {
 
     // Enable WAF logging to CloudWatch Logs
     // WAF requires the log group ARN without the :* suffix
-    // logGroupArn returns arn:aws:logs:region:account:log-group:name:*
-    // We need: arn:aws:logs:region:account:log-group:name
-    // Use Fn::Select to extract parts and reconstruct without wildcard
-    // Split ARN by ':' and take all parts except the last one (which is '*')
-    const logGroupArnParts = Fn.split(':', wafLogGroup.logGroupArn);
-    const logGroupArnWithoutWildcard = Fn.join(':', [
-      Fn.select(0, logGroupArnParts), // arn
-      Fn.select(1, logGroupArnParts), // aws
-      Fn.select(2, logGroupArnParts), // logs
-      Fn.select(3, logGroupArnParts), // region
-      Fn.select(4, logGroupArnParts), // account
-      Fn.select(5, logGroupArnParts), // log-group
-      Fn.select(6, logGroupArnParts), // name (without :*)
-    ]);
+    // Construct the ARN manually from known values to avoid CloudFormation token issues
+    const logGroupArn = `arn:aws:logs:${stack.region}:${stack.account}:log-group:${wafLogGroup.logGroupName}`;
 
     new CfnLoggingConfiguration(this, 'WafLoggingConfiguration', {
       resourceArn: webAcl.attrArn,
-      logDestinationConfigs: [logGroupArnWithoutWildcard],
+      logDestinationConfigs: [logGroupArn],
     });
   }
 }
