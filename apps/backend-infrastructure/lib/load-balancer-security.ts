@@ -1,16 +1,11 @@
-import { RemovalPolicy, Stack } from 'aws-cdk-lib';
+import { RemovalPolicy } from 'aws-cdk-lib';
 import {
   ApplicationLoadBalancer,
   IApplicationLoadBalancer,
 } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import { Effect, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
-import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { Bucket, BucketEncryption } from 'aws-cdk-lib/aws-s3';
-import {
-  CfnLoggingConfiguration,
-  CfnWebACL,
-  CfnWebACLAssociation,
-} from 'aws-cdk-lib/aws-wafv2';
+import { CfnWebACL, CfnWebACLAssociation } from 'aws-cdk-lib/aws-wafv2';
 import { Construct } from 'constructs';
 
 export interface LoadBalancerSecurityProps {
@@ -23,7 +18,6 @@ export class LoadBalancerSecurity extends Construct {
     super(scope, id);
 
     const { loadBalancer, applicationName } = props;
-    const stack = Stack.of(this);
 
     // ============================================
     // ALB Access Logs Configuration
@@ -47,15 +41,15 @@ export class LoadBalancerSecurity extends Construct {
     } else {
       // Fallback: if for some reason we don't have ApplicationLoadBalancer,
       // manually configure bucket policy and log a warning
-      albLogsBucket.addToResourcePolicy(
-        new PolicyStatement({
-          sid: 'AllowELBServiceToWriteLogs',
-          effect: Effect.ALLOW,
-          principals: [new ServicePrincipal('logdelivery.elb.amazonaws.com')],
-          actions: ['s3:PutObject'],
-          resources: [`${albLogsBucket.bucketArn}/*`],
-        }),
-      );
+    albLogsBucket.addToResourcePolicy(
+      new PolicyStatement({
+        sid: 'AllowELBServiceToWriteLogs',
+        effect: Effect.ALLOW,
+        principals: [new ServicePrincipal('logdelivery.elb.amazonaws.com')],
+        actions: ['s3:PutObject'],
+        resources: [`${albLogsBucket.bucketArn}/*`],
+      }),
+    );
       console.warn(
         'Load balancer is not an ApplicationLoadBalancer instance. Access logs may not be configured.',
       );
@@ -158,44 +152,43 @@ export class LoadBalancerSecurity extends Construct {
     // ============================================
     // WAF Logging Configuration
     // ============================================
-
-    // Create CloudWatch Logs group for WAF logs
-    // Using CloudWatch Logs instead of S3 because WAF S3 logging has ARN format issues
-    // CloudWatch Logs is simpler, more reliable, and integrates better with AWS services
-    // Using a simple name without leading slash to avoid ARN format issues with WAF
-    const wafLogGroup = new LogGroup(this, 'WafLogGroup', {
-      logGroupName: `aws-waf-${applicationName}-webacl`,
-      retention: RetentionDays.ONE_MONTH,
-      removalPolicy: RemovalPolicy.RETAIN,
-    });
-
-    // Grant WAF service permission to write to the log group
-    wafLogGroup.addToResourcePolicy(
-      new PolicyStatement({
-        sid: 'AllowWAFServiceToWriteLogs',
-        effect: Effect.ALLOW,
-        principals: [new ServicePrincipal('delivery.logs.amazonaws.com')],
-        actions: ['logs:CreateLogStream', 'logs:PutLogEvents'],
-        resources: [wafLogGroup.logGroupArn],
-        conditions: {
-          StringEquals: {
-            'aws:SourceAccount': stack.account,
-          },
-          ArnLike: {
-            'aws:SourceArn': `arn:aws:logs:${stack.region}:${stack.account}:*`,
-          },
-        },
-      }),
-    );
-
-    // Enable WAF logging to CloudWatch Logs
-    // WAF requires the log group ARN without the :* suffix
-    // Construct the ARN manually from known values to avoid CloudFormation token issues
-    const logGroupArn = `arn:aws:logs:${stack.region}:${stack.account}:log-group:${wafLogGroup.logGroupName}`;
-
-    new CfnLoggingConfiguration(this, 'WafLoggingConfiguration', {
-      resourceArn: webAcl.attrArn,
-      logDestinationConfigs: [logGroupArn],
-    });
+    // NOTE: WAF logging temporarily disabled due to ARN format validation issues
+    // The ARN format appears correct but WAF service rejects it
+    // TODO: Re-enable logging once the correct ARN format is confirmed
+    // Options to investigate:
+    // 1. Use Kinesis Data Firehose delivery stream for CloudWatch Logs
+    // 2. Use S3 logging with proper bucket policy and ARN format
+    // 3. Verify if regional WAF supports direct CloudWatch Logs logging
+    //
+    // Uncomment below to enable logging:
+    //
+    // const wafLogGroup = new LogGroup(this, 'WafLogGroup', {
+    //   logGroupName: `aws-waf-${applicationName}-webacl`,
+    //   retention: RetentionDays.ONE_MONTH,
+    //   removalPolicy: RemovalPolicy.RETAIN,
+    // });
+    //
+    // wafLogGroup.addToResourcePolicy(
+    //   new PolicyStatement({
+    //     sid: 'AllowWAFServiceToWriteLogs',
+    //     effect: Effect.ALLOW,
+    //     principals: [new ServicePrincipal('delivery.logs.amazonaws.com')],
+    //     actions: ['logs:CreateLogStream', 'logs:PutLogEvents'],
+    //     resources: [wafLogGroup.logGroupArn],
+    //     conditions: {
+    //       StringEquals: {
+    //         'aws:SourceAccount': stack.account,
+    //       },
+    //       ArnLike: {
+    //         'aws:SourceArn': `arn:aws:logs:${stack.region}:${stack.account}:*`,
+    //       },
+    //     },
+    //   }),
+    // );
+    //
+    // new CfnLoggingConfiguration(this, 'WafLoggingConfiguration', {
+    //   resourceArn: webAcl.attrArn,
+    //   logDestinationConfigs: [`arn:aws:logs:${stack.region}:${stack.account}:log-group:${wafLogGroup.logGroupName}`],
+    // });
   }
 }
