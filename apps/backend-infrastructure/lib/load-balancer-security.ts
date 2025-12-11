@@ -162,9 +162,9 @@ export class LoadBalancerSecurity extends Construct {
     // Create CloudWatch Logs group for WAF logs
     // Using CloudWatch Logs instead of S3 because WAF S3 logging has ARN format issues
     // CloudWatch Logs is simpler, more reliable, and integrates better with AWS services
-    // Using a simple, fixed name format that WAF accepts
+    // Using a simple name without leading slash to avoid ARN format issues with WAF
     const wafLogGroup = new LogGroup(this, 'WafLogGroup', {
-      logGroupName: `/aws/waf/${applicationName}-webacl`,
+      logGroupName: `aws-waf-${applicationName}-webacl`,
       retention: RetentionDays.ONE_MONTH,
       removalPolicy: RemovalPolicy.RETAIN,
     });
