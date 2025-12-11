@@ -4,6 +4,11 @@
     "district": "District / Krong",
     "commune": "Commune"
   },
+  "generic": {
+    "password_input": {
+      "show_password": "Show password"
+    }
+  },
   "login": {
     "title": "Welcome!",
     "error": "An error has occurred. Please try again.",
@@ -57,7 +62,8 @@
     "logout": "Log out"
   },
   "home": {
-    "no_report": "No disaster report"
+    "no_report": "No disaster report",
+    "week": "week"
   },
   "validation_search_params": {
     "location": "Location",
@@ -71,7 +77,8 @@
     "all-commune": "All communes",
     "date_range": "Date range",
     "start_date": "From",
-    "end_date": "To"
+    "end_date": "To",
+    "filters_changed": "Filters have changed. Click to update results."
   },
   "form_page": {
     "approve": "Approve Report",
@@ -729,7 +736,8 @@
     "22": "Oddar Meanchey",
     "23": "Kep",
     "24": "Pailin",
-    "25": "Tboung Khmum"
+    "25": "Tboung Khmum",
+    "undefined": "Missing Province info"
   },
   "district": {
     "0102": "Mongkol Borei",
@@ -941,6 +949,7 @@
     "2504": "Ou Reang Ov",
     "2505": "Ponhea Kraek",
     "2506": "Suong",
-    "2507": "Tboung Khmum"
+    "2507": "Tboung Khmum",
+    "undefined": "Missing District info"
   }
 }

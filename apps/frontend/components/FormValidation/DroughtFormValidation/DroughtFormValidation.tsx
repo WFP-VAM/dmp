@@ -16,6 +16,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { usePatchForm } from 'services/api/kobo/usePatchForm';
 import { formatFormToRaw } from 'utils/formatFormToRaw';
 import { formatDroughtFields } from 'utils/formatRawToForm';
+import { reloadPage } from 'utils/reloadPage';
 
 import FormValidationFooter from '../FormValidationFooter';
 import FormValidationHeader from '../FormValidationHeader';
@@ -29,7 +30,7 @@ export const DroughtFormValidation = ({
 }): JSX.Element => {
   const theme = useTheme();
   const router = useRouter();
-  const { disasterType, id } = router.query;
+  const { disaster: disasterType, formId: id } = router.query;
 
   const formattedForm = useMemo(
     () => formatDroughtFields(validationForm),
@@ -77,8 +78,9 @@ export const DroughtFormValidation = ({
           formatFormToRaw(data, koboKeys[DROUGHT], droughtSpecificKeys),
         );
         if (status === 201) {
-          reset(data);
           setIsEditMode(false);
+          // Reload current page to refresh form data and prevent navigation issues
+          reloadPage(router);
         }
       } catch (error) {
         setShouldReset(true);
@@ -110,7 +112,6 @@ export const DroughtFormValidation = ({
         <FormValidationFooter
           isEditMode={isEditMode}
           setIsEditMode={setIsEditMode}
-          setShouldReset={setShouldReset}
           status={validationForm._validation_status.uid}
         />
       </Stack>

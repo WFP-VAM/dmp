@@ -18,7 +18,7 @@ import {
 
 import { KoboService } from './kobo.service';
 
-const AuthorizedPatchOrigin = /^https:\/\/dmp\.ovio\.org(\/.*)?$/;
+const AuthorizedPatchOrigin = /^https:\/\/([a-zA-Z0-9-]+\.)?dmp\.ovio\.org(\/.*)?$/;
 
 @Controller('kobo')
 export class KoboController {

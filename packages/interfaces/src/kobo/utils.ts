@@ -1,5 +1,3 @@
-import * as path from 'path';
-
 import { DroughtDto } from './DroughtDto';
 import { FloodDto } from './FloodDto';
 import { IncidentDto } from './IncidentDto';
@@ -63,7 +61,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       ).toString(),
       [KoboCommonKeys.submissionTime]: form[keys.submissionTime],
       floodN: form[keys.floodN],
-      approvalLink: path.join('/form', FLOOD, form[keys.id].toString()),
+      approvalLink: `/form?disaster=${FLOOD}&formId=${form[keys.id].toString()}`,
     };
   } else if (isDrought(form)) {
     const keys = koboKeys[DROUGHT];
@@ -83,7 +81,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
         form[keys.validationStatus].uid ?? ValidationStatusValue.onHold
       ).toString(),
       [KoboCommonKeys.submissionTime]: form[keys.submissionTime],
-      approvalLink: path.join('/form', DROUGHT, form[keys.id].toString()),
+      approvalLink: `/form?disaster=${DROUGHT}&formId=${form[keys.id].toString()}`,
     };
   } else {
     const keys = koboKeys[INCIDENT];
@@ -103,7 +101,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
         form[keys.validationStatus].uid ?? ValidationStatusValue.onHold
       ).toString(),
       [KoboCommonKeys.submissionTime]: form[keys.submissionTime],
-      approvalLink: path.join('/form', INCIDENT, form[keys.id].toString()),
+      approvalLink: `/form?disaster=${INCIDENT}&formId=${form[keys.id].toString()}`,
     };
   }
 };

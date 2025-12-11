@@ -6,41 +6,26 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Home, Logout, Person } from '@mui/icons-material';
-import { Menu, MenuItem, Stack, useTheme } from '@mui/material';
+import { Menu, MenuItem, Stack, Tooltip, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import SelectLanguage from 'components/SelectLanguage';
+import { useAuth } from 'context/auth';
 import { apiBaseUrl } from 'services/api/client';
 import { colors } from 'theme/muiTheme';
 import { logout } from 'utils/logout';
 
-type NormalLink = {
-  key: number;
-  linkTo: string;
-  textId: string;
-  icon: React.ReactNode;
-};
-
-type SubMenuItem = {
-  key: string;
-  linkTo: string;
-  textId: string;
-  icon: React.ReactNode;
-};
-
-type LinkWithSubMenu = {
-  key: number;
-  textId: string;
-  icon: React.ReactNode;
-  subMenu: SubMenuItem[];
-};
-
-type NavLink = NormalLink | LinkWithSubMenu;
+import type {
+  LinkWithSubMenu,
+  NavLink,
+  NormalLink,
+} from './NavBarButtons.types';
 
 const handleAdminClick = () => {
   const path = new URL('/admin/login', apiBaseUrl).toString();
@@ -107,8 +92,10 @@ const isLinkWithSubMenu = (link: NavLink): link is LinkWithSubMenu => {
 
 const NavBarButtons = () => {
   const intl = useIntl();
+  const router = useRouter();
   const path = usePathname();
   const theme = useTheme();
+  const { user } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openMenuKey, setOpenMenuKey] = useState<number | null>(null);
 
@@ -229,19 +216,25 @@ const NavBarButtons = () => {
         </Typography>
       </Button>
       <SelectLanguage />
-      <Button
-        className="logout"
-        onClick={() => {
-          void logout();
-        }}
-        startIcon={<Logout fontSize="large" style={{ minWidth: '1.5rem' }} />}
+      <Tooltip
+        title={
+          user?.email != null && user.email !== ''
+            ? `logged in as ${user.email}`
+            : ''
+        }
+        arrow
       >
-        <Typography>
-          <FormattedMessage id="navigation.logout" />
-        </Typography>
-      </Button>
+        <Button
+          className="logout"
+          onClick={() => void logout(router)}
+          startIcon={<Logout fontSize="large" style={{ minWidth: '1.5rem' }} />}
+        >
+          <Typography>
+            <FormattedMessage id="navigation.logout" />
+          </Typography>
+        </Button>
+      </Tooltip>
     </Stack>
   );
 };
-
 export default NavBarButtons;

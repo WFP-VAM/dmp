@@ -18,6 +18,8 @@ import { ISecret, Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { Construct } from 'constructs';
 import path = require('path');
 
+import { LoadBalancerSecurity } from './load-balancer-security';
+
 export interface ECSServiceProps extends NestedStackProps {
   vpc: IVpc;
   dbSecret: ISecret;
@@ -57,7 +59,7 @@ export class ECSService extends NestedStack {
     });
 
     const superadminUsername = new Secret(this, 'superadminUser', {
-      secretName: 'Superadmin-Username',
+      secretName: `${applicationName}/SuperadminUsername`,
       generateSecretString: {
         excludeUppercase: true,
         excludePunctuation: true,
@@ -65,64 +67,64 @@ export class ECSService extends NestedStack {
       },
     });
     const superadminPassword = new Secret(this, 'superadminPassword', {
-      secretName: 'Superadmin-Password',
+      secretName: `${applicationName}/SuperadminPassword`,
       generateSecretString: {
         passwordLength: 12,
       },
     });
 
     const adminjsCookieSecret = new Secret(this, 'adminjsCookieSecret', {
-      secretName: 'dmpAdminjsCookieSecret',
+      secretName: `${applicationName}/AdminjsCookieSecret`,
     });
 
     const adminjsSessionSecret = new Secret(this, 'adminjsSessionSecret', {
-      secretName: 'dmpAdminjsSessionSecret',
+      secretName: `${applicationName}/AdminjsSessionSecret`,
     });
 
     const koboToken = Secret.fromSecretNameV2(
       this,
       'koboToken',
-      '/wfp/dmp/kobo/token',
+      `${applicationName}/kobo/token`,
     );
 
     const floodAssetId = Secret.fromSecretNameV2(
       this,
       'koboFloodAssetId',
-      '/wfp/dmp/kobo/floodAssetId',
+      `${applicationName}/kobo/floodAssetId`,
     );
 
     const incidentAssetId = Secret.fromSecretNameV2(
       this,
       'koboIncidentAssetId',
-      '/wfp/dmp/kobo/incidentAssetId',
+      `${applicationName}/kobo/incidentAssetId`,
     );
 
     const droughtAssetId = Secret.fromSecretNameV2(
       this,
       'koboDroughtAssetId',
-      '/wfp/dmp/kobo/droughtAssetId',
+      `${applicationName}/kobo/droughtAssetId`,
     );
 
     const webhookToken = new Secret(this, 'webhookToken', {
-      secretName: 'dmpWebhookToken',
+      secretName: `${applicationName}/kobo/WebhookToken`,
     });
 
     const telegramBotToken = Secret.fromSecretNameV2(
       this,
       'telegramBotToken',
-      '/wfp/dmp/telegram/telegramBotToken',
+      `${applicationName}/telegram/telegramBotToken`,
     );
 
     const telegramPcdmChatId = Secret.fromSecretNameV2(
       this,
       'telegramPcdmChatId',
-      '/wfp/dmp/telegram/telegramPcdmChatId',
+      `${applicationName}/telegram/telegramPcdmChatId`,
     );
 
     const telegramNcdmChatId = Secret.fromSecretNameV2(
       this,
       'telegramNcdmChatId',
-      '/wfp/dmp/telegram/telegramNcdmChatId',
+      `${applicationName}/telegram/telegramNcdmChatId`,
     );
 
     const cluster = new Cluster(this, 'Cluster', { vpc });
@@ -201,5 +203,11 @@ export class ECSService extends NestedStack {
     );
 
     this.loadBalancer = loadBalancedService.loadBalancer;
+
+    // Configure security: WAF, ALB access logs, and WAF logging
+    new LoadBalancerSecurity(this, 'LoadBalancerSecurity', {
+      loadBalancer: this.loadBalancer,
+      applicationName,
+    });
   }
 }

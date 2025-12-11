@@ -4,7 +4,6 @@ import 'styles/tableFormatting.css';
 import { ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Inter } from '@next/font/google';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import React from 'react';
@@ -16,7 +15,7 @@ import { AuthGuard } from 'components/AuthGuard/AuthGuard';
 import { LanguageWrapper } from 'context';
 import { AuthProvider } from 'context/auth';
 import { Intl } from 'providers';
-import { apiClient } from 'services/api/client';
+import { defaultSWRConfig } from 'services/api/swr-config';
 import { muiTheme } from 'theme/muiTheme';
 
 if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
@@ -31,33 +30,17 @@ export type NextApplicationPage<P = unknown, IP = unknown> = NextPage<P, IP> & {
   requireAuth?: boolean;
 };
 
-// https://nextjs.org/docs/basic-features/font-optimization
-const inter = Inter({ subsets: ['latin'] });
-
 const MyApp = ({
   Component,
   pageProps,
 }: AppProps & { Component: NextApplicationPage }): JSX.Element => {
   return (
     <>
-      <style jsx global>{`
-        html {
-          font-family: ${inter.style.fontFamily};
-        }
-      `}</style>
       <ThemeProvider theme={muiTheme}>
         <ErrorBoundary FallbackComponent={AppCrashFallback}>
           <LanguageWrapper>
             <Intl>
-              <SWRConfig
-                value={{
-                  refreshInterval: 0, // disable auto refresh by interval by default
-                  fetcher: (resource: string) =>
-                    apiClient
-                      .get<unknown>(resource)
-                      .then(response => response.data),
-                }}
-              >
+              <SWRConfig value={defaultSWRConfig}>
                 <LocalizationProvider
                   dateAdapter={AdapterDayjs}
                   dateFormats={{

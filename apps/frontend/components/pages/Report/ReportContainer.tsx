@@ -119,11 +119,7 @@ export const ReportContainer = () => {
         />
       )}
       {!isLoading && (
-        <PrintWrapper
-          key={isPrinting ? 'printing' : 'not-printing'}
-          printRef={printRef}
-          isPrinting={isPrinting}
-        >
+        <PrintWrapper printRef={printRef} isPrinting={isPrinting}>
           <PrintHeader searchReportData={searchReportData} />
           <Report
             forms={filteredFormsData}

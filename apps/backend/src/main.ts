@@ -12,7 +12,17 @@ const bootstrap = async () => {
 
   if (typeof process.env.ALLOWED_HOST === 'string') {
     // Enable CORS for ALLOWED_HOST and PR test sites.
-    const allowedOrigins = [process.env.ALLOWED_HOST, /https:\/\/wfp-dmp-[0-9]+.surge\.sh$/];
+    const allowedHost = process.env.ALLOWED_HOST.startsWith('http')
+      ? process.env.ALLOWED_HOST
+      : `https://${process.env.ALLOWED_HOST}`;
+    // allow surge preview sites
+    const surgePreviewSites = [
+      /https:\/\/wfp-dmp-[0-9]+.surge\.sh$/,
+      /https:\/\/staging-wfp-dmp.surge\.sh$/,
+    ];
+    // and ovio.org sites (allows any subdomain prefix like staging.dmp.ovio.org, demo.dmp.ovio.org)
+    const ovioSites = [/https:\/\/([a-zA-Z0-9-]+\.)?dmp\.ovio\.org$/];
+    const allowedOrigins = [allowedHost, ...surgePreviewSites, ...ovioSites];
     app.enableCors({ credentials: true, origin: allowedOrigins });
   }
 
