@@ -48,6 +48,6 @@ AWS_ROLE_ARN
 DOMAIN_NAME=staging-api.dmp.ovio.org
 
 ### Variables
-AWS_REGION=us-east-1
+AWS_REGION=us-west-1
 
 **Note:** `${applicationName}` should match the value you use for the `applicationName` context (e.g., `stagingdmp`, `dmp`). This ensures secrets are namespaced per environment.

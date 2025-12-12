@@ -18,6 +18,8 @@ import { ISecret, Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { Construct } from 'constructs';
 import path = require('path');
 
+import { LoadBalancerSecurity } from './load-balancer-security';
+
 export interface ECSServiceProps extends NestedStackProps {
   vpc: IVpc;
   dbSecret: ISecret;
@@ -201,5 +203,11 @@ export class ECSService extends NestedStack {
     );
 
     this.loadBalancer = loadBalancedService.loadBalancer;
+
+    // Configure security: WAF, ALB access logs, and WAF logging
+    new LoadBalancerSecurity(this, 'LoadBalancerSecurity', {
+      loadBalancer: this.loadBalancer,
+      applicationName,
+    });
   }
 }
