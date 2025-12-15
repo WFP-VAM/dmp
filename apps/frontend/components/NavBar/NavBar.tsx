@@ -45,13 +45,17 @@ export const NavBar = ({ children }: NavBarProps): JSX.Element => {
       <AppBar position="sticky" id="app-bar">
         <Toolbar disableGutters>
           <Stack
-            style={{
+            sx={{
               transition: '0.4s',
-              padding: shrink ? theme.spacing(1) : theme.spacing(2),
+              padding: {
+                xs: shrink ? theme.spacing(0.5) : theme.spacing(1),
+                sm: shrink ? theme.spacing(1) : theme.spacing(2),
+              },
             }}
             direction="row"
             justifyContent="space-between"
             width="100%"
+            gap={{ xs: 0.5, sm: 1 }}
           >
             <NavBarInfo shrink={shrink} />
             <NavBarButtons />

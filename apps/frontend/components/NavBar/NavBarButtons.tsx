@@ -200,8 +200,8 @@ const NavBarButtons = () => {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      gap={theme.spacing(4)}
-      marginRight={1}
+      gap={{ xs: theme.spacing(1), sm: theme.spacing(2), md: theme.spacing(4) }}
+      marginRight={{ xs: 0.5, sm: 1 }}
     >
       {links.map(x =>
         isLinkWithSubMenu(x) ? renderSubMenu(x) : renderNormalMenu(x),

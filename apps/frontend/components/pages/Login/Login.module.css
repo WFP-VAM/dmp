@@ -9,6 +9,16 @@
   min-height: 80vh;
   height: 100%;
   background-color: var(--background-color-main);
+  padding: 1rem;
+}
+
+@media (max-width: 600px) {
+  .main {
+    padding: 0.5rem;
+    min-height: 100vh;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
 }
 
 .container {
@@ -19,6 +29,13 @@
   text-align: center;
   max-width: 400px;
   width: 100%;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1.5rem 1rem;
+    margin: 0 0.5rem;
+  }
 }
 
 .logoContainer {
@@ -36,6 +53,15 @@
   font-size: 0.875rem;
   color: black;
   margin-bottom: 1rem;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+@media (max-width: 600px) {
+  .khSubtitle {
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
 }
 
 /* stylelint-disable declaration-no-important */
@@ -51,6 +77,13 @@
   margin-bottom: 1rem;
   text-align: start;
   color: var(--color_primary_3);
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.25rem;
+    text-align: center;
+  }
 }
 
 .form {

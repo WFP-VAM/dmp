@@ -81,16 +81,23 @@ const HomeTableRow = ({ isLoading, disastersPerDate }: HomeTableRowProps) => {
   return (
     <>
       {disastersPerDate.map(disasters => (
-        <Stack key={disasters.entryDate} direction="row" gap={theme.spacing(2)}>
+        <Stack
+          key={disasters.entryDate}
+          direction="row"
+          gap={{ xs: theme.spacing(1), sm: theme.spacing(2) }}
+          sx={{ flexWrap: { xs: 'wrap', sm: 'nowrap' } }}
+        >
           <Typography
-            padding={theme.spacing(1.25)}
+            padding={{ xs: theme.spacing(0.75), sm: theme.spacing(1.25) }}
             borderRadius="4px"
             style={{ backgroundColor: colors.color2 }}
             color="white"
+            fontSize={{ xs: '0.75rem', sm: '0.875rem' }}
+            sx={{ whiteSpace: 'nowrap' }}
           >
             {formatDate(disasters.entryDate, 'MM-DD-YYYY')}
           </Typography>
-          <Stack direction="row" gap={theme.spacing(1.25)}>
+          <Stack direction="row" gap={{ xs: theme.spacing(0.75), sm: theme.spacing(1.25) }} sx={{ flexWrap: 'wrap' }}>
             {disasters.disTyps.length === 0 && (
               <Typography display="flex" alignItems="center">
                 <FormattedMessage id="home.no_report" />
@@ -124,6 +131,8 @@ const HomeTableRow = ({ isLoading, disastersPerDate }: HomeTableRowProps) => {
                     }}
                     component={Link}
                     sx={{
+                      width: { xs: 36, sm: 44 },
+                      height: { xs: 36, sm: 44 },
                       '&:hover': {
                         color: '#494949',
                       },
