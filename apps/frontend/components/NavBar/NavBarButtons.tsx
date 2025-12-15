@@ -120,6 +120,24 @@ const NavBarButtons = () => {
     setOpenMenuKey(null);
   };
 
+  const renderMenuText = (textId: string, selected: boolean) => {
+    if (isMobile) return null;
+
+    return (
+      <Typography
+        fontWeight={selected ? 'bold' : undefined}
+        color={selected ? colors.color3 : undefined}
+        style={
+          selected
+            ? { textDecoration: 'underline', textDecorationThickness: '4px' }
+            : undefined
+        }
+      >
+        {intl.formatMessage({ id: textId })}
+      </Typography>
+    );
+  };
+
   const renderSubMenu = (x: LinkWithSubMenu) => {
     const { key, textId, icon, subMenu } = x;
     const selected = subMenu.some(item => item.linkTo === path);
@@ -134,22 +152,7 @@ const NavBarButtons = () => {
           aria-haspopup="true"
           aria-expanded={openMenuKey === key ? 'true' : undefined}
         >
-          {!isMobile && (
-            <Typography
-              fontWeight={selected ? 'bold' : undefined}
-              color={selected ? colors.color3 : undefined}
-              style={
-                selected
-                  ? {
-                      textDecoration: 'underline',
-                      textDecorationThickness: '4px',
-                    }
-                  : undefined
-              }
-            >
-              {intl.formatMessage({ id: textId })}
-            </Typography>
-          )}
+          {renderMenuText(textId, selected)}
         </Button>
         <Menu
           id={`menu-${key}`}
@@ -186,22 +189,7 @@ const NavBarButtons = () => {
         style={{ textDecoration: 'none', color: 'inherit' }}
       >
         <Button variant="text" startIcon={icon}>
-          {!isMobile && (
-            <Typography
-              fontWeight={selected ? 'bold' : undefined}
-              color={selected ? colors.color3 : undefined}
-              style={
-                selected
-                  ? {
-                      textDecoration: 'underline',
-                      textDecorationThickness: '4px',
-                    }
-                  : undefined
-              }
-            >
-              {intl.formatMessage({ id: textId })}
-            </Typography>
-          )}
+          {renderMenuText(textId, selected)}
         </Button>
       </Link>
     );
