@@ -1,15 +1,11 @@
-import {
-  NestedStack,
-  NestedStackProps,
-  RemovalPolicy,
-  Stack,
-} from 'aws-cdk-lib';
+/* eslint-disable max-lines */
+import { Stack } from 'aws-cdk-lib';
 import {
   ApplicationLoadBalancer,
+  CfnLoadBalancer,
   IApplicationLoadBalancer,
 } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
-import { Effect, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
-import { Bucket, BucketEncryption } from 'aws-cdk-lib/aws-s3';
+import { Bucket } from 'aws-cdk-lib/aws-s3';
 import {
   CfnLoggingConfiguration,
   CfnWebACL,
@@ -17,54 +13,127 @@ import {
 } from 'aws-cdk-lib/aws-wafv2';
 import { Construct } from 'constructs';
 
-export interface LoadBalancerSecurityProps extends NestedStackProps {
+export interface LoadBalancerSecurityProps {
   loadBalancer: IApplicationLoadBalancer;
   applicationName: string;
+  /**
+   * Centralized S3 bucket name for ALB access logs (region-specific)
+   * If not provided, will be determined from CDK context or defaults based on region
+   */
+  albLogsBucketName?: string;
+  /**
+   * Centralized S3 bucket ARN for WAF logs (region-specific)
+   * If not provided, will be determined from CDK context or defaults based on region
+   */
+  wafLogsBucketArn?: string;
 }
 
-export class LoadBalancerSecurity extends NestedStack {
-  constructor(scope: Construct, id: string, props: LoadBalancerSecurityProps) {
-    super(scope, id, props);
+export class LoadBalancerSecurity extends Construct {
+  private static readonly SUPPORTED_REGIONS = ['eu-west-1', 'eu-central-1'];
 
-    const { loadBalancer, applicationName } = props;
+  private static isLoggingSupported(region: string): boolean {
+    return LoadBalancerSecurity.SUPPORTED_REGIONS.includes(region);
+  }
+
+  private static getContextValue(
+    stack: Stack,
+    contextKey: string,
+  ): string | undefined {
+    const value = stack.node.tryGetContext(contextKey) as unknown;
+
+    return typeof value === 'string' ? value : undefined;
+  }
+
+  // eslint-disable-next-line complexity
+  constructor(scope: Construct, id: string, props: LoadBalancerSecurityProps) {
+    super(scope, id);
+
+    const {
+      loadBalancer,
+      applicationName,
+      albLogsBucketName,
+      wafLogsBucketArn,
+    } = props;
     const stack = Stack.of(this);
+    const region = stack.region;
+
+    // Centralized logging buckets for TECI/Sentinel integration
+    // Only configure logging for supported regions: eu-west-1 and eu-central-1
+    // Note: Bucket names/ARNs must be configured via CDK context to avoid exposing
+    // organizational details in open source code:
+    //   --context albLogsBucketName="your-bucket-name"
+    //   --context wafLogsBucketArn="arn:aws:s3:::your-bucket-name"
+    const isLoggingSupported = LoadBalancerSecurity.isLoggingSupported(region);
 
     // ============================================
     // ALB Access Logs Configuration
     // ============================================
 
-    // Create S3 bucket for ALB access logs
-    const albLogsBucket = new Bucket(this, 'AlbLogsBucket', {
-      bucketName: `${applicationName.toLowerCase()}-alb-access-logs-${
-        stack.account
-      }-${stack.region}`,
-      encryption: BucketEncryption.S3_MANAGED,
-      removalPolicy: RemovalPolicy.RETAIN,
-      autoDeleteObjects: false,
-    });
+    if (isLoggingSupported) {
+      // Use centralized S3 bucket for ALB access logs
+      // Bucket name must be provided via props or CDK context
+      const contextAlbLogsBucketName = LoadBalancerSecurity.getContextValue(
+        stack,
+        'albLogsBucketName',
+      );
+      const resolvedAlbLogsBucketName =
+        albLogsBucketName ?? contextAlbLogsBucketName;
 
-    // Grant ELB service permission to write to the bucket
-    albLogsBucket.addToResourcePolicy(
-      new PolicyStatement({
-        sid: 'AllowELBServiceToWriteLogs',
-        effect: Effect.ALLOW,
-        principals: [new ServicePrincipal('logdelivery.elb.amazonaws.com')],
-        actions: ['s3:PutObject'],
-        resources: [`${albLogsBucket.bucketArn}/*`],
-      }),
-    );
+      if (
+        resolvedAlbLogsBucketName === undefined ||
+        resolvedAlbLogsBucketName === ''
+      ) {
+        throw new Error(
+          `ALB logs bucket name must be configured via CDK context: --context albLogsBucketName="your-bucket-name"`,
+        );
+      }
 
-    // Enable access logging on the Application Load Balancer
-    // ApplicationLoadBalancedFargateService always creates an ApplicationLoadBalancer,
-    // so logAccessLogs should always be available
-    if (loadBalancer instanceof ApplicationLoadBalancer) {
-      loadBalancer.logAccessLogs(albLogsBucket, `${applicationName}-alb-logs`);
+      // Reference existing centralized bucket
+      const albLogsBucket = Bucket.fromBucketName(
+        this,
+        'AlbLogsBucket',
+        resolvedAlbLogsBucketName,
+      );
+
+      // Enable access logging on the Application Load Balancer
+      if (loadBalancer instanceof ApplicationLoadBalancer) {
+        loadBalancer.logAccessLogs(
+          albLogsBucket,
+          `${applicationName}-alb-logs`,
+        );
+      } else {
+        // Fallback: manually configure via CfnLoadBalancer attributes
+        const cfnLoadBalancer = loadBalancer.node.defaultChild as
+          | CfnLoadBalancer
+          | undefined;
+        if (cfnLoadBalancer !== undefined) {
+          const existingAttributes = Array.isArray(
+            cfnLoadBalancer.loadBalancerAttributes,
+          )
+            ? cfnLoadBalancer.loadBalancerAttributes
+            : [];
+          cfnLoadBalancer.loadBalancerAttributes = [
+            ...existingAttributes,
+            {
+              key: 'access_logs.s3.enabled',
+              value: 'true',
+            },
+            {
+              key: 'access_logs.s3.bucket',
+              value: resolvedAlbLogsBucketName,
+            },
+            {
+              key: 'access_logs.s3.prefix',
+              value: `${applicationName}-alb-logs`,
+            },
+          ];
+        }
+      }
     } else {
-      // Fallback: if for some reason we don't have ApplicationLoadBalancer,
-      // log a warning but don't modify CfnLoadBalancer attributes directly
-      // as this can cause CloudFormation update conflicts
       console.warn(
-        'Load balancer is not an ApplicationLoadBalancer instance. Access logs may not be configured.',
+        `ALB access logging not configured: region ${region} is not supported. Supported regions: ${LoadBalancerSecurity.SUPPORTED_REGIONS.join(
+          ', ',
+        )}`,
       );
     }
 
@@ -166,36 +235,36 @@ export class LoadBalancerSecurity extends NestedStack {
     // WAF Logging Configuration
     // ============================================
 
-    // Create S3 bucket for WAF logs
-    const wafLogsBucket = new Bucket(this, 'WafLogsBucket', {
-      bucketName: `${applicationName.toLowerCase()}-waf-logs-${stack.account}-${
-        stack.region
-      }`,
-      encryption: BucketEncryption.S3_MANAGED,
-      removalPolicy: RemovalPolicy.RETAIN,
-      autoDeleteObjects: false,
-    });
+    if (isLoggingSupported) {
+      // Use centralized S3 bucket for WAF logs
+      // Bucket ARN must be provided via props or CDK context
+      const contextWafLogsBucketArn = LoadBalancerSecurity.getContextValue(
+        stack,
+        'wafLogsBucketArn',
+      );
+      const resolvedWafLogsBucketArn =
+        wafLogsBucketArn ?? contextWafLogsBucketArn;
 
-    // Grant WAF service permission to write to the bucket
-    wafLogsBucket.addToResourcePolicy(
-      new PolicyStatement({
-        sid: 'AllowWAFServiceToWriteLogs',
-        effect: Effect.ALLOW,
-        principals: [new ServicePrincipal('delivery.logs.amazonaws.com')],
-        actions: ['s3:PutObject'],
-        resources: [`${wafLogsBucket.bucketArn}/*`],
-        conditions: {
-          StringEquals: {
-            's3:x-amz-acl': 'bucket-owner-full-control',
-          },
-        },
-      }),
-    );
+      if (
+        resolvedWafLogsBucketArn === undefined ||
+        resolvedWafLogsBucketArn === ''
+      ) {
+        throw new Error(
+          `WAF logs bucket ARN must be configured via CDK context: --context wafLogsBucketArn="arn:aws:s3:::your-bucket-name"`,
+        );
+      }
 
-    // Enable WAF logging
-    new CfnLoggingConfiguration(this, 'WafLoggingConfiguration', {
-      resourceArn: webAcl.attrArn,
-      logDestinationConfigs: [wafLogsBucket.bucketArn],
-    });
+      // Enable WAF logging to centralized S3 bucket
+      new CfnLoggingConfiguration(this, 'WafLoggingConfiguration', {
+        resourceArn: webAcl.attrArn,
+        logDestinationConfigs: [resolvedWafLogsBucketArn],
+      });
+    } else {
+      console.warn(
+        `WAF logging not configured: region ${region} is not supported. Supported regions: ${LoadBalancerSecurity.SUPPORTED_REGIONS.join(
+          ', ',
+        )}`,
+      );
+    }
   }
 }
