@@ -26,7 +26,11 @@ To deploy the backend:
 - Run
 
   ```bash
-  pnpm cdk deploy --profile <aws-profile> --context applicationName="<app-name>" --context hostedZoneDomainName="<domain-name>"
+  pnpm cdk deploy --profile <aws-profile> \
+    --context applicationName="<app-name>" \
+    --context hostedZoneDomainName="<domain-name>" \
+    --context albLogsBucketName="<alb-logs-bucket-name>" \
+    --context wafLogsBucketArn="<waf-logs-bucket-arn>"
   ```
 
   where:
@@ -34,6 +38,10 @@ To deploy the backend:
   - <aws-profile> is your local aws profile
   - <app-name> is the application name used by the CDK
   - <domain-name> is the main domain name to use
+  - <alb-logs-bucket-name> is the S3 bucket name for ALB access logs (required for eu-west-1 and eu-central-1 regions)
+  - <waf-logs-bucket-arn> is the S3 bucket ARN for WAF logs (required for eu-west-1 and eu-central-1 regions)
+
+  **Note:** For regions other than eu-west-1 and eu-central-1, ALB and WAF logging will be skipped automatically.
 
 For more information check [here](https://www.notion.so/m33/Kobo-Deployment-52c5bacbf4214eb9ac2156ac94de032e)
 
@@ -46,8 +54,12 @@ APPLICATION_NAME=test
 AWS_ACCOUNT=246724672
 AWS_ROLE_ARN
 DOMAIN_NAME=staging-api.dmp.ovio.org
+ALB_LOGS_BUCKET_NAME=your-alb-logs-bucket-name (required for eu-west-1 and eu-central-1)
+WAF_LOGS_BUCKET_ARN=arn:aws:s3:::your-waf-logs-bucket-name (required for eu-west-1 and eu-central-1)
 
 ### Variables
 AWS_REGION=us-west-1
 
-**Note:** `${applicationName}` should match the value you use for the `applicationName` context (e.g., `stagingdmp`, `dmp`). This ensures secrets are namespaced per environment.
+**Note:** 
+- `${applicationName}` should match the value you use for the `applicationName` context (e.g., `stagingdmp`, `dmp`). This ensures secrets are namespaced per environment.
+- `ALB_LOGS_BUCKET_NAME` and `WAF_LOGS_BUCKET_ARN` are only required for deployments in `eu-west-1` and `eu-central-1` regions. For other regions, logging will be automatically skipped.
