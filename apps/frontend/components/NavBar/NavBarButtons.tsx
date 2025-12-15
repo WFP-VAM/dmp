@@ -6,7 +6,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Home, Logout, Person } from '@mui/icons-material';
-import { Menu, MenuItem, Stack, Tooltip, useTheme } from '@mui/material';
+import {
+  Menu,
+  MenuItem,
+  Stack,
+  Tooltip,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
@@ -95,6 +102,7 @@ const NavBarButtons = () => {
   const router = useRouter();
   const path = usePathname();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openMenuKey, setOpenMenuKey] = useState<number | null>(null);
@@ -126,20 +134,22 @@ const NavBarButtons = () => {
           aria-haspopup="true"
           aria-expanded={openMenuKey === key ? 'true' : undefined}
         >
-          <Typography
-            fontWeight={selected ? 'bold' : undefined}
-            color={selected ? colors.color3 : undefined}
-            style={
-              selected
-                ? {
-                    textDecoration: 'underline',
-                    textDecorationThickness: '4px',
-                  }
-                : undefined
-            }
-          >
-            {intl.formatMessage({ id: textId })}
-          </Typography>
+          {!isMobile && (
+            <Typography
+              fontWeight={selected ? 'bold' : undefined}
+              color={selected ? colors.color3 : undefined}
+              style={
+                selected
+                  ? {
+                      textDecoration: 'underline',
+                      textDecorationThickness: '4px',
+                    }
+                  : undefined
+              }
+            >
+              {intl.formatMessage({ id: textId })}
+            </Typography>
+          )}
         </Button>
         <Menu
           id={`menu-${key}`}
@@ -176,20 +186,22 @@ const NavBarButtons = () => {
         style={{ textDecoration: 'none', color: 'inherit' }}
       >
         <Button variant="text" startIcon={icon}>
-          <Typography
-            fontWeight={selected ? 'bold' : undefined}
-            color={selected ? colors.color3 : undefined}
-            style={
-              selected
-                ? {
-                    textDecoration: 'underline',
-                    textDecorationThickness: '4px',
-                  }
-                : undefined
-            }
-          >
-            {intl.formatMessage({ id: textId })}
-          </Typography>
+          {!isMobile && (
+            <Typography
+              fontWeight={selected ? 'bold' : undefined}
+              color={selected ? colors.color3 : undefined}
+              style={
+                selected
+                  ? {
+                      textDecoration: 'underline',
+                      textDecorationThickness: '4px',
+                    }
+                  : undefined
+              }
+            >
+              {intl.formatMessage({ id: textId })}
+            </Typography>
+          )}
         </Button>
       </Link>
     );
@@ -211,9 +223,11 @@ const NavBarButtons = () => {
         startIcon={<Person style={{ minWidth: '1.5rem' }} />}
         onClick={handleAdminClick}
       >
-        <Typography>
-          {intl.formatMessage({ id: 'navigation.admin' })}
-        </Typography>
+        {!isMobile && (
+          <Typography>
+            {intl.formatMessage({ id: 'navigation.admin' })}
+          </Typography>
+        )}
       </Button>
       <SelectLanguage />
       <Tooltip
@@ -229,9 +243,11 @@ const NavBarButtons = () => {
           onClick={() => void logout(router)}
           startIcon={<Logout fontSize="large" style={{ minWidth: '1.5rem' }} />}
         >
-          <Typography>
-            <FormattedMessage id="navigation.logout" />
-          </Typography>
+          {!isMobile && (
+            <Typography>
+              <FormattedMessage id="navigation.logout" />
+            </Typography>
+          )}
         </Button>
       </Tooltip>
     </Stack>
