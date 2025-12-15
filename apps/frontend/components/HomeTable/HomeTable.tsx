@@ -116,7 +116,11 @@ export const HomeTable = ({
   return (
     <Card
       sx={{
-        padding: { xs: theme.spacing(1.5), sm: theme.spacing(2), md: theme.spacing(3) },
+        padding: {
+          xs: theme.spacing(1.5),
+          sm: theme.spacing(2),
+          md: theme.spacing(3),
+        },
       }}
     >
       <Stack gap={theme.spacing(1)}>

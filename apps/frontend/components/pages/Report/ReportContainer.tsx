@@ -101,7 +101,11 @@ export const ReportContainer = () => {
             </>
           }
         />
-        <Stack direction="row" spacing={1} sx={{ alignSelf: { xs: 'flex-start', sm: 'auto' } }}>
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{ alignSelf: { xs: 'flex-start', sm: 'auto' } }}
+        >
           <IconButton
             onClick={handlePrint}
             style={{

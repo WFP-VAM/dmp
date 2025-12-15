@@ -97,7 +97,11 @@ const HomeTableRow = ({ isLoading, disastersPerDate }: HomeTableRowProps) => {
           >
             {formatDate(disasters.entryDate, 'MM-DD-YYYY')}
           </Typography>
-          <Stack direction="row" gap={{ xs: theme.spacing(0.75), sm: theme.spacing(1.25) }} sx={{ flexWrap: 'wrap' }}>
+          <Stack
+            direction="row"
+            gap={{ xs: theme.spacing(0.75), sm: theme.spacing(1.25) }}
+            sx={{ flexWrap: 'wrap' }}
+          >
             {disasters.disTyps.length === 0 && (
               <Typography display="flex" alignItems="center">
                 <FormattedMessage id="home.no_report" />
