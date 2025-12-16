@@ -63,7 +63,12 @@ export const ReportContainer = () => {
 
   return (
     <Stack flexDirection="column" gap={theme.spacing(4)} width="100%">
-      <Stack justifyContent="space-between" direction="row">
+      <Stack
+        justifyContent="space-between"
+        direction={{ xs: 'column', sm: 'row' }}
+        gap={{ xs: theme.spacing(2), sm: 0 }}
+        alignItems={{ xs: 'stretch', sm: 'center' }}
+      >
         <SearchFilters
           initSearchFormData={searchReportData}
           setSearchFormData={setSearchReportData}
@@ -96,7 +101,11 @@ export const ReportContainer = () => {
             </>
           }
         />
-        <Stack direction="row" spacing={1}>
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{ alignSelf: { xs: 'flex-start', sm: 'auto' } }}
+        >
           <IconButton
             onClick={handlePrint}
             style={{
@@ -115,7 +124,11 @@ export const ReportContainer = () => {
       {isLoading && (
         <Skeleton
           variant="rounded"
-          sx={{ minWidth: 800, minHeight: 400, mt: 5 }}
+          sx={{
+            minWidth: { xs: '100%', sm: 800 },
+            minHeight: { xs: 300, sm: 400 },
+            mt: { xs: 2, sm: 5 },
+          }}
         />
       )}
       {!isLoading && (

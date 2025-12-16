@@ -50,14 +50,10 @@ const MyApp = ({
                   <AuthProvider>
                     {Component.requireAuth ?? false ? (
                       <AuthGuard>
-                        <div>
-                          <Component {...pageProps} />
-                        </div>
+                        <Component {...pageProps} />
                       </AuthGuard>
                     ) : (
-                      <div>
-                        <Component {...pageProps} />
-                      </div>
+                      <Component {...pageProps} />
                     )}
                   </AuthProvider>
                 </LocalizationProvider>
