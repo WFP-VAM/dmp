@@ -1,3 +1,4 @@
+import { AboutModal } from 'components/AboutModal';
 import { NavBar } from 'components/NavBar';
 
 import { Layout, LayoutProps } from './Layout';
@@ -13,6 +14,7 @@ export const LayoutWithNav = ({
   return (
     <NavBar>
       <Layout {...layoutProps}>{children}</Layout>
+      <AboutModal />
     </NavBar>
   );
 };

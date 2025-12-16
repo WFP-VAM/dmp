@@ -1,8 +1,6 @@
 import { Box, useTheme } from '@mui/material';
 import React from 'react';
 
-import { AboutModal } from '../AboutModal';
-
 export interface LayoutProps {
   alignItems?: React.CSSProperties['alignItems'];
   backgroundColor?: string;
@@ -28,7 +26,6 @@ export const Layout = ({
       style={{ backgroundColor, paddingTop: theme.spacing(5) }}
     >
       {children}
-      <AboutModal />
     </Box>
   );
 };
