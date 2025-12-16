@@ -1,3 +1,4 @@
+import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
 import {
   Dialog,
@@ -7,7 +8,6 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -21,7 +21,7 @@ export const AboutModal = (): JSX.Element => {
     <>
       <Fab
         color="primary"
-        aria-label="about"
+        aria-label="About the system"
         onClick={handleOpen}
         sx={{
           position: 'fixed',
