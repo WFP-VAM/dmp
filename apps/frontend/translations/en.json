@@ -2,7 +2,31 @@
   "common": {
     "province": "Province",
     "district": "District / Krong",
-    "commune": "Commune"
+    "commune": "Commune",
+    "words": {
+      "yes": "Yes",
+      "no": "No",
+      "affected": "Affected",
+      "damaged": "Damaged",
+      "missing": "Missing",
+      "dead": "Dead",
+      "evacuated": "Evacuated",
+      "men": "Men",
+      "women": "Women",
+      "children": "Children",
+      "elderly": "Elderly",
+      "disabled": "Disabled",
+      "families": "Families",
+      "people": "People",
+      "total": "Total",
+      "injured": "Injured",
+      "relocated": "Relocated",
+      "length": "Length",
+      "width": "Width",
+      "depth": "Depth",
+      "schools": "Schools",
+      "number": "Number"
+    }
   },
   "generic": {
     "password_input": {
@@ -92,6 +116,21 @@
     "FLOOD": "Flood",
     "DROUGHT": "Drought",
     "INCIDENT": "Other Incidents",
+    "ALL_INCIDENTS": "All Incidents",
+    "flood": "Flood",
+    "drought": "Drought",
+    "storm": "Storm",
+    "fire": "Fire",
+    "lightning": "Lightning",
+    "epidemics": "Epidemics",
+    "river_bank_collapse": "River Bank Collapse",
+    "insects": "Insects",
+    "traffic_accident": "Traffic Accident",
+    "drowning": "Drowning",
+    "collapse": "Collapse",
+    "unexploded_weapon": "Unexploded Weapon",
+    "shipwreck": "Shipwreck",
+    "other_incidents": "Other Incidents",
     "1": "Flood",
     "2": "Drought",
     "3": "Storm",
@@ -105,8 +144,7 @@
     "11": "Collapse",
     "12": "Unexploded Weapon",
     "13": "Shipwreck",
-    "99": "Other Incidents",
-    "ALL_INCIDENTS": "All Incidents"
+    "99": "Other Incidents"
   },
   "forms_table": {
     "no_forms": "No forms match your search parameters.",
