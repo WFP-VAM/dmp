@@ -25,9 +25,9 @@ export const AboutModal = (): JSX.Element => {
         onClick={handleOpen}
         sx={{
           position: 'fixed',
-          bottom: 16,
-          left: 16,
-          zIndex: 1000,
+          bottom: 24,
+          left: 24,
+          zIndex: 1100,
         }}
       >
         <InfoIcon />
