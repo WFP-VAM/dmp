@@ -42,7 +42,7 @@ export const NavBar = ({ children }: NavBarProps): JSX.Element => {
 
   return (
     <>
-      <AppBar position="sticky" id="app-bar" sx={{ width: '100vw' }}>
+      <AppBar position="sticky" id="app-bar" sx={{ width: '100%' }}>
         <Toolbar disableGutters>
           <Stack
             sx={{
