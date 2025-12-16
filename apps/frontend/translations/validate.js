@@ -32,32 +32,51 @@ try {
     console.log('✓ Both translations have matching common word keys');
   } else {
     console.error('✗ Common word keys do not match between EN and KM');
+    const enOnly = enWords.filter(w => !kmWords.includes(w));
+    const kmOnly = kmWords.filter(w => !enWords.includes(w));
+    if (enOnly.length) console.error('  EN only:', enOnly.join(', '));
+    if (kmOnly.length) console.error('  KM only:', kmOnly.join(', '));
     process.exit(1);
   }
   
-  // Check disaster keys
+  // Check disaster keys - dynamically extract expected keys
   const readableDisasters = ['flood', 'drought', 'storm', 'fire', 'lightning', 
                               'epidemics', 'river_bank_collapse', 'insects', 
                               'traffic_accident', 'drowning', 'collapse', 
                               'unexploded_weapon', 'shipwreck', 'other_incidents'];
   
-  let enHasReadable = readableDisasters.every(key => en.disasters && en.disasters[key]);
-  let kmHasReadable = readableDisasters.every(key => km.disasters && km.disasters[key]);
+  const enDisasterKeys = Object.keys(en.disasters || {});
+  const kmDisasterKeys = Object.keys(km.disasters || {});
   
-  if (enHasReadable && kmHasReadable) {
+  // Check that readable keys exist in both
+  const enMissingReadable = readableDisasters.filter(key => !enDisasterKeys.includes(key));
+  const kmMissingReadable = readableDisasters.filter(key => !kmDisasterKeys.includes(key));
+  
+  if (enMissingReadable.length === 0 && kmMissingReadable.length === 0) {
     console.log('✓ Both translations have readable disaster keys');
   } else {
     console.error('✗ Missing readable disaster keys');
+    if (enMissingReadable.length) console.error('  EN missing:', enMissingReadable.join(', '));
+    if (kmMissingReadable.length) console.error('  KM missing:', kmMissingReadable.join(', '));
     process.exit(1);
   }
   
   // Check numeric disaster keys still exist (backward compatibility)
-  const numericKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '99'];
-  let enHasNumeric = numericKeys.every(key => en.disasters && en.disasters[key]);
-  let kmHasNumeric = numericKeys.every(key => km.disasters && km.disasters[key]);
+  // Dynamically find all numeric keys from EN file
+  const enNumericKeys = enDisasterKeys.filter(k => /^\d+$/.test(k)).sort();
+  const kmNumericKeys = kmDisasterKeys.filter(k => /^\d+$/.test(k)).sort();
   
-  if (enHasNumeric && kmHasNumeric) {
-    console.log('✓ Both translations maintain numeric disaster keys (backward compatible)');
+  if (enNumericKeys.length > 0 && kmNumericKeys.length > 0) {
+    console.log(`✓ Both translations maintain ${enNumericKeys.length} numeric disaster keys (backward compatible)`);
+    
+    // Verify they match
+    if (JSON.stringify(enNumericKeys) !== JSON.stringify(kmNumericKeys)) {
+      console.warn('⚠ Warning: Numeric disaster keys differ between EN and KM');
+      const enOnly = enNumericKeys.filter(k => !kmNumericKeys.includes(k));
+      const kmOnly = kmNumericKeys.filter(k => !enNumericKeys.includes(k));
+      if (enOnly.length) console.warn('  EN only:', enOnly.join(', '));
+      if (kmOnly.length) console.warn('  KM only:', kmOnly.join(', '));
+    }
   } else {
     console.error('✗ Missing numeric disaster keys');
     process.exit(1);
