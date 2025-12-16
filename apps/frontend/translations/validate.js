@@ -56,9 +56,15 @@ try {
   const enDisasterKeys = Object.keys(en.disasters || {});
   const kmDisasterKeys = Object.keys(km.disasters || {});
   
+  // Define special keys that should be excluded from readable disaster validation
+  // These are uppercase constants or metadata keys, not disaster type identifiers
+  const EXCLUDED_KEYS = ['FLOOD', 'DROUGHT', 'INCIDENT', 'ALL_INCIDENTS', 'undefined'];
+  
   // Dynamically determine readable disaster keys from EN file
+  // Readable keys: lowercase with underscores (e.g., 'storm', 'river_bank_collapse')
+  // Excluded: uppercase constants and special metadata keys
   const readableDisasters = enDisasterKeys.filter(key => 
-    /^[a-z_]+$/.test(key) && key !== 'undefined' // lowercase with underscores, exclude special keys
+    /^[a-z_]+$/.test(key) && !EXCLUDED_KEYS.includes(key)
   );
   
   // Check that all EN readable keys exist in KM

@@ -95,6 +95,7 @@ Disaster types are now available in both numeric and readable formats:
     "12": "Unexploded Weapon",
     "13": "Shipwreck",
     "99": "Other Incidents"
+    // Note: KM file also has "100" (alias for ALL_INCIDENTS) for regional compatibility
   }
 }
 ```
