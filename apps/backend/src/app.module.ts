@@ -43,10 +43,7 @@ const ADMINJS_ADMIN = {
     ConfigModule.forRoot({ validate, isGlobal: true, ignoreEnvFile: true }),
     TypeOrmModule.forRoot(dataSourceOptions),
     AdminModule.createAdminAsync({
-      useFactory: (
-        sessionRepository: Repository<Session>,
-        userRepository: Repository<User>,
-      ) => {
+      useFactory: (sessionRepository: Repository<Session>, userRepository: Repository<User>) => {
         if (process.env.ADMINJS_COOKIE_SECRET === undefined) {
           throw new Error('ADMINJS_COOKIE_SECRET is not defined');
         }
@@ -71,11 +68,12 @@ const ADMINJS_ADMIN = {
           if (!user) {
             // Keep this line to avoid timing difference between existing and non existing users
             await compare(password, 'Jean-Claude Van Damme');
+
             return null;
           }
 
           // Check if user has admin role
-          if (!user.roles || !user.roles.includes('admin')) {
+          if (!user.roles.includes('admin')) {
             return null;
           }
 
