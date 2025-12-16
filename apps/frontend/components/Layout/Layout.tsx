@@ -22,8 +22,11 @@ export const Layout = ({
       display="flex"
       flexDirection="column"
       alignItems={alignItems ?? 'left'}
-      sx={{ p: 1 }}
-      style={{ backgroundColor, paddingTop: theme.spacing(5) }}
+      sx={{
+        p: { xs: 0.5, sm: 1 },
+        paddingTop: { xs: theme.spacing(3), sm: theme.spacing(5) },
+      }}
+      style={{ backgroundColor }}
     >
       {children}
     </Box>

@@ -6,7 +6,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Home, Logout, Person } from '@mui/icons-material';
-import { Menu, MenuItem, Stack, Tooltip, useTheme } from '@mui/material';
+import {
+  Menu,
+  MenuItem,
+  Stack,
+  Tooltip,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
@@ -95,6 +102,7 @@ const NavBarButtons = () => {
   const router = useRouter();
   const path = usePathname();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openMenuKey, setOpenMenuKey] = useState<number | null>(null);
@@ -112,6 +120,24 @@ const NavBarButtons = () => {
     setOpenMenuKey(null);
   };
 
+  const renderMenuText = (textId: string, selected: boolean) => {
+    if (isMobile) return null;
+
+    return (
+      <Typography
+        fontWeight={selected ? 'bold' : undefined}
+        color={selected ? colors.color3 : undefined}
+        style={
+          selected
+            ? { textDecoration: 'underline', textDecorationThickness: '4px' }
+            : undefined
+        }
+      >
+        {intl.formatMessage({ id: textId })}
+      </Typography>
+    );
+  };
+
   const renderSubMenu = (x: LinkWithSubMenu) => {
     const { key, textId, icon, subMenu } = x;
     const selected = subMenu.some(item => item.linkTo === path);
@@ -126,20 +152,7 @@ const NavBarButtons = () => {
           aria-haspopup="true"
           aria-expanded={openMenuKey === key ? 'true' : undefined}
         >
-          <Typography
-            fontWeight={selected ? 'bold' : undefined}
-            color={selected ? colors.color3 : undefined}
-            style={
-              selected
-                ? {
-                    textDecoration: 'underline',
-                    textDecorationThickness: '4px',
-                  }
-                : undefined
-            }
-          >
-            {intl.formatMessage({ id: textId })}
-          </Typography>
+          {renderMenuText(textId, selected)}
         </Button>
         <Menu
           id={`menu-${key}`}
@@ -175,21 +188,14 @@ const NavBarButtons = () => {
         href={linkTo}
         style={{ textDecoration: 'none', color: 'inherit' }}
       >
-        <Button variant="text" startIcon={icon}>
-          <Typography
-            fontWeight={selected ? 'bold' : undefined}
-            color={selected ? colors.color3 : undefined}
-            style={
-              selected
-                ? {
-                    textDecoration: 'underline',
-                    textDecorationThickness: '4px',
-                  }
-                : undefined
-            }
-          >
-            {intl.formatMessage({ id: textId })}
-          </Typography>
+        <Button
+          variant="text"
+          startIcon={icon}
+          {...(isMobile && {
+            'aria-label': intl.formatMessage({ id: textId }),
+          })}
+        >
+          {renderMenuText(textId, selected)}
         </Button>
       </Link>
     );
@@ -200,8 +206,8 @@ const NavBarButtons = () => {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      gap={theme.spacing(4)}
-      marginRight={1}
+      gap={{ xs: theme.spacing(1), sm: theme.spacing(2), md: theme.spacing(4) }}
+      marginRight={{ xs: 0.5, sm: 1 }}
     >
       {links.map(x =>
         isLinkWithSubMenu(x) ? renderSubMenu(x) : renderNormalMenu(x),
@@ -211,9 +217,11 @@ const NavBarButtons = () => {
         startIcon={<Person style={{ minWidth: '1.5rem' }} />}
         onClick={handleAdminClick}
       >
-        <Typography>
-          {intl.formatMessage({ id: 'navigation.admin' })}
-        </Typography>
+        {!isMobile && (
+          <Typography>
+            {intl.formatMessage({ id: 'navigation.admin' })}
+          </Typography>
+        )}
       </Button>
       <SelectLanguage />
       <Tooltip
@@ -229,9 +237,11 @@ const NavBarButtons = () => {
           onClick={() => void logout(router)}
           startIcon={<Logout fontSize="large" style={{ minWidth: '1.5rem' }} />}
         >
-          <Typography>
-            <FormattedMessage id="navigation.logout" />
-          </Typography>
+          {!isMobile && (
+            <Typography>
+              <FormattedMessage id="navigation.logout" />
+            </Typography>
+          )}
         </Button>
       </Tooltip>
     </Stack>
