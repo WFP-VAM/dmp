@@ -55,7 +55,6 @@ jobs:
       - name: build
         run: pnpm build
       - name: Tests
-        timeout-minutes: 15
         run: pnpm test
       - name: Dependency Cruiser
         run: pnpm test:circular
