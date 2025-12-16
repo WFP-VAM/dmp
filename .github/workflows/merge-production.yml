@@ -42,4 +42,10 @@ jobs:
           CDK_DEFAULT_REGION: ${{ vars.AWS_REGION }}
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
           ALLOWED_HOST: ${{ secrets.ALLOWED_HOST }}
-        run: cd apps/backend-infrastructure && pnpm cdk deploy --context applicationName="${{ secrets.APPLICATION_NAME }}" --context hostedZoneDomainName="${{ secrets.DOMAIN_NAME }}"
+        run: |
+          cd apps/backend-infrastructure
+          pnpm cdk deploy \
+            --context applicationName="${{ secrets.APPLICATION_NAME }}" \
+            --context hostedZoneDomainName="${{ secrets.DOMAIN_NAME }}" \
+            --context albLogsBucketName="${{ secrets.ALB_LOGS_BUCKET_NAME }}" \
+            --context wafLogsBucketArn="${{ secrets.WAF_LOGS_BUCKET_ARN }}"

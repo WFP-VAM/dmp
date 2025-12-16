@@ -27,3 +27,4 @@ pnpm-debug.log*
 pnpm-error.log*
 lerna-debug.log*
 .vscode
+/scripts/debug
