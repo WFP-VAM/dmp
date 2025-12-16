@@ -114,9 +114,22 @@ export const HomeTable = ({
     earliestDateString !== undefined && formatDate(earliestDateString, 'MM/DD');
 
   return (
-    <Card style={{ padding: theme.spacing(3) }}>
+    <Card
+      sx={{
+        padding: {
+          xs: theme.spacing(1.5),
+          sm: theme.spacing(2),
+          md: theme.spacing(3),
+        },
+      }}
+    >
       <Stack gap={theme.spacing(1)}>
-        <Typography fontWeight={600} fontSize="1rem" variant="subtitle2">
+        <Typography
+          fontWeight={600}
+          fontSize={{ xs: '0.875rem', sm: '1rem' }}
+          variant="subtitle2"
+          sx={{ wordBreak: 'break-word' }}
+        >
           {monthTranslated} — <FormattedMessage id="home.week" /> {week}
           {formattedEarliestDate !== false &&
             ` — ${formattedEarliestDate} - ${formattedMostRecentDate}`}

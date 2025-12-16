@@ -58,14 +58,15 @@ ChartJS.register(
 
 const defaultSearchReportData: SearchFormData = {
   disTyps: [],
-  region: {
-    province: [],
-    district: [],
-    commune: [],
-  },
-  dateRange: {
-    startDate: dayjs().subtract(1, 'month'),
-    endDate: dayjs(),
+  region: { province: [], district: [], commune: [] },
+  dateRange: { startDate: dayjs().subtract(1, 'month'), endDate: dayjs() },
+};
+
+const chartOptions = {
+  responsive: true,
+  scales: {
+    x: { stacked: true, grid: { display: false } },
+    y: { stacked: true, grid: { display: true } },
   },
 };
 
@@ -112,60 +113,38 @@ const useFormattedForms = (searchReportData: SearchFormData) => {
 
 export const ChartsContainer = () => {
   const theme = useTheme();
+  const intl = useIntl();
   const [searchReportData, setSearchReportData] = useState(
     defaultSearchReportData,
   );
-
   const { formattedForms, isLoading } = useFormattedForms(searchReportData);
-
   const printRef = useRef(null);
-  const handlePrint = useReactToPrint({
-    content: () => printRef.current,
-  });
-
-  const intl = useIntl();
+  const handlePrint = useReactToPrint({ content: () => printRef.current });
   const [chartData, setChartData] = useState<{
     events: ChartData<'bar'>;
     affected: ChartData<'bar'>;
-  }>({
-    events: { datasets: [] },
-    affected: { datasets: [] },
-  });
+  }>({ events: { datasets: [] }, affected: { datasets: [] } });
 
   useEffect(() => {
-    if (formattedForms.length > 0) {
-      const data = formatChartData(
-        formattedForms as FormattedForm[],
-        searchReportData,
-        intl,
-      );
-      setChartData(data);
-    } else {
-      setChartData({ events: { datasets: [] }, affected: { datasets: [] } });
-    }
+    const data =
+      formattedForms.length > 0
+        ? formatChartData(
+            formattedForms as FormattedForm[],
+            searchReportData,
+            intl,
+          )
+        : { events: { datasets: [] }, affected: { datasets: [] } };
+    setChartData(data);
   }, [formattedForms, searchReportData, intl]);
-
-  const options = {
-    responsive: true,
-    scales: {
-      x: {
-        stacked: true,
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        stacked: true,
-        grid: {
-          display: true,
-        },
-      },
-    },
-  };
 
   return (
     <Stack flexDirection="column" gap={theme.spacing(4)} width="100%">
-      <Stack justifyContent="space-between" direction="row">
+      <Stack
+        justifyContent="space-between"
+        direction={{ xs: 'column', sm: 'row' }}
+        gap={{ xs: theme.spacing(2), sm: 0 }}
+        alignItems={{ xs: 'stretch', sm: 'center' }}
+      >
         <SearchFilters
           initSearchFormData={searchReportData}
           setSearchFormData={setSearchReportData}
@@ -183,6 +162,7 @@ export const ChartsContainer = () => {
             height: '2.5rem',
             color: colors.color3,
           }}
+          sx={{ alignSelf: { xs: 'flex-start', sm: 'auto' } }}
         >
           <PrintIcon />
         </IconButton>
@@ -191,7 +171,11 @@ export const ChartsContainer = () => {
       {isLoading && (
         <Skeleton
           variant="rounded"
-          sx={{ minWidth: 800, minHeight: 400, mt: 5 }}
+          sx={{
+            minWidth: { xs: '100%', sm: 800 },
+            minHeight: { xs: 300, sm: 400 },
+            mt: { xs: 2, sm: 5 },
+          }}
         />
       )}
       {!isLoading && (
@@ -215,7 +199,7 @@ export const ChartsContainer = () => {
               </Typography>
               <Bar
                 data={chartData.events}
-                options={options}
+                options={chartOptions}
                 width={1000}
                 height={400}
               />
@@ -235,7 +219,7 @@ export const ChartsContainer = () => {
               </Typography>
               <Bar
                 data={chartData.affected}
-                options={options}
+                options={chartOptions}
                 width={1000}
                 height={400}
               />
