@@ -42,12 +42,8 @@ export const NavBar = ({ children }: NavBarProps): JSX.Element => {
 
   return (
     <>
-      <AppBar
-        position="sticky"
-        id="app-bar"
-        sx={{ width: '100%', maxWidth: '100%' }}
-      >
-        <Toolbar disableGutters sx={{ width: '100%', maxWidth: '100%' }}>
+      <AppBar position="sticky" id="app-bar" sx={{ width: '100vw' }}>
+        <Toolbar disableGutters>
           <Stack
             sx={{
               transition: '0.4s',
@@ -56,7 +52,6 @@ export const NavBar = ({ children }: NavBarProps): JSX.Element => {
                 sm: shrink ? theme.spacing(1) : theme.spacing(2),
               },
               width: '100%',
-              maxWidth: '100%',
             }}
             direction="row"
             justifyContent="space-between"
