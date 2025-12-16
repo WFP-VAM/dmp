@@ -191,7 +191,9 @@ const NavBarButtons = () => {
         <Button
           variant="text"
           startIcon={icon}
-          {...(isMobile && { 'aria-label': intl.formatMessage({ id: textId }) })}
+          {...(isMobile && {
+            'aria-label': intl.formatMessage({ id: textId }),
+          })}
         >
           {renderMenuText(textId, selected)}
         </Button>
