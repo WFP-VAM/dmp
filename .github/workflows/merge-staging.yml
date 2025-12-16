@@ -49,7 +49,9 @@ jobs:
           cd apps/backend-infrastructure
           pnpm cdk deploy \
             --context applicationName="${{ secrets.APPLICATION_NAME }}" \
-            --context hostedZoneDomainName="${{ secrets.DOMAIN_NAME }}"
+            --context hostedZoneDomainName="${{ secrets.DOMAIN_NAME }}" \
+            --context albLogsBucketName="${{ secrets.ALB_LOGS_BUCKET_NAME }}" \
+            --context wafLogsBucketArn="${{ secrets.WAF_LOGS_BUCKET_ARN }}"
 
   deploy_staging_surge:
     runs-on: ubuntu-latest
