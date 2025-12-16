@@ -1,18 +1,69 @@
 import EastIcon from '@mui/icons-material/East';
 import { Button, Stack, Typography, useTheme } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { DateRange, DateRangeFilter } from './DateRangeFilter';
+import { DateRangeFilter } from './DateRangeFilter';
 import { DisasterFilter } from './DisasterFilter';
-import { Region, RegionFilters } from './RegionFilters';
+import { RegionFilters } from './RegionFilters';
+import { isFormDataEqual } from './searchFormUtils';
+import { SearchFormData } from './types';
 
-export interface SearchFormData {
-  disTyps: string[];
-  dateRange: DateRange;
-  region: Region;
+export type { SearchFormData };
+
+interface SubmitButtonProps {
+  isDirty: boolean;
+  submitButtonContent: JSX.Element;
+  hideDisasterFilter: boolean;
+  intl: ReturnType<typeof useIntl>;
 }
+
+const SubmitButton = ({
+  isDirty,
+  submitButtonContent,
+  hideDisasterFilter,
+  intl,
+}: SubmitButtonProps): JSX.Element => (
+  <Button
+    sx={{
+      color: isDirty ? 'white' : 'black',
+      padding: 1,
+      height: '2.5rem',
+      ml: hideDisasterFilter ? 0 : 2,
+      backgroundColor: isDirty
+        ? 'var(--color_buttons_2, #d32f2f)'
+        : 'var(--color_buttons_1)',
+      '&:hover': {
+        backgroundColor: isDirty
+          ? 'var(--color_buttons_2, #d32f2f)'
+          : 'var(--color_buttons_1)',
+        opacity: isDirty ? 0.9 : 0.7,
+      },
+      transition: 'all 0.2s ease-in-out',
+      boxShadow: isDirty ? '0 2px 8px rgba(211, 47, 47, 0.3)' : 'none',
+    }}
+    type="submit"
+    title={
+      isDirty
+        ? intl.formatMessage({
+            id: 'validation_search_params.filters_changed',
+            defaultMessage: 'Filters have changed. Click to update results.',
+          })
+        : undefined
+    }
+  >
+    {submitButtonContent}
+    {<EastIcon style={{ marginLeft: 6, marginBottom: 2 }} />}
+  </Button>
+);
 
 interface SearchFiltersProps {
   initSearchFormData: SearchFormData;
@@ -20,6 +71,11 @@ interface SearchFiltersProps {
   submitButtonContent: JSX.Element;
   hideDisasterFilter?: boolean;
   extraFilters?: JSX.Element;
+  /**
+   * If true, automatically submits the form when disaster type changes
+   * @default false
+   */
+  autoSubmitOnDisasterChange?: boolean;
 }
 
 export const SearchFilters = ({
@@ -28,39 +84,80 @@ export const SearchFilters = ({
   submitButtonContent,
   hideDisasterFilter = false,
   extraFilters,
+  autoSubmitOnDisasterChange = false,
 }: SearchFiltersProps): JSX.Element => {
   const theme = useTheme();
-  const { control, handleSubmit } = useForm<SearchFormData>({
+  const { control, handleSubmit, getValues } = useForm<SearchFormData>({
     defaultValues: initSearchFormData,
   });
   const intl = useIntl();
 
-  const submitHandler = (data: SearchFormData) => {
-    setSearchFormData(data);
-  };
+  // Track the last submitted form data
+  const lastSubmittedDataRef = useRef<SearchFormData>(initSearchFormData);
+  const [isDirty, setIsDirty] = useState(false);
+  const previousDisasterTypeRef = useRef<string[]>(initSearchFormData.disTyps);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const SubmitButton = (
-    <Button
-      sx={{
-        color: 'black',
-        padding: 1,
-        height: '2.5rem',
-        ml: hideDisasterFilter ? 0 : 2,
-        backgroundColor: 'var(--color_buttons_1)',
-        '&:hover': {
-          backgroundColor: 'var(--color_buttons_1)',
-          opacity: 0.7,
-        },
-      }}
-      type="submit"
-    >
-      {submitButtonContent}
-      {<EastIcon style={{ marginLeft: 6, marginBottom: 2 }} />}
-    </Button>
+  // Update refs when initSearchFormData changes (e.g., from URL params)
+  useEffect(() => {
+    lastSubmittedDataRef.current = initSearchFormData;
+    previousDisasterTypeRef.current = initSearchFormData.disTyps;
+  }, [initSearchFormData]);
+
+  // Watch all form values to detect changes
+  const watchedValues = useWatch({ control });
+
+  const submitHandler = useCallback(
+    (data: SearchFormData) => {
+      setSearchFormData(data);
+      lastSubmittedDataRef.current = data;
+      setIsDirty(false);
+      previousDisasterTypeRef.current = data.disTyps;
+    },
+    [setSearchFormData],
   );
+
+  // Check if form is dirty (has unsaved changes)
+  useEffect(() => {
+    const currentValues = getValues();
+    const isFormDirty = !isFormDataEqual(
+      currentValues,
+      lastSubmittedDataRef.current,
+    );
+    setIsDirty(isFormDirty);
+  }, [watchedValues, getValues]);
+
+  // Auto-submit on disaster type change if enabled
+  const handleAutoSubmit = useCallback(() => {
+    if (!autoSubmitOnDisasterChange || hideDisasterFilter) {
+      return;
+    }
+
+    const currentValues = getValues();
+    const currentDisasterTypes = JSON.stringify(currentValues.disTyps.sort());
+    const previousDisasterTypes = JSON.stringify(
+      previousDisasterTypeRef.current.sort(),
+    );
+
+    if (currentDisasterTypes !== previousDisasterTypes) {
+      previousDisasterTypeRef.current = currentValues.disTyps;
+      void handleSubmit(submitHandler)();
+    }
+  }, [
+    autoSubmitOnDisasterChange,
+    hideDisasterFilter,
+    getValues,
+    handleSubmit,
+    submitHandler,
+  ]);
+
+  useEffect(() => {
+    handleAutoSubmit();
+  }, [watchedValues, handleAutoSubmit]);
 
   return (
     <form
+      ref={formRef}
       onSubmit={handleSubmit(submitHandler)}
       style={{ width: 'fit-content' }}
     >
@@ -94,7 +191,14 @@ export const SearchFilters = ({
               )}
             />
           </Stack>
-          {hideDisasterFilter && SubmitButton}
+          {hideDisasterFilter && (
+            <SubmitButton
+              isDirty={isDirty}
+              submitButtonContent={submitButtonContent}
+              hideDisasterFilter={hideDisasterFilter}
+              intl={intl}
+            />
+          )}
         </Stack>
         <Stack
           direction="row"
@@ -113,7 +217,12 @@ export const SearchFilters = ({
                 />
                 {extraFilters}
               </Stack>
-              {SubmitButton}
+              <SubmitButton
+                isDirty={isDirty}
+                submitButtonContent={submitButtonContent}
+                hideDisasterFilter={hideDisasterFilter}
+                intl={intl}
+              />
             </>
           )}
         </Stack>
