@@ -14,10 +14,9 @@
 
 @media (max-width: 600px) {
   .main {
-    padding: 0.5rem;
+    padding: 2rem 0.5rem 0.5rem 0.5rem;
     min-height: 100vh;
     align-items: flex-start;
-    padding-top: 2rem;
   }
 }
 
