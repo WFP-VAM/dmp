@@ -55,6 +55,7 @@
     "charts": "Summary charts",
     "admin": "Admin",
     "language": {
+      "select": "Select Language",
       "english": "English",
       "khmer": "ភាសាខ្មែរ"
     },
