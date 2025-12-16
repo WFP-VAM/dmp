@@ -10,12 +10,13 @@ import {
   useTheme,
 } from '@mui/material';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useLanguageContext } from 'context';
 import { colors } from 'theme/muiTheme';
 
 const SelectLanguage = (): JSX.Element => {
+  const intl = useIntl();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { language, setLanguage } = useLanguageContext();
@@ -43,6 +44,10 @@ const SelectLanguage = (): JSX.Element => {
         IconComponent={() => null}
         inputProps={{
           sx: { padding: '0 !important' },
+          'aria-label': intl.formatMessage({
+            id: 'navigation.language.select',
+            defaultMessage: 'Select Language',
+          }),
         }}
         style={{
           width: isMobile ? '2rem' : '3rem',
