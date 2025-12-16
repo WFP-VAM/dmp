@@ -188,7 +188,11 @@ const NavBarButtons = () => {
         href={linkTo}
         style={{ textDecoration: 'none', color: 'inherit' }}
       >
-        <Button variant="text" startIcon={icon}>
+        <Button
+          variant="text"
+          startIcon={icon}
+          {...(isMobile && { 'aria-label': intl.formatMessage({ id: textId }) })}
+        >
           {renderMenuText(textId, selected)}
         </Button>
       </Link>
