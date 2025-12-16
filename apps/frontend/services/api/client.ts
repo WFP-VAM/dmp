@@ -33,9 +33,10 @@ export const apiClient = axios.create({
  * Request interceptor that adds the Bearer token to requests.
  * 
  * This interceptor has a focused responsibility: add the authorization header.
- * Token verification and refresh logic is handled by:
- * - AuthContext: Verifies tokens before fetching user data
- * - axios-auth-refresh: Handles 401 responses and token refresh
+ * Token validation happens server-side. When tokens are invalid/expired:
+ * - Server returns 401
+ * - axios-auth-refresh handles the 401 and refreshes the token
+ * - AuthContext manages the authentication state and redirects to login if needed
  */
 apiClient.interceptors.request.use(
   config => {

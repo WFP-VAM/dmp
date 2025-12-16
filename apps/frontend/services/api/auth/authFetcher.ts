@@ -3,13 +3,13 @@ import { apiClient } from '../client';
 /**
  * Custom fetcher for authentication endpoints used by AuthContext.
  * 
- * Token verification is now handled by AuthContext through this fetcher:
+ * This fetcher integrates authentication into the AuthContext flow:
  * 1. The axios interceptor adds the Bearer token (simple, focused responsibility)
  * 2. This fetcher makes the request to fetch user data
- * 3. If the token is expired/invalid, server returns 401
+ * 3. Token validation happens server-side - server returns 401 if token is invalid/expired
  * 4. axios-auth-refresh intercepts the 401 and refreshes the token automatically
  * 5. The request is retried with the new token
- * 6. AuthContext receives the user data or an error
+ * 6. AuthContext receives the user data or an error, and manages auth state accordingly
  * 
  * This approach:
  * - Keeps interceptors focused on adding headers
