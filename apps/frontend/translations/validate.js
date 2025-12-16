@@ -3,9 +3,21 @@ const fs = require('fs');
 try {
   console.log('Validating translation files...\n');
   
-  // Load translation files
-  const en = JSON.parse(fs.readFileSync('./en.json', 'utf8'));
-  const km = JSON.parse(fs.readFileSync('./km.json', 'utf8'));
+  // Load translation files with specific error handling
+  let en, km;
+  try {
+    en = JSON.parse(fs.readFileSync('./en.json', 'utf8'));
+  } catch (error) {
+    console.error('✗ Failed to load or parse en.json:', error.message);
+    process.exit(1);
+  }
+  
+  try {
+    km = JSON.parse(fs.readFileSync('./km.json', 'utf8'));
+  } catch (error) {
+    console.error('✗ Failed to load or parse km.json:', error.message);
+    process.exit(1);
+  }
   
   console.log('✓ Both files are valid JSON');
   
@@ -39,43 +51,45 @@ try {
     process.exit(1);
   }
   
-  // Check disaster keys - dynamically extract expected keys
-  const readableDisasters = ['flood', 'drought', 'storm', 'fire', 'lightning', 
-                              'epidemics', 'river_bank_collapse', 'insects', 
-                              'traffic_accident', 'drowning', 'collapse', 
-                              'unexploded_weapon', 'shipwreck', 'other_incidents'];
-  
+  // Check disaster keys - extract readable keys dynamically from EN file
+  // Readable keys are lowercase with underscores, numeric keys are digits only
   const enDisasterKeys = Object.keys(en.disasters || {});
   const kmDisasterKeys = Object.keys(km.disasters || {});
   
-  // Check that readable keys exist in both
-  const enMissingReadable = readableDisasters.filter(key => !enDisasterKeys.includes(key));
+  // Dynamically determine readable disaster keys from EN file
+  const readableDisasters = enDisasterKeys.filter(key => 
+    /^[a-z_]+$/.test(key) && key !== 'undefined' // lowercase with underscores, exclude special keys
+  );
+  
+  // Check that all EN readable keys exist in KM
   const kmMissingReadable = readableDisasters.filter(key => !kmDisasterKeys.includes(key));
   
-  if (enMissingReadable.length === 0 && kmMissingReadable.length === 0) {
-    console.log('✓ Both translations have readable disaster keys');
+  if (kmMissingReadable.length === 0) {
+    console.log(`✓ Both translations have ${readableDisasters.length} readable disaster keys`);
   } else {
-    console.error('✗ Missing readable disaster keys');
-    if (enMissingReadable.length) console.error('  EN missing:', enMissingReadable.join(', '));
-    if (kmMissingReadable.length) console.error('  KM missing:', kmMissingReadable.join(', '));
+    console.error('✗ KM missing readable disaster keys from EN');
+    console.error('  Missing:', kmMissingReadable.join(', '));
     process.exit(1);
   }
   
   // Check numeric disaster keys still exist (backward compatibility)
-  // Dynamically find all numeric keys from EN file
   const enNumericKeys = enDisasterKeys.filter(k => /^\d+$/.test(k)).sort();
   const kmNumericKeys = kmDisasterKeys.filter(k => /^\d+$/.test(k)).sort();
   
   if (enNumericKeys.length > 0 && kmNumericKeys.length > 0) {
     console.log(`✓ Both translations maintain ${enNumericKeys.length} numeric disaster keys (backward compatible)`);
     
-    // Verify they match
-    if (JSON.stringify(enNumericKeys) !== JSON.stringify(kmNumericKeys)) {
-      console.warn('⚠ Warning: Numeric disaster keys differ between EN and KM');
-      const enOnly = enNumericKeys.filter(k => !kmNumericKeys.includes(k));
-      const kmOnly = kmNumericKeys.filter(k => !enNumericKeys.includes(k));
-      if (enOnly.length) console.warn('  EN only:', enOnly.join(', '));
-      if (kmOnly.length) console.warn('  KM only:', kmOnly.join(', '));
+    // Verify they match (allow KM to have extra keys for regional needs)
+    const enOnly = enNumericKeys.filter(k => !kmNumericKeys.includes(k));
+    const kmOnly = kmNumericKeys.filter(k => !enNumericKeys.includes(k));
+    
+    if (enOnly.length > 0) {
+      console.error('✗ EN has numeric keys not in KM:', enOnly.join(', '));
+      process.exit(1);
+    }
+    
+    if (kmOnly.length > 0) {
+      console.log(`  Note: KM has ${kmOnly.length} additional numeric key(s): ${kmOnly.join(', ')}`);
     }
   } else {
     console.error('✗ Missing numeric disaster keys');
@@ -89,6 +103,7 @@ try {
   console.log('- Backward compatibility maintained: existing numeric keys preserved');
   
 } catch (error) {
-  console.error('✗ Validation failed:', error.message);
+  console.error('✗ Unexpected validation error:', error.message);
+  console.error(error.stack);
   process.exit(1);
 }
