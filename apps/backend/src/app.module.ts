@@ -43,10 +43,7 @@ const ADMINJS_ADMIN = {
     ConfigModule.forRoot({ validate, isGlobal: true, ignoreEnvFile: true }),
     TypeOrmModule.forRoot(dataSourceOptions),
     AdminModule.createAdminAsync({
-      useFactory: (
-        sessionRepository: Repository<Session>,
-        userRepository: Repository<User>,
-      ) => {
+      useFactory: (sessionRepository: Repository<Session>, userRepository: Repository<User>) => {
         if (process.env.ADMINJS_COOKIE_SECRET === undefined) {
           throw new Error('ADMINJS_COOKIE_SECRET is not defined');
         }
