@@ -62,6 +62,13 @@
     "banner": "Disaster Information and Monitoring System",
     "logout": "Log out"
   },
+  "about": {
+    "button": "About",
+    "title": "About the system",
+    "content_paragraph_1": "PRISM - Platform for Real-time Impact and Situation Monitoring - is an information collection system, a platform that provides timely information to assist in monitoring, evaluating, updating, and validating information. Its goal is to make it easier for users and decision-makers to access information. In addition, this tool is a place to integrate the flow of information of the Royal Government from relevant ministries to communicate with each other.",
+    "content_paragraph_2": "PRISM Goal: Development related to the distribution and timely response system, which is the foundation for social welfare, to ensure the resilience of communities across the country. PRISM is not about creating new information or data systems to replace Camdi, but about using various IT tools and resources to support Camdi to connect and create an effective information system that saves time and money. Special funding can ensure that the poor and vulnerable get an appropriate and timely response.",
+    "content_paragraph_3": "This system can use and collect data on all types of disasters such as floods, droughts, storms, lightning, fires, epidemics, pests, landslides, and traffic accidents. Data in the PRISM system include Disaster Impact and Damage Data on People, Animals, Homes, Crops, Infrastructure, Schools, Hospitals / Health Centers, Pagodas, and the needs of the victims. This data is collected at the commune level and transmitted by district officials."
+  },
   "home": {
     "no_report": "No disaster report",
     "week": "week"
