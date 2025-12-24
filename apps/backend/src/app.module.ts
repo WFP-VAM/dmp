@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import AdminJS from 'adminjs';
+import { compare } from 'bcrypt';
 import { TypeormStore } from 'connect-typeorm';
 import { Repository } from 'typeorm';
 
@@ -19,6 +20,7 @@ import { QueryFailedFilter } from './exception/query-failed.filter';
 import { KoboModule } from './modules/kobo/kobo.module';
 import { LoggerMiddleware } from './modules/logger/logger.middleware';
 import { LoggerModule } from './modules/logger/logger.module';
+import { User } from './modules/user/user.entity';
 import { UserModule } from './modules/user/user.module';
 import { WebhookModule } from './modules/webhook/webhook.module';
 
@@ -36,20 +38,12 @@ const ADMINJS_ADMIN = {
   password: process.env.SUPERADMIN_PASSWORD,
 };
 
-const authenticate = async (email: string, password: string) => {
-  if (email === ADMINJS_ADMIN.email && password === ADMINJS_ADMIN.password) {
-    return Promise.resolve({ email: ADMINJS_ADMIN.email });
-  }
-
-  return null;
-};
-
 @Module({
   imports: [
     ConfigModule.forRoot({ validate, isGlobal: true, ignoreEnvFile: true }),
     TypeOrmModule.forRoot(dataSourceOptions),
     AdminModule.createAdminAsync({
-      useFactory: (sessionRepository: Repository<Session>) => {
+      useFactory: (sessionRepository: Repository<Session>, userRepository: Repository<User>) => {
         if (process.env.ADMINJS_COOKIE_SECRET === undefined) {
           throw new Error('ADMINJS_COOKIE_SECRET is not defined');
         }
@@ -57,6 +51,40 @@ const authenticate = async (email: string, password: string) => {
         if (process.env.ADMINJS_SESSION_SECRET === undefined) {
           throw new Error('ADMINJS_SESSION_SECRET is not defined');
         }
+
+        const authenticate = async (email: string, password: string) => {
+          // Check superadmin credentials first
+          if (email === ADMINJS_ADMIN.email && password === ADMINJS_ADMIN.password) {
+            return Promise.resolve({ email: ADMINJS_ADMIN.email });
+          }
+
+          // Check database for admin users
+          const user = await userRepository
+            .createQueryBuilder('user')
+            .addSelect('user.password')
+            .where('user.email ILIKE :email', { email })
+            .getOne();
+
+          if (!user) {
+            // Keep this line to avoid timing difference between existing and non existing users
+            await compare(password, 'Jean-Claude Van Damme');
+
+            return null;
+          }
+
+          // Check if user has admin role
+          if (!user.roles.includes('admin')) {
+            return null;
+          }
+
+          // Verify password
+          const areCredentialsValid = await compare(password, user.password);
+          if (!areCredentialsValid) {
+            return null;
+          }
+
+          return Promise.resolve({ email: user.email });
+        };
 
         return {
           adminJsOptions: {
@@ -104,8 +132,8 @@ const authenticate = async (email: string, password: string) => {
           },
         };
       },
-      imports: [TypeOrmModule.forFeature([Session])],
-      inject: [getRepositoryToken(Session)],
+      imports: [TypeOrmModule.forFeature([Session, User])],
+      inject: [getRepositoryToken(Session), getRepositoryToken(User)],
     }),
 
     UserModule,
