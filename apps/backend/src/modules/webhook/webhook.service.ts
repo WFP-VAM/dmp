@@ -29,7 +29,9 @@ export class WebhookService {
       // Log detailed error information
       if (error && typeof error === 'object' && 'response' in error) {
         // Axios error with response
-        const axiosError = error as { response: { status: number; statusText: string; data: unknown } };
+        const axiosError = error as {
+          response: { status: number; statusText: string; data: unknown };
+        };
         console.error('Telegram API Error:', {
           status: axiosError.response.status,
           statusText: axiosError.response.statusText,
@@ -37,7 +39,9 @@ export class WebhookService {
           chatId: chatId,
         });
         throw new HttpException(
-          `Telegram API Error: ${axiosError.response.status} - ${JSON.stringify(axiosError.response.data)}`,
+          `Telegram API Error: ${axiosError.response.status} - ${JSON.stringify(
+            axiosError.response.data,
+          )}`,
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       } else if (error && typeof error === 'object' && 'request' in error) {
@@ -52,7 +56,9 @@ export class WebhookService {
         // Other error
         const errorMessage = error instanceof Error ? error.message : String(error);
         console.error('Telegram Error:', errorMessage);
-        throw error instanceof HttpException ? error : new HttpException(`Telegram Error: ${errorMessage}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        throw error instanceof HttpException
+          ? error
+          : new HttpException(`Telegram Error: ${errorMessage}`, HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
   }
@@ -77,7 +83,7 @@ export class WebhookService {
       return 'sent';
     } catch (error: unknown) {
       console.log('Form data:', JSON.stringify(form));
-      
+
       // Log detailed error information
       if (error instanceof Error) {
         console.error('Error sending alerts:', {
@@ -87,7 +93,9 @@ export class WebhookService {
         });
       } else if (error && typeof error === 'object' && 'response' in error) {
         // Axios error with response
-        const axiosError = error as { response: { status: number; statusText: string; data: unknown } };
+        const axiosError = error as {
+          response: { status: number; statusText: string; data: unknown };
+        };
         console.error('Error sending alerts:', {
           status: axiosError.response.status,
           statusText: axiosError.response.statusText,
@@ -96,13 +104,16 @@ export class WebhookService {
       } else {
         console.error('Error sending alerts:', error);
       }
-      
+
       // Re-throw if it's already an HttpException, otherwise wrap it
       if (error instanceof HttpException) {
         throw error;
       }
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      throw new HttpException(`Failed to send alerts: ${errorMessage}`, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        `Failed to send alerts: ${errorMessage}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

@@ -57,7 +57,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.entryDate]: form[keys.entryDate],
       [KoboCommonKeys.id]: form[keys.id].toString(),
       [KoboCommonKeys.validationStatus]: (
-        form[keys.validationStatus]?.uid ?? ValidationStatusValue.onHold
+        form[keys.validationStatus].uid ?? ValidationStatusValue.onHold
       ).toString(),
       [KoboCommonKeys.submissionTime]: form[keys.submissionTime],
       floodN: form[keys.floodN],
@@ -78,7 +78,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.entryDate]: form[keys.entryDate],
       [KoboCommonKeys.id]: form[keys.id].toString(),
       [KoboCommonKeys.validationStatus]: (
-        form[keys.validationStatus]?.uid ?? ValidationStatusValue.onHold
+        form[keys.validationStatus].uid ?? ValidationStatusValue.onHold
       ).toString(),
       [KoboCommonKeys.submissionTime]: form[keys.submissionTime],
       approvalLink: `/form?disaster=${DROUGHT}&formId=${form[keys.id].toString()}`,
@@ -98,7 +98,7 @@ export const formatCommonFields = (form: DisasterDtoType) => {
       [KoboCommonKeys.entryDate]: form[keys.entryDate],
       [KoboCommonKeys.id]: form[keys.id].toString(),
       [KoboCommonKeys.validationStatus]: (
-        form[keys.validationStatus]?.uid ?? ValidationStatusValue.onHold
+        form[keys.validationStatus].uid ?? ValidationStatusValue.onHold
       ).toString(),
       [KoboCommonKeys.submissionTime]: form[keys.submissionTime],
       approvalLink: `/form?disaster=${INCIDENT}&formId=${form[keys.id].toString()}`,

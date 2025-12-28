@@ -68,6 +68,7 @@ const ADMINJS_ADMIN = {
           if (!user) {
             // Keep this line to avoid timing difference between existing and non existing users
             await compare(password, 'Jean-Claude Van Damme');
+
             return null;
           }
 
