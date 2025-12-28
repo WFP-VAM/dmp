@@ -6,12 +6,14 @@ import { AboutModal } from 'components/AboutModal';
 export interface LayoutProps {
   alignItems?: React.CSSProperties['alignItems'];
   backgroundColor?: string;
+  showAboutModal?: boolean;
 }
 
 export const Layout = ({
   alignItems,
   children,
   backgroundColor = '#f9f7f7',
+  showAboutModal = false,
 }: React.PropsWithChildren<LayoutProps>): JSX.Element => {
   const theme = useTheme();
 
@@ -33,7 +35,7 @@ export const Layout = ({
       >
         {children}
       </Box>
-      <AboutModal />
+      {showAboutModal && <AboutModal />}
     </>
   );
 };
