@@ -73,7 +73,7 @@ const ADMINJS_ADMIN = {
           }
 
           // Check if user has admin role
-          if (!user.roles || !user.roles.includes('admin')) {
+          if (!user.roles.includes('admin')) {
             return null;
           }
 

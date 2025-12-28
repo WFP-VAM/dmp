@@ -65,10 +65,6 @@ interface MessageSection {
 }
 
 export const generateTelegramMessage = (disasterType: DisasterType, form: DisasterDtoType) => {
-  if (frontendUrl === undefined) {
-    throw new Error('frontendUrl is not defined');
-  }
-
   const commonFields = formatCommonFields(form);
 
   // Format location
