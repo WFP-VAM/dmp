@@ -16,7 +16,7 @@ import { get, startCase } from 'lodash';
 // TODO - avoid duplication of translated data
 import Mapping from './mapping.json';
 // Refactor not to use ALLOWED_HOST once deployed
-const frontendUrl = process.env.ALLOWED_HOST;
+const frontendUrl = 'https://dmp.ovio.org';
 
 /**
  * Converts a raw form value to a number if it's valid and greater than 0
