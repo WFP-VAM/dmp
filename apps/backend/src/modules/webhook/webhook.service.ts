@@ -69,8 +69,9 @@ export class WebhookService {
       const text = generateTelegramMessage(disasterType, form);
 
       await Promise.all([
-        this.sendTelegramMessage(telegramPcdmChatId, text),
         this.sendTelegramMessage(telegramNcdmChatId, text),
+        // TODO: Uncomment this when the PCDM chat is ready and tested
+        // this.sendTelegramMessage(telegramPcdmChatId, text),
       ]);
 
       return 'sent';
