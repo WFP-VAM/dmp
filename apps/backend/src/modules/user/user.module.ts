@@ -16,10 +16,6 @@ import { UserService } from './user.service';
         resource: User,
         options: {
           properties: { password: { isVisible: false } },
-          navigation: {
-            name: 'User Management',
-            icon: 'User',
-          },
         },
         features: [
           passwordsFeature({
