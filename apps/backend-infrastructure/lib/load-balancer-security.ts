@@ -217,6 +217,57 @@ export class LoadBalancerSecurity extends Construct {
             metricName: 'SQLiRuleSetMetric',
           },
         },
+        // AWS Managed Rules - Bot Control
+        {
+          name: 'AWSManagedRulesBotControlRuleSet',
+          priority: 5,
+          overrideAction: { none: {} },
+          statement: {
+            managedRuleGroupStatement: {
+              vendorName: 'AWS',
+              name: 'AWSManagedRulesBotControlRuleSet',
+            },
+          },
+          visibilityConfig: {
+            sampledRequestsEnabled: true,
+            cloudWatchMetricsEnabled: true,
+            metricName: 'BotControlRuleSetMetric',
+          },
+        },
+        // AWS Managed Rules - Admin Protection
+        {
+          name: 'AWSManagedRulesAdminProtectionRuleSet',
+          priority: 6,
+          overrideAction: { none: {} },
+          statement: {
+            managedRuleGroupStatement: {
+              vendorName: 'AWS',
+              name: 'AWSManagedRulesAdminProtectionRuleSet',
+            },
+          },
+          visibilityConfig: {
+            sampledRequestsEnabled: true,
+            cloudWatchMetricsEnabled: true,
+            metricName: 'AdminProtectionRuleSetMetric',
+          },
+        },
+        // AWS Managed Rules - Account Takeover Prevention
+        {
+          name: 'AWSManagedRulesATPRuleSet',
+          priority: 7,
+          overrideAction: { none: {} },
+          statement: {
+            managedRuleGroupStatement: {
+              vendorName: 'AWS',
+              name: 'AWSManagedRulesATPRuleSet',
+            },
+          },
+          visibilityConfig: {
+            sampledRequestsEnabled: true,
+            cloudWatchMetricsEnabled: true,
+            metricName: 'ATPRuleSetMetric',
+          },
+        },
       ],
       visibilityConfig: {
         sampledRequestsEnabled: true,
