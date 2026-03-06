@@ -401,6 +401,8 @@ export const DisasterTable = ({
                         outline: 'solid green 3px',
                         outlineWidth: '3px',
                         outlineOffset: '-3px',
+                        zIndex: 2,
+                        position: 'relative',
                       },
                     }}
                     disableColumnResize
