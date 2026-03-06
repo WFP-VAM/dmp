@@ -11,9 +11,10 @@
     "GHSA-6rw7-vpxm-498p",
     "GHSA-83g3-92jg-28cx",
     "GHSA-8qq5-rm4j-mr97",
+    "GHSA-qffp-2rhf-9h96",
     "GHSA-r6q2-hw4h-h46w"
   ],
-  "_info": "linkifyjs, validator are transitive dependencies from adminjs that cannot be easily updated. tar (via bcrypt/node-pre-gyp) only has a fix in major version 7.x which would be a breaking change. serialize-javascript (via adminjs/rollup-plugin-terser) requires ^4.0.0 which is incompatible with the 7.x fix. qs is allowlisted as a precaution for older transitive versions.",
+  "_info": "linkifyjs, validator are transitive dependencies from adminjs that cannot be easily updated. tar (via bcrypt/node-pre-gyp) only has a fix in major version 7.x which would be a breaking change (GHSA-34x7-hfp2-rc4v, GHSA-83g3-92jg-28cx, GHSA-8qq5-rm4j-mr97, GHSA-qffp-2rhf-9h96, GHSA-r6q2-hw4h-h46w). serialize-javascript (via adminjs/rollup-plugin-terser) requires ^4.0.0 which is incompatible with the 7.x fix. qs is allowlisted as a precaution for older transitive versions.",
   "allowlistPaths": [
     "apps/backend > @adminjs/express@5.0.1 > adminjs@6.7.5 > @adminjs/design-system@3.1.8 > @tiptap/extension-link@2.0.0-beta.217 > linkifyjs@3.0.5",
     "apps/backend > @adminjs/nestjs@5.1.0 > adminjs@6.7.5 > @adminjs/design-system@3.1.8 > @tiptap/extension-link@2.0.0-beta.217 > linkifyjs@3.0.5",
