@@ -21,7 +21,15 @@ const config = {
     '<rootDir>/cypress/',
   ],
 
-  coveragePathIgnorePatterns: ['<rootDir>/src/.next/'],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/.next/',
+    '<rootDir>/out/',
+    '<rootDir>/node_modules/',
+    '<rootDir>/src/.next/',
+    '<rootDir>/coverage/',
+    '<rootDir>/*.config.{js,ts}',
+    '\\.(test|spec)\\.(js|jsx|ts|tsx)$',
+  ],
   // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
   moduleDirectories: ['node_modules', '<rootDir>'],
   testEnvironment: 'jest-environment-jsdom',
