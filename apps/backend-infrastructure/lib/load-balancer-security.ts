@@ -217,6 +217,66 @@ export class LoadBalancerSecurity extends Construct {
             metricName: 'SQLiRuleSetMetric',
           },
         },
+        // AWS Managed Rules - Bot Control
+        {
+          name: 'AWSManagedRulesBotControlRuleSet',
+          priority: 5,
+          overrideAction: { none: {} },
+          statement: {
+            managedRuleGroupStatement: {
+              vendorName: 'AWS',
+              name: 'AWSManagedRulesBotControlRuleSet',
+              managedRuleGroupConfigs: [
+                {
+                  awsManagedRulesBotControlRuleSet: {
+                    inspectionLevel: 'COMMON',
+                  },
+                },
+              ],
+            },
+          },
+          visibilityConfig: {
+            sampledRequestsEnabled: true,
+            cloudWatchMetricsEnabled: true,
+            metricName: 'BotControlRuleSetMetric',
+          },
+        },
+        // AWS Managed Rules - Admin Protection
+        {
+          name: 'AWSManagedRulesAdminProtectionRuleSet',
+          priority: 6,
+          overrideAction: { none: {} },
+          statement: {
+            managedRuleGroupStatement: {
+              vendorName: 'AWS',
+              name: 'AWSManagedRulesAdminProtectionRuleSet',
+            },
+          },
+          visibilityConfig: {
+            sampledRequestsEnabled: true,
+            cloudWatchMetricsEnabled: true,
+            metricName: 'AdminProtectionRuleSetMetric',
+          },
+        },
+        // AWS Managed Rules - Account Takeover Prevention
+        // Note: managedRuleGroupConfigs will be added via escape hatch after creation
+        // due to CDK type conversion issues with ATP rule set configuration
+        {
+          name: 'AWSManagedRulesATPRuleSet',
+          priority: 7,
+          overrideAction: { none: {} },
+          statement: {
+            managedRuleGroupStatement: {
+              vendorName: 'AWS',
+              name: 'AWSManagedRulesATPRuleSet',
+            },
+          },
+          visibilityConfig: {
+            sampledRequestsEnabled: true,
+            cloudWatchMetricsEnabled: true,
+            metricName: 'ATPRuleSetMetric',
+          },
+        },
       ],
       visibilityConfig: {
         sampledRequestsEnabled: true,
@@ -224,6 +284,29 @@ export class LoadBalancerSecurity extends Construct {
         metricName: `${applicationName}-waf-metric`,
       },
     });
+
+    // Use escape hatch to add ATP rule set configuration with PascalCase properties
+    // CDK's type definitions may not properly convert camelCase to PascalCase for CloudFormation
+    // ATP rule is at index 6 (priority 7, 0-indexed: priorities 1-7 = indices 0-6)
+    webAcl.addPropertyOverride(
+      'Rules.6.Statement.ManagedRuleGroupStatement.ManagedRuleGroupConfigs',
+      [
+        {
+          AWSManagedRulesATPRuleSet: {
+            LoginPath: '/auth/jwt/create',
+            RequestInspection: {
+              PayloadType: 'JSON',
+              UsernameField: {
+                Identifier: 'email',
+              },
+              PasswordField: {
+                Identifier: 'password',
+              },
+            },
+          },
+        },
+      ],
+    );
 
     // Associate WAF with the Application Load Balancer
     new CfnWebACLAssociation(this, 'WebACLAssociation', {
