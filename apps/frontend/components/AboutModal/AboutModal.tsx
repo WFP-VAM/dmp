@@ -64,9 +64,6 @@ export const AboutModal = (): JSX.Element => {
           <Typography paragraph>
             <FormattedMessage id="about.content_paragraph_2" />
           </Typography>
-          <Typography paragraph>
-            <FormattedMessage id="about.content_paragraph_3" />
-          </Typography>
         </DialogContent>
       </Dialog>
     </>
