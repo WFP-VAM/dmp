@@ -45,6 +45,7 @@
     "overrides": {
       "adminjs>flat": "5.0.2",
       "adminjs>axios": "^0.30.3",
+      "body-parser": "2.2.2",
       "path-to-regexp": "0.1.12",
       "path-to-regexp@3.2.0": "3.3.0",
       "path-to-regexp@6.2.2": "6.3.0",
