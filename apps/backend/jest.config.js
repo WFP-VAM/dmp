@@ -16,7 +16,6 @@ const config = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
-  transformIgnorePatterns: ['/node_modules/', '.*/packages/interfaces/dist/.*'],
   coverageDirectory: './coverage',
   testEnvironment: 'node',
   testTimeout: 10000,
