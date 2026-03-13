@@ -39,9 +39,40 @@ type GetFormResponse<T> = T extends typeof FLOOD
   ? IncidentDto
   : never;
 
+const KOBO_PAGE_LIMIT = 1000;
+
 @Injectable()
 export class KoboService {
   constructor(private readonly httpService: HttpService) {}
+
+  private async getAllPages<T extends DisasterType>(
+    path: string,
+    params?: Record<string, unknown>,
+  ): Promise<QueryResponse<T>> {
+    const { data: firstPage } = await this.httpService.axiosRef.get<QueryResponse<T>>(path, {
+      params: {
+        ...params,
+        limit: KOBO_PAGE_LIMIT,
+      },
+    });
+
+    const results = [...firstPage.results];
+    let nextUrl = firstPage.next;
+
+    while (nextUrl !== null) {
+      const { data: nextPage } = await this.httpService.axiosRef.get<QueryResponse<T>>(nextUrl);
+
+      results.push(...nextPage.results);
+      nextUrl = nextPage.next;
+    }
+
+    return {
+      ...firstPage,
+      next: null,
+      results,
+    };
+  }
+
   async getLastForms<T extends DisasterType>(
     numDays: number,
     disasterType: T,
@@ -49,21 +80,14 @@ export class KoboService {
   ): Promise<QueryResponse<T>> {
     const startDate = substractDaysToDate(new Date(), numDays);
 
-    const { data } = await this.httpService.axiosRef.get<QueryResponse<T>>(
-      `assets/${AssetId[disasterType]}/data.json`,
-      {
-        params: {
-          query: {
-            [koboKeys[disasterType].entryDate]: { $gte: formatDateToStringDate(startDate) },
-            ...(province !== undefined && {
-              [koboKeys[disasterType].province]: province,
-            }),
-          },
-        },
+    return this.getAllPages<T>(`assets/${AssetId[disasterType]}/data.json`, {
+      query: {
+        [koboKeys[disasterType].entryDate]: { $gte: formatDateToStringDate(startDate) },
+        ...(province !== undefined && {
+          [koboKeys[disasterType].province]: province,
+        }),
       },
-    );
-
-    return data;
+    });
   }
 
   async getForms<T extends DisasterType>({
@@ -83,32 +107,21 @@ export class KoboService {
   }): Promise<QueryResponse<T>> {
     const disasterType = computeDisasterTypeFromDistTyps(disTyps);
 
-    const { data } = await this.httpService.axiosRef.get<QueryResponse<T>>(
-      `assets/${AssetId[disasterType]}/data.json`,
-      {
-        params: {
-          query: {
-            ...(province !== undefined && {
-              [koboKeys[disasterType].province]: Array.isArray(province)
-                ? { $in: province }
-                : province,
-            }),
-            ...(district !== undefined && {
-              [koboKeys[disasterType].district]: Array.isArray(district)
-                ? { $in: district }
-                : district,
-            }),
-            ...(commune !== undefined && {
-              [koboKeys[disasterType].commune]: Array.isArray(commune) ? { $in: commune } : commune,
-            }),
-            [koboKeys[disasterType].entryDate]: { $gte: startDate, $lte: endDate },
-            [koboKeys[disasterType].disTyp]: { $in: disTyps },
-          },
-        },
+    return this.getAllPages<T>(`assets/${AssetId[disasterType]}/data.json`, {
+      query: {
+        ...(province !== undefined && {
+          [koboKeys[disasterType].province]: Array.isArray(province) ? { $in: province } : province,
+        }),
+        ...(district !== undefined && {
+          [koboKeys[disasterType].district]: Array.isArray(district) ? { $in: district } : district,
+        }),
+        ...(commune !== undefined && {
+          [koboKeys[disasterType].commune]: Array.isArray(commune) ? { $in: commune } : commune,
+        }),
+        [koboKeys[disasterType].entryDate]: { $gte: startDate, $lte: endDate },
+        [koboKeys[disasterType].disTyp]: { $in: disTyps },
       },
-    );
-
-    return data;
+    });
   }
 
   async getForm<T extends DisasterType>(
