@@ -87,7 +87,7 @@ describe('KoboService - nested params', () => {
     const startDate = '2023-02-02';
     const endDate = '2023-02-03';
     const nextUrl =
-      'https://kobo.humanitarianresponse.info/api/v2/assets/test-asset/data.json?limit=1000&start=1000';
+      'https://eu.kobotoolbox.org/api/v2/assets/test-asset/data.json?limit=1000&start=1000';
 
     (httpService.axiosRef.get as jest.Mock)
       .mockResolvedValueOnce({
@@ -140,7 +140,7 @@ describe('KoboService - nested params', () => {
 
   it('should fetch every page for getLastForms and merge the results', async () => {
     const nextUrl =
-      'https://kobo.humanitarianresponse.info/api/v2/assets/test-asset/data.json?limit=1000&start=1000';
+      'https://eu.kobotoolbox.org/api/v2/assets/test-asset/data.json?limit=1000&start=1000';
 
     (httpService.axiosRef.get as jest.Mock)
       .mockResolvedValueOnce({
