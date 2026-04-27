@@ -43,10 +43,9 @@
   "packageManager": "pnpm@9.4.0",
   "pnpm": {
     "overrides": {
-      "@babel/core>json5": "2.2.2",
       "adminjs>flat": "5.0.2",
       "adminjs>axios": "^0.30.3",
-      "body-parser": "1.20.3",
+      "body-parser": "2.2.2",
       "path-to-regexp": "0.1.12",
       "path-to-regexp@3.2.0": "3.3.0",
       "path-to-regexp@6.2.2": "6.3.0",
@@ -64,7 +63,7 @@
       "minimatch@9.0.6": "9.0.7",
       "@remix-run/router@1.23.0": "1.23.2",
       "@remix-run/router@1.23.1": "1.23.2",
-      "next": "15.5.10"
+      "tar": "^7.5.11"
     }
   }
 }
