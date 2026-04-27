@@ -13,7 +13,7 @@ if (koboToken === undefined) {
   imports: [
     HttpModule.register({
       headers: { authorization: `Token ${koboToken}` },
-      baseURL: 'https://kobo.humanitarianresponse.info/api/v2/',
+      baseURL: 'https://eu.kobotoolbox.org/api/v2/',
       paramsSerializer: (params) => {
         // Kobo API expects the 'query' parameter as a JSON-encoded string
         // Handle 'query' specially: if it's an object, JSON stringify it; if it's already a string, use it as-is
