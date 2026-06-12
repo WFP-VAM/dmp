@@ -2,9 +2,10 @@
 import { Cancel, Check, CheckCircle, Close, Edit } from '@mui/icons-material';
 import { CircularProgress, Stack, useTheme } from '@mui/material';
 import { DisasterType, ValidationStatusValue } from '@wfp-dmp/interfaces';
-import Button from 'components/Button';
 import { useRouter } from 'next/router';
 import { FormattedMessage, useIntl } from 'react-intl';
+
+import Button from 'components/Button';
 import { usePatchValidationStatus } from 'services/api/kobo/usePatchValidationStatus';
 import { colors } from 'theme/muiTheme';
 import { reloadPage } from 'utils/reloadPage';

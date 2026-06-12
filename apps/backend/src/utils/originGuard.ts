@@ -9,9 +9,7 @@ import {
 
 import { isAllowedOrigin } from './allowedOrigins';
 
-export const OriginGuard = (
-  isOriginAllowed: (origin: string) => boolean = isAllowedOrigin,
-) => {
+export const OriginGuard = (isOriginAllowed: (origin: string) => boolean = isAllowedOrigin) => {
   class OriginGuardImpl implements CanActivate {
     canActivate(context: ExecutionContext): boolean {
       if (process.env.NODE_ENV === 'test') {

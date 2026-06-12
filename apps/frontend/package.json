@@ -6,6 +6,7 @@
     "build": "next build",
     "build:analyze": "DEV_ANALYZE_BUNDLE=true next build",
     "dev": "./gen_env.sh local public && next dev -p 3000",
+    "extract-translations": "node scripts/extract-translations.mjs",
     "lint": "eslint --cache --cache-location .next/cache/eslint/ './!(out)/**/*.{js,ts,tsx}'",
     "lint:fix": "pnpm lint --fix",
     "lint:style": "stylelint './**/*.module.css'",
@@ -17,8 +18,7 @@
     "test": "jest",
     "test:circular": "pnpm depcruise --validate .dependency-cruiser.js pages --ignore-known",
     "test:coverage": "pnpm test -- --coverage",
-    "test:type": "pnpm build",
-    "extract-translations": "node scripts/extract-translations.mjs"
+    "test:type": "pnpm build"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

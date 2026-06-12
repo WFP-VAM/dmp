@@ -21,7 +21,7 @@ export const isAllowedOrigin = (origin: string): boolean => {
     return process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
   }
 
-  return getAllowedOriginMatchers().some(matcher =>
+  return getAllowedOriginMatchers().some((matcher) =>
     typeof matcher === 'string' ? matcher === origin : matcher.test(origin),
   );
 };
