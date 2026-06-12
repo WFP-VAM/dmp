@@ -68,7 +68,7 @@ describe('KoboService - nested params', () => {
       [koboKeys[FLOOD].province]: { $in: province },
       [koboKeys[FLOOD].district]: { $in: district },
       [koboKeys[FLOOD].commune]: { $in: commune },
-      [koboKeys[FLOOD].entryDate]: { $gte: startDate, $lte: endDate },
+      [koboKeys[FLOOD].disasterDate]: { $gte: startDate, $lte: endDate },
       [koboKeys[FLOOD].disTyp]: { $in: disTyps },
     };
 
@@ -120,7 +120,7 @@ describe('KoboService - nested params', () => {
       [koboKeys[FLOOD].province]: { $in: province },
       [koboKeys[FLOOD].district]: { $in: district },
       [koboKeys[FLOOD].commune]: { $in: commune },
-      [koboKeys[FLOOD].entryDate]: { $gte: startDate, $lte: endDate },
+      [koboKeys[FLOOD].disasterDate]: { $gte: startDate, $lte: endDate },
       [koboKeys[FLOOD].disTyp]: { $in: disTyps },
     };
 
@@ -177,7 +177,7 @@ describe('KoboService - nested params', () => {
         },
       },
     });
-    expect(config.params.query[koboKeys[FLOOD].entryDate]).toEqual(expect.any(Object));
+    expect(config.params.query[koboKeys[FLOOD].disasterDate]).toEqual(expect.any(Object));
     expect(httpService.axiosRef.get).toHaveBeenNthCalledWith(2, nextUrl);
     expect(response.results).toEqual([{ _id: 'first-page' }, { _id: 'second-page' }]);
   });

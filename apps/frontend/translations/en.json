@@ -92,7 +92,8 @@
     "reject": "Reject Report",
     "submit": "Submit",
     "edit": "Edit Report",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "action_error": "Unable to update this form. Please try again."
   },
   "disasters": {
     "FLOOD": "Flood",

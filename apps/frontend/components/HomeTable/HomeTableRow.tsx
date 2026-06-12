@@ -82,7 +82,7 @@ const HomeTableRow = ({ isLoading, disastersPerDate }: HomeTableRowProps) => {
     <>
       {disastersPerDate.map(disasters => (
         <Stack
-          key={disasters.entryDate}
+          key={disasters.disasterDate}
           direction="row"
           gap={{ xs: theme.spacing(1), sm: theme.spacing(2) }}
           sx={{ flexWrap: { xs: 'wrap', sm: 'nowrap' } }}
@@ -95,7 +95,7 @@ const HomeTableRow = ({ isLoading, disastersPerDate }: HomeTableRowProps) => {
             fontSize={{ xs: '0.75rem', sm: '0.875rem' }}
             sx={{ whiteSpace: 'nowrap' }}
           >
-            {formatDate(disasters.entryDate, 'MM-DD-YYYY')}
+            {formatDate(disasters.disasterDate, 'MM-DD-YYYY')}
           </Typography>
           <Stack
             direction="row"
@@ -145,8 +145,8 @@ const HomeTableRow = ({ isLoading, disastersPerDate }: HomeTableRowProps) => {
                       pathname: '/forms/search',
                       query: {
                         disTyp,
-                        startDate: disasters.entryDate,
-                        endDate: disasters.entryDate,
+                        startDate: disasters.disasterDate,
+                        endDate: disasters.disasterDate,
                       },
                     }}
                   >

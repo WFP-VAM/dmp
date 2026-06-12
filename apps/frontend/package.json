@@ -17,7 +17,8 @@
     "test": "jest",
     "test:circular": "pnpm depcruise --validate .dependency-cruiser.js pages --ignore-known",
     "test:coverage": "pnpm test -- --coverage",
-    "test:type": "pnpm build"
+    "test:type": "pnpm build",
+    "extract-translations": "node scripts/extract-translations.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

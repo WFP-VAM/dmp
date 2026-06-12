@@ -4,7 +4,7 @@ export interface DisasterLocation {
 }
 
 export interface DisasterPerDate {
-  entryDate: string;
+  disasterDate: string;
   disTyps: string[];
   disTypLocations: Record<string, DisasterLocation[]>;
 }

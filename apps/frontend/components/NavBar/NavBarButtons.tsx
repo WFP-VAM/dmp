@@ -25,6 +25,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import SelectLanguage from 'components/SelectLanguage';
 import { useAuth } from 'context/auth';
 import { apiBaseUrl } from 'services/api/client';
+import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
 import { colors } from 'theme/muiTheme';
 import { logout } from 'utils/logout';
 
@@ -104,6 +105,7 @@ const NavBarButtons = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user } = useAuth();
+  const isAdmin = useIsSignedInUserAdmin();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openMenuKey, setOpenMenuKey] = useState<number | null>(null);
 
@@ -212,17 +214,19 @@ const NavBarButtons = () => {
       {links.map(x =>
         isLinkWithSubMenu(x) ? renderSubMenu(x) : renderNormalMenu(x),
       )}
-      <Button
-        variant="text"
-        startIcon={<Person style={{ minWidth: '1.5rem' }} />}
-        onClick={handleAdminClick}
-      >
-        {!isMobile && (
-          <Typography>
-            {intl.formatMessage({ id: 'navigation.admin' })}
-          </Typography>
-        )}
-      </Button>
+      {isAdmin && (
+        <Button
+          variant="text"
+          startIcon={<Person style={{ minWidth: '1.5rem' }} />}
+          onClick={handleAdminClick}
+        >
+          {!isMobile && (
+            <Typography>
+              {intl.formatMessage({ id: 'navigation.admin' })}
+            </Typography>
+          )}
+        </Button>
+      )}
       <SelectLanguage />
       <Tooltip
         title={

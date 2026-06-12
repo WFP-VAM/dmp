@@ -2,10 +2,9 @@
 import { Cancel, Check, CheckCircle, Close, Edit } from '@mui/icons-material';
 import { CircularProgress, Stack, useTheme } from '@mui/material';
 import { DisasterType, ValidationStatusValue } from '@wfp-dmp/interfaces';
-import { useRouter } from 'next/router';
-import { FormattedMessage } from 'react-intl';
-
 import Button from 'components/Button';
+import { useRouter } from 'next/router';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { usePatchValidationStatus } from 'services/api/kobo/usePatchValidationStatus';
 import { colors } from 'theme/muiTheme';
 import { reloadPage } from 'utils/reloadPage';
@@ -28,12 +27,25 @@ const FormValidationFooter = ({
 }: FormValidationFooterProps) => {
   const theme = useTheme();
   const router = useRouter();
+  const intl = useIntl();
   const { disaster: disasterType, formId: id } = router.query;
 
   const { trigger, isMutating } = usePatchValidationStatus(
     disasterType as DisasterType,
     id as string,
   );
+
+  const handleValidationStatusChange = async (
+    validationStatusValue: ValidationStatusValue,
+  ) => {
+    try {
+      await trigger(validationStatusValue);
+      await router.push('/forms/search');
+    } catch (error) {
+      console.error('Error updating validation status:', error);
+      window.alert(intl.formatMessage({ id: 'form_page.action_error' }));
+    }
+  };
 
   const editButtonStyles = {
     color: 'black',
@@ -123,9 +135,9 @@ const FormValidationFooter = ({
             disabled={isMutating}
             startIcon={<Cancel />}
             onClick={() => {
-              void trigger(ValidationStatusValue.notApproved).then(() => {
-                window.close();
-              });
+              void handleValidationStatusChange(
+                ValidationStatusValue.notApproved,
+              );
             }}
             endIcon={
               isMutating ? <CircularProgress color="inherit" size={20} /> : null
@@ -143,9 +155,7 @@ const FormValidationFooter = ({
             startIcon={<CheckCircle />}
             disabled={isMutating}
             onClick={() => {
-              void trigger(ValidationStatusValue.approved).then(() => {
-                window.close();
-              });
+              void handleValidationStatusChange(ValidationStatusValue.approved);
             }}
             endIcon={
               isMutating ? <CircularProgress color="inherit" size={20} /> : null
