@@ -115,8 +115,12 @@ jobs:
   frontend_build_and_deploy:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     env:
-      surge_url: wfp-dmp-${{ github.event.pull_request.number }}.surge.sh
+      pages_base_path: /dmp/pr-${{ github.event.pull_request.number }}
+      pages_url: https://wfp-vam.github.io/dmp/pr-${{ github.event.pull_request.number }}/
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v4.0.0
@@ -143,19 +147,21 @@ jobs:
         run: pnpm turbo build
         env:
           NEXT_PUBLIC_API_BASE_URL: https://staging-api.dmp.ovio.org
+          NEXT_PUBLIC_BASE_PATH: ${{ env.pages_base_path }}
       - name: Export to static HTML
         run: |
           cd apps/frontend
           ./gen_env.sh staging
           cd out
-          cp index.html 200.html
-      - name: Deploy on surge
-        uses: dswistowski/surge-sh-action@v1.1.0
+          cp index.html 404.html
+          touch .nojekyll
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          domain: ${{ env.surge_url }}
-          project: 'apps/frontend/out/.'
-          login: ${{ secrets.surge_login }}
-          token: ${{ secrets.surge_token }}
+          folder: apps/frontend/out
+          target-folder: pr-${{ github.event.pull_request.number }}
+          branch: gh-pages
+          clean: true
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%S')"
@@ -165,5 +171,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           message: |
-            Build succeeded and deployed at https://${{ env.surge_url }} 
+            Build succeeded and deployed at ${{ env.pages_url }}
             (hash ${{ github.event.pull_request.head.sha }} deployed at ${{ steps.date.outputs.date }})
