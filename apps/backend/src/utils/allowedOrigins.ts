@@ -9,7 +9,9 @@ export const getAllowedOriginMatchers = (): Array<string | RegExp> => {
 
   return [
     allowedHost,
-    /https:\/\/wfp-vam\.github\.io\/dmp(\/pr-[0-9]+)?\/?$/,
+    /https:\/\/wfp-dmp-[0-9]+.surge\.sh$/,
+    /https:\/\/staging-wfp-dmp.surge\.sh$/,
+    'https://wfp-vam.github.io',
     /https:\/\/([a-zA-Z0-9-]+\.)?dmp\.ovio\.org$/,
     /^http:\/\/localhost(:\d+)?$/,
   ];
