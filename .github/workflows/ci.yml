@@ -114,6 +114,9 @@ jobs:
 
   frontend_build_and_deploy:
     if: github.event_name == 'pull_request'
+    concurrency:
+      group: gh-pages-deploy
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     permissions:
       contents: write
