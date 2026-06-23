@@ -237,8 +237,8 @@ export const DisasterTable = ({
     return () => obs.disconnect();
   }, [totalWidth, columnVisibilityModel]);
 
-  const maxPrintWidth = 1600; // Maximum print width in pixels
-  const scaleFactor = Math.min(1, maxPrintWidth / totalWidth);
+  const maxPrintWidth = 2400;
+  const scaleFactor = isPrinting ? 1 : Math.min(1, maxPrintWidth / totalWidth);
 
   const borderCSS = `1px solid ${colors.gray}`;
 
@@ -250,7 +250,7 @@ export const DisasterTable = ({
     zIndex: 1,
   };
 
-  const rowsPerPage = Math.floor(28 / scaleFactor);
+  const rowsPerPage = isPrinting ? 25 : extendedData.length;
   const dataChunks = useMemo(() => {
     return isPrinting ? chunk(extendedData, rowsPerPage) : [extendedData];
   }, [isPrinting, extendedData, rowsPerPage]);

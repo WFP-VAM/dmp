@@ -4,7 +4,7 @@ import { LayoutWithNav } from 'components/Layout';
 import { NextApplicationPage } from './_app';
 
 const HomePage: NextApplicationPage = () => (
-  <LayoutWithNav layoutProps={{ alignItems: 'center' }}>
+  <LayoutWithNav layoutProps={{ alignItems: 'center', showAboutModal: true }}>
     <Home />
   </LayoutWithNav>
 );

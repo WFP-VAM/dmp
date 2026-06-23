@@ -40,6 +40,13 @@ body {
   overflow-x: hidden;
 }
 
+@media print {
+  html,
+  body {
+    overflow-x: visible;
+  }
+}
+
 /*
   Typographic tweaks!
   4. Add accessible line-height

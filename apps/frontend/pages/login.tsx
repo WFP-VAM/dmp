@@ -4,7 +4,7 @@ import { Login } from 'components';
 import { Layout } from 'components/Layout';
 
 const LoginPage: NextPage = () => (
-  <Layout alignItems="center" backgroundColor="#f9f7f7">
+  <Layout alignItems="center" backgroundColor="#f9f7f7" showAboutModal>
     <Login />
   </Layout>
 );

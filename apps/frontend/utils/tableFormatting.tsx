@@ -146,6 +146,7 @@ const getLocationCountColumnSetup = (
               </Tooltip>
             );
           },
+          valueFormatter: (value: string[]) => value.join(', '),
           sortComparator: (v1, v2) => {
             const v1List = v1 as string[];
             const v2List = v2 as string[];
@@ -405,6 +406,9 @@ export const useAggregatedRow = <
     aggregatedRow[KoboCommonKeys.village] = Array.from(
       new Set(aggregatedRow[KoboCommonKeys.village] as string[]),
     );
+    aggregatedRow[columns[0].field] = intl.formatMessage({
+      id: 'table.COMMON.total',
+    });
   }
 
   // Update column add custom sort to keep total on top & override first column cell

@@ -1,11 +1,4 @@
-import { faClipboard } from '@fortawesome/free-regular-svg-icons';
-import {
-  faChartSimple,
-  faClipboardCheck,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Home, Logout, Person } from '@mui/icons-material';
+import { Logout, Person } from '@mui/icons-material';
 import {
   Menu,
   MenuItem,
@@ -25,9 +18,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import SelectLanguage from 'components/SelectLanguage';
 import { useAuth } from 'context/auth';
 import { apiBaseUrl } from 'services/api/client';
+import { useIsSignedInUserAdmin } from 'services/api/user/useUser';
 import { colors } from 'theme/muiTheme';
 import { logout } from 'utils/logout';
 
+import { links } from './NavBarButtons.links';
 import type {
   LinkWithSubMenu,
   NavLink,
@@ -38,60 +33,6 @@ const handleAdminClick = () => {
   const path = new URL('/admin/login', apiBaseUrl).toString();
   window.location.href = path;
 };
-
-const links: NavLink[] = [
-  {
-    key: 1,
-    linkTo: '/',
-    textId: 'navigation.home',
-    icon: <Home style={{ minWidth: '1.5rem' }} />,
-  },
-  {
-    key: 2,
-    textId: 'navigation.reports',
-    icon: (
-      <FontAwesomeIcon
-        icon={faClipboard as IconDefinition}
-        style={{ color: colors.color3, fontSize: '1rem', minWidth: '1.5rem' }}
-      />
-    ),
-    subMenu: [
-      {
-        key: 'all-reports',
-        linkTo: '/report',
-        textId: 'navigation.reports',
-        icon: (
-          <FontAwesomeIcon
-            icon={faClipboard as IconDefinition}
-            style={{ color: colors.color3 }}
-          />
-        ),
-      },
-      {
-        key: 'summary-charts',
-        linkTo: '/charts',
-        textId: 'navigation.charts',
-        icon: (
-          <FontAwesomeIcon
-            icon={faChartSimple}
-            style={{ color: colors.color3 }}
-          />
-        ),
-      },
-    ],
-  },
-  {
-    key: 3,
-    linkTo: '/forms/search',
-    textId: 'navigation.forms.header',
-    icon: (
-      <FontAwesomeIcon
-        icon={faClipboardCheck}
-        style={{ color: colors.color3, fontSize: '1rem', minWidth: '1.5rem' }}
-      />
-    ),
-  },
-];
 
 const isLinkWithSubMenu = (link: NavLink): link is LinkWithSubMenu => {
   return 'subMenu' in link;
@@ -104,6 +45,7 @@ const NavBarButtons = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user } = useAuth();
+  const isAdmin = useIsSignedInUserAdmin();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openMenuKey, setOpenMenuKey] = useState<number | null>(null);
 
@@ -212,17 +154,19 @@ const NavBarButtons = () => {
       {links.map(x =>
         isLinkWithSubMenu(x) ? renderSubMenu(x) : renderNormalMenu(x),
       )}
-      <Button
-        variant="text"
-        startIcon={<Person style={{ minWidth: '1.5rem' }} />}
-        onClick={handleAdminClick}
-      >
-        {!isMobile && (
-          <Typography>
-            {intl.formatMessage({ id: 'navigation.admin' })}
-          </Typography>
-        )}
-      </Button>
+      {isAdmin && (
+        <Button
+          variant="text"
+          startIcon={<Person style={{ minWidth: '1.5rem' }} />}
+          onClick={handleAdminClick}
+        >
+          {!isMobile && (
+            <Typography>
+              {intl.formatMessage({ id: 'navigation.admin' })}
+            </Typography>
+          )}
+        </Button>
+      )}
       <SelectLanguage />
       <Tooltip
         title={

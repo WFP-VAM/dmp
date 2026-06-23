@@ -55,7 +55,11 @@ export const ReportContainer = () => {
       setIsPrinting(true);
 
       return new Promise<void>(resolve => {
-        setTimeout(resolve, 0);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setTimeout(resolve, 300);
+          });
+        });
       });
     },
     onAfterPrint: () => setIsPrinting(false),
