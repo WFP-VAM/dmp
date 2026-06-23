@@ -43,26 +43,43 @@ const getColumnsWidth = (columns: GridColDef[]): number =>
 const filterColumnGroupNodes = (
   nodes: GridColumnNode[],
   fields: Set<string>,
-): GridColumnNode[] =>
-  nodes.flatMap(node => {
+): GridColumnNode[] => {
+  const filtered: GridColumnNode[] = [];
+
+  for (const node of nodes) {
     if (isLeaf(node)) {
-      return fields.has(node.field) ? [node] : [];
+      if (fields.has(node.field)) {
+        filtered.push(node);
+      }
+      continue;
     }
 
     const children = filterColumnGroupNodes(node.children, fields);
 
-    return children.length > 0 ? [{ ...node, children }] : [];
-  });
+    if (children.length > 0) {
+      filtered.push({ ...node, children } as GridColumnNode);
+    }
+  }
+
+  return filtered;
+};
 
 const filterColumnGroup = (
   columnGroup: GridColumnGroupingModel,
   fields: Set<string>,
-): GridColumnGroupingModel =>
-  columnGroup.flatMap(group => {
+): GridColumnGroupingModel => {
+  const filtered: GridColumnGroupingModel = [];
+
+  for (const group of columnGroup) {
     const children = filterColumnGroupNodes(group.children, fields);
 
-    return children.length > 0 ? [{ ...group, children }] : [];
-  });
+    if (children.length > 0) {
+      filtered.push({ ...group, children });
+    }
+  }
+
+  return filtered;
+};
 
 export interface PrintColumnBand {
   columns: GridColDef[];
