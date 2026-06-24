@@ -25,17 +25,15 @@ describe('printLayout', () => {
         col('district', 72),
         col('commune', 84),
         col('village', 300),
-        ...Array.from({ length: 20 }, (_, index) =>
-          col(`metric${index}`, 96),
-        ),
+        ...Array.from({ length: 20 }, (_, index) => col(`metric${index}`, 96)),
       ],
       [],
       PRINTABLE_WIDTH_PX / 0.65,
     );
 
     expect(bands.length).toBeGreaterThan(1);
-    expect(bands.every(band => band.columns.some(c => c.field === 'province'))).toBe(
-      true,
-    );
+    expect(
+      bands.every(band => band.columns.some(c => c.field === 'province')),
+    ).toBe(true);
   });
 });

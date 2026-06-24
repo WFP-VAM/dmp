@@ -75,7 +75,6 @@ export const DisasterTable = ({
   variant,
   columnHeaderHeight = 'large',
   getRowClassName,
-  isFirstTable = true,
   aggregateRowFilter,
 }: DisasterTableProps): JSX.Element => {
   const theme = useTheme();
@@ -125,36 +124,41 @@ export const DisasterTable = ({
   //     );
 
   const hasGroups = columnGroup.length > 0;
-  const withTopCellDef = columnGroup.map(x => ({
-    ...x,
-    headerClassName: `${x.headerClassName?.toString() ?? ''} header-top-cell`,
-  }));
-  const [groupHead, ...groupRest] = withTopCellDef;
-  const updatedColumnGroup = hasGroups
-    ? [
-        {
-          ...groupHead,
-          renderHeaderGroup: (params: GridColumnGroupHeaderParams) => {
-            return (
-              <>
-                {groupHead.renderHeaderGroup?.(params)}
+  const updatedColumnGroup = useMemo(() => {
+    if (!hasGroups) {
+      return [];
+    }
 
-                <CustomToolMenu withBorder={false} />
-              </>
-            );
-          },
-          headerClassName:
-            variant === 'open'
-              ? `${groupHead.headerClassName
-                  .toString()
-                  .split(' ')
-                  .filter(x => x !== 'header-top-cell')
-                  .join(' ')} header-setting-cell`
-              : groupHead.headerClassName,
+    const withTopCellDef = columnGroup.map(x => ({
+      ...x,
+      headerClassName: `${x.headerClassName?.toString() ?? ''} header-top-cell`,
+    }));
+    const [groupHead, ...groupRest] = withTopCellDef;
+
+    return [
+      {
+        ...groupHead,
+        renderHeaderGroup: (params: GridColumnGroupHeaderParams) => {
+          return (
+            <>
+              {groupHead.renderHeaderGroup?.(params)}
+
+              <CustomToolMenu withBorder={false} />
+            </>
+          );
         },
-        ...groupRest,
-      ]
-    : [];
+        headerClassName:
+          variant === 'open'
+            ? `${groupHead.headerClassName
+                .toString()
+                .split(' ')
+                .filter(x => x !== 'header-top-cell')
+                .join(' ')} header-setting-cell`
+            : groupHead.headerClassName,
+      },
+      ...groupRest,
+    ];
+  }, [columnGroup, hasGroups, variant]);
 
   // Make location columns non-hideable
   const updatedColumns = useMemo(() => {
@@ -282,10 +286,6 @@ export const DisasterTable = ({
 
   return (
     <>
-      {/* Add page break before additional tables */}
-      {!isFirstTable && isPrinting && (
-        <Box sx={{ pageBreakBefore: 'always', height: '0px' }} />
-      )}
       <Box position="relative">
         <ScrollArrows
           hasOverflow={hasOverflow}
@@ -308,7 +308,9 @@ export const DisasterTable = ({
         >
           {printColumnBands.map((band, bandIndex) =>
             dataChunks.map((chunkOfRows, chunkIndex) => {
-              const bandFields = new Set(band.columns.map(column => column.field));
+              const bandFields = new Set(
+                band.columns.map(column => column.field),
+              );
               const bandExtendedColumns = extendedColumns.filter(column =>
                 bandFields.has(column.field),
               );
@@ -319,6 +321,9 @@ export const DisasterTable = ({
                     )
                   : chunkOfRows;
               const scaleFactor = isPrinting ? getPrintScale(band.width) : 1;
+              // Hard page break only for additional column bands or row chunks.
+              // Short themed tables flow naturally; category (disaster type)
+              // breaks are handled at the report level.
               const needsPageBreak = bandIndex > 0 || chunkIndex > 0;
 
               return (
@@ -326,7 +331,18 @@ export const DisasterTable = ({
                   {needsPageBreak && (
                     <Box sx={{ pageBreakBefore: 'always', height: '20px' }} />
                   )}
-                  <Stack direction="row" position="relative" m={2} mt={0}>
+                  <Stack
+                    direction="row"
+                    position="relative"
+                    m={2}
+                    mt={0}
+                    sx={{
+                      '@media print': {
+                        breakInside: 'avoid',
+                        pageBreakInside: 'avoid',
+                      },
+                    }}
+                  >
                     {/* Adds padding for printing */}
                     <Box
                       sx={{
@@ -392,7 +408,8 @@ export const DisasterTable = ({
                             background: '#D0EBF9',
                           },
                           '& .MuiDataGrid-columnHeader.header-top-cell': {
-                            borderTop: variant === 'open' ? borderCSS : undefined,
+                            borderTop:
+                              variant === 'open' ? borderCSS : undefined,
                           },
                           '& .MuiDataGrid-columnHeader.header-setting-cell': {
                             fontWeight: 'bold',
@@ -430,9 +447,10 @@ export const DisasterTable = ({
                           '& .MuiDataGrid-columnHeader--filledGroup': {
                             borderBottom: borderCSS,
                           },
-                          '& .MuiDataGrid-columnHeader--filledGroup:focus-within': {
-                            outline: 'none',
-                          },
+                          '& .MuiDataGrid-columnHeader--filledGroup:focus-within':
+                            {
+                              outline: 'none',
+                            },
                           '& .MuiDataGrid-columnHeaderTitleContainer': {
                             border: 'none !important',
                           },
@@ -443,7 +461,8 @@ export const DisasterTable = ({
                           '& .MuiDataGrid-scrollbar': {
                             overflow: 'hidden',
                           },
-                          borderTop: variant === 'bordered' ? undefined : 'none',
+                          borderTop:
+                            variant === 'bordered' ? undefined : 'none',
                           borderColor: colors.gray,
                           '& .MuiDataGrid-cell:focus-within': {
                             outline: 'solid green 3px',

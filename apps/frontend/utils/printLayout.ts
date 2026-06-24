@@ -87,45 +87,39 @@ export interface PrintColumnBand {
   width: number;
 }
 
-export const splitColumnsForPrint = (
+const toPrintBand = (
   columns: GridColDef[],
   columnGroup: GridColumnGroupingModel,
-  maxBandWidth: number,
-): PrintColumnBand[] => {
-  const locationColumns = columns.filter(column =>
+): PrintColumnBand => ({
+  columns,
+  columnGroup,
+  width: getColumnsWidth(columns),
+});
+
+const splitLocationAndMetricColumns = (columns: GridColDef[]) => ({
+  locationColumns: columns.filter(column =>
     LOCATION_COLUMN_FIELDS.has(column.field),
-  );
-  const metricColumns = columns.filter(
+  ),
+  metricColumns: columns.filter(
     column => !LOCATION_COLUMN_FIELDS.has(column.field),
-  );
-  const locationWidth = sum(locationColumns.map(column => column.width ?? 0));
-  const availableMetricWidth = maxBandWidth - locationWidth;
+  ),
+});
 
-  if (
-    metricColumns.length === 0 ||
-    availableMetricWidth <= 0 ||
-    getColumnsWidth(columns) <= maxBandWidth
-  ) {
-    return [
-      {
-        columns,
-        columnGroup,
-        width: getColumnsWidth(columns),
-      },
-    ];
-  }
-
+const packMetricColumnsIntoBands = (
+  metricColumns: GridColDef[],
+  availableMetricWidth: number,
+): GridColDef[][] => {
   const metricBands: GridColDef[][] = [];
   let currentBand: GridColDef[] = [];
   let currentWidth = 0;
 
   for (const column of metricColumns) {
     const columnWidth = column.width ?? 0;
-
-    if (
+    const exceedsBandWidth =
       currentBand.length > 0 &&
-      currentWidth + columnWidth > availableMetricWidth
-    ) {
+      currentWidth + columnWidth > availableMetricWidth;
+
+    if (exceedsBandWidth) {
       metricBands.push(currentBand);
       currentBand = [column];
       currentWidth = columnWidth;
@@ -140,14 +134,34 @@ export const splitColumnsForPrint = (
     metricBands.push(currentBand);
   }
 
+  return metricBands;
+};
+
+export const splitColumnsForPrint = (
+  columns: GridColDef[],
+  columnGroup: GridColumnGroupingModel,
+  maxBandWidth: number,
+): PrintColumnBand[] => {
+  const { locationColumns, metricColumns } =
+    splitLocationAndMetricColumns(columns);
+  const locationWidth = sum(locationColumns.map(column => column.width ?? 0));
+  const availableMetricWidth = maxBandWidth - locationWidth;
+  const fitsOnSingleBand =
+    metricColumns.length === 0 ||
+    availableMetricWidth <= 0 ||
+    getColumnsWidth(columns) <= maxBandWidth;
+
+  if (fitsOnSingleBand) {
+    return [toPrintBand(columns, columnGroup)];
+  }
+
+  const metricBands = packMetricColumnsIntoBands(
+    metricColumns,
+    availableMetricWidth,
+  );
+
   if (metricBands.length <= 1) {
-    return [
-      {
-        columns,
-        columnGroup,
-        width: getColumnsWidth(columns),
-      },
-    ];
+    return [toPrintBand(columns, columnGroup)];
   }
 
   return metricBands.map(metricBand => {
