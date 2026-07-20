@@ -108,7 +108,7 @@ importers:
         version: 4.0.0(adminjs@6.7.5(@types/babel__core@7.20.5)(@types/react-dom@18.2.0))(typeorm@0.3.28(babel-plugin-macros@3.1.0)(pg@8.8.0)(ts-node@10.9.2(@types/node@20.19.25)(typescript@5.9.3)))
       '@nestjs/axios':
         specifier: ^2.0.0
-        version: 2.0.0(@nestjs/common@10.4.16(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6))(axios@1.16.0)(reflect-metadata@0.1.13)(rxjs@7.5.6)
+        version: 2.0.0(@nestjs/common@10.4.16(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6))(axios@1.18.0)(reflect-metadata@0.1.13)(rxjs@7.5.6)
       '@nestjs/common':
         specifier: 10.4.16
         version: 10.4.16(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6)
@@ -146,8 +146,8 @@ importers:
         specifier: 6.7.5
         version: 6.7.5(@types/babel__core@7.20.5)(@types/react-dom@18.2.0)
       axios:
-        specifier: ^1.16.0
-        version: 1.16.0
+        specifier: ^1.18.0
+        version: 1.18.0
       bcrypt:
         specifier: 6.0.0
         version: 6.0.0
@@ -379,11 +379,11 @@ importers:
         specifier: workspace:*
         version: link:../../packages/interfaces
       axios:
-        specifier: ^1.16.0
-        version: 1.16.0
+        specifier: ^1.18.0
+        version: 1.18.0
       axios-auth-refresh:
         specifier: 3.3.6
-        version: 3.3.6(axios@1.16.0)
+        version: 3.3.6(axios@1.18.0)
       chart.js:
         specifier: ^4.4.3
         version: 4.4.3
@@ -3554,8 +3554,8 @@ packages:
     peerDependencies:
       axios: '>= 0.18 < 0.19.0 || >= 0.19.1'
 
-  axios@1.16.0:
-    resolution: {integrity: sha512-6hp5CwvTPlN2A31g5dxnwAX0orzM7pmCRDLnZSX772mv8WDqICwFjowHuPs04Mc8deIld1+ejhtaMn5vp6b+1w==}
+  axios@1.18.0:
+    resolution: {integrity: sha512-E32NzpYKp++W7XRe52rHiXV2ehxmh3wbdgO7MHeFM+vqxLBYHzt0ElkiImtOBxtOmyp0yoC8C6uESVV84Y2/hw==}
 
   axobject-query@2.2.0:
     resolution: {integrity: sha512-Td525n+iPOOyUQIeBfcASuG6uJsDOITl7Mds5gFyerkWiX7qhUTdYUBlSgNMyVqtSJqwpt1kXGLdUt6SykLMRA==}
@@ -4989,8 +4989,8 @@ packages:
       vue-template-compiler:
         optional: true
 
-  form-data@4.0.5:
-    resolution: {integrity: sha512-8RipRLol37bNs2bhoV67fiTEvdTrbMUYcFTiy3+wuuOnUog2QBHCZWXDRijWQfAkhBj2Uf5UnVaiWwA5vdd82w==}
+  form-data@4.0.6:
+    resolution: {integrity: sha512-vKatAh4SlVfgbv+YtmhiRjhEMJsYpsG1Y2rMQtR+SVSbytsSD1YGzDIcrAJmdFec88u/+VoGmxnl+80gL1tRCQ==}
     engines: {node: '>= 6'}
 
   formidable@1.2.6:
@@ -5089,7 +5089,7 @@ packages:
   git-raw-commits@2.0.11:
     resolution: {integrity: sha512-VnctFhw+xfj8Va1xtfEqCUD2XDrbAPSJx+hSrE5K7fGdjZruW7XV+QOrN7LF/RJyvspRiD2I0asWsxFp0ya26A==}
     engines: {node: '>=10'}
-    deprecated: This package is no longer maintained. For the JavaScript API, please use @conventional-changelog/git-client instead.
+    deprecated: Deprecated and no longer maintained. Use @conventional-changelog/git-client instead.
     hasBin: true
 
   glob-parent@5.1.2:
@@ -6531,9 +6531,6 @@ packages:
 
   path-to-regexp@3.3.0:
     resolution: {integrity: sha512-qyCH421YQPS2WFDxDjftfc1ZR5WKQzVzqsp4n9M2kQhVOo/ByahFoUNJfl58kOcEGfQ//7weFTDhm+ss8Ecxgw==}
-
-  path-to-regexp@6.3.0:
-    resolution: {integrity: sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ==}
 
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
@@ -8425,7 +8422,7 @@ snapshots:
       express: 4.20.0
       express-formidable: 1.2.0
       express-session: 1.17.3
-      path-to-regexp: 6.3.0
+      path-to-regexp: 0.1.13
       tslib: 2.8.1
 
   '@adminjs/nestjs@5.1.0(@nestjs/common@10.4.16(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6))(@nestjs/core@9.0.11(@nestjs/common@10.4.16(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6))(@nestjs/platform-express@9.0.11)(reflect-metadata@0.1.13)(rxjs@7.5.6))(adminjs@6.7.5(@types/babel__core@7.20.5)(@types/react-dom@18.2.0))(rxjs@7.5.6)':
@@ -10616,10 +10613,10 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@nestjs/axios@2.0.0(@nestjs/common@10.4.16(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6))(axios@1.16.0)(reflect-metadata@0.1.13)(rxjs@7.5.6)':
+  '@nestjs/axios@2.0.0(@nestjs/common@10.4.16(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6))(axios@1.18.0)(reflect-metadata@0.1.13)(rxjs@7.5.6)':
     dependencies:
       '@nestjs/common': 10.4.16(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.5.6)
-      axios: 1.16.0
+      axios: 1.18.0
       reflect-metadata: 0.1.13
       rxjs: 7.5.6
 
@@ -11568,7 +11565,7 @@ snapshots:
       '@types/cookiejar': 2.1.5
       '@types/methods': 1.1.4
       '@types/node': 20.19.25
-      form-data: 4.0.5
+      form-data: 4.0.6
 
   '@types/supertest@2.0.12':
     dependencies:
@@ -12065,7 +12062,7 @@ snapshots:
       '@rollup/plugin-replace': 2.4.2(rollup@3.30.0)
       '@types/babel-core': 6.25.10
       '@types/react': 18.2.0
-      axios: 1.16.0
+      axios: 1.18.0
       babel-plugin-styled-components: 1.13.3(styled-components@5.3.11(react-dom@18.2.0(react@18.2.0))(react-is@18.3.1)(react@18.2.0))(supports-color@5.5.0)
       commander: 5.1.0
       flat: 5.0.2
@@ -12324,17 +12321,19 @@ snapshots:
 
   axe-core@4.4.1: {}
 
-  axios-auth-refresh@3.3.6(axios@1.16.0):
+  axios-auth-refresh@3.3.6(axios@1.18.0):
     dependencies:
-      axios: 1.16.0
+      axios: 1.18.0
 
-  axios@1.16.0:
+  axios@1.18.0:
     dependencies:
       follow-redirects: 1.16.0
-      form-data: 4.0.5
+      form-data: 4.0.6
+      https-proxy-agent: 5.0.1
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
       - debug
+      - supports-color
 
   axobject-query@2.2.0: {}
 
@@ -14385,7 +14384,7 @@ snapshots:
       typescript: 4.8.3
       webpack: 5.74.0
 
-  form-data@4.0.5:
+  form-data@4.0.6:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
@@ -15687,7 +15686,7 @@ snapshots:
       decimal.js: 10.6.0
       domexception: 4.0.0
       escodegen: 2.1.0
-      form-data: 4.0.5
+      form-data: 4.0.6
       html-encoding-sniffer: 3.0.0
       http-proxy-agent: 5.0.0
       https-proxy-agent: 5.0.1
@@ -16417,8 +16416,6 @@ snapshots:
   path-to-regexp@0.1.13: {}
 
   path-to-regexp@3.3.0: {}
-
-  path-to-regexp@6.3.0: {}
 
   path-type@4.0.0: {}
 
@@ -17615,7 +17612,7 @@ snapshots:
       cookiejar: 2.1.4
       debug: 4.4.1(supports-color@5.5.0)
       fast-safe-stringify: 2.1.1
-      form-data: 4.0.5
+      form-data: 4.0.6
       formidable: 2.1.5
       methods: 1.1.2
       mime: 2.6.0
