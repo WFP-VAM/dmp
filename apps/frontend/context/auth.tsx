@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import useSWR from 'swr';
 
 import { ApiRoutes } from 'services/api/apiRoutes';
+import { authFetcher } from 'services/api/auth/authFetcher';
 import { CustomError } from 'services/errors/custom-error';
 
 type AuthContext = {
@@ -31,7 +32,12 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   const router = useRouter();
 
-  const { data, isLoading, error } = useSWR<GetUserDto, unknown>(ApiRoutes.me);
+  // Use custom fetcher that handles token verification and refresh
+  // This moves token validation logic from the axios interceptor to AuthContext
+  const { data, isLoading, error } = useSWR<GetUserDto, unknown>(
+    ApiRoutes.me,
+    authFetcher,
+  );
 
   const value = {
     user: data,

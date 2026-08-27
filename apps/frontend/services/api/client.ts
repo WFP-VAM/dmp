@@ -2,7 +2,6 @@ import axios from 'axios';
 import createAuthRefreshInterceptor, {
   AxiosAuthRefreshRequestConfig,
 } from 'axios-auth-refresh';
-import jwtDecode, { JwtPayload } from 'jwt-decode';
 
 import { env } from 'services/env';
 import { CustomError } from 'services/errors/custom-error';
@@ -12,7 +11,6 @@ import { ApiRoutes } from './apiRoutes';
 import {
   getAccessFromResponse,
   getAccessToken,
-  isTokenExpired,
   removeAccessToken,
   setAccessToken,
 } from './auth/utils';
@@ -21,10 +19,6 @@ export const apiBaseUrl = env('NEXT_PUBLIC_API_BASE_URL');
 
 // Request timeout: 30 seconds
 const REQUEST_TIMEOUT_MS = 30000;
-
-// Circuit breaker to prevent refresh retry loops
-let isRefreshing = false;
-let refreshPromise: Promise<void> | null = null;
 
 export const apiClient = axios.create({
   baseURL: apiBaseUrl,
@@ -35,45 +29,32 @@ export const apiClient = axios.create({
   },
 });
 
+/**
+ * Request interceptor that adds the Bearer token to requests.
+ * 
+ * This interceptor has a focused responsibility: add the authorization header.
+ * Token validation happens server-side. When tokens are invalid/expired:
+ * - Server returns 401
+ * - axios-auth-refresh handles the 401 and refreshes the token
+ * - AuthContext manages the authentication state and redirects to login if needed
+ */
 apiClient.interceptors.request.use(
-  async config => {
+  config => {
     const access = getAccessToken();
-    // If there's no token, skip adding Authorization header
-    // The request will proceed and server will return 401, which SWR can handle
-    if (access === null) {
-      return config;
+    
+    // If there's a token, add it to the Authorization header
+    if (access !== null) {
+      return {
+        ...config,
+        headers: Object.assign(config.headers, {
+          Authorization: `Bearer ${access}`,
+        }),
+      };
     }
 
-    // Validate and decode token safely
-    let decodedToken: JwtPayload;
-    try {
-      decodedToken = jwtDecode<JwtPayload>(access);
-    } catch {
-      // Invalid token format - skip adding Authorization header
-      return config;
-    }
-
-    if (isTokenExpired(decodedToken)) {
-      // Wait for any ongoing refresh to complete
-      if (refreshPromise) {
-        await refreshPromise;
-      } else {
-        await refreshToken();
-      }
-    }
-
-    const updatedAccess = getAccessToken();
-    // If token is still null after refresh attempt, skip adding header
-    if (updatedAccess === null) {
-      return config;
-    }
-
-    return {
-      ...config,
-      headers: Object.assign(config.headers, {
-        Authorization: `Bearer ${updatedAccess}`,
-      }),
-    };
+    // No token available - let the request proceed
+    // Server will return 401 if auth is required
+    return config;
   },
   undefined,
   {
@@ -109,46 +90,32 @@ const clearAuthState = async (): Promise<void> => {
 };
 
 const refreshToken = async (): Promise<void> => {
-  // Prevent concurrent refresh attempts
-  if (isRefreshing && refreshPromise) {
-    return refreshPromise;
-  }
-
-  isRefreshing = true;
   const options: AxiosAuthRefreshRequestConfig = { skipAuthRefresh: true };
 
-  refreshPromise = (async (): Promise<void> => {
-    try {
-      const response = await apiClient.post<unknown>(
-        ApiRoutes.refresh,
-        undefined,
-        options,
-      );
-      setAccessToken(getAccessFromResponse(response));
-    } catch (error) {
-      // If refresh fails, clear auth state to prevent loops with stale cookies
-      // This handles:
-      // - Invalid/expired refresh token cookie
-      // - Network errors (backend down, DNS issues)
-      // - Any other refresh failures
-      await clearAuthState();
+  try {
+    const response = await apiClient.post<unknown>(
+      ApiRoutes.refresh,
+      undefined,
+      options,
+    );
+    setAccessToken(getAccessFromResponse(response));
+  } catch (error) {
+    // If refresh fails, clear auth state to prevent loops with stale cookies
+    // This handles:
+    // - Invalid/expired refresh token cookie
+    // - Network errors (backend down, DNS issues)
+    // - Any other refresh failures
+    await clearAuthState();
 
-      // For network errors, throw a network error (not auth error)
-      // This allows SWR to handle it properly (no retry)
-      if (isNetworkError(error)) {
-        throw error;
-      }
-
-      // For auth errors (invalid token), throw auth error
-      throw new CustomError('authentication', 'invalid-token');
-    } finally {
-      // Always reset state after promise resolves/rejects
-      isRefreshing = false;
-      refreshPromise = null;
+    // For network errors, throw a network error (not auth error)
+    // This allows SWR to handle it properly (no retry)
+    if (isNetworkError(error)) {
+      throw error;
     }
-  })();
 
-  return refreshPromise;
+    // For auth errors (invalid token), throw auth error
+    throw new CustomError('authentication', 'invalid-token');
+  }
 };
 
 createAuthRefreshInterceptor(apiClient, async () => await refreshToken(), {
