@@ -43,18 +43,20 @@ KoboToolbox  ──(REST webhook on new submission)──▶  backend (NestJS)
      ▲                                                  │
      │  polled/fetched via Kobo API                      ├──▶ Telegram (NCDM/PCDM chat notifications)
      └──────────────────────────────────────────────────┘│
-                                                           ├──▶ Postgres (via TypeORM) — users, sessions
-frontend (Next.js) ───────REST API─────────────────────────┘
+                                                           ├──▶ Postgres — users + AdminJS sessions
+frontend (Next.js) ───────REST API + JWT cookie────────────┘
      (staff review/validate/edit forms, manage users, auth)
 
-AdminJS (mounted at /admin on the backend) — back-office for admins to manage raw data
+AdminJS (mounted at /admin on the backend) — back-office for admins to manage users
 ```
 
 - **backend**: exposes REST endpoints for auth, users, Kobo forms (flood/drought/incident) and a webhook endpoint
-  that Kobo calls on new submissions. It talks to Kobo's API to fetch/patch form data, stores users/sessions in
-  Postgres, and notifies Telegram channels.
+  that Kobo calls on new submissions. It talks to Kobo's API to fetch/patch form data (forms themselves stay in
+  Kobo, not in Postgres). Postgres holds `users` plus AdminJS cookie sessions. JWT access tokens are short-lived
+  (10 min); the refresh token is an httpOnly cookie, not a DB row. Telegram channels get notified on new
+  submissions.
 - **frontend**: the staff-facing UI to log in, browse/validate/edit flood, drought and incident reports, and view
-  summary reports.
+  summary reports. It calls `NEXT_PUBLIC_API_BASE_URL` (default `http://localhost:8000`) with credentials.
 - **packages/interfaces**: shared DTOs and Kobo→app field mappings so backend and frontend stay in sync when Kobo
   forms change (see the "Updating KOBO Tables" section in the frontend README for the workflow).
 - **backend-infrastructure**: CDK stack that provisions the AWS resources (ECS service, ALB, RDS, Route53, WAF) the
@@ -70,18 +72,39 @@ Prerequisites and day-to-day dev commands live in [docs/installation.md](docs/in
 3. [Install Docker Desktop](https://www.docker.com/products/docker-desktop/) (used for the local Postgres DB).
 4. Run `pnpm install` from the repo root.
 5. Follow the [backend README](apps/backend/README.md) to configure `.env.rc`/`.env.test.rc` (Kobo + Telegram
-   secrets) and start the database/migrations.
+   secrets) and start the database/migrations (`docker compose up -d` then `pnpm migration:run` from
+   `apps/backend`).
 6. Start both apps from the repo root:
    - `pnpm dev` (runs `turbo dev` across `apps/*`), or per-app via `pnpm --filter backend dev` /
      `pnpm --filter frontend dev`.
+   - API: http://localhost:8000 — UI: http://localhost:3000
+   - Frontend `postinstall` copies `apps/frontend/.env.sample` → `.env.local` if missing
+     (`NEXT_PUBLIC_API_BASE_URL=http://localhost:8000`).
 
-To create a user to sign in with locally, `POST /users` requires an **admin** JWT and a `roles` array
-(there's no bootstrap admin user — see the "First admin user" note below):
+### Local login
+
+On backend boot, `UserService.onModuleInit` seeds an admin **into the `users` table** from env (no-op if that
+email already exists). Defaults from `apps/backend/.env.example.rc`:
+
+| Field | Value |
+| --- | --- |
+| Email | `superadmin@superadmin.com` (`${SUPERADMIN_USERNAME}@superadmin.com`) |
+| Password | `SUPERADMIN_PASSWORD` (default `password`) |
+| Roles | `admin` |
+
+Use that pair for both:
+
+- Staff UI at http://localhost:3000 (`POST /auth/jwt/create` → `{ access }`; refresh token is an httpOnly
+  `refresh_token` cookie).
+- AdminJS at http://localhost:8000/admin (same env pair, **or** any `users` row with role `admin`).
+
+`POST /users` is admin-only and requires a `roles` array. Valid roles used in the app: `admin`, `ncdm`,
+`pcdm`. `admin`/`ncdm` see all provinces; `pcdm` **must** have a `province` or Kobo queries fail.
 
 ```sh
 TOKEN=$(curl -s --request POST --url http://localhost:8000/auth/jwt/create \
   --header 'Content-Type: application/json' \
-  --data '{"email":"<an-existing-admin-email>","password":"<their-password>"}' \
+  --data '{"email":"superadmin@superadmin.com","password":"password"}' \
   | python3 -c "import sys,json; print(json.load(sys.stdin)['access'])")
 
 curl --request POST \
@@ -92,27 +115,13 @@ curl --request POST \
   "name": "username",
   "email": "username@email.com",
   "password": "password",
-  "roles": ["user"]
+  "roles": ["ncdm"]
 }'
 ```
 
-**First admin user:** the `SUPERADMIN_USERNAME`/`SUPERADMIN_PASSWORD` env vars only log you into the AdminJS
-back-office at `/admin` — they don't correspond to a row in the `users` table, so they can't get you a JWT via
-`/auth/jwt/create`. To create your first real admin user for local dev, either use the AdminJS UI at
-`http://localhost:8000/admin`, or insert one directly, e.g.:
-
-```sh
-# from apps/backend, with the local Postgres container running
-node -e "require('bcrypt').hash('password', 10).then(console.log)"
-# then, using the hash printed above:
-docker compose exec db psql -U nestjs -d api -c \
-  "INSERT INTO users (name, password, email, roles) VALUES ('Local Admin', '<hash>', 'admin@example.com', ARRAY['admin']);"
-```
-
-**Note:** the backend's `ALLOWED_HOST` env var (in `apps/backend/.env.rc`) must match the origin the frontend
-actually runs on (CORS is enforced in `apps/backend/src/main.ts`) — if you run the frontend on a non-default
-port (e.g. because `3000` is already taken by another project), update `ALLOWED_HOST` to match, e.g.
-`http://localhost:3001`.
+CORS is set in `apps/backend/src/main.ts` from `ALLOWED_HOST` (default `http://localhost:3000`) plus surge
+preview and `*.dmp.ovio.org` regexes. If the frontend runs on a non-default port, update `ALLOWED_HOST` in
+`apps/backend/.env.rc` to match, e.g. `http://localhost:3001`.
 
 ## Common root scripts
 
