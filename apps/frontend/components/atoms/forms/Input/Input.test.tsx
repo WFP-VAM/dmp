@@ -1,7 +1,6 @@
 import { act, render } from '@testing-library/react';
-import { axe } from 'jest-axe';
-
 import { EyeClosed } from 'components/atoms/icons';
+import { axe } from 'jest-axe';
 
 import { Input } from './Input';
 
@@ -18,7 +17,12 @@ it.each([
   ],
   [
     'Input withIcon',
-    <Input id="withIcon" key="withIcon" label="A label" startIcon={<EyeClosed />} />,
+    <Input
+      id="withIcon"
+      key="withIcon"
+      label="A label"
+      startIcon={<EyeClosed />}
+    />,
   ],
   [
     'Input withPlaceholder',
