@@ -16,6 +16,8 @@ import { DisasterType, KoboCommonKeys } from '@wfp-dmp/interfaces';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { formatVillageListWithOverflow } from './formatVillageList';
+
 interface GetColumnSetupParams {
   field: string;
   disaster: DisasterType | 'COMMON';
@@ -129,19 +131,25 @@ const getLocationCountColumnSetup = (
             return formattedList ?? [];
           },
           renderCell: (params: GridRenderCellParams) => {
-            const displayLabel = (params.value as string[]).join(', ');
+            const villageNames = params.value as string[];
+            const displayLabel = villageNames.join(', ');
+            const printLabel = formatVillageListWithOverflow(villageNames);
 
             return (
               <Tooltip title={displayLabel} arrow>
-                <div
-                  style={{
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                    textAlign: 'left',
-                  }}
-                >
-                  {displayLabel}
+                <div>
+                  <div
+                    className="village-list-screen"
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      textAlign: 'left',
+                    }}
+                  >
+                    {displayLabel}
+                  </div>
+                  <div className="village-list-print">{printLabel}</div>
                 </div>
               </Tooltip>
             );

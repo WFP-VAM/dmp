@@ -21,6 +21,7 @@ import CustomToolMenu from 'utils/CustomToolMenu';
 import {
   getMaxBandContentWidth,
   getPrintScale,
+  PRINT_VILLAGE_COLUMN_PRINT_WIDTH,
   shouldUseColumnBands,
   splitColumnsForPrint,
 } from 'utils/printLayout';
@@ -76,6 +77,7 @@ export const DisasterTable = ({
   columnHeaderHeight = 'large',
   getRowClassName,
   aggregateRowFilter,
+  isFirstTable,
 }: DisasterTableProps): JSX.Element => {
   const theme = useTheme();
   const outerRef = React.useRef<HTMLDivElement>(null);
@@ -172,6 +174,13 @@ export const DisasterTable = ({
         };
       }
 
+      if (isPrinting && column.field === 'village') {
+        return {
+          ...column,
+          width: PRINT_VILLAGE_COLUMN_PRINT_WIDTH,
+        };
+      }
+
       return column;
     });
 
@@ -193,7 +202,7 @@ export const DisasterTable = ({
     }
 
     return _updatedColumns;
-  }, [columns, hasGroups]);
+  }, [columns, hasGroups, isPrinting]);
 
   const {
     data: extendedData,
@@ -325,19 +334,22 @@ export const DisasterTable = ({
               // Short themed tables flow naturally; category (disaster type)
               // breaks are handled at the report level.
               const needsPageBreak = bandIndex > 0 || chunkIndex > 0;
+              const printTopPadding =
+                isFirstTable === false || needsPageBreak ? '2rem' : 0;
 
               return (
                 <React.Fragment key={`${bandIndex}-${chunkIndex}`}>
-                  {needsPageBreak && (
-                    <Box sx={{ pageBreakBefore: 'always', height: '20px' }} />
-                  )}
+                  {needsPageBreak && <Box sx={{ pageBreakBefore: 'always' }} />}
                   <Stack
                     direction="row"
                     position="relative"
-                    m={2}
-                    mt={0}
                     sx={{
+                      m: 2,
+                      mt: 0,
                       '@media print': {
+                        m: 0,
+                        pl: '2rem',
+                        pt: printTopPadding,
                         breakInside: 'avoid',
                         pageBreakInside: 'avoid',
                       },
@@ -347,7 +359,6 @@ export const DisasterTable = ({
                     <Box
                       sx={{
                         '@media print': {
-                          minWidth: '2rem',
                           minHeight: theme.spacing(4),
                         },
                       }}
@@ -364,7 +375,7 @@ export const DisasterTable = ({
                             right: 0,
                             top: 0,
                             '@media print': {
-                              right: '2rem',
+                              right: 0,
                             },
                           }}
                         />
@@ -376,16 +387,23 @@ export const DisasterTable = ({
                           left: 0,
                           top: 0,
                           '@media print': {
-                            left: '2rem',
+                            left: 0,
                           },
                         }}
                       />
                     )}
-                    <Box sx={{ width: band.width, minWidth: band.width }}>
+                    <Box
+                      sx={{
+                        width: band.width,
+                        minWidth: band.width,
+                        '@media print': {
+                          zoom: scaleFactor,
+                        },
+                      }}
+                    >
                       <DataGrid
                         sx={{
                           '@media print': {
-                            zoom: scaleFactor,
                             '& .MuiDataGrid-columnHeader': {
                               fontSize: '0.65rem',
                               padding: '4px 0px 4px 4px',
@@ -504,7 +522,6 @@ export const DisasterTable = ({
                     <Box
                       sx={{
                         '@media print': {
-                          minWidth: '2rem',
                           minHeight: '100%',
                         },
                       }}

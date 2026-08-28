@@ -28,7 +28,6 @@ export const PrintFooter = (): JSX.Element => {
           display: 'flex',
           flexDirection: 'column',
           padding: '2rem',
-          pageBreakBefore: 'always',
           pageBreakInside: 'avoid',
         },
         '@media screen': {
