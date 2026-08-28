@@ -350,6 +350,44 @@ export const wrapGroupAsTitle = ({
 
 export const TOTAL_ROW_ID = 'total-row';
 
+type TotalRowLike = { id?: unknown };
+
+const isTotalRow = (row: unknown): row is TotalRowLike =>
+  typeof row === 'object' &&
+  row !== null &&
+  (row as TotalRowLike).id === TOTAL_ROW_ID;
+
+/**
+ * CSV/Excel export uses valueGetter + valueFormatter, not renderCell.
+ * Location getters rebuild province-district-commune and overwrite the Total label.
+ */
+export const withTotalRowFirstColumnExport = (
+  column: GridColDef,
+  totalLabel: string,
+): GridColDef => ({
+  ...column,
+  valueGetter: (value, row, columnDef, apiRef) => {
+    if (isTotalRow(row)) {
+      return totalLabel;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return column.valueGetter
+      ? column.valueGetter(value, row, columnDef, apiRef)
+      : value;
+  },
+  valueFormatter: (value, row, columnDef, apiRef) => {
+    if (isTotalRow(row)) {
+      return totalLabel;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return column.valueFormatter
+      ? column.valueFormatter(value, row, columnDef, apiRef)
+      : value;
+  },
+});
+
 type UseAggregatedRowParams<R extends Record<string, unknown>> = {
   data: R[];
   columns: GridColDef[];
@@ -376,6 +414,7 @@ export const useAggregatedRow = <
   rowFilter = () => true,
 }: UseAggregatedRowParams<R>) => {
   const intl = useIntl();
+  const totalLabel = intl.formatMessage({ id: 'table.COMMON.total' });
 
   const filteredData = data.filter(rowFilter);
 
@@ -406,23 +445,26 @@ export const useAggregatedRow = <
     aggregatedRow[KoboCommonKeys.village] = Array.from(
       new Set(aggregatedRow[KoboCommonKeys.village] as string[]),
     );
-    aggregatedRow[columns[0].field] = intl.formatMessage({
-      id: 'table.COMMON.total',
-    });
+    aggregatedRow[columns[0].field] = totalLabel;
   }
 
   // Update column add custom sort to keep total on top & override first column cell
-  const updatedColumns = columns.map((col, i) => ({
-    ...col,
-    getSortComparator: getTotalRowComparatorFactory(col.sortComparator),
-    ...(i === 0 && {
-      renderCell: (params: GridRenderCellParams<R>) =>
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        params.id === TOTAL_ROW_ID
-          ? intl.formatMessage({ id: 'table.COMMON.total' })
-          : col.renderCell?.(params) ?? params.value,
-    }),
-  }));
+  const updatedColumns = columns.map((col, i) => {
+    const columnWithExport =
+      i === 0 ? withTotalRowFirstColumnExport(col, totalLabel) : col;
+
+    return {
+      ...columnWithExport,
+      getSortComparator: getTotalRowComparatorFactory(col.sortComparator),
+      ...(i === 0 && {
+        renderCell: (params: GridRenderCellParams<R>) =>
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          params.id === TOTAL_ROW_ID
+            ? totalLabel
+            : col.renderCell?.(params) ?? params.value,
+      }),
+    };
+  });
 
   const updatedGetRowId = (row: R) =>
     row.id === TOTAL_ROW_ID ? TOTAL_ROW_ID : getRowId?.(row) ?? '';
