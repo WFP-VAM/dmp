@@ -148,7 +148,8 @@
     "data": "Data",
     "summary": "Summary",
     "all_columns": "Detailed",
-    "level": "Level"
+    "level": "Level",
+    "print_too_large": "This report is too large to print (~{pages} pages, limit {limit}). Narrow the location or date range, or download CSV from the table menu."
   },
   "charts_page": {
     "update": "Update",

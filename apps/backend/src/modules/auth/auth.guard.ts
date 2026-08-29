@@ -11,8 +11,11 @@ export class CustomAuthGuard extends AuthGuard('jwt') {
   }
 
   canActivate(context: ExecutionContext): boolean {
-    const request = context.switchToHttp().getRequest<{ url?: string }>();
-    const path = request.url?.split('?')[0] ?? '';
+    const request = context.switchToHttp().getRequest<{
+      url?: string;
+      originalUrl?: string;
+    }>();
+    const path = (request.originalUrl ?? request.url)?.split('?')[0] ?? '';
 
     if (path.startsWith('/admin')) {
       return true;

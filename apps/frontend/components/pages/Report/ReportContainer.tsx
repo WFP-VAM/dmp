@@ -1,9 +1,16 @@
 import PrintIcon from '@mui/icons-material/Print';
-import { IconButton, Skeleton, Stack, useTheme } from '@mui/material';
+import {
+  IconButton,
+  Skeleton,
+  Stack,
+  Tooltip,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { DisasterMapping } from '@wfp-dmp/interfaces';
 import dayjs from 'dayjs';
 import { useMemo, useRef, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useReactToPrint } from 'react-to-print';
 
 import {
@@ -18,6 +25,8 @@ import { Report } from 'components/Report/Report';
 import { useGetForms } from 'services/api/kobo/useGetForms';
 import { colors } from 'theme/muiTheme';
 import { dropNotApproved } from 'utils/dropNotApproved';
+import { estimateReportPrintPages } from 'utils/estimateReportPrintPages';
+import { MAX_PRINT_PAGES } from 'utils/printLayout';
 
 const defaultSearchReportData: SearchFormData = {
   disTyps: [DisasterMapping['flood']],
@@ -34,6 +43,7 @@ const defaultSearchReportData: SearchFormData = {
 
 export const ReportContainer = () => {
   const theme = useTheme();
+  const intl = useIntl();
   const [searchReportData, setSearchReportData] = useState(
     defaultSearchReportData,
   );
@@ -48,10 +58,31 @@ export const ReportContainer = () => {
     return formsData !== undefined ? dropNotApproved(formsData) : [];
   }, [formsData]);
 
+  const printPageCount = useMemo(
+    () =>
+      estimateReportPrintPages(
+        filteredFormsData,
+        isCommuneLevelReport,
+        isAllColumnReport,
+      ),
+    [filteredFormsData, isCommuneLevelReport, isAllColumnReport],
+  );
+  const printBlocked = printPageCount > MAX_PRINT_PAGES;
+  const printBlockedReason = printBlocked
+    ? intl.formatMessage(
+        { id: 'report_page.print_too_large' },
+        { pages: printPageCount, limit: MAX_PRINT_PAGES },
+      )
+    : '';
+
   const printRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
     onBeforeGetContent: () => {
+      if (printBlocked) {
+        return Promise.resolve();
+      }
+
       setIsPrinting(true);
 
       return new Promise<void>(resolve => {
@@ -66,70 +97,76 @@ export const ReportContainer = () => {
   });
 
   return (
-    <Stack flexDirection="column" gap={theme.spacing(4)} width="100%">
-      <Stack
-        justifyContent="space-between"
-        direction={{ xs: 'column', sm: 'row' }}
-        gap={{ xs: theme.spacing(2), sm: 0 }}
-        alignItems={{ xs: 'stretch', sm: 'center' }}
-      >
-        <SearchFilters
-          initSearchFormData={searchReportData}
-          setSearchFormData={setSearchReportData}
-          submitButtonContent={
-            <FormattedMessage
-              id="report_page.showReport"
-              defaultMessage="Show Report"
+    <Stack
+      flexDirection="column"
+      gap={theme.spacing(4)}
+      width="100%"
+      minWidth={0}
+    >
+      <SearchFilters
+        initSearchFormData={searchReportData}
+        setSearchFormData={setSearchReportData}
+        submitButtonContent={
+          <FormattedMessage
+            id="report_page.showReport"
+            defaultMessage="Show Report"
+          />
+        }
+        extraFilters={
+          <Stack direction="row" flexWrap="wrap" gap={theme.spacing(1)}>
+            <LabelSwitch
+              label="report_page.data"
+              value={isAllColumnReport}
+              onChange={(event, checked) => {
+                setIsAllColumnReport(checked);
+              }}
+              labelUncheck="report_page.summary"
+              labelCheck="report_page.all_columns"
             />
-          }
-          extraFilters={
-            <>
-              <LabelSwitch
-                label="report_page.data"
-                value={isAllColumnReport}
-                onChange={(event, checked) => {
-                  setIsAllColumnReport(checked);
+            <LabelSwitch
+              label="report_page.level"
+              value={isCommuneLevelReport}
+              onChange={(event, checked) => {
+                setIsCommuneLevelReport(checked);
+              }}
+              labelUncheck="common.province"
+              labelCheck="common.commune"
+            />
+          </Stack>
+        }
+        topRight={
+          <Tooltip title={printBlockedReason}>
+            <span>
+              <IconButton
+                onClick={handlePrint}
+                disabled={printBlocked}
+                aria-label={printBlocked ? printBlockedReason : undefined}
+                style={{
+                  border: `1px solid ${colors.color3}`,
+                  borderRadius: '4px',
+                  aspectRatio: 1,
+                  height: '2.5rem',
+                  color: colors.color3,
                 }}
-                labelUncheck="report_page.summary"
-                labelCheck="report_page.all_columns"
-              />
-              <LabelSwitch
-                label="report_page.level"
-                value={isCommuneLevelReport}
-                onChange={(event, checked) => {
-                  setIsCommuneLevelReport(checked);
-                }}
-                labelUncheck="common.province"
-                labelCheck="common.commune"
-              />
-            </>
-          }
-        />
-        <Stack
-          direction="row"
-          spacing={1}
-          sx={{ alignSelf: { xs: 'flex-start', sm: 'auto' } }}
-        >
-          <IconButton
-            onClick={handlePrint}
-            style={{
-              border: `1px solid ${colors.color3}`,
-              borderRadius: '4px',
-              aspectRatio: 1,
-              height: '2.5rem',
-              color: colors.color3,
-            }}
-          >
-            <PrintIcon />
-          </IconButton>
-        </Stack>
-      </Stack>
+              >
+                <PrintIcon />
+              </IconButton>
+            </span>
+          </Tooltip>
+        }
+      />
+      {printBlocked && (
+        <Typography color="warning.main" maxWidth={560}>
+          {printBlockedReason}
+        </Typography>
+      )}
 
       {isLoading && (
         <Skeleton
           variant="rounded"
           sx={{
-            minWidth: { xs: '100%', sm: 800 },
+            minWidth: 0,
+            width: '100%',
             minHeight: { xs: 300, sm: 400 },
             mt: { xs: 2, sm: 5 },
           }}

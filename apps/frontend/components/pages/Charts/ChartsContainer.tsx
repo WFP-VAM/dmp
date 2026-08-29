@@ -141,9 +141,11 @@ export const ChartsContainer = () => {
     <Stack flexDirection="column" gap={theme.spacing(4)} width="100%">
       <Stack
         justifyContent="space-between"
-        direction={{ xs: 'column', sm: 'row' }}
-        gap={{ xs: theme.spacing(2), sm: 0 }}
-        alignItems={{ xs: 'stretch', sm: 'center' }}
+        direction="row"
+        flexWrap="wrap"
+        gap={theme.spacing(2)}
+        alignItems="flex-start"
+        width="100%"
       >
         <SearchFilters
           initSearchFormData={searchReportData}
@@ -162,7 +164,10 @@ export const ChartsContainer = () => {
             height: '2.5rem',
             color: colors.color3,
           }}
-          sx={{ alignSelf: { xs: 'flex-start', sm: 'auto' } }}
+          sx={{
+            alignSelf: 'flex-start',
+            flexShrink: 0,
+          }}
         >
           <PrintIcon />
         </IconButton>
@@ -172,7 +177,8 @@ export const ChartsContainer = () => {
         <Skeleton
           variant="rounded"
           sx={{
-            minWidth: { xs: '100%', sm: 800 },
+            minWidth: 0,
+            width: '100%',
             minHeight: { xs: 300, sm: 400 },
             mt: { xs: 2, sm: 5 },
           }}

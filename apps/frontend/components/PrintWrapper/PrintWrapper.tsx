@@ -1,6 +1,8 @@
 import { Box, GlobalStyles } from '@mui/material';
 import { createContext, MutableRefObject, ReactNode, useContext } from 'react';
 
+import { PRINT_PAGE_MARGIN_MM } from 'utils/printLayout';
+
 // Create the context
 const PrintContext = createContext<boolean | undefined>(undefined);
 
@@ -25,6 +27,7 @@ const printStyles = (
       },
       '@page': {
         size: 'A4 landscape',
+        margin: `${PRINT_PAGE_MARGIN_MM}mm`,
       },
     }}
   />

@@ -79,7 +79,7 @@ export const RegionFilters = ({
   );
 
   return (
-    <Stack direction="row" gap={theme.spacing(1)} height="100%">
+    <Stack direction="row" flexWrap="wrap" gap={theme.spacing(1)}>
       <FormControl>
         <MultiSelect
           value={value.province}

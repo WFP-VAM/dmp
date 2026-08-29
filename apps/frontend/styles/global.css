@@ -47,6 +47,24 @@ body {
   }
 }
 
+.village-list-print {
+  display: none;
+}
+
+@media print {
+  .village-list-screen {
+    display: none !important;
+  }
+
+  .village-list-print {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+  }
+}
+
 /*
   Typographic tweaks!
   4. Add accessible line-height
@@ -77,6 +95,7 @@ canvas,
 svg {
   display: block;
   max-width: 100%;
+  height: auto;
 }
 
 /*
