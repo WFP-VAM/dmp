@@ -148,6 +148,8 @@ const NavBarButtons = () => {
       direction="row"
       justifyContent="center"
       alignItems="center"
+      flexWrap="wrap"
+      flexShrink={0}
       gap={{ xs: theme.spacing(1), sm: theme.spacing(2), md: theme.spacing(4) }}
       marginRight={{ xs: 0.5, sm: 1 }}
     >

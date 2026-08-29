@@ -22,7 +22,7 @@ export const DateRangeFilter = ({ value, onChange }: IProps): JSX.Element => {
   const [endOpen, setEndOpen] = useState(false);
 
   return (
-    <Stack direction="row" gap={theme.spacing(1)}>
+    <Stack direction="row" flexWrap="nowrap" gap={theme.spacing(1)}>
       <DatePicker
         sx={{
           width: 140,

@@ -46,6 +46,16 @@ export const COLUMN_BAND_MIN_WIDTH = PRINTABLE_WIDTH_PX / MIN_PRINT_SCALE;
 /** Narrower Villages Reported column when printing compact "+N" labels. */
 export const PRINT_VILLAGE_COLUMN_PRINT_WIDTH = 140;
 
+/** Print row chunks. Must match DisasterTable print paging. */
+export const PRINT_ROWS_PER_CHUNK = 25;
+
+/**
+ * Guard for `window.print` / react-to-print.
+ * Counts print blocks (tables × column bands × row chunks), which tracks A4
+ * landscape pages for detailed reports. Raise or lower this number to retune.
+ */
+export const MAX_PRINT_PAGES = 25;
+
 export const getPrintScale = (contentWidth: number): number => {
   if (contentWidth <= PRINTABLE_WIDTH_PX) {
     return 1;

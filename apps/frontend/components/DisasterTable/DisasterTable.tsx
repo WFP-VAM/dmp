@@ -21,6 +21,7 @@ import CustomToolMenu from 'utils/CustomToolMenu';
 import {
   getMaxBandContentWidth,
   getPrintScale,
+  PRINT_ROWS_PER_CHUNK,
   PRINT_VILLAGE_COLUMN_PRINT_WIDTH,
   shouldUseColumnBands,
   splitColumnsForPrint,
@@ -278,7 +279,7 @@ export const DisasterTable = ({
     return [singleBand];
   }, [isPrinting, totalWidth, updatedColumns, updatedColumnGroup]);
 
-  const rowsPerPage = isPrinting ? 25 : extendedData.length;
+  const rowsPerPage = isPrinting ? PRINT_ROWS_PER_CHUNK : extendedData.length;
   const dataChunks = useMemo(() => {
     return isPrinting ? chunk(extendedData, rowsPerPage) : [extendedData];
   }, [isPrinting, extendedData, rowsPerPage]);
