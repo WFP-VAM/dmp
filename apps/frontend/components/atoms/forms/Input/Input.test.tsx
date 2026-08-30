@@ -18,7 +18,12 @@ it.each([
   ],
   [
     'Input withIcon',
-    <Input id="withIcon" key="withIcon" label="A label" icon={<EyeClosed />} />,
+    <Input
+      id="withIcon"
+      key="withIcon"
+      label="A label"
+      startIcon={<EyeClosed />}
+    />,
   ],
   [
     'Input withPlaceholder',

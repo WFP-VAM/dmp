@@ -14,6 +14,8 @@ if (koboToken === undefined) {
     HttpModule.register({
       headers: { authorization: `Token ${koboToken}` },
       baseURL: 'https://eu.kobotoolbox.org/api/v2/',
+      // Avoid HTTP(S)_PROXY (e.g. 127.0.0.1:7890) when proxy app is off — common local dev failure
+      proxy: false,
       paramsSerializer: (params) => {
         // Kobo API expects the 'query' parameter as a JSON-encoded string
         // Handle 'query' specially: if it's an object, JSON stringify it; if it's already a string, use it as-is

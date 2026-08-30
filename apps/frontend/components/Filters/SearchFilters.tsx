@@ -1,5 +1,4 @@
-import EastIcon from '@mui/icons-material/East';
-import { Button, Stack, Typography, useTheme } from '@mui/material';
+import { Stack, Typography, useTheme } from '@mui/material';
 import {
   Dispatch,
   SetStateAction,
@@ -14,56 +13,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { DateRangeFilter } from './DateRangeFilter';
 import { DisasterFilter } from './DisasterFilter';
 import { RegionFilters } from './RegionFilters';
+import { SubmitButton } from './SubmitButton';
 import { isFormDataEqual } from './searchFormUtils';
 import { SearchFormData } from './types';
 
 export type { SearchFormData };
-
-interface SubmitButtonProps {
-  isDirty: boolean;
-  submitButtonContent: JSX.Element;
-  hideDisasterFilter: boolean;
-  intl: ReturnType<typeof useIntl>;
-}
-
-const SubmitButton = ({
-  isDirty,
-  submitButtonContent,
-  hideDisasterFilter,
-  intl,
-}: SubmitButtonProps): JSX.Element => (
-  <Button
-    sx={{
-      color: isDirty ? 'white' : 'black',
-      padding: 1,
-      height: '2.5rem',
-      ml: hideDisasterFilter ? 0 : 2,
-      backgroundColor: isDirty
-        ? 'var(--color_buttons_2, #d32f2f)'
-        : 'var(--color_buttons_1)',
-      '&:hover': {
-        backgroundColor: isDirty
-          ? 'var(--color_buttons_2, #d32f2f)'
-          : 'var(--color_buttons_1)',
-        opacity: isDirty ? 0.9 : 0.7,
-      },
-      transition: 'all 0.2s ease-in-out',
-      boxShadow: isDirty ? '0 2px 8px rgba(211, 47, 47, 0.3)' : 'none',
-    }}
-    type="submit"
-    title={
-      isDirty
-        ? intl.formatMessage({
-            id: 'validation_search_params.filters_changed',
-            defaultMessage: 'Filters have changed. Click to update results.',
-          })
-        : undefined
-    }
-  >
-    {submitButtonContent}
-    {<EastIcon style={{ marginLeft: 6, marginBottom: 2 }} />}
-  </Button>
-);
 
 interface SearchFiltersProps {
   initSearchFormData: SearchFormData;
@@ -71,6 +25,7 @@ interface SearchFiltersProps {
   submitButtonContent: JSX.Element;
   hideDisasterFilter?: boolean;
   extraFilters?: JSX.Element;
+  topRight?: JSX.Element;
   /**
    * If true, automatically submits the form when disaster type changes
    * @default false
@@ -84,6 +39,7 @@ export const SearchFilters = ({
   submitButtonContent,
   hideDisasterFilter = false,
   extraFilters,
+  topRight,
   autoSubmitOnDisasterChange = false,
 }: SearchFiltersProps): JSX.Element => {
   const theme = useTheme();
@@ -159,72 +115,95 @@ export const SearchFilters = ({
     <form
       ref={formRef}
       onSubmit={handleSubmit(submitHandler)}
-      style={{ width: 'fit-content' }}
+      style={{ width: '100%', minWidth: 0, maxWidth: '100%' }}
     >
-      <Stack direction="column" gap={theme.spacing(2)} paddingLeft={2}>
-        <Stack direction="row" gap={theme.spacing(5)}>
-          <Stack direction="row" gap={theme.spacing(2)} alignItems="center">
-            <Typography>
-              <FormattedMessage id="validation_search_params.location" />
-            </Typography>
-
-            <Controller
-              name="region"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <RegionFilters value={value} onChange={onChange} />
-              )}
-            />
+      <Stack
+        direction="row"
+        flexWrap="wrap"
+        alignItems="flex-start"
+        justifyContent="space-between"
+        gap={theme.spacing(2)}
+        paddingLeft={2}
+      >
+        <Stack direction="column" gap={theme.spacing(2)} minWidth={0} flex={1}>
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            gap={theme.spacing(2)}
+            alignItems="center"
+          >
+            <Stack
+              direction="row"
+              flexWrap="wrap"
+              gap={theme.spacing(2)}
+              alignItems="center"
+            >
+              <Typography>
+                <FormattedMessage id="validation_search_params.location" />
+              </Typography>
+              <Controller
+                name="region"
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <RegionFilters value={value} onChange={onChange} />
+                )}
+              />
+            </Stack>
+            <Stack
+              direction="row"
+              flexWrap="nowrap"
+              gap={theme.spacing(2)}
+              alignItems="center"
+              flexShrink={0}
+            >
+              <Typography noWrap>
+                {intl.formatMessage({
+                  id: 'validation_search_params.date_range',
+                })}
+              </Typography>
+              <Controller
+                name="dateRange"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <DateRangeFilter value={value} onChange={onChange} />
+                )}
+              />
+            </Stack>
           </Stack>
-
-          <Stack direction="row" gap={theme.spacing(2)} alignItems="center">
-            <Typography>
-              {intl.formatMessage({
-                id: 'validation_search_params.date_range',
-              })}
-            </Typography>
-            <Controller
-              name="dateRange"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <DateRangeFilter value={value} onChange={onChange} />
-              )}
-            />
-          </Stack>
-          {hideDisasterFilter && (
-            <SubmitButton
-              isDirty={isDirty}
-              submitButtonContent={submitButtonContent}
-              hideDisasterFilter={hideDisasterFilter}
-              intl={intl}
-            />
+          {!hideDisasterFilter && (
+            <Stack
+              direction="row"
+              flexWrap="wrap"
+              alignItems="center"
+              gap={theme.spacing(2)}
+            >
+              <Controller
+                name={'disTyps'}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <DisasterFilter value={value} onChange={onChange} />
+                )}
+              />
+              {extraFilters}
+            </Stack>
           )}
         </Stack>
         <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
+          direction="column"
+          alignItems="flex-end"
+          alignSelf="stretch"
+          justifyContent={topRight != null ? 'space-between' : 'flex-end'}
+          gap={theme.spacing(2)}
+          flexShrink={0}
+          ml="auto"
         >
-          {!hideDisasterFilter && (
-            <>
-              <Stack direction="row" alignItems="center" gap={theme.spacing(3)}>
-                <Controller
-                  name={'disTyps'}
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <DisasterFilter value={value} onChange={onChange} />
-                  )}
-                />
-                {extraFilters}
-              </Stack>
-              <SubmitButton
-                isDirty={isDirty}
-                submitButtonContent={submitButtonContent}
-                hideDisasterFilter={hideDisasterFilter}
-                intl={intl}
-              />
-            </>
-          )}
+          {topRight}
+          <SubmitButton
+            isDirty={isDirty}
+            submitButtonContent={submitButtonContent}
+            hideDisasterFilter={hideDisasterFilter}
+            intl={intl}
+          />
         </Stack>
       </Stack>
     </form>

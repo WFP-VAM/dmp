@@ -92,7 +92,8 @@
     "reject": "Reject Report",
     "submit": "Submit",
     "edit": "Edit Report",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "action_error": "Unable to update this form. Please try again."
   },
   "disasters": {
     "FLOOD": "Flood",
@@ -147,7 +148,8 @@
     "data": "Data",
     "summary": "Summary",
     "all_columns": "Detailed",
-    "level": "Level"
+    "level": "Level",
+    "print_too_large": "This report is too large to print (~{pages} pages, limit {limit}). Narrow the location or date range, or download CSV from the table menu."
   },
   "charts_page": {
     "update": "Update",

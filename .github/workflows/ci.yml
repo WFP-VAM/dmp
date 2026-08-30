@@ -114,8 +114,16 @@ jobs:
 
   frontend_build_and_deploy:
     if: github.event_name == 'pull_request'
+    concurrency:
+      group: gh-pages-deploy
+      cancel-in-progress: false
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     env:
+      pages_base_path: /dmp/pr-${{ github.event.pull_request.number }}
+      pages_url: https://wfp-vam.github.io/dmp/pr-${{ github.event.pull_request.number }}/
       surge_url: wfp-dmp-${{ github.event.pull_request.number }}.surge.sh
     steps:
       - uses: actions/checkout@v3
@@ -139,11 +147,11 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Clean build folder
         run: rm -rf apps/frontend/out
-      - name: Build Interfaces & Frontend
+      - name: Build for Surge
         run: pnpm turbo build
         env:
           NEXT_PUBLIC_API_BASE_URL: https://staging-api.dmp.ovio.org
-      - name: Export to static HTML
+      - name: Export for Surge
         run: |
           cd apps/frontend
           ./gen_env.sh staging
@@ -156,6 +164,33 @@ jobs:
           project: 'apps/frontend/out/.'
           login: ${{ secrets.surge_login }}
           token: ${{ secrets.surge_token }}
+      - name: Clean build folder for GitHub Pages
+        run: rm -rf apps/frontend/out
+      - name: Build for GitHub Pages
+        run: pnpm turbo build
+        env:
+          NEXT_PUBLIC_API_BASE_URL: https://staging-api.dmp.ovio.org
+          NEXT_PUBLIC_BASE_PATH: ${{ env.pages_base_path }}
+      - name: Export for GitHub Pages
+        run: |
+          cd apps/frontend
+          ./gen_env.sh staging
+          cd out
+          cp index.html 404.html
+          touch .nojekyll
+      - name: Prepare GitHub Pages deploy folder
+        run: |
+          pr_dir="gh-pages-deploy/pr-${{ github.event.pull_request.number }}"
+          rm -rf gh-pages-deploy
+          mkdir -p "$pr_dir"
+          cp -r apps/frontend/out/. "$pr_dir/"
+          touch gh-pages-deploy/.nojekyll
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: gh-pages-deploy
+          branch: gh-pages
+          clean: false
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%S')"
@@ -165,5 +200,11 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           message: |
-            Build succeeded and deployed at https://${{ env.surge_url }} 
+            Build succeeded and deployed:
+
+            - **GitHub Pages:** ${{ env.pages_url }}
+            - **Surge (deprecated):** https://${{ env.surge_url }}
+
             (hash ${{ github.event.pull_request.head.sha }} deployed at ${{ steps.date.outputs.date }})
+
+            > Surge is deprecated and will be removed once backend CORS changes are deployed to staging. Use GitHub Pages for preview; Surge remains available until then.

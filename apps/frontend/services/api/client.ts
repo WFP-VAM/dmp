@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { create } from 'axios';
 import createAuthRefreshInterceptor, {
   AxiosAuthRefreshRequestConfig,
 } from 'axios-auth-refresh';
@@ -26,7 +26,7 @@ const REQUEST_TIMEOUT_MS = 30000;
 let isRefreshing = false;
 let refreshPromise: Promise<void> | null = null;
 
-export const apiClient = axios.create({
+export const apiClient = create({
   baseURL: apiBaseUrl,
   withCredentials: true,
   timeout: REQUEST_TIMEOUT_MS,
@@ -94,7 +94,7 @@ const clearAuthState = async (): Promise<void> => {
 
   // Try to clear the refresh token cookie via logout endpoint
   // Use a separate axios instance to avoid interceptor loops
-  const logoutClient = axios.create({
+  const logoutClient = create({
     baseURL: apiBaseUrl,
     withCredentials: true,
     timeout: 5000, // Shorter timeout for logout

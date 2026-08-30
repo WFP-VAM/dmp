@@ -18,8 +18,6 @@ import {
 
 import { KoboService } from './kobo.service';
 
-const AuthorizedPatchOrigin = /^https:\/\/([a-zA-Z0-9-]+\.)?dmp\.ovio\.org(\/.*)?$/;
-
 @Controller('kobo')
 export class KoboController {
   constructor(private readonly koboService: KoboService) {}
@@ -75,7 +73,7 @@ export class KoboController {
   }
 
   @Patch('form/validationStatus')
-  @OriginGuard(AuthorizedPatchOrigin)
+  @OriginGuard()
   async patchValidationStatus(
     @Body() body: PatchValidationStatusDto,
   ): Promise<ValidationStatusDto> {
@@ -90,7 +88,7 @@ export class KoboController {
   }
 
   @Patch(`form/${FLOOD}/:id`)
-  @OriginGuard(AuthorizedPatchOrigin)
+  @OriginGuard()
   async patchFloodForm(
     @Param('id') id: string,
     @Body() body: PatchFloodFormDto,
@@ -101,7 +99,7 @@ export class KoboController {
   }
 
   @Patch(`form/${DROUGHT}/:id`)
-  @OriginGuard(AuthorizedPatchOrigin)
+  @OriginGuard()
   async patchDroughtForm(
     @Param('id') id: string,
     @Body() body: PatchDroughtFormDto,
@@ -112,7 +110,7 @@ export class KoboController {
   }
 
   @Patch(`form/${INCIDENT}/:id`)
-  @OriginGuard(AuthorizedPatchOrigin)
+  @OriginGuard()
   async patchIncidentForm(
     @Param('id') id: string,
     @Body() body: PatchIncidentFormDto,

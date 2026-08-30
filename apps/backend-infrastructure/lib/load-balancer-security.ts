@@ -242,10 +242,11 @@ export class LoadBalancerSecurity extends Construct {
           },
         },
         // AWS Managed Rules - Admin Protection
+        // Count only: DMP legitimately serves AdminJS at /admin (see issue #247)
         {
           name: 'AWSManagedRulesAdminProtectionRuleSet',
           priority: 6,
-          overrideAction: { none: {} },
+          overrideAction: { count: {} },
           statement: {
             managedRuleGroupStatement: {
               vendorName: 'AWS',
