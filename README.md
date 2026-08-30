@@ -119,9 +119,10 @@ curl --request POST \
 }'
 ```
 
-CORS is set in `apps/backend/src/main.ts` from `ALLOWED_HOST` (default `http://localhost:3000`) plus surge
-preview and `*.dmp.ovio.org` regexes. If the frontend runs on a non-default port, update `ALLOWED_HOST` in
-`apps/backend/.env.rc` to match, e.g. `http://localhost:3001`.
+CORS matchers live in `apps/backend/src/utils/allowedOrigins.ts` (`ALLOWED_HOST`, GH Pages, surge,
+`*.dmp.ovio.org`). Extra `http://localhost` ports are allowed only when `NODE_ENV` is `development` or
+`test`. If the frontend runs on a non-default port in local dev, either rely on that localhost matcher
+or set `ALLOWED_HOST` in `apps/backend/.env.rc` to match, e.g. `http://localhost:3001`.
 
 ## Common root scripts
 

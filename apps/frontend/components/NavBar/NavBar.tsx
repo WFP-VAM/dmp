@@ -55,6 +55,8 @@ export const NavBar = ({ children }: NavBarProps): JSX.Element => {
             }}
             direction="row"
             justifyContent="space-between"
+            alignItems="center"
+            flexWrap="wrap"
             gap={{ xs: 0.5, sm: 1 }}
           >
             <NavBarInfo shrink={shrink} />
