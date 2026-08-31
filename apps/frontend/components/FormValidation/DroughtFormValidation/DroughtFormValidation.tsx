@@ -18,6 +18,7 @@ import { formatFormToRaw } from 'utils/formatFormToRaw';
 import { formatDroughtFields } from 'utils/formatRawToForm';
 import { reloadPage } from 'utils/reloadPage';
 
+import { useShowFormUpdateError } from '../FormUpdateError';
 import FormValidationFooter from '../FormValidationFooter';
 import FormValidationHeader from '../FormValidationHeader';
 import { DroughtFormType } from './DroughtFormType';
@@ -30,6 +31,7 @@ export const DroughtFormValidation = ({
 }): JSX.Element => {
   const theme = useTheme();
   const router = useRouter();
+  const showFormUpdateError = useShowFormUpdateError();
   const { disaster: disasterType, formId: id } = router.query;
 
   const formattedForm = useMemo(
@@ -84,7 +86,7 @@ export const DroughtFormValidation = ({
         }
       } catch (error) {
         setShouldReset(true);
-        console.error(error);
+        showFormUpdateError(error);
       }
     };
     void triggerAndUpdateDefault();

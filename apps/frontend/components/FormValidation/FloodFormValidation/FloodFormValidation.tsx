@@ -17,6 +17,7 @@ import { formatFormToRaw } from 'utils/formatFormToRaw';
 import { formatFloodFields } from 'utils/formatRawToForm';
 import { reloadPage } from 'utils/reloadPage';
 
+import { useShowFormUpdateError } from '../FormUpdateError';
 import FormValidationFooter from '../FormValidationFooter';
 import FormValidationHeader from '../FormValidationHeader';
 import { FloodCheckBoxes } from './FloodCheckBoxes';
@@ -30,6 +31,7 @@ export const FloodFormValidation = ({
 }): JSX.Element => {
   const theme = useTheme();
   const router = useRouter();
+  const showFormUpdateError = useShowFormUpdateError();
   const { disaster: disasterType, formId: id } = router.query;
 
   const formattedForm = useMemo(
@@ -82,7 +84,7 @@ export const FloodFormValidation = ({
         }
       } catch (error) {
         setShouldReset(true);
-        console.error(error);
+        showFormUpdateError(error);
       }
     };
     void triggerAndUpdateDefault();
