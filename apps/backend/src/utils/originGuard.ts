@@ -7,7 +7,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-export const OriginGuard = (regex: RegExp) => {
+import { isAllowedOrigin } from './allowedOrigins';
+
+export const OriginGuard = (isOriginAllowed: (origin: string) => boolean = isAllowedOrigin) => {
   class OriginGuardImpl implements CanActivate {
     canActivate(context: ExecutionContext): boolean {
       if (process.env.NODE_ENV === 'test') {
@@ -18,7 +20,7 @@ export const OriginGuard = (regex: RegExp) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       const origin: string = request.headers.origin ?? '';
 
-      if (origin === '' || !regex.test(origin)) {
+      if (!isOriginAllowed(origin)) {
         throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
       }
 

@@ -24,9 +24,9 @@ const getDisastersPerDate = (
     return [];
   }
 
-  const dateKey = KoboCommonKeys.entryDate;
+  const dateKey = KoboCommonKeys.disasterDate;
   const formattedForms: Array<{
-    [KoboCommonKeys.entryDate]: string;
+    [KoboCommonKeys.disasterDate]: string;
     [KoboCommonKeys.disTyp]?: string;
     [KoboCommonKeys.province]?: string;
     [KoboCommonKeys.district]?: string;
@@ -37,7 +37,7 @@ const getDisastersPerDate = (
       KoboCommonKeys.province,
       KoboCommonKeys.district,
     ]) as {
-      [KoboCommonKeys.entryDate]: string;
+      [KoboCommonKeys.disasterDate]: string;
       [KoboCommonKeys.disTyp]?: string;
       [KoboCommonKeys.province]?: string;
       [KoboCommonKeys.district]?: string;
@@ -70,7 +70,7 @@ const getDisastersPerDate = (
       );
 
       return {
-        entryDate: keyValue,
+        disasterDate: keyValue,
         disTyps: uniq(compact(array.map(disaster => disaster.disTyp))).sort(),
         disTypLocations,
       } as unknown as DisasterPerDate;
@@ -94,7 +94,7 @@ export const HomeTable = ({
   const disastersPerDate = useMemo(() => getDisastersPerDate(forms), [forms]);
   const { language } = useLanguageContext();
 
-  const mostRecentDateString = disastersPerDate[0]?.entryDate as
+  const mostRecentDateString = disastersPerDate[0]?.disasterDate as
     | string
     | undefined;
   const mostRecentDate =
@@ -109,7 +109,7 @@ export const HomeTable = ({
   const formattedMostRecentDate = formatDate(mostRecentDate, 'MM/DD');
 
   const earliestDateString = disastersPerDate[NUMBER_LAST_DAYS - 1]
-    ?.entryDate as string | undefined;
+    ?.disasterDate as string | undefined;
   const formattedEarliestDate =
     earliestDateString !== undefined && formatDate(earliestDateString, 'MM/DD');
 

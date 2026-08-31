@@ -23,13 +23,15 @@ export const Layout = ({
     <>
       <Box
         flexGrow={1}
-        width="100vw"
+        width="100%"
         display="flex"
         flexDirection="column"
         alignItems={alignItems ?? 'left'}
         sx={{
           p: { xs: 0.5, sm: 1 },
           paddingTop: { xs: theme.spacing(3), sm: theme.spacing(5) },
+          minWidth: 0,
+          maxWidth: '100%',
         }}
         style={{ backgroundColor }}
       >
