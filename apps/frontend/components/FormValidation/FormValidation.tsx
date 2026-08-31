@@ -2,6 +2,7 @@ import { DisasterDtoType, isDrought, isFlood } from '@wfp-dmp/interfaces';
 
 import { DroughtFormValidation } from './DroughtFormValidation/DroughtFormValidation';
 import { FloodFormValidation } from './FloodFormValidation/FloodFormValidation';
+import { FormUpdateErrorProvider } from './FormUpdateError';
 import { IncidentFormValidation } from './IncidentFormValidation/IncidentFormValidation';
 
 export const FormValidation = ({
@@ -9,11 +10,14 @@ export const FormValidation = ({
 }: {
   validationForm: DisasterDtoType;
 }): JSX.Element => {
-  if (isFlood(validationForm))
-    return <FloodFormValidation validationForm={validationForm} />;
+  let form: JSX.Element;
+  if (isFlood(validationForm)) {
+    form = <FloodFormValidation validationForm={validationForm} />;
+  } else if (isDrought(validationForm)) {
+    form = <DroughtFormValidation validationForm={validationForm} />;
+  } else {
+    form = <IncidentFormValidation validationForm={validationForm} />;
+  }
 
-  if (isDrought(validationForm))
-    return <DroughtFormValidation validationForm={validationForm} />;
-
-  return <IncidentFormValidation validationForm={validationForm} />;
+  return <FormUpdateErrorProvider>{form}</FormUpdateErrorProvider>;
 };

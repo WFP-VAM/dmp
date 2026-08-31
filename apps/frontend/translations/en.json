@@ -93,7 +93,8 @@
     "submit": "Submit",
     "edit": "Edit Report",
     "cancel": "Cancel",
-    "action_error": "Unable to update this form. Please try again."
+    "action_error": "Unable to update this form. Please try again.",
+    "write_access_disabled": "The app does not have sufficient Kobo access to update this report."
   },
   "disasters": {
     "FLOOD": "Flood",

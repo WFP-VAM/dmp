@@ -1,6 +1,8 @@
 import { HttpService } from '@nestjs/axios';
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { FLOOD, koboKeys } from '@wfp-dmp/interfaces';
+import { FLOOD, KOBO_WRITE_FORBIDDEN, koboKeys, ValidationStatusValue } from '@wfp-dmp/interfaces';
+import { AxiosError } from 'axios';
 
 import { AssetId } from '../constants';
 import { KoboService } from '../kobo.service';
@@ -180,5 +182,33 @@ describe('KoboService - nested params', () => {
     expect(config.params.query[koboKeys[FLOOD].disasterDate]).toEqual(expect.any(Object));
     expect(httpService.axiosRef.get).toHaveBeenNthCalledWith(2, nextUrl);
     expect(response.results).toEqual([{ _id: 'first-page' }, { _id: 'second-page' }]);
+  });
+
+  it('maps a Kobo 403 on validation status to KOBO_WRITE_FORBIDDEN', async () => {
+    const axiosError = new AxiosError(
+      'Request failed with status code 403',
+      'ERR_BAD_REQUEST',
+      undefined,
+      undefined,
+      {
+        status: 403,
+        statusText: 'Forbidden',
+        data: { detail: 'You do not have permission to perform this action.' },
+        headers: {},
+        config: { headers: {} },
+      } as AxiosError['response'],
+    );
+    (httpService.axiosRef.patch as jest.Mock).mockRejectedValueOnce(axiosError);
+
+    const error = await koboService
+      .patchValidationStatus(FLOOD, '123', ValidationStatusValue.notApproved)
+      .catch((caught: unknown) => caught);
+
+    expect(error).toBeInstanceOf(HttpException);
+    expect((error as HttpException).getStatus()).toBe(HttpStatus.FORBIDDEN);
+    expect((error as HttpException).getResponse()).toMatchObject({
+      code: KOBO_WRITE_FORBIDDEN,
+      message: 'The app does not have sufficient Kobo access to update this report.',
+    });
   });
 });

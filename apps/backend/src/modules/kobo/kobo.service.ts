@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { formatDateToStringDate, substractDaysToDate } from '@utils/date';
 import {
   computeDisasterTypeFromDistTyps,
@@ -13,6 +13,7 @@ import {
   INCIDENT,
   IncidentDto,
   IncidentQueryResponseDto,
+  KOBO_WRITE_FORBIDDEN,
   koboKeys,
   PatchDroughtFormDto,
   PatchFloodFormDto,
@@ -20,6 +21,7 @@ import {
   ValidationStatusDto,
   ValidationStatusValue,
 } from '@wfp-dmp/interfaces';
+import { isAxiosError } from 'axios';
 
 import { AssetId } from './constants';
 
@@ -40,10 +42,51 @@ type GetFormResponse<T> = T extends typeof FLOOD
   : never;
 
 const KOBO_PAGE_LIMIT = 1000;
+const KOBO_INSUFFICIENT_RIGHTS_MESSAGE =
+  'The app does not have sufficient Kobo access to update this report.';
+
+const nonEmptyString = (value: unknown): string | undefined =>
+  typeof value === 'string' && value.trim() !== '' ? value : undefined;
 
 @Injectable()
 export class KoboService {
   constructor(private readonly httpService: HttpService) {}
+
+  private readKoboMessage(data: unknown): string | undefined {
+    const asString = nonEmptyString(data);
+    if (asString !== undefined) {
+      return asString;
+    }
+
+    if (typeof data !== 'object' || data === null) {
+      return undefined;
+    }
+
+    const body = data as { detail?: unknown; message?: unknown };
+
+    return nonEmptyString(body.detail) ?? nonEmptyString(body.message);
+  }
+
+  private rethrowKoboWriteError(error: unknown): never {
+    if (!isAxiosError(error) || error.response === undefined) {
+      throw error;
+    }
+
+    const status = error.response.status;
+    const koboMessage = this.readKoboMessage(error.response.data);
+    const isForbidden = status === HttpStatus.FORBIDDEN;
+
+    throw new HttpException(
+      {
+        statusCode: isForbidden ? HttpStatus.FORBIDDEN : status,
+        ...(isForbidden ? { code: KOBO_WRITE_FORBIDDEN } : {}),
+        message: isForbidden
+          ? KOBO_INSUFFICIENT_RIGHTS_MESSAGE
+          : koboMessage ?? 'Kobo request failed',
+      },
+      isForbidden ? HttpStatus.FORBIDDEN : status,
+    );
+  }
 
   private async getAllPages<T extends DisasterType>(
     path: string,
@@ -150,14 +193,18 @@ export class KoboService {
     id: string,
     validationStatusValue: ValidationStatusValue,
   ): Promise<ValidationStatusDto> {
-    const { data } = await this.httpService.axiosRef.patch<ValidationStatusDto>(
-      `assets/${AssetId[disasterType]}/data/${id}/validation_status`,
-      {
-        'validation_status.uid': validationStatusValue,
-      },
-    );
+    try {
+      const { data } = await this.httpService.axiosRef.patch<ValidationStatusDto>(
+        `assets/${AssetId[disasterType]}/data/${id}/validation_status`,
+        {
+          'validation_status.uid': validationStatusValue,
+        },
+      );
 
-    return data;
+      return data;
+    } catch (error: unknown) {
+      this.rethrowKoboWriteError(error);
+    }
   }
 
   async patchForm(
@@ -165,16 +212,19 @@ export class KoboService {
     id: string,
     fieldsToUpdate: PatchFloodFormDto | PatchDroughtFormDto | PatchIncidentFormDto,
   ): Promise<number> {
-    const { data } = await this.httpService.axiosRef.patch<{ results: { status_code: number }[] }>(
-      `assets/${AssetId[disasterType]}/data/bulk`,
-      {
+    try {
+      const { data } = await this.httpService.axiosRef.patch<{
+        results: { status_code: number }[];
+      }>(`assets/${AssetId[disasterType]}/data/bulk`, {
         payload: {
           submission_ids: [id],
           data: fieldsToUpdate,
         },
-      },
-    );
+      });
 
-    return data.results[0].status_code;
+      return data.results[0].status_code;
+    } catch (error: unknown) {
+      this.rethrowKoboWriteError(error);
+    }
   }
 }
