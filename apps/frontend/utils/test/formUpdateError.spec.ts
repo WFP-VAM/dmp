@@ -27,9 +27,9 @@ describe('formUpdateError', () => {
         }),
       ),
     ).toBe(true);
-    expect(isKoboWriteForbiddenError(axiosErrorWith({ message: 'Forbidden' }))).toBe(
-      false,
-    );
+    expect(
+      isKoboWriteForbiddenError(axiosErrorWith({ message: 'Forbidden' })),
+    ).toBe(false);
   });
 
   it('joins validation message arrays', () => {

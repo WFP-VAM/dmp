@@ -45,30 +45,26 @@ const KOBO_PAGE_LIMIT = 1000;
 const KOBO_INSUFFICIENT_RIGHTS_MESSAGE =
   'The app does not have sufficient Kobo access to update this report.';
 
+const nonEmptyString = (value: unknown): string | undefined =>
+  typeof value === 'string' && value.trim() !== '' ? value : undefined;
+
 @Injectable()
 export class KoboService {
   constructor(private readonly httpService: HttpService) {}
 
   private readKoboMessage(data: unknown): string | undefined {
-    if (typeof data === 'string' && data.trim() !== '') {
-      return data;
+    const asString = nonEmptyString(data);
+    if (asString !== undefined) {
+      return asString;
     }
 
     if (typeof data !== 'object' || data === null) {
       return undefined;
     }
 
-    const detail = (data as { detail?: unknown }).detail;
-    if (typeof detail === 'string' && detail.trim() !== '') {
-      return detail;
-    }
+    const body = data as { detail?: unknown; message?: unknown };
 
-    const message = (data as { message?: unknown }).message;
-    if (typeof message === 'string' && message.trim() !== '') {
-      return message;
-    }
-
-    return undefined;
+    return nonEmptyString(body.detail) ?? nonEmptyString(body.message);
   }
 
   private rethrowKoboWriteError(error: unknown): never {

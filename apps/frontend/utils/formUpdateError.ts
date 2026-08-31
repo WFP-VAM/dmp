@@ -1,7 +1,8 @@
 import { KOBO_WRITE_FORBIDDEN } from '@wfp-dmp/interfaces';
 import { isAxiosError } from 'axios';
 
-export const FORM_PAGE_WRITE_ACCESS_DISABLED = 'form_page.write_access_disabled';
+export const FORM_PAGE_WRITE_ACCESS_DISABLED =
+  'form_page.write_access_disabled';
 
 const readMessageField = (message: unknown): string | undefined => {
   if (typeof message === 'string' && message.trim() !== '') {
@@ -37,7 +38,7 @@ export const getFormUpdateErrorMessage = (
     return fallback;
   }
 
-  const data = error.response?.data;
+  const data: unknown = error.response?.data;
 
   if (typeof data === 'string' && data.trim() !== '') {
     return data;
