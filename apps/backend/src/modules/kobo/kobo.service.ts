@@ -217,15 +217,14 @@ export class KoboService {
     fieldsToUpdate: PatchFloodFormDto | PatchDroughtFormDto | PatchIncidentFormDto,
   ): Promise<number> {
     try {
-      const { data } = await this.httpService.axiosRef.patch<{ results: { status_code: number }[] }>(
-        `assets/${AssetId[disasterType]}/data/bulk`,
-        {
-          payload: {
-            submission_ids: [id],
-            data: fieldsToUpdate,
-          },
+      const { data } = await this.httpService.axiosRef.patch<{
+        results: { status_code: number }[];
+      }>(`assets/${AssetId[disasterType]}/data/bulk`, {
+        payload: {
+          submission_ids: [id],
+          data: fieldsToUpdate,
         },
-      );
+      });
 
       return data.results[0].status_code;
     } catch (error: unknown) {
