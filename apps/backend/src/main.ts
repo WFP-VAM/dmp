@@ -5,25 +5,14 @@ import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 import { Environment } from './env.validation';
 import { CustomLogger } from './modules/logger/custom-logger.service';
+import { getAllowedOriginMatchers } from './utils/allowedOrigins';
 
 const bootstrap = async () => {
   const logger = new CustomLogger();
   const app = await NestFactory.create(AppModule, { logger });
 
   if (typeof process.env.ALLOWED_HOST === 'string') {
-    // Enable CORS for ALLOWED_HOST and PR test sites.
-    const allowedHost = process.env.ALLOWED_HOST.startsWith('http')
-      ? process.env.ALLOWED_HOST
-      : `https://${process.env.ALLOWED_HOST}`;
-    // allow surge preview sites
-    const surgePreviewSites = [
-      /https:\/\/wfp-dmp-[0-9]+.surge\.sh$/,
-      /https:\/\/staging-wfp-dmp.surge\.sh$/,
-    ];
-    // and ovio.org sites (allows any subdomain prefix like staging.dmp.ovio.org, demo.dmp.ovio.org)
-    const ovioSites = [/https:\/\/([a-zA-Z0-9-]+\.)?dmp\.ovio\.org$/];
-    const allowedOrigins = [allowedHost, ...surgePreviewSites, ...ovioSites];
-    app.enableCors({ credentials: true, origin: allowedOrigins });
+    app.enableCors({ credentials: true, origin: getAllowedOriginMatchers() });
   }
 
   app.use(cookieParser());

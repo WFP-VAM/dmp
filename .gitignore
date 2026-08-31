@@ -28,3 +28,6 @@ pnpm-error.log*
 lerna-debug.log*
 .vscode
 /scripts/debug
+
+# Generated translation review dump (pnpm --filter @wfp-dmp/frontend extract-translations)
+apps/frontend/translations/en-km-review.csv

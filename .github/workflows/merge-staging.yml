@@ -53,10 +53,12 @@ jobs:
             --context albLogsBucketName="${{ secrets.ALB_LOGS_BUCKET_NAME }}" \
             --context wafLogsBucketArn="${{ secrets.WAF_LOGS_BUCKET_ARN }}"
 
-  deploy_staging_surge:
+  deploy_staging_pages:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
-      surge_url: staging-wfp-dmp.surge.sh
+      pages_url: https://wfp-vam.github.io/dmp/
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v4.0.0
@@ -72,14 +74,17 @@ jobs:
         run: pnpm turbo build
         env:
           NEXT_PUBLIC_API_BASE_URL: https://staging-api.dmp.ovio.org
+          NEXT_PUBLIC_BASE_PATH: /dmp
       - name: Export to static HTML
         run: |
           cd apps/frontend
           ./gen_env.sh staging
-      - name: Deploy on surge
-        uses: dswistowski/surge-sh-action@v1.1.0
+          cd out
+          cp index.html 404.html
+          touch .nojekyll
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          domain: ${{ env.surge_url }}
-          project: 'apps/frontend/out/.'
-          login: ${{ secrets.surge_login }}
-          token: ${{ secrets.surge_token }}
+          folder: apps/frontend/out
+          branch: gh-pages
+          clean: false

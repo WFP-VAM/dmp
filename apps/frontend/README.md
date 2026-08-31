@@ -33,3 +33,11 @@ If changes have been made to the KOBO forms, you can follow the step by step bel
 3. In `translations`
 
 - Add the necessary key mapping to both the `en.json` and `km.json` files.
+
+To dump every English/Khmer string (UI chrome, communes, villages) into one CSV for translation review:
+
+```sh
+pnpm --filter @wfp-dmp/frontend extract-translations
+```
+
+Writes `apps/frontend/translations/en-km-review.csv` (`key,en,km,missing_km,source`). Pass an output path as the first argument if needed. The CSV is gitignored (villages make it large).

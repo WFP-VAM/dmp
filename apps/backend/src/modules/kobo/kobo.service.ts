@@ -82,7 +82,7 @@ export class KoboService {
 
     return this.getAllPages<T>(`assets/${AssetId[disasterType]}/data.json`, {
       query: {
-        [koboKeys[disasterType].entryDate]: { $gte: formatDateToStringDate(startDate) },
+        [koboKeys[disasterType].disasterDate]: { $gte: formatDateToStringDate(startDate) },
         ...(province !== undefined && {
           [koboKeys[disasterType].province]: province,
         }),
@@ -118,7 +118,7 @@ export class KoboService {
         ...(commune !== undefined && {
           [koboKeys[disasterType].commune]: Array.isArray(commune) ? { $in: commune } : commune,
         }),
-        [koboKeys[disasterType].entryDate]: { $gte: startDate, $lte: endDate },
+        [koboKeys[disasterType].disasterDate]: { $gte: startDate, $lte: endDate },
         [koboKeys[disasterType].disTyp]: { $in: disTyps },
       },
     });
