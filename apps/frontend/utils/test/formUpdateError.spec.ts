@@ -50,5 +50,11 @@ describe('formUpdateError', () => {
     expect(getFormUpdateErrorMessage(axiosErrorWith({}), fallback)).toBe(
       fallback,
     );
+    expect(
+      getFormUpdateErrorMessage(
+        axiosErrorWith('<!doctype html><html>Server error (500)</html>', 500),
+        fallback,
+      ),
+    ).toBe(fallback);
   });
 });

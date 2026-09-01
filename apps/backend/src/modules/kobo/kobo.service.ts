@@ -24,6 +24,7 @@ import {
 import { isAxiosError } from 'axios';
 
 import { AssetId } from './constants';
+import { toKoboBulkData } from './koboBulkPayload';
 
 type QueryResponse<T> = T extends typeof FLOOD
   ? FloodQueryResponseDto
@@ -45,8 +46,18 @@ const KOBO_PAGE_LIMIT = 1000;
 const KOBO_INSUFFICIENT_RIGHTS_MESSAGE =
   'The app does not have sufficient Kobo access to update this report.';
 
-const nonEmptyString = (value: unknown): string | undefined =>
-  typeof value === 'string' && value.trim() !== '' ? value : undefined;
+const nonEmptyString = (value: unknown): string | undefined => {
+  if (typeof value !== 'string') {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+  if (trimmed === '' || trimmed.startsWith('<')) {
+    return undefined;
+  }
+
+  return trimmed;
+};
 
 @Injectable()
 export class KoboService {
@@ -195,7 +206,7 @@ export class KoboService {
   ): Promise<ValidationStatusDto> {
     try {
       const { data } = await this.httpService.axiosRef.patch<ValidationStatusDto>(
-        `assets/${AssetId[disasterType]}/data/${id}/validation_status`,
+        `assets/${AssetId[disasterType]}/data/${id}/validation_status/`,
         {
           'validation_status.uid': validationStatusValue,
         },
@@ -212,17 +223,20 @@ export class KoboService {
     id: string,
     fieldsToUpdate: PatchFloodFormDto | PatchDroughtFormDto | PatchIncidentFormDto,
   ): Promise<number> {
+    const submissionId = /^\d+$/.test(id) ? Number(id) : id;
+    const data = toKoboBulkData(fieldsToUpdate as Record<string, unknown>);
+
     try {
-      const { data } = await this.httpService.axiosRef.patch<{
+      const { data: response } = await this.httpService.axiosRef.patch<{
         results: { status_code: number }[];
-      }>(`assets/${AssetId[disasterType]}/data/bulk`, {
+      }>(`assets/${AssetId[disasterType]}/data/bulk/`, {
         payload: {
-          submission_ids: [id],
-          data: fieldsToUpdate,
+          submission_ids: [submissionId],
+          data,
         },
       });
 
-      return data.results[0].status_code;
+      return response.results[0].status_code;
     } catch (error: unknown) {
       this.rethrowKoboWriteError(error);
     }

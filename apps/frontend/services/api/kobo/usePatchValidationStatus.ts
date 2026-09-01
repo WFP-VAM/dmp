@@ -14,12 +14,9 @@ export const usePatchValidationStatus = (
   formId: string,
 ) => {
   const { trigger, isMutating } = useSWRMutation(
-    [ApiRoutes.form, formDisasterType, formId],
-    async (
-      [relativePath, disasterType, id],
-      { arg }: { arg: ValidationStatusValue },
-    ) => {
-      const url = path.join(relativePath, 'validationStatus');
+    ['kobo-patch-validation', formDisasterType, formId],
+    async ([, disasterType, id], { arg }: { arg: ValidationStatusValue }) => {
+      const url = path.join(ApiRoutes.form, 'validationStatus');
       try {
         const { data: updatedValidationStatus } =
           await apiClient.patch<ValidationStatusDto>(url, {

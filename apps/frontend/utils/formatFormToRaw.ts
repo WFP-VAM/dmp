@@ -1,5 +1,5 @@
 import { KoboCommonKeys } from '@wfp-dmp/interfaces';
-import { mapKeys, mapValues, omit } from 'lodash';
+import { mapKeys, omit } from 'lodash';
 
 import { DroughtFormType } from 'components/FormValidation/DroughtFormValidation/DroughtFormType';
 import { FloodFormType } from 'components/FormValidation/FloodFormValidation/FloodFormType';
@@ -35,5 +35,25 @@ export const formatFormToRaw = (
     ...mapKeys(specificData, (_, key) => specificKeysMapping[key]),
   };
 
-  return mapValues(koboFormatData, value => (value === '' ? null : value));
+  return Object.fromEntries(
+    Object.entries(koboFormatData)
+      .filter(([key]) => key !== '' && key !== 'undefined')
+      .map(([key, value]) => [key, toKoboValue(value)]),
+  );
+};
+
+const toKoboValue = (value: unknown): string | null => {
+  if (value === '' || value === undefined || value === null) {
+    return null;
+  }
+
+  if (typeof value === 'number' || typeof value === 'boolean') {
+    return String(value);
+  }
+
+  if (typeof value === 'string') {
+    return value;
+  }
+
+  return null;
 };
