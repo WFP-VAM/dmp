@@ -21,12 +21,12 @@ export const usePatchForm = (
   );
 
   const { trigger, isMutating } = useSWRMutation(
-    [ApiRoutes.form, formDisasterType, formId],
+    ['kobo-patch-form', formDisasterType, formId],
     async (
-      [relativePath, disasterType, id],
+      [, disasterType, id],
       { arg }: { arg: Record<string, string | null | undefined> },
     ) => {
-      const url = path.join(relativePath, disasterType, id);
+      const url = path.join(ApiRoutes.form, disasterType, id);
       const {
         data: { status },
       } = await apiClient.patch<{

@@ -30,6 +30,19 @@ export const isKoboWriteForbiddenError = (error: unknown): boolean => {
   return data?.code === KOBO_WRITE_FORBIDDEN;
 };
 
+const readPlainTextBody = (data: unknown): string | undefined => {
+  if (typeof data !== 'string') {
+    return undefined;
+  }
+
+  const trimmed = data.trim();
+  if (trimmed === '' || trimmed.startsWith('<')) {
+    return undefined;
+  }
+
+  return data;
+};
+
 export const getFormUpdateErrorMessage = (
   error: unknown,
   fallback: string,
@@ -39,9 +52,9 @@ export const getFormUpdateErrorMessage = (
   }
 
   const data: unknown = error.response?.data;
-
-  if (typeof data === 'string' && data.trim() !== '') {
-    return data;
+  const asText = readPlainTextBody(data);
+  if (asText !== undefined) {
+    return asText;
   }
 
   if (typeof data === 'object' && data !== null) {

@@ -211,4 +211,22 @@ describe('KoboService - nested params', () => {
       message: 'The app does not have sufficient Kobo access to update this report.',
     });
   });
+
+  it('patches Kobo bulk with a trailing slash and string field values', async () => {
+    (httpService.axiosRef.patch as jest.Mock).mockResolvedValueOnce({
+      data: { results: [{ status_code: 201 }] },
+    });
+
+    const status = await koboService.patchForm(FLOOD, '815732335', {
+      'g3/g3_1/g3_2/NumFamAff': 10,
+    } as never);
+
+    expect(status).toBe(201);
+    expect(httpService.axiosRef.patch).toHaveBeenCalledWith(`assets/${AssetId[FLOOD]}/data/bulk/`, {
+      payload: {
+        submission_ids: [815732335],
+        data: { 'g3/g3_1/g3_2/NumFamAff': '10' },
+      },
+    });
+  });
 });
