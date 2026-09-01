@@ -6,6 +6,7 @@ export { DroughtDto, DroughtQueryResponseDto } from './DroughtDto';
 export { GetFormsDto } from './GetFormsDto';
 export { GetFormDto } from './GetFormDto';
 export { PatchValidationStatusDto } from './PatchValidationStatusDto';
+export { KOBO_WRITE_FORBIDDEN } from './koboErrorCodes';
 export { ValidationStatusDto, ValidationStatusValue } from './ValidationStatusDto';
 export { IncidentDto, IncidentQueryResponseDto } from './IncidentDto';
 export * from './mapping';

@@ -10,6 +10,7 @@ import { usePatchValidationStatus } from 'services/api/kobo/usePatchValidationSt
 import { colors } from 'theme/muiTheme';
 import { reloadPage } from 'utils/reloadPage';
 
+import { useShowFormUpdateError } from './FormUpdateError';
 import { ValidationIndicator } from './ValidationIndicator';
 
 // Feature flag: if true, cancel navigates away; if false, cancel resets form and stays on page
@@ -17,34 +18,34 @@ const SHOULD_NAVIGATE_ON_CANCEL = false;
 
 interface FormValidationFooterProps {
   isEditMode: boolean;
+  isFormMutating?: boolean;
   status: ValidationStatusValue | undefined;
   setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FormValidationFooter = ({
   isEditMode,
+  isFormMutating = false,
   status,
   setIsEditMode,
 }: FormValidationFooterProps) => {
   const theme = useTheme();
   const router = useRouter();
-  const intl = useIntl();
+  const showFormUpdateError = useShowFormUpdateError();
   const { disaster: disasterType, formId: id } = router.query;
 
-  const { trigger, isMutating } = usePatchValidationStatus(
-    disasterType as DisasterType,
-    id as string,
-  );
+  const { trigger, isMutating: isValidationMutating } =
+    usePatchValidationStatus(disasterType as DisasterType, id as string);
+  const isMutating = isFormMutating || isValidationMutating;
 
   const handleValidationStatusChange = async (
     validationStatusValue: ValidationStatusValue,
   ) => {
     try {
-      await trigger(validationStatusValue);
-      await router.push('/forms/search');
+      await trigger(validationStatusValue, { revalidate: false });
+      window.location.assign(`${router.basePath}/forms/search`);
     } catch (error) {
-      console.error('Error updating validation status:', error);
-      window.alert(intl.formatMessage({ id: 'form_page.action_error' }));
+      showFormUpdateError(error);
     }
   };
 
@@ -77,6 +78,7 @@ const FormValidationFooter = ({
         <Stack flexDirection="row" gap={theme.spacing(5)}>
           {!isEditMode && (
             <Button
+              type="button"
               sx={editButtonStyles}
               onClick={() => {
                 setIsEditMode(true);
@@ -89,13 +91,17 @@ const FormValidationFooter = ({
           {isEditMode && (
             <Button
               type="submit"
-              sx={editButtonStyles}
+              sx={{
+                ...editButtonStyles,
+                '&.Mui-disabled': { opacity: 1 },
+              }}
               disabled={isMutating}
-              startIcon={<Check />}
-              endIcon={
-                isMutating ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null
+              startIcon={
+                isFormMutating ? (
+                  <CircularProgress size={18} sx={{ color: 'black' }} />
+                ) : (
+                  <Check />
+                )
               }
             >
               <FormattedMessage id="form_page.submit" />
@@ -127,6 +133,7 @@ const FormValidationFooter = ({
             </Button>
           )}
           <Button
+            type="button"
             sx={{
               color: 'black',
               backgroundColor: '#FF9473',
@@ -147,6 +154,7 @@ const FormValidationFooter = ({
             <FormattedMessage id="form_page.reject" />
           </Button>
           <Button
+            type="button"
             sx={{
               color: 'black',
               backgroundColor: colors.color5,

@@ -17,6 +17,7 @@ import { formatFormToRaw } from 'utils/formatFormToRaw';
 import { formatFloodFields } from 'utils/formatRawToForm';
 import { reloadPage } from 'utils/reloadPage';
 
+import { useShowFormUpdateError } from '../FormUpdateError';
 import FormValidationFooter from '../FormValidationFooter';
 import FormValidationHeader from '../FormValidationHeader';
 import { FloodCheckBoxes } from './FloodCheckBoxes';
@@ -30,6 +31,7 @@ export const FloodFormValidation = ({
 }): JSX.Element => {
   const theme = useTheme();
   const router = useRouter();
+  const showFormUpdateError = useShowFormUpdateError();
   const { disaster: disasterType, formId: id } = router.query;
 
   const formattedForm = useMemo(
@@ -56,9 +58,13 @@ export const FloodFormValidation = ({
     },
   });
 
-  const { trigger } = usePatchForm(disasterType as DisasterType, id as string);
+  const { trigger, isMutating } = usePatchForm(
+    disasterType as DisasterType,
+    id as string,
+  );
 
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   // We set this state to avoid race condition between a field update and the reset coming from react hook form
   const [shouldReset, setShouldReset] = useState(false);
 
@@ -69,23 +75,28 @@ export const FloodFormValidation = ({
     }
   }, [shouldReset, reset]);
 
-  const onSubmit = (data: FloodFormType) => {
-    const triggerAndUpdateDefault = async () => {
-      try {
-        const status = await trigger(
-          formatFormToRaw(data, koboKeys[FLOOD], floodSpecificKeys),
-        );
-        if (status === 201) {
-          setIsEditMode(false);
-          // Reload current page to refresh form data and prevent navigation issues
-          reloadPage(router);
-        }
-      } catch (error) {
-        setShouldReset(true);
-        console.error(error);
+  const onSubmit = async (data: FloodFormType) => {
+    if (!isEditMode) {
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const status = await trigger(
+        formatFormToRaw(data, koboKeys[FLOOD], floodSpecificKeys),
+      );
+      if (status === 201) {
+        setIsEditMode(false);
+        // Reload current page to refresh form data and prevent navigation issues
+        reloadPage(router);
+
+        return;
       }
-    };
-    void triggerAndUpdateDefault();
+    } catch (error) {
+      setShouldReset(true);
+      showFormUpdateError(error);
+    }
+    setIsSaving(false);
   };
 
   return (
@@ -121,6 +132,7 @@ export const FloodFormValidation = ({
         />
         <FormValidationFooter
           isEditMode={isEditMode}
+          isFormMutating={isSaving || isMutating}
           setIsEditMode={setIsEditMode}
           status={validationForm._validation_status.uid}
         />

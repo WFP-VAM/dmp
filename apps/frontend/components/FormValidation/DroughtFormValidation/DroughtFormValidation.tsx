@@ -18,6 +18,7 @@ import { formatFormToRaw } from 'utils/formatFormToRaw';
 import { formatDroughtFields } from 'utils/formatRawToForm';
 import { reloadPage } from 'utils/reloadPage';
 
+import { useShowFormUpdateError } from '../FormUpdateError';
 import FormValidationFooter from '../FormValidationFooter';
 import FormValidationHeader from '../FormValidationHeader';
 import { DroughtFormType } from './DroughtFormType';
@@ -30,6 +31,7 @@ export const DroughtFormValidation = ({
 }): JSX.Element => {
   const theme = useTheme();
   const router = useRouter();
+  const showFormUpdateError = useShowFormUpdateError();
   const { disaster: disasterType, formId: id } = router.query;
 
   const formattedForm = useMemo(
@@ -58,10 +60,13 @@ export const DroughtFormValidation = ({
     },
   });
 
-  const { trigger } = usePatchForm(disasterType as DisasterType, id as string);
+  const { trigger, isMutating } = usePatchForm(
+    disasterType as DisasterType,
+    id as string,
+  );
 
   const [isEditMode, setIsEditMode] = useState(false);
-  // We set this state to avoid race condition between a field update and the reset coming from react hook form
+  const [isSaving, setIsSaving] = useState(false);
   const [shouldReset, setShouldReset] = useState(false);
 
   useEffect(() => {
@@ -71,23 +76,28 @@ export const DroughtFormValidation = ({
     }
   }, [shouldReset, reset]);
 
-  const onSubmit = (data: DroughtFormType) => {
-    const triggerAndUpdateDefault = async () => {
-      try {
-        const status = await trigger(
-          formatFormToRaw(data, koboKeys[DROUGHT], droughtSpecificKeys),
-        );
-        if (status === 201) {
-          setIsEditMode(false);
-          // Reload current page to refresh form data and prevent navigation issues
-          reloadPage(router);
-        }
-      } catch (error) {
-        setShouldReset(true);
-        console.error(error);
+  const onSubmit = async (data: DroughtFormType) => {
+    if (!isEditMode) {
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const status = await trigger(
+        formatFormToRaw(data, koboKeys[DROUGHT], droughtSpecificKeys),
+      );
+      if (status === 201) {
+        setIsEditMode(false);
+        // Reload current page to refresh form data and prevent navigation issues
+        reloadPage(router);
+
+        return;
       }
-    };
-    void triggerAndUpdateDefault();
+    } catch (error) {
+      setShouldReset(true);
+      showFormUpdateError(error);
+    }
+    setIsSaving(false);
   };
 
   return (
@@ -111,6 +121,7 @@ export const DroughtFormValidation = ({
         />
         <FormValidationFooter
           isEditMode={isEditMode}
+          isFormMutating={isSaving || isMutating}
           setIsEditMode={setIsEditMode}
           status={validationForm._validation_status.uid}
         />
