@@ -85,10 +85,10 @@ export class IncidentDto {
   @IsOptional() @IsNumberString() readonly 'group_pk03i04/group_lf9ou90/StorageDam'?: string;
   @IsOptional() @IsNumberString() readonly 'group_pk03i04/group_ub2hp14/CraftAff'?: string;
   @IsOptional() @IsNumberString() readonly 'group_pk03i04/group_ub2hp14/CraftDam'?: string;
+  @IsOptional() @IsNumberString() readonly 'group_pk03i04/group_az7bv13/FactoryAff'?: string;
+  @IsOptional() @IsNumberString() readonly 'group_pk03i04/group_az7bv13/FactoryDam'?: string;
   @IsOptional() @IsNumberString() readonly 'group_gh6ag70/group_na4yi04/CropAff'?: string;
   @IsOptional() @IsNumberString() readonly 'group_gh6ag70/group_na4yi04/CropDam'?: string;
-  @IsOptional() @IsNumberString() readonly 'group_gh6ag70/group_az7bv13/FactoryAff'?: string;
-  @IsOptional() @IsNumberString() readonly 'group_gh6ag70/group_az7bv13/FactoryDam'?: string;
   @IsOptional() @IsNumberString() readonly 'group_gh6ag70/group_yh83p68/SamnabAff'?: string;
   @IsOptional() @IsNumberString() readonly 'group_gh6ag70/group_yh83p68/SamnabDam'?: string;
   @IsOptional() @IsNumberString() readonly 'group_gh6ag70/group_en38q31/PaddyAff'?: string;
