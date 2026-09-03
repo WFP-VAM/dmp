@@ -1,4 +1,4 @@
-import { DroughtDto, FloodDto, IncidentDto } from '@wfp-dmp/interfaces';
+import { DroughtDto, FloodDto, IncidentDto, provinces } from '@wfp-dmp/interfaces';
 import useSWR from 'swr';
 
 import { SearchFormData } from 'components/Filters/SearchFilters';
@@ -13,7 +13,10 @@ export const useGetForms = ({
   const inputStartDate = inputDateRange.startDate?.format('YYYY-MM-DD');
   const inputEndDate = inputDateRange.endDate?.format('YYYY-MM-DD');
   const inputProvince =
-    inputRegion.province.length === 0 ? undefined : inputRegion.province;
+    inputRegion.province.length === 0 ||
+    inputRegion.province.length === provinces.length
+      ? undefined
+      : inputRegion.province;
   const inputDistrict =
     inputRegion.district.length === 0 ? undefined : inputRegion.district;
   const inputCommune =

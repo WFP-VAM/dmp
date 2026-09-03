@@ -6,6 +6,7 @@ import { AppModule } from './app.module';
 import { Environment } from './env.validation';
 import { CustomLogger } from './modules/logger/custom-logger.service';
 import { getAllowedOriginMatchers } from './utils/allowedOrigins';
+import { configureQueryParser } from './utils/queryParser';
 
 const bootstrap = async () => {
   const logger = new CustomLogger();
@@ -15,6 +16,7 @@ const bootstrap = async () => {
     app.enableCors({ credentials: true, origin: getAllowedOriginMatchers() });
   }
 
+  configureQueryParser(app);
   app.use(cookieParser());
 
   // Setting up Swagger document

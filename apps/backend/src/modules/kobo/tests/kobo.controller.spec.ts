@@ -6,6 +6,7 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AppModule } from '@root/app.module';
+import { configureQueryParser } from '@root/utils/queryParser';
 import {
   DisasterDtoType,
   DROUGHT,
@@ -45,6 +46,7 @@ describe('KoboController', () => {
     authService = testingModule.get(AuthService);
     koboService = testingModule.get(KoboService);
     app = testingModule.createNestApplication();
+    configureQueryParser(app);
     await app.init();
   });
 
@@ -179,6 +181,40 @@ describe('KoboController', () => {
             province,
             district,
             commune,
+          });
+        });
+    });
+
+    it('should accept more than 20 province values in axios bracket query format', async () => {
+      const role = 'ncdm';
+      const disTyps = ['1'];
+      const startDate = '2026-08-01';
+      const endDate = '2026-09-01';
+      const province = Array.from({ length: 25 }, (_, index) =>
+        String(index + 1).padStart(2, '0'),
+      );
+
+      const getFormsSpy = jest.spyOn(koboService, 'getForms').mockImplementation(getFormsMock);
+
+      const user = await userFactory.createOne({ roles: [role] });
+      const accessToken = authService.createAccessToken(user, 10000);
+      const queryString = province.reduce(
+        (params, code) => `${params}&province[]=${code}`,
+        `disTyps[]=1&startDate=${startDate}&endDate=${endDate}`,
+      );
+
+      await request(app.getHttpServer())
+        .get(`/kobo/forms?${queryString}`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect(200)
+        .expect(() => {
+          expect(getFormsSpy).toHaveBeenNthCalledWith(1, {
+            disTyps,
+            startDate,
+            endDate,
+            province,
+            district: undefined,
+            commune: undefined,
           });
         });
     });
