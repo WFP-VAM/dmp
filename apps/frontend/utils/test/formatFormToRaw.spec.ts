@@ -20,6 +20,7 @@ describe('formatFormToRaw', () => {
     specific: {
       NumFamAff: 50,
       floodN: '3',
+      FarmAff: 31,
     },
   } as unknown as FloodFormType;
 
@@ -28,6 +29,8 @@ describe('formatFormToRaw', () => {
 
     expect(raw['g3/g3_1/g3_2/NumFamAff']).toBe('50');
     expect(raw['g2/flood_n']).toBe('3');
+    expect(raw['g11/Crop/FarmAff']).toBe('31');
+    expect(raw).not.toHaveProperty('g11/g11_1/FarmAff');
     expect(raw).not.toHaveProperty('undefined');
   });
 });
