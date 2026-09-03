@@ -1,4 +1,9 @@
-import { DroughtDto, FloodDto, IncidentDto, provinces } from '@wfp-dmp/interfaces';
+import {
+  DroughtDto,
+  FloodDto,
+  IncidentDto,
+  provinces,
+} from '@wfp-dmp/interfaces';
 import useSWR from 'swr';
 
 import { SearchFormData } from 'components/Filters/SearchFilters';

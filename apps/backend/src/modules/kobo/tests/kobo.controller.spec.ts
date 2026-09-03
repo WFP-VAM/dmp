@@ -190,9 +190,7 @@ describe('KoboController', () => {
       const disTyps = ['1'];
       const startDate = '2026-08-01';
       const endDate = '2026-09-01';
-      const province = Array.from({ length: 25 }, (_, index) =>
-        String(index + 1).padStart(2, '0'),
-      );
+      const province = Array.from({ length: 25 }, (_, index) => String(index + 1).padStart(2, '0'));
 
       const getFormsSpy = jest.spyOn(koboService, 'getForms').mockImplementation(getFormsMock);
 
