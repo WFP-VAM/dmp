@@ -85,12 +85,14 @@ export const TableDisplay = ({
 
   return (
     <>
-      <Typography sx={{ mx: 2, mt: 2 }}>
-        <FormattedMessage
-          id="forms_table.results_count"
-          values={{ count: formattedForms.length }}
-        />
-      </Typography>
+      {!isLoading && (
+        <Typography sx={{ mx: 2, mt: 2 }}>
+          <FormattedMessage
+            id="forms_table.results_count"
+            values={{ count: formattedForms.length }}
+          />
+        </Typography>
+      )}
       <TableContainer
         component={Paper}
         sx={{ m: 2, width: 'calc(100% - 32px)' }}
