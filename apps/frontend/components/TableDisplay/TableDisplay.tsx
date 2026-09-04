@@ -105,7 +105,6 @@ export const TableDisplay = ({
             selectedForms={selectedForms}
             handleEditFloodNumber={handleEditFloodNumber}
             lastCheckboxPosition={lastCheckboxPosition}
-            setSelectedForms={setSelectedForms}
           />
           {isLoading ? (
             <TableBody>
