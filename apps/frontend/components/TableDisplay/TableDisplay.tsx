@@ -6,7 +6,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -18,71 +17,8 @@ import { ValidationLinkButton } from 'components/FormValidation/ValidationIndica
 import { useAuth } from 'context/auth';
 
 import { formatDate } from '../../utils/date';
-import { BatchEditDialog, BatchEditWarningTooltip } from './BatchEditControls';
+import { TableHeader } from './TableHeader';
 import { BasicFloodForm, formatForms } from './utils';
-
-const TableHeader = ({
-  isFlood,
-  batchEditMode,
-  handleBatchEditClick,
-  selectedForms,
-  handleEditFloodNumber,
-  lastCheckboxPosition,
-}: {
-  isFlood: boolean;
-  batchEditMode: boolean;
-  handleBatchEditClick: () => void;
-  selectedForms: BasicFloodForm[];
-  handleEditFloodNumber: (newFloodNumber: number) => void;
-  lastCheckboxPosition: { top: number; left: number } | null;
-  setSelectedForms: (forms: BasicFloodForm[]) => void;
-}) => (
-  <TableHead>
-    <TableRow sx={{ backgroundColor: 'var(--color_table_1)', color: 'black' }}>
-      <TableCell sx={{ color: 'inherit' }}>
-        <FormattedMessage id="forms_table.headers.province" />
-      </TableCell>
-      <TableCell sx={{ color: 'inherit' }}>
-        <FormattedMessage id="forms_table.headers.district" />
-      </TableCell>
-      <TableCell sx={{ color: 'inherit' }}>
-        <FormattedMessage id="forms_table.headers.commune" />
-      </TableCell>
-      <TableCell sx={{ color: 'inherit' }}>
-        <FormattedMessage id="forms_table.headers.dis_date" />
-      </TableCell>
-      <TableCell sx={{ color: 'inherit', minWidth: '110px' }}>
-        <FormattedMessage id="forms_table.headers.entry_date" />
-      </TableCell>
-      <TableCell sx={{ color: 'inherit' }}>
-        <FormattedMessage id="forms_table.headers.dis_type" />
-      </TableCell>
-      {isFlood && (
-        <TableCell sx={{ color: 'inherit', minWidth: '90px' }}>
-          {batchEditMode && <BatchEditWarningTooltip />}
-          <FormattedMessage id="forms_table.headers.flood_number" />
-          <br />
-          <BatchEditDialog
-            batchEditMode={batchEditMode}
-            selectedForms={selectedForms}
-            handleBatchEditClick={handleBatchEditClick}
-            handleEditFloodNumber={handleEditFloodNumber}
-            lastCheckboxPosition={lastCheckboxPosition}
-          />
-        </TableCell>
-      )}
-      <TableCell sx={{ color: 'inherit' }}>
-        <FormattedMessage id="forms_table.headers.entry_name" />
-      </TableCell>
-      <TableCell sx={{ color: 'inherit', minWidth: '120px' }}>
-        <FormattedMessage id="forms_table.headers.phone" />
-      </TableCell>
-      <TableCell sx={{ color: 'inherit', minWidth: '200px' }}>
-        <FormattedMessage id="forms_table.headers.review_link" />
-      </TableCell>
-    </TableRow>
-  </TableHead>
-);
 
 export const TableDisplay = ({
   forms,
@@ -149,6 +85,14 @@ export const TableDisplay = ({
 
   return (
     <>
+      {!isLoading && (
+        <Typography sx={{ mx: 2, mt: 2 }}>
+          <FormattedMessage
+            id="forms_table.results_count"
+            values={{ count: formattedForms.length }}
+          />
+        </Typography>
+      )}
       <TableContainer
         component={Paper}
         sx={{ m: 2, width: 'calc(100% - 32px)' }}
@@ -161,13 +105,12 @@ export const TableDisplay = ({
             selectedForms={selectedForms}
             handleEditFloodNumber={handleEditFloodNumber}
             lastCheckboxPosition={lastCheckboxPosition}
-            setSelectedForms={setSelectedForms}
           />
           {isLoading ? (
             <TableBody>
               {[1, 2, 3].map(id => (
                 <TableRow key={id}>
-                  <TableCell colSpan={isFlood ? 10 : 9}>
+                  <TableCell colSpan={isFlood ? 11 : 10}>
                     <Skeleton />
                   </TableCell>
                 </TableRow>
@@ -175,8 +118,9 @@ export const TableDisplay = ({
             </TableBody>
           ) : (
             <TableBody>
-              {formattedForms.map(formattedForm => (
+              {formattedForms.map((formattedForm, index) => (
                 <TableRow key={formattedForm.id}>
+                  <TableCell>{index + 1}</TableCell>
                   <TableCell>
                     <FormattedMessage
                       id={`province.${formattedForm.province}`}

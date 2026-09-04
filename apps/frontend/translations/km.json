@@ -46,7 +46,7 @@
     "onHold-normal": "របាយការណ៍ដែលមិនទាន់ឯកភាព",
     "approved-long": "របាយការណ៌បានឯកភាពរួច",
     "notApproved-long": "របាយការណ៌៍ត្រូវបានបដិសេធ",
-    "onHold-long": "របាយការណ៌បានឯកភាពរួច"
+    "onHold-long": "របាយការណ៍ដែលមិនទាន់ឯកភាព"
   },
   "navigation": {
     "home": "ទំព័រដើម",
@@ -122,7 +122,9 @@
   },
   "forms_table": {
     "no_forms": "គ្មានទម្រង់ដែលត្រូវគ្នានឹងប៉ារ៉ាម៉ែត្រស្វែងរករបស់អ្នកទេ។",
+    "results_count": "{count, plural, one {# កំណត់ត្រា} other {# កំណត់ត្រា}} បានរកឃើញ",
     "headers": {
+      "row_number": "#",
       "location": "ទីតាំង",
       "province": "ខេត្ត",
       "district": "ស្រុក",
