@@ -84,11 +84,11 @@ export class FloodDto {
   @IsOptional() @IsNumberString() readonly 'g10/g10_7/NumWareHDam'?: string;
   @IsOptional() @IsNumberString() readonly 'g10/g10_8/NumCraftAff'?: string;
   @IsOptional() @IsNumberString() readonly 'g10/g10_8/NumCraftDam'?: string;
-  @IsOptional() @IsNumberString() readonly 'g11/g11_1/FarmAff'?: string;
-  @IsOptional() @IsNumberString() readonly 'g11/g11_1/FarmDam'?: string;
-  @IsOptional() @IsNumberString() readonly 'g11/g11_1/ToNamAgriAff'?: string;
-  @IsOptional() @IsNumberString() readonly 'g11/g11_1/NumFarmCroAff'?: string;
-  @IsOptional() @IsNumberString() readonly 'g11/g11_2/NumFarmPaddyAff'?: string;
+  @IsOptional() @IsNumberString() readonly 'g11/ToNamAgriAff'?: string;
+  @IsOptional() @IsNumberString() readonly 'g11/NumFarmCroAff'?: string;
+  @IsOptional() @IsNumberString() readonly 'g11/Crop/FarmAff'?: string;
+  @IsOptional() @IsNumberString() readonly 'g11/Crop/FarmDam'?: string;
+  @IsOptional() @IsNumberString() readonly 'g11/NumFarmPaddyAff'?: string;
   @IsOptional() @IsNumberString() readonly 'g11/g11_2/SamNabAff'?: string;
   @IsOptional() @IsNumberString() readonly 'g11/g11_2/SamNabDam'?: string;
   @IsOptional() @IsNumberString() readonly 'g11/g11_3/PaddyAff'?: string;
