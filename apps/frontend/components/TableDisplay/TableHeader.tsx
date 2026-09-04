@@ -18,7 +18,6 @@ export const TableHeader = ({
   selectedForms: BasicFloodForm[];
   handleEditFloodNumber: (newFloodNumber: number) => void;
   lastCheckboxPosition: { top: number; left: number } | null;
-  setSelectedForms: (forms: BasicFloodForm[]) => void;
 }): JSX.Element => (
   <TableHead>
     <TableRow sx={{ backgroundColor: 'var(--color_table_1)', color: 'black' }}>
