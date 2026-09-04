@@ -118,7 +118,9 @@
   },
   "forms_table": {
     "no_forms": "No forms match your search parameters.",
+    "results_count": "{count, plural, one {# record} other {# records}} found",
     "headers": {
+      "row_number": "#",
       "location": "Location",
       "province": "Province",
       "district": "District / Krong",
