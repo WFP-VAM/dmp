@@ -4,6 +4,7 @@ import { communes, districts, provinces } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
 import { useAuth } from 'context/auth';
+import villages from 'translations/villages.json';
 
 import MultiSelect from './MultiSelect';
 
@@ -17,11 +18,17 @@ const getCommunesFilteredByDistrict = (districtValue: string[]) => {
     return districtValue.find(x => commune.startsWith(x));
   });
 };
+const getVillagesFilteredByCommune = (communeValue: string[]) => {
+  return Object.keys(villages.en).filter(village => {
+    return communeValue.find(x => village.startsWith(x));
+  });
+};
 
 export interface Region {
   province: string[];
   district: string[];
   commune: string[];
+  village?: string[];
   disabled?: boolean;
 }
 
@@ -65,6 +72,11 @@ export const RegionFilters = ({
     [value.district],
   );
 
+  const villagesFiltered = useMemo(
+    () => getVillagesFilteredByCommune(value.commune),
+    [value.commune],
+  );
+
   const startAdornment = (
     <InputAdornment position="start">
       <LocationOnIcon
@@ -85,7 +97,7 @@ export const RegionFilters = ({
           value={value.province}
           options={allowedProvinces}
           onChange={v => {
-            onChange({ province: v, district: [], commune: [] });
+            onChange({ province: v, district: [], commune: [], village: [] });
           }}
           placeholder="common.province"
           allSelectedText="validation_search_params.all-province"
@@ -103,7 +115,7 @@ export const RegionFilters = ({
           value={value.district}
           options={districtsFiltered}
           onChange={v => {
-            onChange({ ...value, district: v, commune: [] });
+            onChange({ ...value, district: v, commune: [], village: [] });
           }}
           placeholder="common.district"
           allSelectedText="validation_search_params.all-district"
@@ -121,7 +133,13 @@ export const RegionFilters = ({
           value={value.commune}
           options={communesFiltered}
           onChange={v => {
-            onChange({ ...value, commune: v });
+            onChange({
+              ...value,
+              commune: v,
+              village: (value.village ?? []).filter(village =>
+                v.some(commune => village.startsWith(commune)),
+              ),
+            });
           }}
           placeholder="common.commune"
           allSelectedText="validation_search_params.all-commune"
@@ -133,6 +151,23 @@ export const RegionFilters = ({
           }}
         />
       </FormControl>
+      {value.village !== undefined && (
+        <FormControl>
+          <MultiSelect
+            value={value.village}
+            options={villagesFiltered}
+            onChange={v => onChange({ ...value, village: v })}
+            placeholder="common.village"
+            allSelectedText="validation_search_params.all-village"
+            formatPrefix="village"
+            width={250}
+            selectProps={{
+              disabled: disableAll === true || value.commune.length === 0,
+              startAdornment,
+            }}
+          />
+        </FormControl>
+      )}
     </Stack>
   );
 };
