@@ -10,7 +10,7 @@ describe('formatFormToRaw', () => {
       province: ['01'],
       district: ['0102'],
       commune: ['010203'],
-      village: 'village',
+      village: ['01020301', '01020302'],
     },
     interviewer: 'tester',
     disTyp: '1',
@@ -28,6 +28,7 @@ describe('formatFormToRaw', () => {
 
     expect(raw['g3/g3_1/g3_2/NumFamAff']).toBe('50');
     expect(raw['g2/flood_n']).toBe('3');
+    expect(raw['g2/village']).toBe('01020301 01020302');
     expect(raw).not.toHaveProperty('undefined');
   });
 });

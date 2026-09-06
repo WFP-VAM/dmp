@@ -17,9 +17,7 @@ export const formatFormToRaw = (
     province: formValues.region.province[0],
     district: formValues.region.district[0],
     commune: formValues.region.commune[0],
-    // TODO - FIXME: This is just a placeholder for the village field
     village: formValues.region.village,
-    // TODO - FIXME: This is just a placeholder for the location field
     location: formValues.region.commune[0],
     entryName: formValues.interviewer,
     disTyp: formValues.disTyp,
@@ -53,6 +51,10 @@ const toKoboValue = (value: unknown): string | null => {
 
   if (typeof value === 'string') {
     return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.join(' ');
   }
 
   return null;

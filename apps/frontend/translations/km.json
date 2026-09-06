@@ -2,7 +2,8 @@
   "common": {
     "province": "ខេត្ត",
     "district": "ស្រុក",
-    "commune": "ឃុំ"
+    "commune": "ឃុំ",
+    "village": "ភូមិ"
   },
   "generic": {
     "password_input": {
@@ -85,6 +86,7 @@
     "all-province": "ខេត្តទាំងអស់",
     "all-district": "ស្រុកទាំងអស់",
     "all-commune": "ឃុំទាំងអស់",
+    "all-village": "ភូមិទាំងអស់",
     "date_range": "ចន្លោះកាលបរិច្ឆេទ",
     "start_date": "ចាប់ពី",
     "end_date": "រហូតដល់",
