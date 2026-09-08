@@ -20,6 +20,7 @@ import { QueryFailedFilter } from './exception/query-failed.filter';
 import { KoboModule } from './modules/kobo/kobo.module';
 import { LoggerMiddleware } from './modules/logger/logger.middleware';
 import { LoggerModule } from './modules/logger/logger.module';
+import { PartnersModule } from './modules/partners/partners.module';
 import { User } from './modules/user/user.entity';
 import { UserModule } from './modules/user/user.module';
 import { WebhookModule } from './modules/webhook/webhook.module';
@@ -140,6 +141,7 @@ const ADMINJS_ADMIN = {
     AuthModule,
     LoggerModule,
     KoboModule,
+    PartnersModule,
     WebhookModule,
   ],
   controllers: [AppController],
