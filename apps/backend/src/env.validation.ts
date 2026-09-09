@@ -1,5 +1,5 @@
 import { plainToClass } from 'class-transformer';
-import { IsEnum, IsNumber, IsString, validateSync } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString, validateSync } from 'class-validator';
 
 export enum Environment {
   Development = 'development',
@@ -80,6 +80,17 @@ class EnvironmentVariables {
 
   @IsString()
   TELEGRAM_NCDM_CHAT_ID!: string;
+
+  // Separate read-only Kobo credential for the partners API (see docs/adr/003-partner-api-approach.md).
+  // Optional until the partners module is deployed/enabled for a given environment.
+  @IsOptional()
+  @IsString()
+  KOBO_PUBLIC_API_TOKEN?: string;
+
+  // Comma-separated "partnerName:apiKey" pairs, e.g. "idpoor:abc123,someOtherPartner:def456".
+  @IsOptional()
+  @IsString()
+  PARTNER_API_KEYS?: string;
 }
 
 export const validate = (config: Record<string, unknown>): EnvironmentVariables => {
