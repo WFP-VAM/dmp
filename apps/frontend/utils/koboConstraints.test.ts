@@ -4,6 +4,7 @@ import { KoboFieldConstraintDto } from '@wfp-dmp/interfaces';
 import {
   applyFieldConstraints,
   buildFieldBounds,
+  getChangedFieldViolation,
   getConstraintViolations,
   parseNumericConstraint,
 } from './koboConstraints';
@@ -146,5 +147,74 @@ describe('getConstraintViolations', () => {
     expect(
       getConstraintViolations({ NumVillAff: '5' }, constraints, specificKeys),
     ).toEqual([]);
+  });
+});
+
+describe('getChangedFieldViolation', () => {
+  const boundsByField = buildFieldBounds(
+    [
+      {
+        path: 'g3/g3_1/NumVillAff',
+        constraint: '. >= 0',
+        constraintMessage: 'please enter value >= 0',
+      },
+    ],
+    specificKeys,
+  );
+
+  it('returns undefined when the field did not change', () => {
+    expect(
+      getChangedFieldViolation(
+        { NumVillAff: '-1' },
+        { NumVillAff: '-1' },
+        boundsByField,
+      ),
+    ).toBeUndefined();
+  });
+
+  it('returns undefined when the changed value is within bounds', () => {
+    expect(
+      getChangedFieldViolation(
+        { NumVillAff: '5' },
+        { NumVillAff: '1' },
+        boundsByField,
+      ),
+    ).toBeUndefined();
+  });
+
+  it('returns the violation for a field that changed to an out-of-bounds value', () => {
+    expect(
+      getChangedFieldViolation(
+        { NumVillAff: '-1' },
+        { NumVillAff: '1' },
+        boundsByField,
+      ),
+    ).toEqual({ field: 'NumVillAff', message: 'please enter value >= 0' });
+  });
+
+  it('only reports the first violated field among several changed ones', () => {
+    const multiFieldBounds = buildFieldBounds(
+      [
+        {
+          path: 'g3/g3_1/NumVillAff',
+          constraint: '. >= 0',
+          constraintMessage: 'villages msg',
+        },
+        {
+          path: 'g3/g3_1/g3_2/NumFamAff',
+          constraint: '. >= 0',
+          constraintMessage: 'families msg',
+        },
+      ],
+      specificKeys,
+    );
+
+    expect(
+      getChangedFieldViolation(
+        { NumVillAff: '-1', NumFamAff: '-1' },
+        { NumVillAff: '1', NumFamAff: '1' },
+        multiFieldBounds,
+      ),
+    ).toEqual({ field: 'NumVillAff', message: 'villages msg' });
   });
 });

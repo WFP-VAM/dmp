@@ -55,6 +55,11 @@ export interface DisasterTableProps {
   data: Record<string, string | string[] | number | undefined>[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange?: (event: any) => void;
+  // Called with the row before and after every cell commit (e.g. on blur/tab), so
+  // callers can validate the field(s) that just changed and surface feedback immediately
+  // rather than waiting for form submission.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onCellCommit?: (newRow: any, oldRow: any) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getRowId?: (row: any) => string;
   isEditable: boolean;
@@ -72,6 +77,7 @@ export const DisasterTable = ({
   columnGroup,
   data,
   onChange,
+  onCellCommit,
   getRowId,
   isEditable,
   variant,
@@ -507,7 +513,11 @@ export const DisasterTable = ({
                         columns={bandExtendedColumns}
                         columnGroupingModel={band.columnGroup}
                         isCellEditable={() => isEditable}
-                        processRowUpdate={(newRow: GridRowModel) => {
+                        processRowUpdate={(
+                          newRow: GridRowModel,
+                          oldRow: GridRowModel,
+                        ) => {
+                          onCellCommit?.(newRow, oldRow);
                           if (onChange) onChange(newRow);
 
                           return newRow;

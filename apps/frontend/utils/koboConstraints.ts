@@ -119,6 +119,27 @@ export const applyFieldConstraints = (
   });
 };
 
+// Checks the fields that actually changed between an old and new row (i.e. what a
+// single cell edit just committed on blur) against their Kobo constraints, returning
+// the first violation found. Used to surface one validation message at a time, right
+// when the user leaves the offending cell, rather than batching everything until submit.
+export const getChangedFieldViolation = (
+  newRow: Record<string, unknown>,
+  oldRow: Record<string, unknown>,
+  boundsByField: Map<string, FieldBounds>,
+): { field: string; message: string } | undefined => {
+  for (const [field, bounds] of Array.from(boundsByField)) {
+    if (
+      newRow[field] !== oldRow[field] &&
+      isOutOfBounds(newRow[field], bounds)
+    ) {
+      return { field, message: bounds.message };
+    }
+  }
+
+  return undefined;
+};
+
 // Validates a full set of submitted field values against their Kobo constraints, so a
 // value that violates a constraint (e.g. negative when '. >= 0' is required) can never
 // actually be saved, regardless of whether the grid caught it live during editing.

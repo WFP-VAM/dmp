@@ -3,14 +3,20 @@ import {
   floodSpecificKeys,
   FloodSpecificType,
 } from '@wfp-dmp/interfaces';
+import { useCallback, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
 import ReportTablesWrapper from 'components/ReportTablesWrapper';
 import { useGetFormConstraints } from 'services/api/kobo/useGetFormConstraints';
-import { applyFieldConstraints } from 'utils/koboConstraints';
+import {
+  applyFieldConstraints,
+  buildFieldBounds,
+  getChangedFieldViolation,
+} from 'utils/koboConstraints';
 import { wrapGroupAsTitle } from 'utils/tableFormatting';
 
+import { useShowFormMessage } from '../FormUpdateError';
 import { getFloodTablesMapping } from './floodTablesMapping';
 
 interface IProps {
@@ -25,7 +31,21 @@ export const FloodTables = ({
   isEditMode,
 }: IProps): JSX.Element => {
   const intl = useIntl();
+  const showFormMessage = useShowFormMessage();
   const { data: constraints } = useGetFormConstraints(FLOOD);
+  const boundsByField = useMemo(
+    () => buildFieldBounds(constraints, floodSpecificKeys),
+    [constraints],
+  );
+  const handleCellCommit = useCallback(
+    (newRow: Record<string, unknown>, oldRow: Record<string, unknown>) => {
+      const violation = getChangedFieldViolation(newRow, oldRow, boundsByField);
+      if (violation !== undefined) {
+        showFormMessage(violation.message);
+      }
+    },
+    [boundsByField, showFormMessage],
+  );
 
   return (
     <ReportTablesWrapper>
@@ -52,6 +72,7 @@ export const FloodTables = ({
               }
               data={[{ id: 1, ...value }]}
               onChange={onChange}
+              onCellCommit={handleCellCommit}
               isEditable={isEditMode}
               key={index}
               variant="open"
