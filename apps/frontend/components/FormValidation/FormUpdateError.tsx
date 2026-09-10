@@ -14,20 +14,33 @@ import {
   isKoboWriteForbiddenError,
 } from 'utils/formUpdateError';
 
+interface FormUpdateErrorContextValue {
+  showError: (error: unknown) => void;
+  showMessage: (message: string) => void;
+}
+
 const FormUpdateErrorContext = createContext<
-  ((error: unknown) => void) | undefined
+  FormUpdateErrorContextValue | undefined
 >(undefined);
 
-export const useShowFormUpdateError = (): ((error: unknown) => void) => {
-  const showError = useContext(FormUpdateErrorContext);
-  if (showError === undefined) {
+const useFormUpdateErrorContext = (): FormUpdateErrorContextValue => {
+  const context = useContext(FormUpdateErrorContext);
+  if (context === undefined) {
     throw new Error(
-      'useShowFormUpdateError must be used within FormUpdateErrorProvider',
+      'useShowFormUpdateError/useShowFormMessage must be used within FormUpdateErrorProvider',
     );
   }
 
-  return showError;
+  return context;
 };
+
+export const useShowFormUpdateError = (): ((error: unknown) => void) =>
+  useFormUpdateErrorContext().showError;
+
+// For client-side validation failures (e.g. a Kobo field constraint violation) that
+// never reach the server, so there's no `error` to derive a message from.
+export const useShowFormMessage = (): ((message: string) => void) =>
+  useFormUpdateErrorContext().showMessage;
 
 export const FormUpdateErrorProvider = ({
   children,
@@ -52,8 +65,12 @@ export const FormUpdateErrorProvider = ({
     [intl],
   );
 
+  const showMessage = useCallback((newMessage: string) => {
+    setMessage(newMessage);
+  }, []);
+
   return (
-    <FormUpdateErrorContext.Provider value={showError}>
+    <FormUpdateErrorContext.Provider value={{ showError, showMessage }}>
       {children}
       <Snackbar
         open={message !== null}

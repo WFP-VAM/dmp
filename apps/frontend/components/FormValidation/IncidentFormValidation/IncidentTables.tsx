@@ -1,7 +1,9 @@
-import { incidentSpecificKeys } from '@wfp-dmp/interfaces';
+import { INCIDENT, incidentSpecificKeys } from '@wfp-dmp/interfaces';
 
 import { DisasterTable } from 'components/DisasterTable/DisasterTable';
 import ReportTablesWrapper from 'components/ReportTablesWrapper';
+import { useGetFormConstraints } from 'services/api/kobo/useGetFormConstraints';
+import { applyFieldConstraints } from 'utils/koboConstraints';
 import { wrapGroupAsTitle } from 'utils/tableFormatting';
 
 import { incidentTablesMapping } from './incidentTablesMapping';
@@ -22,15 +24,26 @@ export const IncidentTables = ({
   onChange,
   isEditMode,
 }: IProps): JSX.Element => {
+  const { data: constraints } = useGetFormConstraints(INCIDENT);
+
   return (
     <ReportTablesWrapper>
       {incidentTablesMapping.map(
         ({ columns, columnGroup, groupParams }, index) => {
-          const group = wrapGroupAsTitle({ columns, columnGroup, groupParams });
+          const cols = applyFieldConstraints(
+            columns,
+            constraints,
+            incidentSpecificKeys,
+          );
+          const group = wrapGroupAsTitle({
+            columns: cols,
+            columnGroup,
+            groupParams,
+          });
 
           return (
             <DisasterTable
-              columns={columns}
+              columns={cols}
               columnGroup={group}
               data={[{ id: 1, ...value }]}
               onChange={onChange}

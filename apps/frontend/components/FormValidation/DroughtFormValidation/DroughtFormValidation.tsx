@@ -13,12 +13,14 @@ import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import { useGetFormConstraints } from 'services/api/kobo/useGetFormConstraints';
 import { usePatchForm } from 'services/api/kobo/usePatchForm';
 import { formatFormToRaw } from 'utils/formatFormToRaw';
 import { formatDroughtFields } from 'utils/formatRawToForm';
+import { getConstraintViolations } from 'utils/koboConstraints';
 import { reloadPage } from 'utils/reloadPage';
 
-import { useShowFormUpdateError } from '../FormUpdateError';
+import { useShowFormMessage, useShowFormUpdateError } from '../FormUpdateError';
 import FormValidationFooter from '../FormValidationFooter';
 import FormValidationHeader from '../FormValidationHeader';
 import { DroughtFormType } from './DroughtFormType';
@@ -32,6 +34,8 @@ export const DroughtFormValidation = ({
   const theme = useTheme();
   const router = useRouter();
   const showFormUpdateError = useShowFormUpdateError();
+  const showFormMessage = useShowFormMessage();
+  const { data: constraints } = useGetFormConstraints(DROUGHT);
   const { disaster: disasterType, formId: id } = router.query;
 
   const formattedForm = useMemo(
@@ -78,6 +82,17 @@ export const DroughtFormValidation = ({
 
   const onSubmit = async (data: DroughtFormType) => {
     if (!isEditMode) {
+      return;
+    }
+
+    const violations = getConstraintViolations(
+      data.specific,
+      constraints,
+      droughtSpecificKeys,
+    );
+    if (violations.length > 0) {
+      showFormMessage(violations.map(v => v.message).join(' '));
+
       return;
     }
 

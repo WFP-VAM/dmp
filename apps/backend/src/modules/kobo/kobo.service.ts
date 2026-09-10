@@ -14,6 +14,7 @@ import {
   IncidentDto,
   IncidentQueryResponseDto,
   KOBO_WRITE_FORBIDDEN,
+  KoboFieldConstraintDto,
   koboKeys,
   PatchDroughtFormDto,
   PatchFloodFormDto,
@@ -25,6 +26,7 @@ import { isAxiosError } from 'axios';
 
 import { AssetId } from './constants';
 import { toKoboBulkData } from './koboBulkPayload';
+import { fetchFormConstraints } from './koboSurveyConstraints';
 
 type QueryResponse<T> = T extends typeof FLOOD
   ? FloodQueryResponseDto
@@ -197,6 +199,10 @@ export class KoboService {
     );
 
     return data;
+  }
+
+  async getFormConstraints(disasterType: DisasterType): Promise<KoboFieldConstraintDto[]> {
+    return fetchFormConstraints(this.httpService, AssetId[disasterType]);
   }
 
   async patchValidationStatus(

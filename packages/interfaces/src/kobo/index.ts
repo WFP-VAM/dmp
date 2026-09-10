@@ -5,10 +5,12 @@ export { PatchIncidentFormDto } from './PatchIncidentFormDto';
 export { DroughtDto, DroughtQueryResponseDto } from './DroughtDto';
 export { GetFormsDto } from './GetFormsDto';
 export { GetFormDto } from './GetFormDto';
+export { GetFormConstraintsDto } from './GetFormConstraintsDto';
 export { PatchValidationStatusDto } from './PatchValidationStatusDto';
 export { KOBO_WRITE_FORBIDDEN } from './koboErrorCodes';
 export { ValidationStatusDto, ValidationStatusValue } from './ValidationStatusDto';
 export { IncidentDto, IncidentQueryResponseDto } from './IncidentDto';
+export { KoboFieldConstraintDto } from './KoboFieldConstraintDto';
 export * from './mapping';
 export {
   computeDisasterTypeFromDistTyp,

@@ -426,6 +426,12 @@ export const DisasterTable = ({
                           '& .MuiDataGrid-cell.highlighted-cell': {
                             background: '#D0EBF9',
                           },
+                          '& .MuiDataGrid-cell.kobo-constraint-invalid': {
+                            background: `${theme.palette.error.light}33`,
+                            color: theme.palette.error.dark,
+                            outline: `1px solid ${theme.palette.error.main}`,
+                            outlineOffset: '-1px',
+                          },
                           '& .MuiDataGrid-columnHeader.header-top-cell': {
                             borderTop:
                               variant === 'open' ? borderCSS : undefined,

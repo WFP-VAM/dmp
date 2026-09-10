@@ -6,6 +6,7 @@ export const ApiRoutes = {
   lastForms: `/kobo/last-forms/${NUMBER_LAST_DAYS}`,
   forms: '/kobo/forms',
   form: '/kobo/form',
+  formConstraints: '/kobo/form-constraints',
   refresh: '/auth/jwt/refresh',
   me: '/users/me',
   users: '/users/',

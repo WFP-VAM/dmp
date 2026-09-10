@@ -6,9 +6,11 @@ import {
   DisasterDtoType,
   DROUGHT,
   FLOOD,
+  GetFormConstraintsDto,
   GetFormDto,
   GetFormsDto,
   INCIDENT,
+  KoboFieldConstraintDto,
   PatchDroughtFormDto,
   PatchFloodFormDto,
   PatchIncidentFormDto,
@@ -70,6 +72,13 @@ export class KoboController {
     } catch (error) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     }
+  }
+
+  @Get('form-constraints/:disasterType')
+  async getFormConstraints(
+    @Param() params: GetFormConstraintsDto,
+  ): Promise<KoboFieldConstraintDto[]> {
+    return this.koboService.getFormConstraints(params.disasterType);
   }
 
   @Patch('form/validationStatus')
