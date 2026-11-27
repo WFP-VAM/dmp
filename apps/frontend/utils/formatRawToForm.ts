@@ -15,19 +15,16 @@ export const formatVillageValues = (village: string | undefined): string[] =>
 
 export const formatFloodFields = (form: FloodDto) => ({
   ...formatCommonFields(form),
-  village: formatVillageValues(formatCommonFields(form).village),
   ...mapValues(floodSpecificKeys, value => form[value]),
 });
 
 export const formatDroughtFields = (form: DroughtDto) => ({
   ...formatCommonFields(form),
-  village: formatVillageValues(formatCommonFields(form).village),
   ...mapValues(droughtSpecificKeys, value => form[value] ?? ''),
 });
 
 export const formatIncidentFields = (form: IncidentDto) => ({
   ...formatCommonFields(form),
-  village: formatVillageValues(formatCommonFields(form).village),
   ...mapValues(incidentSpecificKeys, value => form[value]),
 });
 

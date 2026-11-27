@@ -12,8 +12,8 @@ export const formatFormToRaw = (
 ) => {
   const commonData: Omit<
     Record<KoboCommonKeys, string>,
-    'id' | 'validationStatus' | 'submissionTime'
-  > = {
+    'id' | 'validationStatus' | 'submissionTime' | 'village'
+  > & { village: string[] } = {
     province: formValues.region.province[0],
     district: formValues.region.district[0],
     commune: formValues.region.commune[0],
@@ -54,7 +54,9 @@ const toKoboValue = (value: unknown): string | null => {
   }
 
   if (Array.isArray(value)) {
-    return value.join(' ');
+    const joined = value.join(' ');
+
+    return joined === '' ? null : joined;
   }
 
   return null;

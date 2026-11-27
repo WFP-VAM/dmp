@@ -97,7 +97,12 @@ export const RegionFilters = ({
           value={value.province}
           options={allowedProvinces}
           onChange={v => {
-            onChange({ province: v, district: [], commune: [], village: [] });
+            onChange({
+              province: v,
+              district: [],
+              commune: [],
+              ...(value.village !== undefined ? { village: [] } : {}),
+            });
           }}
           placeholder="common.province"
           allSelectedText="validation_search_params.all-province"
@@ -115,7 +120,12 @@ export const RegionFilters = ({
           value={value.district}
           options={districtsFiltered}
           onChange={v => {
-            onChange({ ...value, district: v, commune: [], village: [] });
+            onChange({
+              ...value,
+              district: v,
+              commune: [],
+              ...(value.village !== undefined ? { village: [] } : {}),
+            });
           }}
           placeholder="common.district"
           allSelectedText="validation_search_params.all-district"
@@ -136,9 +146,13 @@ export const RegionFilters = ({
             onChange({
               ...value,
               commune: v,
-              village: (value.village ?? []).filter(village =>
-                v.some(commune => village.startsWith(commune)),
-              ),
+              ...(value.village !== undefined
+                ? {
+                    village: value.village.filter(village =>
+                      v.some(commune => village.startsWith(commune)),
+                    ),
+                  }
+                : {}),
             });
           }}
           placeholder="common.commune"
