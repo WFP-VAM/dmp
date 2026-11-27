@@ -15,6 +15,7 @@ import { FormattedMessage } from 'react-intl';
 import { DisasterFilter } from 'components/Filters/DisasterFilter';
 import { RegionFilters } from 'components/Filters/RegionFilters';
 import { colors } from 'theme/muiTheme';
+import { isNegativeNumber } from 'utils/numbers';
 
 import { DroughtFormType } from './DroughtFormValidation/DroughtFormType';
 import { FloodFormType } from './FloodFormValidation/FloodFormType';
@@ -149,12 +150,14 @@ const FormValidationHeader = ({
                     type="number"
                     value={value.floodN}
                     sx={{ width: 75, backgroundColor: 'white' }}
-                    onChange={event =>
+                    inputProps={{ min: 0 }}
+                    onChange={event => {
+                      if (isNegativeNumber(event.target.value)) return;
                       onChange({
                         ...value,
                         [FloodSpecific.floodN]: event.target.value,
-                      })
-                    }
+                      });
+                    }}
                   />
                 )}
               />
