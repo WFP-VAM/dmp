@@ -5,6 +5,10 @@ export { PatchIncidentFormDto } from './PatchIncidentFormDto';
 export { DroughtDto, DroughtQueryResponseDto } from './DroughtDto';
 export { GetFormsDto } from './GetFormsDto';
 export { GetFormDto } from './GetFormDto';
+export {
+  GetFloodAffectedVillagesDto,
+  FloodAffectedVillageDto,
+} from './GetFloodAffectedVillagesDto';
 export { PatchValidationStatusDto } from './PatchValidationStatusDto';
 export { KOBO_WRITE_FORBIDDEN } from './koboErrorCodes';
 export { ValidationStatusDto, ValidationStatusValue } from './ValidationStatusDto';
@@ -20,3 +24,4 @@ export {
   isDroughtArray,
 } from './utils';
 export * from './constants';
+export { villageToCommune, villages, parseAffectedVillageCodes } from './villages';
