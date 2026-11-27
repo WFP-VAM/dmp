@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { usePatchFloodNumber } from 'services/api/kobo/usePatchForm';
+import { isNegativeNumber } from 'utils/numbers';
 
 type FloodForm = {
   id: string;
@@ -165,9 +166,12 @@ export const BatchEditDialog = ({
             <TextField
               type="number"
               sx={{ width: '20%' }}
-              inputProps={{ style: { textAlign: 'center' } }}
+              inputProps={{ min: 0, style: { textAlign: 'center' } }}
               value={newFloodNumber}
-              onChange={e => setNewFloodNumber(Number(e.target.value))}
+              onChange={e => {
+                if (isNegativeNumber(e.target.value)) return;
+                setNewFloodNumber(Number(e.target.value));
+              }}
               fullWidth
             />
           </Stack>

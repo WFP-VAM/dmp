@@ -7,7 +7,10 @@ import {
   GridColumnHeaderParams,
   GridColumnNode,
   GridComparatorFn,
+  GridEditInputCell,
+  GridPreProcessEditCellProps,
   GridRenderCellParams,
+  GridRenderEditCellParams,
   GridRowClassNameParams,
   GridSortDirection,
   gridStringOrNumberComparator,
@@ -17,6 +20,7 @@ import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { formatVillageListWithOverflow } from './formatVillageList';
+import { isNegativeNumber } from './numbers';
 
 interface GetColumnSetupParams {
   field: string;
@@ -30,6 +34,18 @@ interface GetColumnSetupParams {
   fontWeight?: React.CSSProperties['fontWeight'];
   highlightColumn?: boolean;
 }
+
+const nonNegativeNumberColumnSetup: Partial<GridColDef> = {
+  // Keeps the cell in edit mode (with error styling) until the value is valid
+  preProcessEditCellProps: (params: GridPreProcessEditCellProps) => ({
+    ...params.props,
+    error: isNegativeNumber(params.props.value),
+  }),
+  // Prevents the browser spinner from going below 0
+  renderEditCell: (params: GridRenderEditCellParams) => (
+    <GridEditInputCell {...params} inputProps={{ min: 0 }} />
+  ),
+};
 
 export const getColumnSetup = ({
   field,
@@ -67,7 +83,11 @@ export const getColumnSetup = ({
     },
   } as const;
 
-  return { ...fields, ...opts };
+  return {
+    ...fields,
+    ...(opts.type === 'number' ? nonNegativeNumberColumnSetup : {}),
+    ...opts,
+  };
 };
 
 const getLocationColumnSetup = (
