@@ -1,8 +1,18 @@
-/* eslint-disable complexity */
+/* eslint-disable complexity, max-lines */
 import { Cancel, Check, CheckCircle, Close, Edit } from '@mui/icons-material';
-import { CircularProgress, Stack, useTheme } from '@mui/material';
+import {
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Stack,
+  useTheme,
+} from '@mui/material';
 import { DisasterType, ValidationStatusValue } from '@wfp-dmp/interfaces';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import Button from 'components/Button';
@@ -37,6 +47,10 @@ const FormValidationFooter = ({
   const { trigger, isMutating: isValidationMutating } =
     usePatchValidationStatus(disasterType as DisasterType, id as string);
   const isMutating = isFormMutating || isValidationMutating;
+  const [pendingStatus, setPendingStatus] = useState<
+    ValidationStatusValue.approved | ValidationStatusValue.notApproved | null
+  >(null);
+  const isApproving = pendingStatus === ValidationStatusValue.approved;
 
   const handleValidationStatusChange = async (
     validationStatusValue: ValidationStatusValue,
@@ -46,7 +60,13 @@ const FormValidationFooter = ({
       window.location.assign(`${router.basePath}/forms/search`);
     } catch (error) {
       showFormUpdateError(error);
+    } finally {
+      setPendingStatus(null);
     }
+  };
+
+  const closeConfirmDialog = () => {
+    if (!isValidationMutating) setPendingStatus(null);
   };
 
   const editButtonStyles = {
@@ -143,9 +163,7 @@ const FormValidationFooter = ({
             disabled={isMutating}
             startIcon={<Cancel />}
             onClick={() => {
-              void handleValidationStatusChange(
-                ValidationStatusValue.notApproved,
-              );
+              setPendingStatus(ValidationStatusValue.notApproved);
             }}
             endIcon={
               isMutating ? <CircularProgress color="inherit" size={20} /> : null
@@ -164,7 +182,7 @@ const FormValidationFooter = ({
             startIcon={<CheckCircle />}
             disabled={isMutating}
             onClick={() => {
-              void handleValidationStatusChange(ValidationStatusValue.approved);
+              setPendingStatus(ValidationStatusValue.approved);
             }}
             endIcon={
               isMutating ? <CircularProgress color="inherit" size={20} /> : null
@@ -174,6 +192,69 @@ const FormValidationFooter = ({
           </Button>
         </Stack>
       </Stack>
+      <Dialog
+        open={pendingStatus !== null}
+        onClose={closeConfirmDialog}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>
+          <FormattedMessage
+            id={
+              isApproving
+                ? 'form_page.confirm_approve_title'
+                : 'form_page.confirm_reject_title'
+            }
+          />
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <FormattedMessage
+              id={
+                isApproving
+                  ? 'form_page.confirm_approve_message'
+                  : 'form_page.confirm_reject_message'
+              }
+            />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button
+            type="button"
+            sx={editButtonStyles}
+            onClick={closeConfirmDialog}
+            disabled={isValidationMutating}
+            startIcon={<Close />}
+          >
+            <FormattedMessage id="form_page.cancel" />
+          </Button>
+          <Button
+            type="button"
+            sx={{
+              color: 'black',
+              backgroundColor: isApproving ? colors.color5 : '#FF9473',
+              pl: 2,
+              fontWeight: 'bold',
+            }}
+            disabled={isValidationMutating}
+            startIcon={isApproving ? <CheckCircle /> : <Cancel />}
+            endIcon={
+              isValidationMutating ? (
+                <CircularProgress color="inherit" size={20} />
+              ) : null
+            }
+            onClick={() => {
+              if (pendingStatus !== null) {
+                void handleValidationStatusChange(pendingStatus);
+              }
+            }}
+          >
+            <FormattedMessage
+              id={isApproving ? 'form_page.approve' : 'form_page.reject'}
+            />
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
