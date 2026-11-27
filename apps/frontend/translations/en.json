@@ -94,7 +94,11 @@
     "edit": "Edit Report",
     "cancel": "Cancel",
     "action_error": "Unable to update this form. Please try again.",
-    "write_access_disabled": "The app does not have sufficient Kobo access to update this report."
+    "write_access_disabled": "The app does not have sufficient Kobo access to update this report.",
+    "confirm_approve_title": "Approve this report?",
+    "confirm_approve_message": "Are you sure you want to approve this report? It will be marked as approved and included in reports.",
+    "confirm_reject_title": "Reject this report?",
+    "confirm_reject_message": "Are you sure you want to reject this report? It will be marked as not approved."
   },
   "disasters": {
     "FLOOD": "Flood",
