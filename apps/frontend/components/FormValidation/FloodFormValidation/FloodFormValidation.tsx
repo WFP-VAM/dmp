@@ -14,10 +14,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { usePatchForm } from 'services/api/kobo/usePatchForm';
 import { formatFormToRaw } from 'utils/formatFormToRaw';
-import {
-  formatFloodFields,
-  formatVillageValues,
-} from 'utils/formatRawToForm';
+import { formatFloodFields, formatVillageValues } from 'utils/formatRawToForm';
 import { reloadPage } from 'utils/reloadPage';
 
 import { useShowFormUpdateError } from '../FormUpdateError';

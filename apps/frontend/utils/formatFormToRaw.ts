@@ -40,6 +40,12 @@ export const formatFormToRaw = (
   );
 };
 
+const toKoboList = (values: readonly unknown[]): string | null => {
+  const joined = values.join(' ');
+
+  return joined === '' ? null : joined;
+};
+
 const toKoboValue = (value: unknown): string | null => {
   if (value === '' || value === undefined || value === null) {
     return null;
@@ -54,9 +60,7 @@ const toKoboValue = (value: unknown): string | null => {
   }
 
   if (Array.isArray(value)) {
-    const joined = value.join(' ');
-
-    return joined === '' ? null : joined;
+    return toKoboList(value);
   }
 
   return null;

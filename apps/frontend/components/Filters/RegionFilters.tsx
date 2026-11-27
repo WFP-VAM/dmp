@@ -24,6 +24,44 @@ const getVillagesFilteredByCommune = (communeValue: string[]) => {
   });
 };
 
+const VillageFilter = ({
+  villages: selectedVillages,
+  options,
+  onChange,
+  disableAll,
+  hasCommune,
+  startAdornment,
+}: {
+  villages?: string[];
+  options: string[];
+  onChange: (village: string[]) => void;
+  disableAll?: boolean;
+  hasCommune: boolean;
+  startAdornment: JSX.Element;
+}): JSX.Element | null => {
+  if (selectedVillages === undefined) {
+    return null;
+  }
+
+  return (
+    <FormControl>
+      <MultiSelect
+        value={selectedVillages}
+        options={options}
+        onChange={onChange}
+        placeholder="common.village"
+        allSelectedText="validation_search_params.all-village"
+        formatPrefix="village"
+        width={250}
+        selectProps={{
+          disabled: disableAll === true || !hasCommune,
+          startAdornment,
+        }}
+      />
+    </FormControl>
+  );
+};
+
 export interface Region {
   province: string[];
   district: string[];
@@ -165,23 +203,14 @@ export const RegionFilters = ({
           }}
         />
       </FormControl>
-      {value.village !== undefined && (
-        <FormControl>
-          <MultiSelect
-            value={value.village}
-            options={villagesFiltered}
-            onChange={v => onChange({ ...value, village: v })}
-            placeholder="common.village"
-            allSelectedText="validation_search_params.all-village"
-            formatPrefix="village"
-            width={250}
-            selectProps={{
-              disabled: disableAll === true || value.commune.length === 0,
-              startAdornment,
-            }}
-          />
-        </FormControl>
-      )}
+      <VillageFilter
+        villages={value.village}
+        options={villagesFiltered}
+        onChange={village => onChange({ ...value, village })}
+        disableAll={disableAll}
+        hasCommune={value.commune.length > 0}
+        startAdornment={startAdornment}
+      />
     </Stack>
   );
 };
