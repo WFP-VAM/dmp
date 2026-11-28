@@ -5,6 +5,7 @@ import { useMemo } from 'react';
 
 import { useAuth } from 'context/auth';
 import villages from 'translations/villages.json';
+import { getVillageOptions, isVillageInCommune } from 'utils/villages';
 
 import MultiSelect from './MultiSelect';
 
@@ -18,11 +19,7 @@ const getCommunesFilteredByDistrict = (districtValue: string[]) => {
     return districtValue.find(x => commune.startsWith(x));
   });
 };
-const getVillagesFilteredByCommune = (communeValue: string[]) => {
-  return Object.keys(villages.en).filter(village => {
-    return communeValue.find(x => village.startsWith(x));
-  });
-};
+const allVillages = Object.keys(villages.en);
 
 const VillageFilter = ({
   villages: selectedVillages,
@@ -110,9 +107,17 @@ export const RegionFilters = ({
     [value.district],
   );
 
+  // Keyed on the joined codes so the options stay stable while the selection
+  // does not change (MultiSelect resets its value when its options change).
+  const selectedVillagesKey = value.village?.join(' ') ?? '';
   const villagesFiltered = useMemo(
-    () => getVillagesFilteredByCommune(value.commune),
-    [value.commune],
+    () =>
+      getVillageOptions(
+        allVillages,
+        value.commune,
+        selectedVillagesKey.split(' ').filter(Boolean),
+      ),
+    [value.commune, selectedVillagesKey],
   );
 
   const startAdornment = (
@@ -187,7 +192,7 @@ export const RegionFilters = ({
               ...(value.village !== undefined
                 ? {
                     village: value.village.filter(village =>
-                      v.some(commune => village.startsWith(commune)),
+                      v.some(commune => isVillageInCommune(village, commune)),
                     ),
                   }
                 : {}),
