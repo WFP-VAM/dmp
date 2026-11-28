@@ -18,7 +18,7 @@ describe('formatFormToRaw', () => {
         province: ['01'],
         district: ['0102'],
         commune: ['010203'],
-        village: 'village',
+        village: ['01020301', '01020302'],
       },
       interviewer: 'tester',
       disTyp: '1',
@@ -36,6 +36,7 @@ describe('formatFormToRaw', () => {
 
     expect(raw['g3/g3_1/g3_2/NumFamAff']).toBe('50');
     expect(raw['g2/flood_n']).toBe('3');
+    expect(raw['g2/village']).toBe('01020301 01020302');
     expect(raw['g11/Crop/FarmAff']).toBe('31');
     expect(raw).not.toHaveProperty('g11/g11_1/FarmAff');
     expect(raw).not.toHaveProperty('undefined');
@@ -69,5 +70,26 @@ describe('formatFormToRaw', () => {
     expect(raw['group_pk03i04/group_az7bv13/FactoryAff']).toBe('7');
     expect(raw['group_pk03i04/group_az7bv13/FactoryDam']).toBe('4');
     expect(raw).not.toHaveProperty('group_gh6ag70/group_az7bv13/FactoryAff');
+  });
+
+  it('writes null when no villages are selected', () => {
+    const formValues = {
+      region: {
+        province: ['01'],
+        district: ['0102'],
+        commune: ['010203'],
+        village: [],
+      },
+      interviewer: 'tester',
+      disTyp: '1',
+      phone: '012',
+      reportDate: dayjs('2024-01-02'),
+      incidentDate: dayjs('2024-01-01'),
+      specific: {},
+    } as unknown as FloodFormType;
+
+    const raw = formatFormToRaw(formValues, koboKeys[FLOOD], floodSpecificKeys);
+
+    expect(raw['g2/village']).toBeNull();
   });
 });

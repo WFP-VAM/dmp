@@ -4,6 +4,8 @@ import { communes, districts, provinces } from '@wfp-dmp/interfaces';
 import { useMemo } from 'react';
 
 import { useAuth } from 'context/auth';
+import villages from 'translations/villages.json';
+import { getVillageOptions, isVillageInCommune } from 'utils/villages';
 
 import MultiSelect from './MultiSelect';
 
@@ -17,11 +19,51 @@ const getCommunesFilteredByDistrict = (districtValue: string[]) => {
     return districtValue.find(x => commune.startsWith(x));
   });
 };
+const allVillages = Object.keys(villages.en);
+
+const VillageFilter = ({
+  villages: selectedVillages,
+  options,
+  onChange,
+  disableAll,
+  hasCommune,
+  startAdornment,
+}: {
+  villages?: string[];
+  options: string[];
+  onChange: (village: string[]) => void;
+  disableAll?: boolean;
+  hasCommune: boolean;
+  startAdornment: JSX.Element;
+}): JSX.Element | null => {
+  if (selectedVillages === undefined) {
+    return null;
+  }
+
+  return (
+    <FormControl>
+      <MultiSelect
+        value={selectedVillages}
+        options={options}
+        onChange={onChange}
+        placeholder="common.village"
+        allSelectedText="validation_search_params.all-village"
+        formatPrefix="village"
+        width={250}
+        selectProps={{
+          disabled: disableAll === true || !hasCommune,
+          startAdornment,
+        }}
+      />
+    </FormControl>
+  );
+};
 
 export interface Region {
   province: string[];
   district: string[];
   commune: string[];
+  village?: string[];
   disabled?: boolean;
 }
 
@@ -65,6 +107,19 @@ export const RegionFilters = ({
     [value.district],
   );
 
+  // Keyed on the joined codes so the options stay stable while the selection
+  // does not change (MultiSelect resets its value when its options change).
+  const selectedVillagesKey = value.village?.join(' ') ?? '';
+  const villagesFiltered = useMemo(
+    () =>
+      getVillageOptions(
+        allVillages,
+        value.commune,
+        selectedVillagesKey.split(' ').filter(Boolean),
+      ),
+    [value.commune, selectedVillagesKey],
+  );
+
   const startAdornment = (
     <InputAdornment position="start">
       <LocationOnIcon
@@ -85,7 +140,12 @@ export const RegionFilters = ({
           value={value.province}
           options={allowedProvinces}
           onChange={v => {
-            onChange({ province: v, district: [], commune: [] });
+            onChange({
+              province: v,
+              district: [],
+              commune: [],
+              ...(value.village !== undefined ? { village: [] } : {}),
+            });
           }}
           placeholder="common.province"
           allSelectedText="validation_search_params.all-province"
@@ -103,7 +163,12 @@ export const RegionFilters = ({
           value={value.district}
           options={districtsFiltered}
           onChange={v => {
-            onChange({ ...value, district: v, commune: [] });
+            onChange({
+              ...value,
+              district: v,
+              commune: [],
+              ...(value.village !== undefined ? { village: [] } : {}),
+            });
           }}
           placeholder="common.district"
           allSelectedText="validation_search_params.all-district"
@@ -121,7 +186,17 @@ export const RegionFilters = ({
           value={value.commune}
           options={communesFiltered}
           onChange={v => {
-            onChange({ ...value, commune: v });
+            onChange({
+              ...value,
+              commune: v,
+              ...(value.village !== undefined
+                ? {
+                    village: value.village.filter(village =>
+                      v.some(commune => isVillageInCommune(village, commune)),
+                    ),
+                  }
+                : {}),
+            });
           }}
           placeholder="common.commune"
           allSelectedText="validation_search_params.all-commune"
@@ -133,6 +208,14 @@ export const RegionFilters = ({
           }}
         />
       </FormControl>
+      <VillageFilter
+        villages={value.village}
+        options={villagesFiltered}
+        onChange={village => onChange({ ...value, village })}
+        disableAll={disableAll}
+        hasCommune={value.commune.length > 0}
+        startAdornment={startAdornment}
+      />
     </Stack>
   );
 };

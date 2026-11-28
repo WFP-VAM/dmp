@@ -15,7 +15,10 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { usePatchForm } from 'services/api/kobo/usePatchForm';
 import { formatFormToRaw } from 'utils/formatFormToRaw';
-import { formatDroughtFields } from 'utils/formatRawToForm';
+import {
+  formatDroughtFields,
+  formatVillageValues,
+} from 'utils/formatRawToForm';
 import { reloadPage } from 'utils/reloadPage';
 
 import { useShowFormUpdateError } from '../FormUpdateError';
@@ -44,7 +47,7 @@ export const DroughtFormValidation = ({
         province: [formattedForm.province],
         district: [formattedForm.district],
         commune: [formattedForm.commune],
-        village: formattedForm.village,
+        village: formatVillageValues(formattedForm.village),
       },
       interviewer: formattedForm.entryName,
       disTyp: formattedForm.disTyp,

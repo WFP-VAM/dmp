@@ -25,6 +25,7 @@ export type BaseFormType = {
     province: string[];
     district: string[];
     commune: string[];
+    village: string[];
   };
   interviewer: string;
   disTyp: string;
@@ -62,6 +63,7 @@ const FormValidationHeader = ({
                   province: value.province,
                   district: value.district,
                   commune: value.commune,
+                  village: value.village,
                 }}
                 onChange={onChange}
                 disableAll={!isEditMode}

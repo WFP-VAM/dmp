@@ -10,6 +10,9 @@ import {
 import dayjs from 'dayjs';
 import { mapValues } from 'lodash';
 
+export const formatVillageValues = (village: string | undefined): string[] =>
+  village?.split(/\s+/).filter(Boolean) ?? [];
+
 export const formatFloodFields = (form: FloodDto) => ({
   ...formatCommonFields(form),
   ...mapValues(floodSpecificKeys, value => form[value]),

@@ -7,7 +7,7 @@ export interface IncidentFormType extends FieldValues {
     province: string[];
     district: string[];
     commune: string[];
-    village: string;
+    village: string[];
   };
   interviewer: string;
   disTyp: string;
